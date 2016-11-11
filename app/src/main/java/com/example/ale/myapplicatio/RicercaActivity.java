@@ -39,11 +39,19 @@ public class RicercaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ricerca);
-        arrayList = new ArrayList<ItemRicercaActivity>();
+        if (findViewById(R.id.fragment_container) != null) {
+            if (savedInstanceState != null) {
+                return;
+            }
+        RicercaActivityFragmentMenu firstFragment = new RicercaActivityFragmentMenu();
+            firstFragment.setArguments(getIntent().getExtras());
+         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,firstFragment).commit();
+            arrayList = new ArrayList<ItemRicercaActivity>();
         itemsListView = (ListView) findViewById(R.id.lista);
         Intent intent = getIntent();
         String message = intent.getStringExtra("citta");
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            //avalenza89@gmail.com
         List<Address> addresses = null;
         try {
             addresses = geocoder.getFromLocationName(message, 1);
