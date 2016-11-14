@@ -39,7 +39,11 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     private Button altro;
 
     public RicercaActivityFragmentList() {
-
+        int barlocco = 100;
+        String paola = "brutta";
+        if(paola.equals("ciao")){
+            barlocco = 50;
+        }
     }
 
     /*public static RicercaActivityFragmentList newInstance(String param1, String param2) {
