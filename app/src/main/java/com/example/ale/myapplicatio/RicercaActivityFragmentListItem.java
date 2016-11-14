@@ -1,5 +1,7 @@
 package com.example.ale.myapplicatio;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,10 +19,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link RicercaActivityFragmentListItem.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link RicercaActivityFragmentListItem#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class RicercaActivityFragmentListItem extends Fragment {
 
     private String place_id;
-    private String hour;
     private TextView titolo;
     private ImageView foto;
     private TextView orario;
@@ -52,7 +62,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             place_id = getArguments().getString("place_id");
-            hour = getArguments().getString("open_now");
+
         }
     }
 
@@ -158,7 +168,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
            telefono.setText(item.getPhone());
             link.setText(item.getWebsite());
             indirizzo.setText(item.getAddress());
-            orario.setText(hour);
+
 
 
         }

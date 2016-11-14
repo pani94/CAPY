@@ -27,6 +27,7 @@ import java.util.Locale;
 public class RicercaActivityFragmentList extends Fragment implements AdapterView.OnItemClickListener {
 
     private String selectedCity;
+    private String selectedCityLocation;
     private ArrayList<ItemRicercaActivity> arrayList;
     private ListView itemsListView;
     private String TAG = MainActivity.class.getSimpleName();
@@ -55,7 +56,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             selectedItem = getArguments().getInt("selectedItem");
 
         }
-        Log.e(TAG, "SelectedItem =  " + selectedItem);
+       // Log.e(TAG, "SelectedItem =  " + selectedCity);
     }
 
     @Override
@@ -75,8 +76,8 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         Address address = addresses.get(0);
         double longitude = address.getLongitude();
         double latitude = address.getLatitude();
-        selectedCity = "location=" + Double.toString(latitude) + "," + Double.toString(longitude);
-        new GetPOI().execute(selectedCity);
+        selectedCityLocation = "location=" + Double.toString(latitude) + "," + Double.toString(longitude);
+        new GetPOI().execute(selectedCityLocation);
         itemsListView.setOnItemClickListener(this);
         // Inflate the layout for this fragment
         return view;
@@ -245,6 +246,8 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
 
             ItemAdapterMenu adapter = new ItemAdapterMenu(getActivity(), arrayList);
             itemsListView.setAdapter(adapter);
+
+
 
 
         }
