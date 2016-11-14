@@ -178,10 +178,10 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                             if (p.has("name")) {
                                 name = p.getString("name");
                             }
-
+                            String open_now = "";
                             if (p.has("opening_hours")) {
                                 JSONObject opening_hours = p.getJSONObject("opening_hours");
-                                String open_now = opening_hours.getString("open_now");
+                                 open_now = opening_hours.getString("open_now");
                                 String weekday_text = opening_hours.getString("weekday_text");
                             }
                             String photo_reference_url="";
@@ -226,7 +226,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                             if (p.has("vicinity")) {
                                 vicinity = p.getString("vicinity");
                             }
-                            ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference);
+                            ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference,open_now);
                            // Log.e(TAG, "photo " + photo_reference_url);
                             arrayList.add(item);
                         }
@@ -263,6 +263,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         RicercaActivityFragmentListItem newFragment = new RicercaActivityFragmentListItem();
         Bundle args = new Bundle();
         args.putString("place_id",arrayList.get(position).getPlace_id());
+        args.putString("orario",arrayList.get(position).getOrario());
         newFragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

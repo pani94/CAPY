@@ -39,6 +39,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
     private TextView titolo;
     private ImageView foto;
     private TextView orario;
+    private String open_now;
     private TextView telefono;
     private TextView indirizzo;
     private TextView link;
@@ -67,7 +68,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             place_id = getArguments().getString("place_id");
-
+            open_now = getArguments().getString("orario");
         }
     }
 
@@ -170,7 +171,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
            telefono.setText(item.getPhone());
             link.setText(item.getWebsite());
             indirizzo.setText(item.getAddress());
-            orario.setText("");
+            orario.setText(open_now);
             String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + item.getPhoto_reference() + "&sensor=false&key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             new LoadImageTask().execute(photo_reference_url);
 
