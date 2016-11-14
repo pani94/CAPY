@@ -160,9 +160,15 @@ public class MainActivity extends AppCompatActivity  {
         @Override
         public void onClick(View v) {
             String ricerca = cerca.getText().toString();
-            Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
-            intent.putExtra("citta", ricerca);
-            startActivity(intent);
+            if(!ricerca.equals("")){
+                Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                intent.putExtra("citta", ricerca);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"Metti una city pezzo di negro bastardo infame",Toast.LENGTH_LONG).show();
+            }
+
 
         }
 
@@ -174,9 +180,14 @@ public class MainActivity extends AppCompatActivity  {
             if (actionId == EditorInfo.IME_ACTION_DONE ||
                     actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
                 String ricerca = cerca.getText().toString();
-                Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
-                intent.putExtra("citta", ricerca);
-                startActivity(intent);
+                if(!ricerca.equals("")){
+                    Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                    intent.putExtra("citta", ricerca);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"Metti una city pezzo di negro bastardo infame",Toast.LENGTH_LONG).show();
+                }
             }
             return false;
         }
