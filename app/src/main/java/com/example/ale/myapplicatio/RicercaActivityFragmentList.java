@@ -256,7 +256,9 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             ItemAdapterMenu adapter = new ItemAdapterMenu(getActivity(), arrayList);
             adapter.notifyDataSetChanged();
             itemsListView.setAdapter(adapter);
-
+            if(count >0 ){
+                itemsListView.setSelection(itemsListView.getAdapter().getCount()-21);
+            }
 
 
 
