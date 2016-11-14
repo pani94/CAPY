@@ -132,8 +132,8 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                 }
             }
             String radius_sensor = "radius=5000&sensor=false";
-            String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
-            //String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+            //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
+            String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             String parameters = message[0] + "&" + type + "&" + radius_sensor + "&" + key;
             boolean bool ;
             bool = false;
