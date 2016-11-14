@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity  {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, cityList);
+            adapter.notifyDataSetChanged();
             cerca.setAdapter(adapter);
             if (!cerca.isPopupShowing()) {
                 cerca.showDropDown();

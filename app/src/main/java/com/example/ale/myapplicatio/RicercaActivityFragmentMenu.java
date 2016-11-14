@@ -62,6 +62,7 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
         listaFragment = (ListView) view.findViewById(R.id.listaFragment);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, scelte);
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(RicercaActivityFragmentMenu.this, R.layout.fragment_ricerca_activity_menu_item, scelte);
+        adapter.notifyDataSetChanged();
         listaFragment.setAdapter(adapter);
         listaFragment.setOnItemClickListener(this);
         // Inflate the layout for this fragment
