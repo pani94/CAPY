@@ -90,6 +90,9 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
 
     @Override
     public void onClick(View view) {
+        if(count > 1){
+            altro.setEnabled(false);
+        }
         count++;
         new GetPOI().execute(selectedCityLocation);
     }
@@ -129,9 +132,14 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             boolean bool ;
             bool = false;
             //do{
-                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/" + output + "?" + parameters;
-                if( count > 0 && next_page != ""){
+            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/" + output + "?" + parameters;
+                if(count == 0){
+                    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/" + output + "?" + parameters;
+                }
+                else if( count > 0 ){
                     url = url + "&pagetoken=" + next_page;
+                }else{
+                    count = 3;
                 }
                 String jsonStr = sh.makeServiceCall(url);
 
