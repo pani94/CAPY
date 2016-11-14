@@ -1,45 +1,23 @@
 package com.example.ale.myapplicatio;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.TextView;
-import android.util.Log;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity  {
@@ -107,32 +85,31 @@ public class MainActivity extends AppCompatActivity  {
                     for (int i = 0; i < predictions.length(); i++) {
                         JSONObject c = predictions.getJSONObject(i);
                         String description = c.getString("description");
-                        String id = c.getString("id");
-                        JSONArray matched_substrings = c.getJSONArray("matched_substrings");
+                        //String id = c.getString("id");
+                        /*JSONArray matched_substrings = c.getJSONArray("matched_substrings");
                         for (int j = 0; j < matched_substrings.length(); j++) {
                             JSONObject m = matched_substrings.getJSONObject(j);
                             String length = m.getString("length");
                             String offset = m.getString("offset");
-                        }
-                        String placeid = c.getString("place_id");
-                        String reference = c.getString("reference");
-                        // Phone node is JSON Object
-                        JSONObject structured_formatting = c.getJSONObject("structured_formatting");
-                        String main_text = structured_formatting.getString("main_text");
-                        JSONArray main_text_matched_substrings = structured_formatting.getJSONArray("main_text_matched_substrings");
+                        }*/
+                        //String placeid = c.getString("place_id");
+                        //String reference = c.getString("reference");
+                        //JSONObject structured_formatting = c.getJSONObject("structured_formatting");
+                        //String main_text = structured_formatting.getString("main_text");
+                        /*JSONArray main_text_matched_substrings = structured_formatting.getJSONArray("main_text_matched_substrings");
                         for (int k = 0; k < main_text_matched_substrings.length(); k++) {
                             JSONObject mt = main_text_matched_substrings.getJSONObject(k);
                             String length1 = mt.getString("length");
                             String offset1 = mt.getString("offset");
-                        }
-                        String secondary_text = structured_formatting.getString("secondary_text");
-                        JSONArray terms = c.getJSONArray("terms");
+                        }*/
+                        //String secondary_text = structured_formatting.getString("secondary_text");
+                        /*JSONArray terms = c.getJSONArray("terms");
                         for (int p = 0; p < terms.length(); p++) {
                             JSONObject t = terms.getJSONObject(p);
                             String offset = t.getString("offset");
                             String value = t.getString("value");
-                        }
-                        String types = c.getString("types");
+                        }*/
+                        //String types = c.getString("types");
                         cityList.add(description);
                     }
                 } catch (final JSONException e) {

@@ -1,23 +1,18 @@
 package com.example.ale.myapplicatio;
 
-import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -28,8 +23,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static android.R.id.message;
 
 public class RicercaActivityFragmentList extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -146,7 +139,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                         JSONArray places = jsonObj.getJSONArray("results");
                         for (int i = 0; i < places.length(); i++) {
                             JSONObject p = places.getJSONObject(i);
-                            if (p.has("geometry")) {
+                            /*if (p.has("geometry")) {
                                 JSONObject geometry = p.getJSONObject("geometry");
                                 if (geometry.has("location")) {
                                     JSONObject location = geometry.getJSONObject("location");
@@ -165,15 +158,15 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                                 }
 
 
-                            }
+                            }*/
                             String icon = "";
                             if (p.has("icon")) {
                                 icon = p.getString("icon");
                             }
 
-                            if (p.has("id")) {
+                            /*if (p.has("id")) {
                               String id = p.getString("id");
-                            }
+                            }*/
                             String name = null;
                             if (p.has("name")) {
                                 name = p.getString("name");
@@ -189,10 +182,10 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                                 JSONArray photos = p.getJSONArray("photos");
                                 for (int j = 0; j < photos.length(); j++) {
                                     JSONObject foto = photos.getJSONObject(j);
-                                    String height = foto.getString("height");
-                                    if (foto.has("html_attributes")) {
+                                    //String height = foto.getString("height");
+                                    /*if (foto.has("html_attributes")) {
                                         String html_attributes = foto.getString("html_attributes");
-                                    }
+                                    }*/
                                    String photo_reference = foto.getString("photo_reference");
                                    /* String photo_reference= "";
                                     if(p.has("icon")){
@@ -201,7 +194,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                                     */
                                     photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photo_reference + "&sensor=false&" + key;
                                     //photo_reference_url = photo_reference;
-                                    String width = foto.getString("width");
+                                    //String width = foto.getString("width");
                                 }
                             }
                             String place_id = "";
@@ -209,19 +202,19 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                                 place_id = p.getString("place_id");
                             }
 
-                            if (p.has("rating")) {
+                            /*if (p.has("rating")) {
                                 String rating = p.getString("rating");
-                            }
+                            }*/
                             String reference="";
                             if (p.has("reference")) {
                                  reference = p.getString("reference");
                             }
-                            if (p.has("scope")) {
+                            /*if (p.has("scope")) {
                                 String scope = p.getString("scope");
                             }
                             if (p.has("types")) {
                                 String types1 = p.getString("types");
-                            }
+                            }*/
                             String vicinity = "";
                             if (p.has("vicinity")) {
                                 vicinity = p.getString("vicinity");

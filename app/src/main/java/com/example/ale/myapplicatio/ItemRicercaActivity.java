@@ -1,9 +1,5 @@
 package com.example.ale.myapplicatio;
 
-import android.net.Uri;
-
-import java.net.URI;
-
 public class ItemRicercaActivity {
     private String name;
     private String place_id  ;
