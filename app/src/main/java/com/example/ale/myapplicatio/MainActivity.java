@@ -7,10 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity  {
         };
         cerca.addTextChangedListener(passwordWatcher);
         bottone.setOnClickListener(buttonListener);
+        cerca.setOnEditorActionListener(editTextListener);
 
 
 
@@ -150,6 +154,7 @@ public class MainActivity extends AppCompatActivity  {
 
         }
     }
+
     public class ButtonListener implements View.OnClickListener{
 
         @Override
@@ -163,6 +168,19 @@ public class MainActivity extends AppCompatActivity  {
 
 
     }
+    private TextView.OnEditorActionListener editTextListener = new TextView.OnEditorActionListener() {
+        @Override
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                    actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
+                String ricerca = cerca.getText().toString();
+                Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                intent.putExtra("citta", ricerca);
+                startActivity(intent);
+            }
+            return false;
+        }
+    };
 
 }
 
