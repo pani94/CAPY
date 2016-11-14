@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class RicercaActivityFragmentList extends Fragment implements AdapterView.OnItemClickListener {
+public class RicercaActivityFragmentList extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private String selectedCity;
     private String selectedCityLocation;
@@ -32,7 +33,9 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     private ListView itemsListView;
     private String TAG = MainActivity.class.getSimpleName();
     private int selectedItem;
-    String next_page = "";
+    private String next_page = "";
+    private int count = 0;
+    private Button altro;
 
     public RicercaActivityFragmentList() {
 
@@ -67,6 +70,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         itemsListView = (ListView) view.findViewById(R.id.lista);
         Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
         //avalenza89@gmail.com
+        altro = (Button) view.findViewById(R.id.altri_risultati);
         List<Address> addresses = null;
         try {
             addresses = geocoder.getFromLocationName(selectedCity, 1);
@@ -79,9 +83,17 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         selectedCityLocation = "location=" + Double.toString(latitude) + "," + Double.toString(longitude);
         new GetPOI().execute(selectedCityLocation);
         itemsListView.setOnItemClickListener(this);
+        altro.setOnClickListener(this);
         // Inflate the layout for this fragment
         return view;
     }
+
+    @Override
+    public void onClick(View view) {
+        count++;
+        new GetPOI().execute(selectedCityLocation);
+    }
+
     private class GetPOI extends AsyncTask<String, Void, Void> {
 
 
@@ -114,14 +126,12 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             //String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             String parameters = message[0] + "&" + type + "&" + radius_sensor + "&" + key;
-            int count = 0;
             boolean bool ;
             bool = false;
-            do {
+            //do{
                 String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/" + output + "?" + parameters;
-                if( count > 0){
-                    url = url + "&page_token=" + next_page;
-
+                if( count > 0 && next_page != ""){
+                    url = url + "&pagetoken=" + next_page;
                 }
                 String jsonStr = sh.makeServiceCall(url);
 
@@ -235,8 +245,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                         });
                     }
                 }
-                count++;
-            } while(bool==false && count<3);
+           // } while(bool==false && count<3);
 
             return null;
         }
@@ -245,6 +254,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             super.onPostExecute(result);
 
             ItemAdapterMenu adapter = new ItemAdapterMenu(getActivity(), arrayList);
+            adapter.notifyDataSetChanged();
             itemsListView.setAdapter(adapter);
 
 
@@ -268,6 +278,9 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
 // Commit the transaction
         transaction.commit();
     }
+
+
+
    /* // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
