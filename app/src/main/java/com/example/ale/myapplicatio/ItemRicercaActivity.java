@@ -8,14 +8,14 @@ public class ItemRicercaActivity {
     private String name;
     private String place_id  ;
     private String vicinity;
-    private Uri icon;
+    private String icon;
     public ItemRicercaActivity(){
         name = "";
         place_id="";
         vicinity="";
-        icon=null;
+        icon="";
     }
-    public ItemRicercaActivity(String n, String p , String v,Uri i){
+    public ItemRicercaActivity(String n, String p , String v,String i){
         name = n;
         place_id = p;
         vicinity = v;
@@ -30,7 +30,7 @@ public class ItemRicercaActivity {
     public void setVicinity(String v){
         vicinity = v;
     }
-    public void setIcon(Uri i){
+    public void setIcon(String i){
         icon = i;
     }
     public String getName(){
@@ -42,7 +42,7 @@ public class ItemRicercaActivity {
     public String getVicinity(){
         return vicinity;
     }
-    public Uri getIcon(){
+    public String getIcon(){
         return icon;
     }
 }

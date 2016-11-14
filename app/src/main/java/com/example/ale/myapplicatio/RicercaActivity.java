@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class RicercaActivity extends AppCompatActivity {
-    private String TAG = MainActivity.class.getSimpleName();
     private ListView itemsListView;
     private ArrayList<ItemRicercaActivity> arrayList;
 
@@ -49,7 +48,7 @@ public class RicercaActivity extends AppCompatActivity {
             firstFragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, firstFragment).commit();
         }
-            arrayList = new ArrayList<ItemRicercaActivity>();
+          /*  arrayList = new ArrayList<ItemRicercaActivity>();
             //itemsListView = (ListView) findViewById(R.id.lista);
             Intent intent = getIntent();
             String message = intent.getStringExtra("citta");
@@ -232,7 +231,7 @@ public class RicercaActivity extends AppCompatActivity {
                 icon.setImageURI(item.getIcon());
                 // Return the completed view to render on screen
                 return convertView;
-            }
+            }*/
         }
     }
 
