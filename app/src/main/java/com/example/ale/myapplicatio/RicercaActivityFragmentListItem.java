@@ -183,7 +183,14 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
             telefono.setText(item.getPhone());
             link.setText(item.getWebsite());
             indirizzo.setText(item.getAddress());
-            orario.setText(open_now);
+            if(open_now.equalsIgnoreCase("true")){
+                orario.setText("APERTO ORA");
+            }else if(open_now.equalsIgnoreCase("false")){
+                orario.setText("CHIUSO ORA");
+            }else{
+                orario.setText("");
+            }
+
             String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + item.getPhoto_reference() + "&sensor=false&key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             new LoadImageTask().execute(photo_reference_url);
 
