@@ -39,6 +39,9 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     private Button altro;
 
 
+
+
+
     public RicercaActivityFragmentList() {
         int barlocco = 100;
         String paola = "brutta";
