@@ -19,7 +19,7 @@ public class ItemRicercaActivityFragmentList {
         this.address = null;
     }
 
-    public ItemRicercaActivityFragmentList(String name, String phone, String website, String photo_reference, String address){
+    public ItemRicercaActivityFragmentList(String name, String phone, String website, String photo_reference,String address){
         this.name = name;
         this.phone = phone;
         this.website = website;
@@ -66,6 +66,8 @@ public class ItemRicercaActivityFragmentList {
     public String getAddress(){
         return this.address;
     }
+
+
 
 
 

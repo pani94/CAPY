@@ -1,23 +1,18 @@
 package com.example.ale.myapplicatio;
 
-import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -28,8 +23,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static android.R.id.message;
 
 public class RicercaActivityFragmentList extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -60,6 +53,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         if (getArguments() != null) {
             selectedCity = getArguments().getString("selectedCity");
             selectedItem = getArguments().getInt("selectedItem");
+
         }
         Log.e(TAG, "SelectedItem =  " + selectedItem);
     }
@@ -176,10 +170,10 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                             if (p.has("name")) {
                                 name = p.getString("name");
                             }
-
+                            String open_now = "";
                             if (p.has("opening_hours")) {
                                 JSONObject opening_hours = p.getJSONObject("opening_hours");
-                                String open_now = opening_hours.getString("open_now");
+                                open_now = opening_hours.getString("open_now");
                                 String weekday_text = opening_hours.getString("weekday_text");
                             }
                             String photo_reference_url="";
@@ -224,7 +218,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                             if (p.has("vicinity")) {
                                 vicinity = p.getString("vicinity");
                             }
-                            ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference);
+                            ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference, open_now);
                            // Log.e(TAG, "photo " + photo_reference_url);
                             arrayList.add(item);
                         }
@@ -259,6 +253,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         RicercaActivityFragmentListItem newFragment = new RicercaActivityFragmentListItem();
         Bundle args = new Bundle();
         args.putString("place_id",arrayList.get(position).getPlace_id());
+        args.putString("open_now",arrayList.get(position).getOpen_now());
         newFragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
