@@ -96,6 +96,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         SystemClock.sleep(500);
         if(count > 1){
             altro.setEnabled(false);
+           String tuoPadre = "Romualdo me lo suca";
         }
     }
 
