@@ -168,8 +168,9 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                             if (p.has("icon")) {
                                 icon = p.getString("icon");
                             }
+
                             if (p.has("id")) {
-                                String id = p.getString("id");
+                              String id = p.getString("id");
                             }
                             String name = null;
                             if (p.has("name")) {
@@ -224,7 +225,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                                 vicinity = p.getString("vicinity");
                             }
                             ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference);
-                            Log.e(TAG, "photo " + photo_reference_url);
+                           // Log.e(TAG, "photo " + photo_reference_url);
                             arrayList.add(item);
                         }
                     } catch (final JSONException e) {
@@ -257,8 +258,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         RicercaActivityFragmentListItem newFragment = new RicercaActivityFragmentListItem();
         Bundle args = new Bundle();
-        args.putString("selectedCity",arrayList.get(position).getIcon());
-        args.putInt("pos",position);
+        args.putString("place_id",arrayList.get(position).getPlace_id());
         newFragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

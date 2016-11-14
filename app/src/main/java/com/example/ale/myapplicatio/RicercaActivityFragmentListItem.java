@@ -30,7 +30,7 @@ import java.util.ArrayList;
  */
 public class RicercaActivityFragmentListItem extends Fragment {
 
-    private String reference;
+    private String place_id;
     private TextView titolo;
     private ImageView foto;
     private TextView orario;
@@ -40,6 +40,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
     private String TAG = RicercaActivityFragmentListItem.class.getSimpleName();
     private ArrayList<ItemRicercaActivity> arrayList;
     private int position;
+    ItemRicercaActivityFragmentList item=null;
    // private OnFragmentInteractionListener mListener;
 
     public RicercaActivityFragmentListItem() {
@@ -60,8 +61,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            reference = getArguments().getString("reference");
-            position = getArguments().getInt("pos");
+            place_id = getArguments().getString("place_id");
 
         }
     }
@@ -77,8 +77,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
         telefono = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemTelefono);
         link = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemLink);
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
-        new GetPOI().execute("location=44.1306408,8.2609671");
-
+        new GetPOI().execute(place_id);
 
         return view;
     }
@@ -89,50 +88,61 @@ public class RicercaActivityFragmentListItem extends Fragment {
         protected Void doInBackground(String... message) {
             HttpHandler sh = new HttpHandler();
             String output = "json";
-            String type = "type=";
-            String[] typesCoseDaVedere = {"amusement_park", "aquarium", "art_gallery", "casino", "church",  "museum", "stadium", "zoo"};
-            String[] typesDoveMangiare = {"bar", "cafe", "restaurant"};
-
-                for (int i = 0; i < typesCoseDaVedere.length; i++) {
-                    if (i != 0) {
-                        type += "|" + typesCoseDaVedere[i];
-                    } else {
-                        type += typesCoseDaVedere[i];
-                    }
-                }
-
-
-            String radius_sensor = "radius=5000&sensor=false";
             String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             //String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
-            String parameters = message[0] + "&" + type + "&" + radius_sensor + "&" + key;
-            int count = 0;
-            boolean bool ;
-            bool = false;
+            String parameters = "placeid=" + message[0] +  "&" + key;
 
-                String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/" + output + "?" + parameters;
-                if( count > 0){
-                   // url = url + "&page_token=" + next_page;
 
-                }
+                String url = " https://maps.googleapis.com/maps/api/place/details/" + output + "?" + parameters;
+            Log.e(TAG, "urlPlace " +url);
                 String jsonStr = sh.makeServiceCall(url);
             String name="";
-                if (jsonStr != null) {
+            String international_phone_number="";
+            String website ="";
+            String photo_reference = "";
+            String formatted_address ="";
+            if (jsonStr != null) {
                     try {
                         JSONObject jsonObj = new JSONObject(jsonStr);
-                        JSONArray results = jsonObj.getJSONArray("results");
-
-                        for (int i = 0; i < results.length(); i++) {
-                            JSONObject result = results.getJSONObject(i);
-                             name = result.getString("name");
-
-
-
-
+                        JSONObject result = jsonObj.getJSONObject("result");
+                        if(result.has("formatted_address")){
+                            formatted_address = result.getString("formatted_address");
                         }
-                           ItemRicercaActivity item = new ItemRicercaActivity(name, "", "", "");
+                        if(result.has("international_phone_number")){
+                            international_phone_number = result.getString("international_phone_number");
+                        }
+                        if(result.has("name")){
+                            name = result.getString("name");
+                        }
+                        if(result.has("photos")){
+                            JSONArray photos = result.getJSONArray("photos");
+                            JSONObject p = photos.getJSONObject(0);
+                            if(p.has("photo_reference")){
+                                photo_reference = p.getString("photo_reference");
+                            }
+                        }
+                        if(result.has("website")){
+                            website = result.getString("website");
+                        }
+
+
+
+
+
+                        //  Log.e(TAG, "photo " + photo_reference_url);
+
+                        item = new ItemRicercaActivityFragmentList(name,international_phone_number,website,photo_reference,formatted_address);
+                        Log.e(TAG, "placeName " + item.getName());
+                        Log.e(TAG, "placeindirizzo " + item.getAddress());
+                        Log.e(TAG, "placeNPhone " + item.getPhone());
+                        Log.e(TAG, "placewebsite " + item.getWebsite());
+
+
+
+
+
                           //  Log.e(TAG, "photo " + photo_reference_url);
-                            arrayList.add(item);
+
                         }
                  catch (final JSONException e) {
                         Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -154,7 +164,11 @@ public class RicercaActivityFragmentListItem extends Fragment {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-           titolo.setText(arrayList.get(position).getName());
+           titolo.setText(item.getName());
+           telefono.setText(item.getPhone());
+            link.setText(item.getWebsite());
+            indirizzo.setText(item.getAddress());
+
 
 
         }
