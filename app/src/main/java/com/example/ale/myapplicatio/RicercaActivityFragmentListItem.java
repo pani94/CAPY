@@ -1,6 +1,6 @@
 package com.example.ale.myapplicatio;
 
-import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
  * Use the {@link RicercaActivityFragmentListItem#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RicercaActivityFragmentListItem extends Fragment {
+public class RicercaActivityFragmentListItem extends Fragment implements View.OnClickListener {
 
     private String place_id;
     private TextView titolo;
@@ -64,7 +64,8 @@ public class RicercaActivityFragmentListItem extends Fragment {
         return fragment;
     }*/
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             place_id = getArguments().getString("place_id");
@@ -82,11 +83,22 @@ public class RicercaActivityFragmentListItem extends Fragment {
         orario = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemOrario);
         telefono = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemTelefono);
         link = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemLink);
+        link.setOnClickListener(this);
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
         new GetPOI().execute(place_id);
 
         return view;
     }
+
+    @Override
+    public void onClick(View view) {
+        Bundle bundle = new Bundle();
+        String link = bundle.getString("link");
+        Uri viewUri = Uri.parse(link);
+        Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
+        startActivity(viewIntent);
+    }
+
     private class GetPOI extends AsyncTask<String, Void, Void> {
 
 
@@ -167,8 +179,8 @@ public class RicercaActivityFragmentListItem extends Fragment {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-           titolo.setText(item.getName());
-           telefono.setText(item.getPhone());
+            titolo.setText(item.getName());
+            telefono.setText(item.getPhone());
             link.setText(item.getWebsite());
             indirizzo.setText(item.getAddress());
             orario.setText(open_now);

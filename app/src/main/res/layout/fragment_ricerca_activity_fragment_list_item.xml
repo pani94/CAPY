@@ -60,6 +60,8 @@
         android:layout_alignRight="@+id/RicercaActivityFragmentListItemTelefono"
         android:layout_alignEnd="@+id/RicercaActivityFragmentListItemTelefono"
         android:layout_marginTop="53dp"
+        android:linksClickable="true"
+        android:autoLink="web"
         android:id="@+id/RicercaActivityFragmentListItemLink" />
 
 </RelativeLayout>

@@ -117,7 +117,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             int count = 0;
             boolean bool ;
             bool = false;
-            while(!bool && count < 3) {
+            do {
                 String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/" + output + "?" + parameters;
                 if( count > 0){
                     url = url + "&page_token=" + next_page;
@@ -236,7 +236,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                     }
                 }
                 count++;
-            }
+            } while(bool==false && count<3);
 
             return null;
         }
