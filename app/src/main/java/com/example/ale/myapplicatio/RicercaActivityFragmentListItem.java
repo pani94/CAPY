@@ -1,6 +1,8 @@
 package com.example.ale.myapplicatio;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +19,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -34,6 +39,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
     private TextView titolo;
     private ImageView foto;
     private TextView orario;
+    private String open_now;
     private TextView telefono;
     private TextView indirizzo;
     private TextView link;
@@ -62,7 +68,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             place_id = getArguments().getString("place_id");
-
+            open_now = getArguments().getString("orario");
         }
     }
 
@@ -132,10 +138,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
                         //  Log.e(TAG, "photo " + photo_reference_url);
 
                         item = new ItemRicercaActivityFragmentList(name,international_phone_number,website,photo_reference,formatted_address);
-                        Log.e(TAG, "placeName " + item.getName());
-                        Log.e(TAG, "placeindirizzo " + item.getAddress());
-                        Log.e(TAG, "placeNPhone " + item.getPhone());
-                        Log.e(TAG, "placewebsite " + item.getWebsite());
+
 
 
 
@@ -168,9 +171,40 @@ public class RicercaActivityFragmentListItem extends Fragment {
            telefono.setText(item.getPhone());
             link.setText(item.getWebsite());
             indirizzo.setText(item.getAddress());
+            orario.setText(open_now);
+            String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + item.getPhoto_reference() + "&sensor=false&key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
+            new LoadImageTask().execute(photo_reference_url);
 
 
 
+        }
+    }
+    public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
+
+
+
+
+        @Override
+        protected Bitmap doInBackground(String... args) {
+
+            try {
+
+                return BitmapFactory.decodeStream((InputStream)new URL(args[0]).getContent());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+
+            if (bitmap != null) {
+                foto.setImageBitmap(bitmap);
+
+
+            }
         }
     }
 

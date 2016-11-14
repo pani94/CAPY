@@ -1,24 +1,28 @@
 package com.example.ale.myapplicatio;
 
+import android.net.Uri;
+
+import java.net.URI;
+
 public class ItemRicercaActivity {
     private String name;
     private String place_id  ;
     private String vicinity;
     private String icon;
-    private String open_now;
+    private String orario;
     public ItemRicercaActivity(){
         name = "";
         place_id="";
         vicinity="";
         icon="";
-        open_now="";
+        orario="";
     }
-    public ItemRicercaActivity(String n, String p , String v,String i, String on){
+    public ItemRicercaActivity(String n, String p , String v,String i,String o){
         name = n;
         place_id = p;
         vicinity = v;
         icon = i;
-        open_now = on;
+        orario= o;
     }
     public void setName(String n){
         name=n;
@@ -32,7 +36,7 @@ public class ItemRicercaActivity {
     public void setIcon(String i){
         icon = i;
     }
-    public void setOpen_now(String on) { open_now=on; }
+    public void setOrario(String o ){orario = o;}
     public String getName(){
         return name;
     }
@@ -45,6 +49,5 @@ public class ItemRicercaActivity {
     public String getIcon(){
         return icon;
     }
-    public  String getOpen_now() { return open_now; }
-
+    public String getOrario(){ return orario;}
 }
