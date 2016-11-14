@@ -258,6 +258,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         RicercaActivityFragmentListItem newFragment = new RicercaActivityFragmentListItem();
         Bundle args = new Bundle();
         args.putString("selectedCity",arrayList.get(position).getIcon());
+        args.putInt("pos",position);
         newFragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

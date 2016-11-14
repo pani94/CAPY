@@ -39,6 +39,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
     private TextView link;
     private String TAG = RicercaActivityFragmentListItem.class.getSimpleName();
     private ArrayList<ItemRicercaActivity> arrayList;
+    private int position;
    // private OnFragmentInteractionListener mListener;
 
     public RicercaActivityFragmentListItem() {
@@ -60,6 +61,8 @@ public class RicercaActivityFragmentListItem extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             reference = getArguments().getString("reference");
+            position = getArguments().getInt("pos");
+
         }
     }
 
@@ -67,6 +70,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ricerca_activity_fragment_list_item, container, false);
+        arrayList = new ArrayList<ItemRicercaActivity>();
         titolo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemTitolo);
         foto = (ImageView) view.findViewById(R.id.RicercaActivityFragmentListItemImmagine);
         orario = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemOrario);
@@ -150,8 +154,7 @@ public class RicercaActivityFragmentListItem extends Fragment {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
 
-            ItemAdapterMenu adapter = new ItemAdapterMenu(getActivity(), arrayList);
-            itemsListView.setAdapter(adapter);
+           titolo.setText(arrayList.get(position).getName());
 
 
         }
