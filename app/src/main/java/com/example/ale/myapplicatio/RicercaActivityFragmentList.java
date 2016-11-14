@@ -4,6 +4,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -90,11 +91,12 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
 
     @Override
     public void onClick(View view) {
+        count++;
+        new GetPOI().execute(selectedCityLocation);
+        SystemClock.sleep(500);
         if(count > 1){
             altro.setEnabled(false);
         }
-        count++;
-        new GetPOI().execute(selectedCityLocation);
     }
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
@@ -136,11 +138,14 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                 if(count == 0){
                     url = "https://maps.googleapis.com/maps/api/place/nearbysearch/" + output + "?" + parameters;
                 }
-                else if( count > 0 ){
+                else if( count > 0  && next_page != ""){
                     url = url + "&pagetoken=" + next_page;
                 }else{
-                    count = 3;
+                   //ount = 3;
+                    url = "";
                 }
+                Log.e(TAG,"richiesta " + url);
+            Log.e(TAG,"richiesta " + count);
                 String jsonStr = sh.makeServiceCall(url);
 
                 if (jsonStr != null) {
@@ -151,7 +156,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                             next_page = jsonObj.getString("next_page_token");
                         }
                         else{
-                            bool = true;
+                            count = 3;
                         }
 
                         JSONArray places = jsonObj.getJSONArray("results");
