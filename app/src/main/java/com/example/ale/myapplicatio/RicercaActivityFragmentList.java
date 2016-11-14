@@ -43,6 +43,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         String paola = "brutta";
         if(paola.equals("ciao")){
             barlocco = 50;
+            barlocco = 100;
         }
     }
 
