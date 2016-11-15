@@ -50,6 +50,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
     private TextView titolo;
     private ImageView foto;
     private TextView orario;
+    private TextView weekday;
     private String open_now;
     private TextView telefono;
     private TextView indirizzo;
@@ -96,6 +97,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
         titolo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemTitolo);
         foto = (ImageView) view.findViewById(R.id.RicercaActivityFragmentListItemImmagine);
         orario = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemOrario);
+        weekday = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemWeekDayText);
         telefono = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemTelefono);
         link = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemLink);
         link.setOnClickListener(this);
@@ -167,7 +169,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
             String output = "json";
             //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
-            String parameters = "placeid=" + message[0] +  "&" + key;
+            String parameters = "placeid=" + message[0] + "&language=it" + "&" + key;
 
 
                 String url = " https://maps.googleapis.com/maps/api/place/details/" + output + "?" + parameters;
@@ -178,6 +180,9 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
             String website ="";
             String photo_reference = "";
             String formatted_address ="";
+            String open_now = "";
+            JSONArray weekday_text = null;
+            String weekday = "";
             if (jsonStr != null) {
                     try {
                         JSONObject jsonObj = new JSONObject(jsonStr);
@@ -190,6 +195,15 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
                         }
                         if(result.has("name")){
                             name = result.getString("name");
+                        }
+                        if (result.has("opening_hours")) {
+                            JSONObject opening_hours = result.getJSONObject("opening_hours");
+                            open_now = opening_hours.getString("open_now");
+                            weekday_text = opening_hours.getJSONArray("weekday_text");
+                            for(int i=0; i<weekday_text.length(); i++){
+                                String wdt = weekday_text.getString(i);
+                                weekday += wdt + "\n";
+                            }
                         }
                         if(result.has("photos")){
                             JSONArray photos = result.getJSONArray("photos");
@@ -208,7 +222,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
 
                         //  Log.e(TAG, "photo " + photo_reference_url);
 
-                        item = new ItemRicercaActivityFragmentList(name,international_phone_number,website,photo_reference,formatted_address);
+                        item = new ItemRicercaActivityFragmentList(name,international_phone_number,website,photo_reference,formatted_address, open_now, weekday);
 
 
 
@@ -242,13 +256,21 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
             telefono.setText(item.getPhone());
             link.setText(item.getWebsite());
             indirizzo.setText(item.getAddress());
-            if(open_now.equalsIgnoreCase("true")){
+            if(item.getOpen_now().equalsIgnoreCase("true")){
+                orario.setText("APERTO ORA");
+            }else if(item.getOpen_now().equalsIgnoreCase("false")){
+                orario.setText("CHIUSO ORA");
+            }else{
+                orario.setText("");
+            }
+            weekday.setText(item.getWeekday_text());
+            /*if(open_now.equalsIgnoreCase("true")){
                 orario.setText("APERTO ORA");
             }else if(open_now.equalsIgnoreCase("false")){
                 orario.setText("CHIUSO ORA");
             }else{
                 orario.setText("");
-            }
+            }*/
 
             String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + item.getPhoto_reference() + "&sensor=false&key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             new LoadImageTask().execute(photo_reference_url);
@@ -256,6 +278,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
 
 
         }
+
     }
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
