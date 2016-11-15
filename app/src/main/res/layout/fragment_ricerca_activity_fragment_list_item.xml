@@ -64,4 +64,12 @@
         android:autoLink="web"
         android:id="@+id/RicercaActivityFragmentListItemLink" />
 
+    <com.google.android.gms.maps.MapView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mapView"
+        android:layout_below="@+id/RicercaActivityFragmentListItemLink"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="116dp" />
+
 </RelativeLayout>
