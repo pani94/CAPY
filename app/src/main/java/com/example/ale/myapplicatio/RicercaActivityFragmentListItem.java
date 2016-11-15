@@ -15,6 +15,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +45,8 @@ import java.util.ArrayList;
 public class RicercaActivityFragmentListItem extends Fragment implements View.OnClickListener {
 
     private String place_id;
+    private String latitudine;
+    private String longitudine;
     private TextView titolo;
     private ImageView foto;
     private TextView orario;
@@ -43,6 +54,8 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
     private TextView telefono;
     private TextView indirizzo;
     private TextView link;
+    private MapView mapView;
+    private GoogleMap googleMap;
     private String TAG = RicercaActivityFragmentListItem.class.getSimpleName();
     private ArrayList<ItemRicercaActivity> arrayList;
     private int position;
@@ -70,6 +83,8 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
         if (getArguments() != null) {
             place_id = getArguments().getString("place_id");
             open_now = getArguments().getString("orario");
+            latitudine = getArguments().getString("lat");
+            longitudine = getArguments().getString("lng");
         }
     }
 
@@ -85,9 +100,53 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
         link = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemLink);
         link.setOnClickListener(this);
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
+        mapView = (MapView) view.findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+        mapView.onResume();
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+                // For dropping a marker at a point on the Map
+                LatLng sydney = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
+                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
+        });
         new GetPOI().execute(place_id);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 
     @Override

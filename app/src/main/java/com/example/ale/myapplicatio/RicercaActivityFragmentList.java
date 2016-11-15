@@ -162,19 +162,20 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                         else{
                             count = 3;
                         }
-
+                        String lat = "";
+                        String lng = "";
                         JSONArray places = jsonObj.getJSONArray("results");
                         for (int i = 0; i < places.length(); i++) {
                             JSONObject p = places.getJSONObject(i);
-                            /*if (p.has("geometry")) {
+                            if (p.has("geometry")) {
                                 JSONObject geometry = p.getJSONObject("geometry");
                                 if (geometry.has("location")) {
                                     JSONObject location = geometry.getJSONObject("location");
-                                    String lat = location.getString("lat");
-                                    String lng = location.getString("lng");
+                                    lat = location.getString("lat");
+                                    lng = location.getString("lng");
                                 }
 
-                                if (geometry.has("viewport")) {
+                                /*if (geometry.has("viewport")) {
                                     JSONObject viewport = geometry.getJSONObject("viewport");
                                     JSONObject northeast = viewport.getJSONObject("northeast");
                                     String lat2 = northeast.getString("lat");
@@ -182,10 +183,10 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                                     JSONObject southwest = viewport.getJSONObject("southwest");
                                     String lat3 = southwest.getString("lat");
                                     String lng3 = southwest.getString("lng");
-                                }
+                                }*/
 
 
-                            }*/
+                            }
                             String icon = "";
                             if (p.has("icon")) {
                                 icon = p.getString("icon");
@@ -246,7 +247,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                             if (p.has("vicinity")) {
                                 vicinity = p.getString("vicinity");
                             }
-                            ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference,open_now);
+                            ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference,open_now, lat, lng);
                            // Log.e(TAG, "photo " + photo_reference_url);
                             arrayList.add(item);
                         }
@@ -285,6 +286,8 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         RicercaActivityFragmentListItem newFragment = new RicercaActivityFragmentListItem();
         Bundle args = new Bundle();
         args.putString("place_id",arrayList.get(position).getPlace_id());
+        args.putString("lat", arrayList.get(position).getLatitudine());
+        args.putString("lng", arrayList.get(position).getLongitudine());
         args.putString("orario",arrayList.get(position).getOrario());
         newFragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
