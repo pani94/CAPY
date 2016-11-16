@@ -1,6 +1,7 @@
 package com.example.ale.myapplicatio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-public class FragmentBottoneCreaIlTuoViaggio extends Fragment{
+public class FragmentBottoneCreaIlTuoViaggio extends Fragment implements View.OnClickListener{
 
     private Button crea_viaggio;
 
@@ -72,10 +73,11 @@ public class FragmentBottoneCreaIlTuoViaggio extends Fragment{
         super.onDetach();
         mListener = null;
     }
-
+*/
     @Override
     public void onClick(View v) {
-
+        Intent intent = new Intent(getActivity(), CreaIlTuoViaggioActivity.class);
+        startActivity(intent);
     }
 
     /**
