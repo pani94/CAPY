@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
 
     private AutoCompleteTextView cerca;
     private Button bottone;
@@ -35,6 +35,14 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        if(findViewById(R.id.fragment_bottone_crea)!=null){
+            if (savedInstanceState != null) {
+                return;
+            }
+
+            FragmentBottoneCreaIlTuoViaggio fragment_bottone = new FragmentBottoneCreaIlTuoViaggio();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_bottone_crea, fragment_bottone).commit();
+        }
         DataBase db = new DataBase(this);
         ButtonListener buttonListener = new ButtonListener();
         cityList = new ArrayList<>();

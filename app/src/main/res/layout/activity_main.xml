@@ -10,28 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.ale.myapplicatio.MainActivity">
 
-    <TextView
-        android:text="@string/footer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
-        android:id="@+id/footer"
-        android:textSize="30sp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/titolo"
-        android:textSize="60sp"
-        android:id="@+id/RicercaActivityFragmentListItemTitolo"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp" />
-
-    <requestFocus />
+    <requestFocus android:id="@+id/requestFocus" />
 
     <AutoCompleteTextView
         android:text=""
@@ -52,4 +32,35 @@
         android:layout_alignRight="@+id/footer"
         android:layout_alignEnd="@+id/footer"
         android:text="@string/bottone" />
+
+    <TextView
+        android:text="@string/footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/footer"
+        android:textSize="30sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/titolo"
+        android:textSize="60sp"
+        android:id="@+id/RicercaActivityFragmentListItemTitolo"
+        android:layout_marginTop="23dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="com.example.ale.myapplicatio.FragmentBottoneCreaIlTuoViaggio"
+        android:layout_below="@+id/cerca"
+        android:layout_alignLeft="@+id/RicercaActivityFragmentListItemTitolo"
+        android:layout_alignStart="@+id/RicercaActivityFragmentListItemTitolo"
+        android:layout_marginTop="64dp"
+        android:id="@+id/fragment_bottone_crea" />
+
+
 </RelativeLayout>
