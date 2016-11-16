@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -99,7 +100,7 @@ public class DataBase {
                     ATTIVITAGIORNO_PLACE_ID + " TEXT NOT NULL, " +
                     ATTIVITAGIORNO_DATA + " TEXT NOT NULL, " +
                     ATTIVITAGIORNO_ID_VIAGGIO + " TEXT NOT NULL, " +
-                    "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO + ");";
+                    "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO + "));";
     public static final String DROP_ATTIVITAGIORNO_TABLE =
             "DROP TABLE IF EXISTS " + ATTIVITAGIORNO_TABLE;
 
@@ -107,7 +108,7 @@ public class DataBase {
             "CREATE TABLE " + VIAGGIOATTIVITA_TABLE + " (" +
                     VIAGGIOATTIVITA_ID_VIAGGIO + " INTEGER, " +
                     VIAGGIOATTIVITA_PLACE_ID + " TEXT NOT NULL, " +
-                    "PRIMARY KEY (" + VIAGGIOATTIVITA_PLACE_ID + "," + VIAGGIOATTIVITA_ID_VIAGGIO + ");";
+                    "PRIMARY KEY (" + VIAGGIOATTIVITA_PLACE_ID + "," + VIAGGIOATTIVITA_ID_VIAGGIO + "));";
     public static final String DROP_VIAGGIOATTIVITA_TABLE =
             "DROP TABLE IF EXISTS " + VIAGGIOATTIVITA_TABLE;
 
@@ -115,7 +116,7 @@ public class DataBase {
             "CREATE TABLE " + VIAGGIOGIORNO_TABLE + " (" +
                     VIAGGIOGIORNO_ID_VIAGGIO + " INTEGER, " +
                     VIAGGIOGIORNO_DATA + " TEXT NOT NULL, " +
-                    "PRIMARY KEY (" + VIAGGIOGIORNO_ID_VIAGGIO + "," + VIAGGIOGIORNO_DATA + ");";
+                    "PRIMARY KEY (" + VIAGGIOGIORNO_ID_VIAGGIO + "," + VIAGGIOGIORNO_DATA + "));";
     public static final String DROP_VIAGGIOGIORNO_TABLE =
             "DROP TABLE IF EXISTS " + VIAGGIOGIORNO_TABLE;
 
@@ -140,10 +141,37 @@ public class DataBase {
         }
 
     }
-
+    private SQLiteDatabase db;
     private DBHelper dbHelper;
+
 
     public DataBase (Context context){
         dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
     }
+    private void openReadableDB() {
+        db = dbHelper.getReadableDatabase();
+    }
+
+    private void openWriteableDB() {
+        db = dbHelper.getWritableDatabase();
+    }
+
+    private void closeDB() {
+        if (db != null)
+            db.close();
+    }
+    public long insertViaggio() {
+        ContentValues cv = new ContentValues();
+        //cv.put(VIAGGIO_ID, 0);
+        cv.put(VIAGGIO_NOME, "Viaggio a Roma");
+        cv.put(VIAGGIO_ARRIVO, "16/11/2016");
+        cv.put(VIAGGIO_PARTENZA,"17/11/2016");
+
+        this.openWriteableDB();
+        long rowID = db.insert(VIAGGIO_TABLE, null, cv);
+        this.closeDB();
+
+        return rowID;
+    }
+
 }
