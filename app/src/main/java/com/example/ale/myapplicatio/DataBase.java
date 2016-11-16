@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -68,54 +69,55 @@ public class DataBase {
     public static final int ATTIVITAGIORNO_DATA_COL = 2;
 
     public static final String CREATE_VIAGGIO_TABLE =
-            "CREATE TABLE" + VIAGGIO_TABLE + " (" +
-                    VIAGGIO_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    VIAGGIO_NOME + "TEXT NOT NULL, " +
-                    VIAGGIO_PARTENZA + "TEXT NOT NULL, " +
-                    VIAGGIO_ARRIVO + "TEXT NOT NULL);";
+            "CREATE TABLE " + VIAGGIO_TABLE + " (" +
+                    VIAGGIO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    VIAGGIO_NOME + " TEXT NOT NULL, " +
+                    VIAGGIO_PARTENZA + " TEXT NOT NULL, " +
+                    VIAGGIO_ARRIVO + " TEXT NOT NULL);";
     public static final String DROP_VIAGGIO_TABLE =
             "DROP TABLE IF EXISTS " + VIAGGIO_TABLE;
 
     public static final String CREATE_ATTIVITA_TABLE =
-            "CREATE TABLE" + ATTIVITA_TABLE + " (" +
-                    ATTIVITA_PLACE_ID + "TEXT PRIMARY KEY, " +
-                    ATTIVITA_NOME + "TEXT NOT NULL, " +
-                    ATTIVITA_INDIRIZZO + "TEXT, " +
-                    ATTIVITA_ORARIO + "TEXT, " +
-                    ATTIVITA_TELEFONO + "TEXT, " +
-                    ATTIVITA_LINK + "TEXT, " +
-                    ATTIVITA_TIPOLOGIA + "TEXT, " +
-                    ATTIVITA_FOTO + "TEXT, " +
-                    ATTIVITA_PREFERITO + "TEXT NOT NULL);";
+            "CREATE TABLE " + ATTIVITA_TABLE + " (" +
+                    ATTIVITA_PLACE_ID + " TEXT PRIMARY KEY, " +
+                    ATTIVITA_NOME + " TEXT NOT NULL, " +
+                    ATTIVITA_INDIRIZZO + " TEXT, " +
+                    ATTIVITA_ORARIO + " TEXT, " +
+                    ATTIVITA_TELEFONO + " TEXT, " +
+                    ATTIVITA_LINK + " TEXT, " +
+                    ATTIVITA_TIPOLOGIA + " TEXT, " +
+                    ATTIVITA_FOTO + " TEXT, " +
+                    ATTIVITA_PREFERITO + " TEXT NOT NULL);";
     public static final String DROP_ATTIVITA_TABLE =
             "DROP TABLE IF EXISTS " + ATTIVITA_TABLE;
 
     public static final String CREATE_GIORNO_TABLE =
-            "CREATE TABLE" + GIORNO_TABLE + " (" +
-                    GIORNO_DATA + "TEXT NOT NULL PRIMARY KEY);";
+            "CREATE TABLE " + GIORNO_TABLE + " (" +
+                    GIORNO_DATA + " TEXT NOT NULL PRIMARY KEY);";
 
     public static final String CREATE_ATTIVITAGIORNO_TABLE =
-            "CREATE TABLE" + ATTIVITAGIORNO_TABLE + " (" +
-                    ATTIVITAGIORNO_PLACE_ID + "TEXT NOT NULL, " +
-                    ATTIVITAGIORNO_DATA + "TEXT NOT NULL, " +
-                    ATTIVITAGIORNO_ID_VIAGGIO + "TEXT NOT NULL, " +
-                    "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO + ");";
+            "CREATE TABLE " + ATTIVITAGIORNO_TABLE + " (" +
+                    ATTIVITAGIORNO_PLACE_ID + " TEXT NOT NULL, " +
+                    ATTIVITAGIORNO_DATA + " TEXT NOT NULL, " +
+                    ATTIVITAGIORNO_ID_VIAGGIO + " TEXT NOT NULL, " +
+                    "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO + "))" +
+                    ";";
     public static final String DROP_ATTIVITAGIORNO_TABLE =
             "DROP TABLE IF EXISTS " + ATTIVITAGIORNO_TABLE;
 
     public static final String CREATE_VIAGGIOATTIVITA_TABLE =
-            "CREATE TABLE" + VIAGGIOATTIVITA_TABLE + " (" +
-                    VIAGGIOATTIVITA_ID_VIAGGIO + "INTEGER, " +
-                    VIAGGIOATTIVITA_PLACE_ID + "TEXT NOT NULL, " +
-                    "PRIMARY KEY (" + VIAGGIOATTIVITA_PLACE_ID + "," + VIAGGIOATTIVITA_ID_VIAGGIO + ");";
+            "CREATE TABLE " + VIAGGIOATTIVITA_TABLE + " (" +
+                    VIAGGIOATTIVITA_ID_VIAGGIO + " INTEGER, " +
+                    VIAGGIOATTIVITA_PLACE_ID + " TEXT NOT NULL, " +
+                    "PRIMARY KEY (" + VIAGGIOATTIVITA_PLACE_ID + "," + VIAGGIOATTIVITA_ID_VIAGGIO + "));";
     public static final String DROP_VIAGGIOATTIVITA_TABLE =
             "DROP TABLE IF EXISTS " + VIAGGIOATTIVITA_TABLE;
 
     public static final String CREATE_VIAGGIOGIORNO_TABLE =
-            "CREATE TABLE" + VIAGGIOGIORNO_TABLE + " (" +
-                    VIAGGIOGIORNO_ID_VIAGGIO + "INTEGER, " +
-                    VIAGGIOGIORNO_DATA + "TEXT NOT NULL, " +
-                    "PRIMARY KEY (" + VIAGGIOGIORNO_ID_VIAGGIO + "," + VIAGGIOGIORNO_DATA + ");";
+            "CREATE TABLE " + VIAGGIOGIORNO_TABLE + " (" +
+                    VIAGGIOGIORNO_ID_VIAGGIO + " INTEGER, " +
+                    VIAGGIOGIORNO_DATA + " TEXT NOT NULL, " +
+                    "PRIMARY KEY (" + VIAGGIOGIORNO_ID_VIAGGIO + "," + VIAGGIOGIORNO_DATA + "));";
     public static final String DROP_VIAGGIOGIORNO_TABLE =
             "DROP TABLE IF EXISTS " + VIAGGIOGIORNO_TABLE;
 
@@ -140,10 +142,38 @@ public class DataBase {
         }
 
     }
-
+    private SQLiteDatabase db;
     private DBHelper dbHelper;
+
 
     public DataBase (Context context){
         dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
     }
+    private void openReadableDB() {
+        db = dbHelper.getReadableDatabase();
+    }
+
+    private void openWriteableDB() {
+        db = dbHelper.getWritableDatabase();
+    }
+
+    private void closeDB() {
+        if (db != null)
+            db.close();
+    }
+    public long insertViaggio(Viaggio viaggio) {
+        // CHIEDERE SE è MEGLIO CREARE IL VIAGGIO OPPURE PASSARGLI DIRETTAMENTE I PARAMETRI
+        ContentValues cv = new ContentValues();
+        //cv.put(VIAGGIO_ID, 0);
+        cv.put(VIAGGIO_NOME, viaggio.getNome_viaggio());
+        cv.put(VIAGGIO_ARRIVO, viaggio.getArrivo());
+        cv.put(VIAGGIO_PARTENZA,viaggio.getPartenza());
+
+        this.openWriteableDB();
+        long rowID = db.insert(VIAGGIO_TABLE, null, cv);
+        this.closeDB();
+
+        return rowID;
+    }
+
 }
