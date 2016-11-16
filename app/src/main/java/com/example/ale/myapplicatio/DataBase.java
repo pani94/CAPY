@@ -1,5 +1,9 @@
 package com.example.ale.myapplicatio;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
 /**
  * Created by Annalisa on 16/11/2016.
  */
@@ -114,4 +118,32 @@ public class DataBase {
                     "PRIMARY KEY (" + VIAGGIOGIORNO_ID_VIAGGIO + "," + VIAGGIOGIORNO_DATA + ");";
     public static final String DROP_VIAGGIOGIORNO_TABLE =
             "DROP TABLE IF EXISTS " + VIAGGIOGIORNO_TABLE;
+
+    private static class DBHelper extends SQLiteOpenHelper {
+        public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+            super(context, name, factory, version);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL(CREATE_VIAGGIO_TABLE);
+            db.execSQL(CREATE_ATTIVITA_TABLE);
+            db.execSQL(CREATE_GIORNO_TABLE);
+            db.execSQL(CREATE_ATTIVITAGIORNO_TABLE);
+            db.execSQL(CREATE_VIAGGIOATTIVITA_TABLE);
+            db.execSQL(CREATE_VIAGGIOGIORNO_TABLE);
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
+        }
+
+    }
+
+    private DBHelper dbHelper;
+
+    public DataBase (Context context){
+        dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
+    }
 }
