@@ -99,7 +99,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         SystemClock.sleep(500);
         if(count > 1){
             altro.setEnabled(false);
-           String tuoPadre = "Romualdo me lo suca";
+
         }
     }
 
@@ -133,6 +133,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             }
             String radius_sensor = "radius=5000&sensor=false";
             //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
+            // METTERE LA TIPOLOGIA
             String key = "language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             String parameters = message[0] + "&" + type + "&" + radius_sensor + "&" + key;
             boolean bool ;
@@ -148,8 +149,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                    //ount = 3;
                     url = "";
                 }
-                Log.e(TAG,"richiesta " + url);
-            Log.e(TAG,"richiesta " + count);
+                Log.e(TAG,"url " + url);
                 String jsonStr = sh.makeServiceCall(url);
 
                 if (jsonStr != null) {

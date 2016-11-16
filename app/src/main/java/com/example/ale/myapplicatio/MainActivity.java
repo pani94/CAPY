@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity  {
             String url2 ="&types=(cities)&language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             //String url2 ="&types=(cities)&key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
             String url= url1 + arg0[0] + url2 ;
-
+            Log.e(TAG, "url  " + url);
             String jsonStr = sh.makeServiceCall(url);
                        if (jsonStr != null) {
                 try {
