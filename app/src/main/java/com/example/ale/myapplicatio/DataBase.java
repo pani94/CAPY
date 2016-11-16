@@ -100,7 +100,8 @@ public class DataBase {
                     ATTIVITAGIORNO_PLACE_ID + " TEXT NOT NULL, " +
                     ATTIVITAGIORNO_DATA + " TEXT NOT NULL, " +
                     ATTIVITAGIORNO_ID_VIAGGIO + " TEXT NOT NULL, " +
-                    "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO + "));";
+                    "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO + "))" +
+                    ";";
     public static final String DROP_ATTIVITAGIORNO_TABLE =
             "DROP TABLE IF EXISTS " + ATTIVITAGIORNO_TABLE;
 
@@ -160,12 +161,13 @@ public class DataBase {
         if (db != null)
             db.close();
     }
-    public long insertViaggio() {
+    public long insertViaggio(Viaggio viaggio) {
+        // CHIEDERE SE è MEGLIO CREARE IL VIAGGIO OPPURE PASSARGLI DIRETTAMENTE I PARAMETRI
         ContentValues cv = new ContentValues();
         //cv.put(VIAGGIO_ID, 0);
-        cv.put(VIAGGIO_NOME, "Viaggio a Roma");
-        cv.put(VIAGGIO_ARRIVO, "16/11/2016");
-        cv.put(VIAGGIO_PARTENZA,"17/11/2016");
+        cv.put(VIAGGIO_NOME, viaggio.getNome_viaggio());
+        cv.put(VIAGGIO_ARRIVO, viaggio.getArrivo());
+        cv.put(VIAGGIO_PARTENZA,viaggio.getPartenza());
 
         this.openWriteableDB();
         long rowID = db.insert(VIAGGIO_TABLE, null, cv);
