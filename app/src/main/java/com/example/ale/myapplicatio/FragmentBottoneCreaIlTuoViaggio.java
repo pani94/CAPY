@@ -45,7 +45,7 @@ public class FragmentBottoneCreaIlTuoViaggio extends Fragment implements View.On
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bottone_crea_il_tuo_viaggio, container, false);
         crea_viaggio = (Button) view.findViewById(R.id.bottone_crea);
-        //crea_viaggio.setOnClickListener(this);
+        crea_viaggio.setOnClickListener(this);
         // Inflate the layout for this fragment
         return view;
     }
@@ -77,7 +77,7 @@ public class FragmentBottoneCreaIlTuoViaggio extends Fragment implements View.On
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(getActivity(), CreaIlTuoViaggioActivity.class);
-        startActivity(intent);
+        getActivity().startActivity(intent);
     }
 
     /**
