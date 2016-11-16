@@ -15,14 +15,14 @@ public class Viaggio {
         partenza = part;
         arrivo = arr;
     }
-    public Viaggio(int id,String nome, String part , String arr){
+    public Viaggio(long id,String nome, String part , String arr){
         id_viaggio = id;
         nome_viaggio = nome;
         partenza = part;
         arrivo = arr;
     }
 
-    public void setId_viaggio(int id){
+    public void setId_viaggio(long id){
         id_viaggio = id;
     }
     public void setNome_viaggio(String n){
