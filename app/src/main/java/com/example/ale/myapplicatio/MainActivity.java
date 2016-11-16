@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        DataBase db = new DataBase(this);
-        db.insertViaggio();
         ButtonListener buttonListener = new ButtonListener();
         cityList = new ArrayList<>();
         bottone = (Button) findViewById(R.id.bottone);
