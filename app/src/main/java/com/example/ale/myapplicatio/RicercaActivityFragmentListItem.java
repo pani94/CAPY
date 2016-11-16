@@ -33,15 +33,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RicercaActivityFragmentListItem.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RicercaActivityFragmentListItem#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RicercaActivityFragmentListItem extends Fragment implements View.OnClickListener {
 
     private String place_id;
