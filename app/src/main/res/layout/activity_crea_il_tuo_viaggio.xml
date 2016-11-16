@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_crea_il_tuo_viaggio"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.ale.myapplicatio.CreaIlTuoViaggioActivity">
+
+    <TextView
+        android:text="Crea il tuo viaggio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:id="@+id/testo"
+        android:textSize="40sp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_marginTop="51dp"
+        android:id="@+id/editTextNomeViaggio"
+        android:text="Nome viaggio"
+        android:layout_below="@+id/testo"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Nome viaggio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewNomeViaggio"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/editTextNomeViaggio"
+        android:layout_alignBottom="@+id/editTextNomeViaggio"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="da"
+        android:ems="10"
+        android:layout_below="@+id/editTextNomeViaggio"
+        android:layout_alignLeft="@+id/editTextNomeViaggio"
+        android:layout_alignStart="@+id/editTextNomeViaggio"
+        android:layout_marginTop="14dp"
+        android:id="@+id/editTextPartenza" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="a"
+        android:ems="10"
+        android:layout_below="@+id/editTextPartenza"
+        android:layout_alignLeft="@+id/editTextPartenza"
+        android:layout_alignStart="@+id/editTextPartenza"
+        android:layout_marginTop="23dp"
+        android:id="@+id/editTextArrivo" />
+
+    <Button
+        android:text="FATTO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextArrivo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:id="@+id/buttonFatto" />
+
+</RelativeLayout>
