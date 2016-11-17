@@ -170,10 +170,10 @@ public class RicercaActivityFragmentListItem extends Fragment{
                     ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayListViaggi);
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                     LayoutInflater inflater = getActivity().getLayoutInflater();
-                    View convertView = (View) inflater.inflate(R.layout.fragment_fragment_ituoi_viaggi, null);
+                    View convertView = (View) inflater.inflate(R.layout.alert_ituoi_viaggi, null);
                     alertDialog.setView(convertView);
                     alertDialog.setTitle("List");
-                    ListView lv = (ListView) convertView.findViewById(R.id.lista_viaggi);
+                    ListView lv = (ListView) convertView.findViewById(R.id.alert_ituoi_viaggi_listaviaggi);
                     lv.setAdapter(adapter);
                     alertDialog.show();
                     break;
