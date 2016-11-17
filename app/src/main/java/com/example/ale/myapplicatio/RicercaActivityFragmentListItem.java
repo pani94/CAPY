@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,6 +101,10 @@ public class RicercaActivityFragmentListItem extends Fragment{
         aggiungiaviaggio.setOnClickListener(buttonListener);
         preferito.setOnClickListener(buttonListener);
         database = new DataBase(getActivity());
+        arrayListViaggi = database.getViaggi();
+        for(int i = 0; i < arrayListViaggi.size(); i++){
+            Log.e("viaggi", arrayListViaggi.get(i).getNome_viaggio());
+        }
         //mapView = (MapView) view.findViewById(R.id.mapView);
         //mapView.onCreate(savedInstanceState);
         //mapView.onResume();
@@ -159,22 +165,20 @@ public class RicercaActivityFragmentListItem extends Fragment{
                                                                 startActivity(viewIntent);
                     break;
                 case R.id.bottone_aggiungiaviaggio:
+
+
                     ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayListViaggi);
-                    AlertDialog dialog = new AlertDialog.Builder(getActivity()).setTitle("Scegli il viaggio").setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case 0:
-                                    //Item 1 was selected
-                                    break;
-                                case 1:
-                                    //Item 2 was selected
-                                    break;
-                            }
-                            dialog.dismiss();
-                        }
-                    }).create();
-                    dialog.show();
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                    View convertView = (View) inflater.inflate(R.layout.fragment_fragment_ituoi_viaggi, null);
+                    alertDialog.setView(convertView);
+                    alertDialog.setTitle("List");
+                    ListView lv = (ListView) convertView.findViewById(R.id.lista_viaggi);
+                    lv.setAdapter(adapter);
+                    alertDialog.show();
+                    break;
+
+
 
             }
 
@@ -383,4 +387,5 @@ public class RicercaActivityFragmentListItem extends Fragment{
         void onFragmentInteraction(Uri uri);
     }
        */
+
 }
