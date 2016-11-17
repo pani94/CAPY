@@ -8,6 +8,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity  {
             FragmentBottoneCreaIlTuoViaggio fragment_bottone = new FragmentBottoneCreaIlTuoViaggio();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_bottone_crea, fragment_bottone).commit();
         }
+
+
         DataBase db = new DataBase(this);
         ButtonListener buttonListener = new ButtonListener();
         cityList = new ArrayList<>();
@@ -71,6 +75,28 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.fragment_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_profilo:
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            case R.id.menu_settings:
+                startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
+                return true;
+            case R.id.menu_about:
+                startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
     private class GetCity extends AsyncTask<String, Void, Void> {
