@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,22 +8,17 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +29,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class RicercaActivityFragmentListItem extends Fragment implements View.OnClickListener {
+public class RicercaActivityFragmentListItem extends Fragment{
 
     private String place_id;
     private String latitudine;
@@ -46,8 +42,12 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
     private TextView telefono;
     private TextView indirizzo;
     private TextView link;
-    private MapView mapView;
-    private GoogleMap googleMap;
+    private Button aggiungiaviaggio;
+    private Button preferito;
+    private DataBase database;
+    private ArrayList <Viaggio> arrayListViaggi;
+    //private MapView mapView;
+    //private GoogleMap googleMap;
     private String TAG = RicercaActivityFragmentListItem.class.getSimpleName();
     private ArrayList<ItemRicercaActivity> arrayList;
     private int position;
@@ -91,18 +91,24 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
         weekday = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemWeekDayText);
         telefono = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemTelefono);
         link = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemLink);
-        link.setOnClickListener(this);
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
-        mapView = (MapView) view.findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-        mapView.onResume();
+        aggiungiaviaggio = (Button) view.findViewById(R.id.bottone_aggiungiaviaggio);
+        preferito = (Button) view.findViewById(R.id.bottone_aggiungipreferiti);
+        ButtonListener buttonListener = new ButtonListener();
+        link.setOnClickListener(buttonListener);
+        aggiungiaviaggio.setOnClickListener(buttonListener);
+        preferito.setOnClickListener(buttonListener);
+        database = new DataBase(getActivity());
+        //mapView = (MapView) view.findViewById(R.id.mapView);
+        //mapView.onCreate(savedInstanceState);
+        //mapView.onResume();
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        mapView.getMapAsync(new OnMapReadyCallback() {
+        /*mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
@@ -112,13 +118,13 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
-        });
+        });*/
         new GetPOI().execute(place_id);
 
         return view;
     }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         mapView.onResume();
@@ -140,16 +146,54 @@ public class RicercaActivityFragmentListItem extends Fragment implements View.On
     public void onLowMemory() {
         super.onLowMemory();
         mapView.onLowMemory();
+    }*/
+
+    public class ButtonListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.RicercaActivityFragmentListItemLink:  Bundle bundle = new Bundle();
+                                                                String link = bundle.getString("link");
+                                                                Uri viewUri = Uri.parse(link);
+                                                                Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
+                                                                startActivity(viewIntent);
+                    break;
+                case R.id.bottone_aggiungiaviaggio:
+                    ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayListViaggi);
+                    AlertDialog dialog = new AlertDialog.Builder(getActivity()).setTitle("Scegli il viaggio").setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case 0:
+                                    //Item 1 was selected
+                                    break;
+                                case 1:
+                                    //Item 2 was selected
+                                    break;
+                            }
+                            dialog.dismiss();
+                        }
+                    }).create();
+                    dialog.show();
+
+            }
+
+        }
     }
 
-    @Override
-    public void onClick(View view) {
-        Bundle bundle = new Bundle();
-        String link = bundle.getString("link");
-        Uri viewUri = Uri.parse(link);
-        Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
-        startActivity(viewIntent);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
 
