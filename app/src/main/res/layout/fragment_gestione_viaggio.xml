@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ale.myapplicatio.GestioneViaggioFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/gestione_viaggio_nome"
+        android:text="Nome del viaggio"
+        android:textSize="40sp"
+        android:textAlignment="center" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:id="@+id/gestione_viaggio_daquando_aquando"
+        tools:text="da quando a quando"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:layout_below="@+id/gestione_viaggio_nome"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="@string/bottone_attivita"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gestione_viaggio_bottone_agenda"
+        android:layout_below="@+id/gestione_viaggio_daquando_aquando"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+
+    <Button
+        android:text="@string/bottone_agenda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gestione_viaggio_bottone_attivita"
+        android:layout_marginTop="75dp"
+        android:layout_below="@+id/gestione_viaggio_bottone_agenda"
+        android:layout_alignLeft="@+id/gestione_viaggio_bottone_agenda"
+        android:layout_alignStart="@+id/gestione_viaggio_bottone_agenda" />
+
+
+</RelativeLayout>
