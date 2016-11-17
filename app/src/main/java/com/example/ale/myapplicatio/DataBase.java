@@ -2,8 +2,11 @@ package com.example.ale.myapplicatio;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by Annalisa on 16/11/2016.
@@ -174,6 +177,41 @@ public class DataBase {
         this.closeDB();
 
         return rowID;
+    }
+    public ArrayList<Viaggio> getViaggi() {
+
+
+        this.openReadableDB();
+        Cursor cursor = db.query(VIAGGIO_TABLE, null,
+                null, null,
+                null, null, null);
+        ArrayList<Viaggio> viaggi = new ArrayList<Viaggio>();
+        while (cursor.moveToNext()) {
+            viaggi.add(getViaggioFromCursor(cursor));
+        }
+        if (cursor != null)
+            cursor.close();
+        this.closeDB();
+
+        return viaggi;
+    }
+    private static Viaggio getViaggioFromCursor(Cursor cursor) {
+        if (cursor == null || cursor.getCount() == 0){
+            return null;
+        }
+        else {
+            try {
+                Viaggio viaggio = new Viaggio(
+                        cursor.getInt(VIAGGIO_ID_COL),
+                        cursor.getString(VIAGGIO_NOME_COL),
+                        cursor.getString(VIAGGIO_PARTENZA_COL),
+                        cursor.getString(VIAGGIO_ARRIVO_COL));
+                return viaggio;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
     }
 
 }
