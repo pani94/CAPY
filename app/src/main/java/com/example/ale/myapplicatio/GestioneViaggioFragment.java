@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +17,10 @@ import java.util.zip.Inflater;
 
 public class GestioneViaggioFragment extends Fragment {
 
-    public TextView nome_viaggio;
-    public TextView daquando_aquando;
-    public Button bottone_attivita;
-    public Button bottone_agenda;
+    private TextView nome_viaggio;
+    private TextView daquando_aquando;
+    private Button bottone_attivita;
+    private Button bottone_agenda;
 
     private String nome_viaggio_get;
     private String daquando_get;
@@ -47,21 +49,55 @@ public class GestioneViaggioFragment extends Fragment {
             aquando_get = getArguments().getString("aquando");
             daquando_aquando_get = "da "+ daquando_get + " a " + aquando_get;
         }
+
+
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gestione_viaggio, container, false);
+        ButtonListener buttonListener = new ButtonListener();
         nome_viaggio = (TextView) view.findViewById(R.id.gestione_viaggio_nome);
         daquando_aquando = (TextView) view.findViewById(R.id.gestione_viaggio_daquando_aquando);
         bottone_attivita = (Button) view.findViewById(R.id.gestione_viaggio_bottone_attivita);
         bottone_agenda = (Button) view.findViewById(R.id.gestione_viaggio_bottone_agenda);
         nome_viaggio.setText(nome_viaggio_get);
         daquando_aquando.setText(daquando_aquando_get);
+        bottone_attivita.setOnClickListener(buttonListener);
+
         return view;
     }
+
+    public class ButtonListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.gestione_viaggio_bottone_attivita:
+                    GestioneViaggioFragmentAttivita newFragment = new GestioneViaggioFragmentAttivita();
+
+                    Bundle args = new Bundle();
+                    args.putString("nome_viaggio", nome_viaggio_get);
+                    args.putString("daquando", daquando_aquando_get);
+                    args.putString("aquando",aquando_get);
+                    newFragment.setArguments(args);
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    transaction.replace(R.id.fragment_container_profilo, newFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                    break;
+                default:
+
+            }
+
+        }
+    }
+
 
    /* // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

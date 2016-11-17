@@ -37,7 +37,7 @@
 
         <activity android:name=".RicercaActivity" />
         <activity android:name=".CreaIlTuoViaggioActivity" />
-        <activity android:name=".ProfiloViaggiActivity"></activity>
+        <activity android:name=".ProfiloViaggiActivity" />
     </application>
 
 </manifest>
