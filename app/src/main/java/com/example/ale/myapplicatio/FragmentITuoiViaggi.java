@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +57,17 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        GestioneViaggioFragment newFragment = new GestioneViaggioFragment();
+        Bundle args = new Bundle();
+        args.putString("nome_viaggio", arrayList.get(position).getNome_viaggio());
+        args.putString("daquando", arrayList.get(position).getPartenza());
+        args.putString("aquando",arrayList.get(position).getArrivo());
+        newFragment.setArguments(args);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container_profilo, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
 
     }
 
