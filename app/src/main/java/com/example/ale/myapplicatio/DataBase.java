@@ -213,6 +213,15 @@ public class DataBase {
             }
         }
     }
+    public int deleteViaggio(long id) {
+        String where = VIAGGIO_ID + "= ?";
+        String[] whereArgs = { String.valueOf(id) };
+
+        this.openWriteableDB();
+        int rowCount = db.delete(VIAGGIO_TABLE, where, whereArgs);
+        this.closeDB();
+        return rowCount;
+    }
     public long insertAttivita(Attivita attivita) {
         ContentValues cv = new ContentValues();
         cv.put(ATTIVITA_PLACE_ID, attivita.getPlace_id());
@@ -261,6 +270,18 @@ public class DataBase {
 
         return rowID;
     }
+    public long insertAttivitaGiorno(AttivitaGiorno attivitaGiorno) {
+        ContentValues cv = new ContentValues();
+        cv.put(ATTIVITAGIORNO_PLACE_ID,attivitaGiorno.getPlace_id());
+        cv.put(ATTIVITAGIORNO_DATA, attivitaGiorno.getData());
+        cv.put(ATTIVITAGIORNO_ID_VIAGGIO, attivitaGiorno.getId_viaggio());
+        this.openWriteableDB();
+        long rowID = db.insert(VIAGGIOGIORNO_TABLE, null, cv);
+        this.closeDB();
+
+        return rowID;
+    }
+
 
 
 
