@@ -85,12 +85,12 @@ public class MainActivity extends AppCompatActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_profilo:
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), ProfiloViaggiActivity.class));
             case R.id.menu_settings:
-                startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
+             //   startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
                 return true;
             case R.id.menu_about:
-                startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
+               // startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
                 return true;
 
             default:

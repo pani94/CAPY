@@ -3,6 +3,8 @@ package com.example.ale.myapplicatio;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,12 +87,12 @@ public class FragmentProfilo extends Fragment implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        /*FragmentITuoiViaggi viaggiFragment = new FragmentITuoiViaggi();
+        FragmentITuoiViaggi viaggiFragment = new FragmentITuoiViaggi();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, viaggiFragment);
+        transaction.replace(R.id.fragment_container_profilo, viaggiFragment);
         transaction.addToBackStack(null);
-        transaction.commit();*/
+        transaction.commit();
 
     }
 
@@ -104,8 +106,8 @@ public class FragmentProfilo extends Fragment implements AdapterView.OnItemClick
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+   /* public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
+    }*/
 }

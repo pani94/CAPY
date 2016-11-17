@@ -9,15 +9,14 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_viaggi);
-        if (findViewById(R.id.fragment_container) != null) {
+        if (findViewById(R.id.fragment_container_profilo) != null) {
 
             if (savedInstanceState != null) {
                 return;
             }
 
             FragmentProfilo profiloFragment = new FragmentProfilo();
-            //profiloFragment.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, profiloFragment).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_profilo, profiloFragment).commit();
         }
     }
 }
