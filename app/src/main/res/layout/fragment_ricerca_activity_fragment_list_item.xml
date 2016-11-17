@@ -81,4 +81,28 @@
         android:layout_marginBottom="28dp"
         android:id="@+id/RicercaActivityFragmentListItemWeekDayText" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:id="@+id/bottone_aggiungipreferiti"
+        android:layout_alignBaseline="@+id/bottone_aggiungiaviaggio"
+        android:layout_alignBottom="@+id/bottone_aggiungiaviaggio"
+        android:layout_toRightOf="@+id/RicercaActivityFragmentListItemTitolo"
+        android:layout_toEndOf="@+id/RicercaActivityFragmentListItemTitolo"
+        android:text="Preferito" />
+
+    <Button
+        android:text="+"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/bottone_aggiungiaviaggio"
+        android:layout_alignBottom="@+id/mapView"
+        android:layout_toRightOf="@+id/RicercaActivityFragmentListItemLink"
+        android:layout_toEndOf="@+id/RicercaActivityFragmentListItemLink"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp" />
+
 </RelativeLayout>

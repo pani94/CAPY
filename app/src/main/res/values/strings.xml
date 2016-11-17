@@ -5,6 +5,9 @@
     <string name="bottone">Cerca</string>
     <string name="bottone_crea">Crea il tuo viaggio</string>
 
+    <string name="action_settings">Settings</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="init_text">gg/mm/aaaa</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="i_tuoi_viaggi">I TUOI VIAGGI</string>
