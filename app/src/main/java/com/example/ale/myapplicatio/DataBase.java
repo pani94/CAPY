@@ -213,5 +213,57 @@ public class DataBase {
             }
         }
     }
+    public long insertAttivita(Attivita attivita) {
+        ContentValues cv = new ContentValues();
+        cv.put(ATTIVITA_PLACE_ID, attivita.getPlace_id());
+        cv.put(ATTIVITA_NOME, attivita.getNome());
+        cv.put(ATTIVITA_INDIRIZZO, attivita.getIndirizzo());
+        cv.put(ATTIVITA_ORARIO, attivita.getOrario());
+        cv.put(ATTIVITA_TELEFONO, attivita.getTelefono());
+        cv.put(ATTIVITA_LINK, attivita.getLink());
+        cv.put(ATTIVITA_TIPOLOGIA, attivita.getTipologia());
+        cv.put(ATTIVITA_FOTO, attivita.getFoto());
+        cv.put(ATTIVITA_PREFERITO, attivita.getPreferito());
+
+
+        this.openWriteableDB();
+        long rowID = db.insert(ATTIVITA_TABLE, null, cv);
+        this.closeDB();
+
+        return rowID;
+    }
+    public long insertGiorno(Giorno giorno) {
+        ContentValues cv = new ContentValues();
+        cv.put(GIORNO_DATA, giorno.getData());
+        this.openWriteableDB();
+        long rowID = db.insert(GIORNO_TABLE, null, cv);
+        this.closeDB();
+
+        return rowID;
+    }
+    public long insertViaggioGiorno(ViaggioGiorno viaggioGiorno) {
+        ContentValues cv = new ContentValues();
+        cv.put(VIAGGIOGIORNO_ID_VIAGGIO, viaggioGiorno.getId_viaggio());
+        cv.put(VIAGGIOGIORNO_DATA, viaggioGiorno.getData());
+        this.openWriteableDB();
+        long rowID = db.insert(VIAGGIOGIORNO_TABLE, null, cv);
+        this.closeDB();
+
+        return rowID;
+    }
+    public long insertViaggioAttivita(ViaggioAttivita viaggioAttivita) {
+        ContentValues cv = new ContentValues();
+        cv.put(VIAGGIOATTIVITA_ID_VIAGGIO, viaggioAttivita.getId_Viaggio());
+        cv.put(VIAGGIOATTIVITA_PLACE_ID, viaggioAttivita.getPlace_id());
+        this.openWriteableDB();
+        long rowID = db.insert(VIAGGIOGIORNO_TABLE, null, cv);
+        this.closeDB();
+
+        return rowID;
+    }
+
+
+
+
 
 }
