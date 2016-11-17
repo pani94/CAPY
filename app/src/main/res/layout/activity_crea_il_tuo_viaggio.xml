@@ -45,37 +45,54 @@
         android:layout_marginLeft="14dp"
         android:layout_marginStart="14dp" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="da"
-        android:ems="10"
-        android:layout_below="@+id/editTextNomeViaggio"
-        android:layout_alignLeft="@+id/editTextNomeViaggio"
-        android:layout_alignStart="@+id/editTextNomeViaggio"
-        android:layout_marginTop="14dp"
-        android:id="@+id/editTextPartenza" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="a"
-        android:ems="10"
-        android:layout_below="@+id/editTextPartenza"
-        android:layout_alignLeft="@+id/editTextPartenza"
-        android:layout_alignStart="@+id/editTextPartenza"
-        android:layout_marginTop="23dp"
-        android:id="@+id/editTextArrivo" />
-
     <Button
         android:text="FATTO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextArrivo"
+        android:id="@+id/buttonFatto"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
-        android:id="@+id/buttonFatto" />
+        android:layout_marginBottom="144dp" />
+
+    <TextView
+        android:text="@string/init_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/arrivo"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/partenza"
+        android:layout_alignStart="@+id/partenza" />
+
+    <Button
+        android:text="A"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_arrivo"
+        android:layout_alignBaseline="@+id/arrivo"
+        android:layout_alignBottom="@+id/arrivo"
+        android:layout_alignLeft="@+id/button_partenza"
+        android:layout_alignStart="@+id/button_partenza" />
+
+    <TextView
+        android:id="@+id/partenza"
+        android:text="@string/init_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button_partenza"
+        android:layout_alignBottom="@+id/button_partenza"
+        android:layout_alignLeft="@+id/editTextNomeViaggio"
+        android:layout_alignStart="@+id/editTextNomeViaggio" />
+
+    <Button
+        android:id="@+id/button_partenza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DA"
+        android:onClick="showDatePickerDialog (CreaIlTuoViaggioActivity)"
+        android:layout_below="@+id/editTextNomeViaggio"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="18dp" />
+
 
 </RelativeLayout>
