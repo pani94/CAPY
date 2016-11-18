@@ -37,8 +37,8 @@ public class RicercaActivityFragmentListItem extends Fragment{
     private TextView titolo;
     private ImageView foto;
     private TextView orario;
-    private TextView weekday;
-    private String open_now;
+    private TextView weekdayTextView;
+    //private String open_now;
     private TextView telefono;
     private TextView indirizzo;
     private TextView link;
@@ -46,6 +46,13 @@ public class RicercaActivityFragmentListItem extends Fragment{
     private Button preferito;
     private DataBase database;
     private ArrayList <Viaggio> arrayListViaggi;
+    private String name="";
+    private String international_phone_number="";
+    private String website ="";
+    private String photo_reference = "";
+    private String formatted_address ="";
+    private String open_now = "";
+    private String weekday = "";
     //private MapView mapView;
     //private GoogleMap googleMap;
     private String TAG = RicercaActivityFragmentListItem.class.getSimpleName();
@@ -89,7 +96,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
         titolo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemTitolo);
         foto = (ImageView) view.findViewById(R.id.RicercaActivityFragmentListItemImmagine);
         orario = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemOrario);
-        weekday = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemWeekDayText);
+        weekdayTextView = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemWeekDayText);
         telefono = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemTelefono);
         link = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemLink);
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
@@ -154,92 +161,6 @@ public class RicercaActivityFragmentListItem extends Fragment{
         mapView.onLowMemory();
     }*/
 
-    public class ButtonListener implements View.OnClickListener{
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()){
-                case R.id.RicercaActivityFragmentListItemLink:  Bundle bundle = new Bundle();
-                                                                String link = bundle.getString("link");
-                                                                Uri viewUri = Uri.parse(link);
-                                                                Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
-                                                                startActivity(viewIntent);
-                    break;
-                case R.id.bottone_aggiungiaviaggio: Attivita attivita = new Attivita(place_id, titolo.toString(), indirizzo.toString(), weekday.toString(), telefono.toString(), "", "", foto.toString(), "false");
-                                                    database.insertAttivita(attivita);
-                                                    String[] nomeViaggi = new String[arrayListViaggi.size()];
-                                                    for(int k=0; k<arrayListViaggi.size(); k++){
-                                                        nomeViaggi[k] = arrayListViaggi.get(k).getNome_viaggio();
-                                                    }
-                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                                    builder.setTitle("I TUOI VIAGGI");
-                                                    builder.setSingleChoiceItems(nomeViaggi, -1, new  DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                                            nomeViaggio = arrayListViaggi.get(i).getNome_viaggio();
-                                                            id = arrayListViaggi.get(i).getId_viaggio();
-                                                        }
-
-                                                        });
-                                                    builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
-                                                        public void onClick(DialogInterface dialog, int which){
-                                                            ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, place_id);
-                                                            database.insertViaggioAttivita(viaggioattivita);
-                                                            Toast.makeText(getActivity().getApplicationContext(),
-                                                                    "L'attività è stata aggiunta al viaggio",
-                                                                    Toast.LENGTH_LONG).show();
-
-                                                        }
-                                                    });
-                                                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-                                                        public void onClick(DialogInterface dialog, int which){
-
-                                                        }
-                                                    });
-                                                    builder.show();
-                                                    break;
-
-                                                    /*ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayListViaggi);
-                                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                                                    LayoutInflater inflater = getActivity().getLayoutInflater();
-                                                    View convertView = (View) inflater.inflate(R.layout.alert_ituoi_viaggi, null);
-                                                    alertDialog.setView(convertView);
-                                                    alertDialog.setTitle("I TUOI VIAGGI");
-                                                    ListView lv = (ListView) convertView.findViewById(R.id.alert_ituoi_viaggi_listaviaggi);
-                                                    lv.setAdapter(adapter);
-                                                    alertDialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
-                                                        public void onClick(DialogInterface dialog, int which){
-
-                                                        }
-                                                    });
-                                                    alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-                                                        public void onClick(DialogInterface dialog, int which){
-
-                                                        }
-                                                    });
-                                                    alertDialog.show();
-                                                    break;*/
-
-
-
-            }
-
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private class GetPOI extends AsyncTask<String, Void, Void> {
 
 
@@ -255,14 +176,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
                 String url = " https://maps.googleapis.com/maps/api/place/details/" + output + "?" + parameters;
             Log.e(TAG, "urlPlace " +url);
                 String jsonStr = sh.makeServiceCall(url);
-            String name="";
-            String international_phone_number="";
-            String website ="";
-            String photo_reference = "";
-            String formatted_address ="";
-            String open_now = "";
             JSONArray weekday_text = null;
-            String weekday = "";
             if (jsonStr != null) {
                     try {
                         JSONObject jsonObj = new JSONObject(jsonStr);
@@ -343,7 +257,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
             }else{
                 orario.setText("");
             }
-            weekday.setText(item.getWeekday_text());
+            weekdayTextView.setText(item.getWeekday_text());
             /*if(open_now.equalsIgnoreCase("true")){
                 orario.setText("APERTO ORA");
             }else if(open_now.equalsIgnoreCase("false")){
@@ -360,6 +274,81 @@ public class RicercaActivityFragmentListItem extends Fragment{
         }
 
     }
+
+    public class ButtonListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.RicercaActivityFragmentListItemLink:  Bundle bundle = new Bundle();
+                    String link = bundle.getString("link");
+                    Uri viewUri = Uri.parse(link);
+                    Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
+                    startActivity(viewIntent);
+                    break;
+                case R.id.bottone_aggiungiaviaggio: Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, "", photo_reference, "false");
+                    database.insertAttivita(attivita);
+                    String[] nomeViaggi = new String[arrayListViaggi.size()];
+                    for(int k=0; k<arrayListViaggi.size(); k++){
+                        nomeViaggi[k] = arrayListViaggi.get(k).getNome_viaggio();
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("I TUOI VIAGGI");
+                    builder.setSingleChoiceItems(nomeViaggi, -1, new  DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            nomeViaggio = arrayListViaggi.get(i).getNome_viaggio();
+                            id = arrayListViaggi.get(i).getId_viaggio();
+                        }
+
+                    });
+                    builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which){
+                            ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, place_id);
+                            database.insertViaggioAttivita(viaggioattivita);
+                            Toast.makeText(getActivity().getApplicationContext(),
+                                    "L'attività è stata aggiunta al viaggio",
+                                    Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                        public void onClick(DialogInterface dialog, int which){
+
+                        }
+                    });
+                    builder.show();
+                    break;
+
+                                                    /*ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayListViaggi);
+                                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                                                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                                                    View convertView = (View) inflater.inflate(R.layout.alert_ituoi_viaggi, null);
+                                                    alertDialog.setView(convertView);
+                                                    alertDialog.setTitle("I TUOI VIAGGI");
+                                                    ListView lv = (ListView) convertView.findViewById(R.id.alert_ituoi_viaggi_listaviaggi);
+                                                    lv.setAdapter(adapter);
+                                                    alertDialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
+                                                        public void onClick(DialogInterface dialog, int which){
+
+                                                        }
+                                                    });
+                                                    alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                                                        public void onClick(DialogInterface dialog, int which){
+
+                                                        }
+                                                    });
+                                                    alertDialog.show();
+                                                    break;*/
+
+
+
+            }
+
+        }
+    }
+
+
+
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
 
