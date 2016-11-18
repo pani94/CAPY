@@ -82,6 +82,9 @@ public class GestioneViaggioFragment extends Fragment {
                     intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
                     startActivity(intent);
                     break;
+                case R.id.gestione_viaggio_bottone_agenda:
+
+                    break;
                 default:
 
 

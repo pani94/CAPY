@@ -158,9 +158,9 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                 case 0:
                     return "TUTTE";
                 case 1:
-                    return "VEDERE";
+                    return "DA VEDERE";
                 case 2:
-                    return "MANGIARE";
+                    return "DOVE MANGIARE";
             }
             return null;
         }
