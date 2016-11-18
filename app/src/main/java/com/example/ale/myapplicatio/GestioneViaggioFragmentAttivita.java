@@ -39,8 +39,8 @@ public class GestioneViaggioFragmentAttivita extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gestione_viaggio_fragment_attivita, container, false);
-        nome_viaggio = (TextView) view.findViewById(R.id.gestione_viaggio_nome);
-        daquando_aquando = (TextView) view.findViewById(R.id.gestione_viaggio_daquando_aquando);
+        nome_viaggio = (TextView) view.findViewById(R.id.fragment_attivita_nome_viaggio);
+        daquando_aquando = (TextView) view.findViewById(R.id.fragment_attivita_daquando_aquando);
         nome_viaggio.setText(nome_viaggio_get);
         daquando_aquando.setText(daquando_aquando_get);
         return view;
