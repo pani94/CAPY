@@ -74,7 +74,7 @@ public class DataBase {
     public static final String CREATE_VIAGGIO_TABLE =
             "CREATE TABLE " + VIAGGIO_TABLE + " (" +
                     VIAGGIO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    VIAGGIO_NOME + " TEXT NOT NULL, " +
+                    VIAGGIO_NOME + " TEXT NOT NULL UNIQUE, " +
                     VIAGGIO_PARTENZA + " TEXT NOT NULL, " +
                     VIAGGIO_ARRIVO + " TEXT NOT NULL);";
     public static final String DROP_VIAGGIO_TABLE =
@@ -241,6 +241,7 @@ public class DataBase {
 
         return rowID;
     }
+
     public long insertGiorno(Giorno giorno) {
         ContentValues cv = new ContentValues();
         cv.put(GIORNO_DATA, giorno.getData());
@@ -250,6 +251,14 @@ public class DataBase {
 
         return rowID;
     }
+    public int deleteGiorno(String data) {
+        String where = GIORNO_DATA + "= " + data;
+        this.openWriteableDB();
+        int rowCount = db.delete(GIORNO_TABLE, where, null);
+        this.closeDB();
+        return rowCount;
+    }
+
     public long insertViaggioGiorno(ViaggioGiorno viaggioGiorno) {
         ContentValues cv = new ContentValues();
         cv.put(VIAGGIOGIORNO_ID_VIAGGIO, viaggioGiorno.getId_viaggio());
@@ -260,26 +269,88 @@ public class DataBase {
 
         return rowID;
     }
+    public int deleteViaggioGiorno(long id, String data) {
+        String where = VIAGGIOGIORNO_ID_VIAGGIO + "= ? AND " + VIAGGIOGIORNO_DATA + "= " + data ;
+        String[] whereArgs = { String.valueOf(id) };
+
+        this.openWriteableDB();
+        int rowCount = db.delete(VIAGGIOGIORNO_TABLE, where, whereArgs);
+        this.closeDB();
+        return rowCount;
+    }
     public long insertViaggioAttivita(ViaggioAttivita viaggioAttivita) {
         ContentValues cv = new ContentValues();
         cv.put(VIAGGIOATTIVITA_ID_VIAGGIO, viaggioAttivita.getId_Viaggio());
         cv.put(VIAGGIOATTIVITA_PLACE_ID, viaggioAttivita.getPlace_id());
         this.openWriteableDB();
-        long rowID = db.insert(VIAGGIOGIORNO_TABLE, null, cv);
+        long rowID = db.insert(VIAGGIOATTIVITA_TABLE, null, cv);
         this.closeDB();
 
         return rowID;
     }
+    public ArrayList<ViaggioAttivita> getViaggiAttivita(long id) {
+        String where = VIAGGIOATTIVITA_ID_VIAGGIO + "= ?";
+        String[] whereArgs = { Long.toString(id) };
+        this.openReadableDB();
+        Cursor cursor = db.query(VIAGGIOATTIVITA_TABLE, null,
+                where,whereArgs,
+                null, null, null);
+        ArrayList<ViaggioAttivita> viaggioAttivita = new ArrayList<ViaggioAttivita>();
+        while (cursor.moveToNext()) {
+            viaggioAttivita.add(getViaggioAttivitaFromCursor(cursor));
+        }
+        if (cursor != null)
+            cursor.close();
+        this.closeDB();
+
+        return viaggioAttivita;
+    }
+    private static ViaggioAttivita getViaggioAttivitaFromCursor(Cursor cursor) {
+        if (cursor == null || cursor.getCount() == 0){
+            return null;
+        }
+        else {
+            try {
+                ViaggioAttivita viaggioAttivita = new ViaggioAttivita(
+                        cursor.getInt(VIAGGIOATTIVITA_ID_VIAGGIO_COL),
+                        cursor.getString(VIAGGIOATTIVITA_PLACE_ID_COL)
+                    );
+                return viaggioAttivita;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
+    }
+    public int deleteViaggioAttivita(long id, String place_id) {
+        String where = VIAGGIOATTIVITA_ID_VIAGGIO + "= ? AND " + VIAGGIOATTIVITA_PLACE_ID + "= " + place_id ;
+        String[] whereArgs = { String.valueOf(id) };
+
+        this.openWriteableDB();
+        int rowCount = db.delete(VIAGGIOATTIVITA_TABLE, where, whereArgs);
+        this.closeDB();
+        return rowCount;
+    }
+
     public long insertAttivitaGiorno(AttivitaGiorno attivitaGiorno) {
         ContentValues cv = new ContentValues();
         cv.put(ATTIVITAGIORNO_PLACE_ID,attivitaGiorno.getPlace_id());
         cv.put(ATTIVITAGIORNO_DATA, attivitaGiorno.getData());
         cv.put(ATTIVITAGIORNO_ID_VIAGGIO, attivitaGiorno.getId_viaggio());
         this.openWriteableDB();
-        long rowID = db.insert(VIAGGIOGIORNO_TABLE, null, cv);
+        long rowID = db.insert(ATTIVITAGIORNO_TABLE, null, cv);
         this.closeDB();
 
         return rowID;
+    }
+    public int deleteAttivitaGiorno( String place_id, String data, long id) {
+        String where = ATTIVITAGIORNO_PLACE_ID + "= " + place_id + " AND "  + ATTIVITAGIORNO_DATA + "= " + data + ATTIVITAGIORNO_ID_VIAGGIO + "=  ?"  ;
+        String[] whereArgs = { String.valueOf(id) };
+
+        this.openWriteableDB();
+        int rowCount = db.delete(ATTIVITAGIORNO_TABLE, where, whereArgs);
+        this.closeDB();
+        return rowCount;
     }
 
 
