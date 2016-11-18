@@ -341,6 +341,13 @@ public class RicercaActivityFragmentListItem extends Fragment{
                                                     });
                                                     alertDialog.show();
                                                     break;*/
+                case R.id.bottone_aggiungipreferiti:    if(database.getAttivitaBool(place_id)) {
+                                                            database.updateAttivita(place_id, "true");
+                                                        }else{
+                                                            Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true");
+                                                            database.insertAttivita(attivitapreferita);
+                                                        }
+                                                        break;
 
 
 
