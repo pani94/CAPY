@@ -183,6 +183,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
                                                     builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
                                                         public void onClick(DialogInterface dialog, int which){
                                                             ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, place_id);
+                                                            database.insertViaggioAttivita(viaggioattivita);
                                                             Toast.makeText(getActivity().getApplicationContext(),
                                                                     "L'attività è stata aggiunta al viaggio",
                                                                     Toast.LENGTH_LONG).show();
