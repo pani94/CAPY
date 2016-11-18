@@ -81,7 +81,7 @@ public class GestioneViaggioFragment extends Fragment {
 
                     Bundle args = new Bundle();
                     args.putString("nome_viaggio", nome_viaggio_get);
-                    args.putString("daquando", daquando_aquando_get);
+                    args.putString("daquando", daquando_get);
                     args.putString("aquando",aquando_get);
                     newFragment.setArguments(args);
 
