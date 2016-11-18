@@ -1,7 +1,5 @@
 package com.example.ale.myapplicatio;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -172,7 +170,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
                     LayoutInflater inflater = getActivity().getLayoutInflater();
                     View convertView = (View) inflater.inflate(R.layout.alert_ituoi_viaggi, null);
                     alertDialog.setView(convertView);
-                    alertDialog.setTitle("List");
+                    alertDialog.setTitle("I TUOI VIAGGI");
                     ListView lv = (ListView) convertView.findViewById(R.id.alert_ituoi_viaggi_listaviaggi);
                     lv.setAdapter(adapter);
                     alertDialog.show();
