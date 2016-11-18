@@ -11,7 +11,7 @@ public class Attivita {
     private String foto;
     private String preferito;
 
-    public Attivita(){
+    public Attivita(String string, String cursorString, String s, String string1, String cursorString1, String s1, String string2, String cursorString2){
         this.place_id = null;
         this.nome = null;
         this.indirizzo = null;
