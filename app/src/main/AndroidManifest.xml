@@ -38,6 +38,10 @@
         <activity android:name=".RicercaActivity" />
         <activity android:name=".CreaIlTuoViaggioActivity" />
         <activity android:name=".ProfiloViaggiActivity" />
+        <activity
+            android:name=".GestioneViaggioAttivitaActivity"
+            android:label="@string/title_activity_gestione_viaggio_attivita"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

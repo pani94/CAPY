@@ -1,6 +1,7 @@
 package com.example.ale.myapplicatio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -77,19 +78,9 @@ public class GestioneViaggioFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.gestione_viaggio_bottone_attivita:
-                    GestioneViaggioFragmentAttivita newFragment = new GestioneViaggioFragmentAttivita();
-
-                    Bundle args = new Bundle();
-                    args.putString("nome_viaggio", nome_viaggio_get);
-                    args.putString("daquando", daquando_get);
-                    args.putString("aquando",aquando_get);
-                    newFragment.setArguments(args);
-
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction transaction = fragmentManager.beginTransaction();
-                    transaction.replace(R.id.fragment_container_profilo, newFragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                    Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaActivity.class);
+                    intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
+                    startActivity(intent);
                     break;
                 default:
 
