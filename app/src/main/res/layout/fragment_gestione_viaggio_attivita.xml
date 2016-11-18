@@ -8,11 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.ale.myapplicatio.GestioneViaggioAttivitaActivity$PlaceholderFragment">
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tab1 Mangiare text"
-        />
+    <ListView
+        android:id="@+id/fragment_gestione_viaggio_attivita_lista"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

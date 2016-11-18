@@ -1,8 +1,6 @@
 package com.example.ale.myapplicatio;
 
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -115,9 +113,9 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita_tutte, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
+            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
@@ -139,10 +137,10 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                     GestioneViaggioAttivitaTabTutte tabTutte = new GestioneViaggioAttivitaTabTutte();
                     return tabTutte;
                 case 1:
-                    GestioneViaggioAttivitaTabVedere tabVedere = new GestioneViaggioAttivitaTabVedere();
+                    GestioneViaggioAttivitaTabTutte tabVedere = new GestioneViaggioAttivitaTabTutte();
                     return tabVedere;
                 case 2:
-                    GestioneViaggioAttivitaTabMangiare tabMangiare = new GestioneViaggioAttivitaTabMangiare();
+                    GestioneViaggioAttivitaTabTutte tabMangiare = new GestioneViaggioAttivitaTabTutte();
                     return tabMangiare;
                 default: return null;
             }
