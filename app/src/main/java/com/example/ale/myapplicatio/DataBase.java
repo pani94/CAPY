@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -413,19 +414,26 @@ public class DataBase {
     }
 
     public ArrayList<Attivita> getAttivita(String nomeViaggio) {
-        String where = VIAGGIO_NOME + "=" + nomeViaggio;
+        nomeViaggio = "'Viaggio a roma'";
+        String where = VIAGGIO_NOME + " = ?" ;
+        String [] whereargs = { nomeViaggio};
         this.openReadableDB();
-        String Query = "SELECT " + VIAGGIO_ID + "FROM " + VIAGGIO_TABLE + where;
-        Cursor cursor = db.rawQuery(Query, null);
-        long id_viaggio = cursor.getLong(VIAGGIO_ID_COL);
+        //String Query = "SELECT " + VIAGGIO_ID + " FROM " + VIAGGIO_TABLE + " WHERE " + where;
+        //Log.e("nome_viaggio", Query);
+        String [] array = new String[1];
+        array[0] = Integer.toString(VIAGGIO_ID_COL);
+        Cursor cursor = db.query(VIAGGIO_TABLE,array,where,whereargs,null,null,null);
+       // long id_viaggio = cursor.getInt(VIAGGIO_ID_COL);
+        long id_viaggio = 2;
         cursor.close();
 
         ArrayList<ViaggioAttivita> viaggioAttivitas = getViaggiAttivita(id_viaggio);
-
+        this.openReadableDB();
+        Cursor cursor1 = null;
         ArrayList<Attivita> attivitas = new ArrayList<Attivita>();
         for(int i=0; i<viaggioAttivitas.size(); i++){
-            String where1 = ATTIVITA_PLACE_ID + "=" + viaggioAttivitas.get(i).getPlace_id();
-            Cursor cursor1 = db.query(ATTIVITA_TABLE, null,
+            String where1 = ATTIVITA_PLACE_ID + " = " + "'" + viaggioAttivitas.get(i).getPlace_id() + "'";
+             cursor1 = db.query(ATTIVITA_TABLE, null,
                     where1, null,
                     null, null, null);
             while (cursor1.moveToNext()) {
@@ -433,9 +441,9 @@ public class DataBase {
             }
         }
 
-        if (cursor != null)
-            cursor.close();
-        this.closeDB();
+        if (cursor1 != null)
+            cursor1.close();
+        //this.closeDB();
 
         return attivitas;
     }

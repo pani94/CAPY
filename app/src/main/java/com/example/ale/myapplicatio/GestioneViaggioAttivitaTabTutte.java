@@ -6,6 +6,7 @@ package com.example.ale.myapplicatio;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class GestioneViaggioAttivitaTabTutte extends Fragment implements Adapter
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             nomeViaggio = getArguments().getString("attivita_nomeviaggio");
+            Log.e("gestione", nomeViaggio);
 
         }
 

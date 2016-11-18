@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,7 +54,10 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
         //attivita_nomeviaggio.setT
         GestioneViaggioAttivitaTabTutte fragmentTutte = new GestioneViaggioAttivitaTabTutte();
-        fragmentTutte.setArguments(getIntent().getExtras());
+        Bundle bundle = new Bundle();
+        bundle.putString("attivita_nomeviaggio",getIntent().getStringExtra("attivita_nomeviaggio"));
+        Log.e("GestioneViaggioActivity", getIntent().getStringExtra("attivita_nomeviaggio"));
+        fragmentTutte.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.container_attivita, fragmentTutte);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
