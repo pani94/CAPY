@@ -1,14 +1,10 @@
 package com.example.ale.myapplicatio;
 
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +20,7 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
     private ListView listaFragment;
     private TextView scelta_menu;
     private String selectedCity;
-
+    private String selectedItem;
 
 
 
@@ -74,7 +70,12 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
         RicercaActivityFragmentList newFragment = new RicercaActivityFragmentList();
         Bundle args = new Bundle();
         args.putString("selectedCity",selectedCity);
-        args.putInt("selectedItem",position);
+        if(position == 0){
+            selectedItem = "vedere";
+        }else if(position == 1){
+            selectedItem = "mangiare";
+        }
+        args.putString("selectedItem",selectedItem);
         newFragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
