@@ -164,6 +164,10 @@ public class DataBase {
         if (db != null)
             db.close();
     }
+    private void closeCursor(Cursor cursor) {
+        if (cursor != null)
+            cursor.close();
+    }
     public long insertViaggio(Viaggio viaggio) {
         // CHIEDERE SE è MEGLIO CREARE IL VIAGGIO OPPURE PASSARGLI DIRETTAMENTE I PARAMETRI
         ContentValues cv = new ContentValues();
@@ -254,6 +258,25 @@ public class DataBase {
         this.closeDB();
 
         return rowCount;
+    }
+    public boolean getAttivitaBool(String place_id) {
+        String where = ATTIVITA_PLACE_ID + "= " + place_id;
+
+        this.openReadableDB();
+        Cursor cursor = db.query(ATTIVITA_TABLE, null,
+                where,null,
+                null, null, null);
+
+        this.closeCursor(cursor);
+        this.closeDB();
+        if(cursor != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+
     }
 
     public long insertGiorno(Giorno giorno) {
