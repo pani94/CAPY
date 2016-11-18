@@ -241,6 +241,20 @@ public class DataBase {
 
         return rowID;
     }
+    public int updateAttivita(String place_id,String preferito) {
+        ContentValues cv = new ContentValues();
+        cv.put(ATTIVITA_PREFERITO, preferito);
+
+
+        String where = ATTIVITA_PLACE_ID + "= " +  place_id;
+
+
+        this.openWriteableDB();
+        int rowCount = db.update(ATTIVITA_TABLE, cv, where, null);
+        this.closeDB();
+
+        return rowCount;
+    }
 
     public long insertGiorno(Giorno giorno) {
         ContentValues cv = new ContentValues();
