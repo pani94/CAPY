@@ -165,8 +165,10 @@ public class DataBase {
             db.close();
     }
     private void closeCursor(Cursor cursor) {
-        if (cursor != null)
+        if (cursor != null){
             cursor.close();
+        }
+
     }
     public long insertViaggio(Viaggio viaggio) {
         // CHIEDERE SE è MEGLIO CREARE IL VIAGGIO OPPURE PASSARGLI DIRETTAMENTE I PARAMETRI
@@ -245,40 +247,21 @@ public class DataBase {
 
         return rowID;
     }
-    public int updateAttivita(String place_id,String preferito) {
+    public void UpdateAttivitaPreferita(Attivita attivita) {
         ContentValues cv = new ContentValues();
-        cv.put(ATTIVITA_PREFERITO, preferito);
-
-
-        String where = ATTIVITA_PLACE_ID + "= " +  place_id;
-
-
-        this.openWriteableDB();
-        int rowCount = db.update(ATTIVITA_TABLE, cv, where, null);
-        this.closeDB();
-
-        return rowCount;
-    }
-    public boolean getAttivitaBool(String place_id) {
-        String where = ATTIVITA_PLACE_ID + "= " + place_id;
-
+        cv.put(ATTIVITA_PLACE_ID, attivita.getPlace_id());
+        cv.put(ATTIVITA_NOME, attivita.getNome());
+        cv.put(ATTIVITA_INDIRIZZO, attivita.getIndirizzo());
+        cv.put(ATTIVITA_ORARIO, attivita.getOrario());
+        cv.put(ATTIVITA_TELEFONO, attivita.getTelefono());
+        cv.put(ATTIVITA_LINK, attivita.getLink());
+        cv.put(ATTIVITA_TIPOLOGIA, attivita.getTipologia());
+        cv.put(ATTIVITA_FOTO, attivita.getFoto());
+        cv.put(ATTIVITA_PREFERITO, attivita.getPreferito());
         this.openReadableDB();
-        Cursor cursor = db.query(ATTIVITA_TABLE, null,
-                where,null,
-                null, null, null);
-
-        this.closeCursor(cursor);
+        db.replace(ATTIVITA_TABLE, null, cv);
         this.closeDB();
-        if(cursor != null){
-            return true;
-        }
-        else{
-            return false;
-        }
-
-
     }
-
     public long insertGiorno(Giorno giorno) {
         ContentValues cv = new ContentValues();
         cv.put(GIORNO_DATA, giorno.getData());
@@ -389,6 +372,7 @@ public class DataBase {
         this.closeDB();
         return rowCount;
     }
+
 
 
 
