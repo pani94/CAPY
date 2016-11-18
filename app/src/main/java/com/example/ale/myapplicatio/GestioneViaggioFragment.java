@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +82,7 @@ public class GestioneViaggioFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaActivity.class);
                     intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
                     startActivity(intent);
+                    Log.e("gestioneViaggioFrament", nome_viaggio_get);
                     break;
                 case R.id.gestione_viaggio_bottone_agenda:
 

@@ -57,17 +57,20 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        GestioneViaggioFragment newFragment = new GestioneViaggioFragment();
-        Bundle args = new Bundle();
-        args.putString("nome_viaggio", arrayList.get(position).getNome_viaggio());
-        args.putString("daquando", arrayList.get(position).getPartenza());
-        args.putString("aquando",arrayList.get(position).getArrivo());
-        newFragment.setArguments(args);
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container_profilo, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+
+                GestioneViaggioFragment newFragment = new GestioneViaggioFragment();
+                Bundle args = new Bundle();
+                args.putString("nome_viaggio", arrayList.get(position).getNome_viaggio());
+                args.putString("daquando", arrayList.get(position).getPartenza());
+                args.putString("aquando",arrayList.get(position).getArrivo());
+                newFragment.setArguments(args);
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.fragment_container_profilo, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+        }
+
 
     }
 
@@ -104,4 +107,4 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
         void onFragmentInteraction(Uri uri);
     }
     */
-}
+
