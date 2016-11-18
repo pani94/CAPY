@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 public class GestioneViaggioAttivitaTabTutte extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita_tutte, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
         return rootView;
     }
 }
