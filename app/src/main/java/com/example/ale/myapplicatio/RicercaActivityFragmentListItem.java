@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,6 +100,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
         preferito.setOnClickListener(buttonListener);
         database = new DataBase(getActivity());
         arrayListViaggi = database.getViaggi();
+
         for(int i = 0; i < arrayListViaggi.size(); i++){
             Log.e("viaggi", arrayListViaggi.get(i).getNome_viaggio());
         }
@@ -162,19 +163,52 @@ public class RicercaActivityFragmentListItem extends Fragment{
                                                                 Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
                                                                 startActivity(viewIntent);
                     break;
-                case R.id.bottone_aggiungiaviaggio:
+                case R.id.bottone_aggiungiaviaggio: String[] nomeViaggi = new String[arrayListViaggi.size()];
+                                                    for(int k=0; k<arrayListViaggi.size(); k++){
+                                                        nomeViaggi[k] = arrayListViaggi.get(k).getNome_viaggio();
+                                                    }
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                                    builder.setTitle("I TUOI VIAGGI");
+                                                    builder.setSingleChoiceItems(nomeViaggi, 0, new  DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            String nomeViaggio = arrayListViaggi.get(i).getNome_viaggio();
+                                                        }
 
+                                                        });
+                                                    builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
+                                                        public void onClick(DialogInterface dialog, int which){
 
-                    ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayListViaggi);
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                    LayoutInflater inflater = getActivity().getLayoutInflater();
-                    View convertView = (View) inflater.inflate(R.layout.alert_ituoi_viaggi, null);
-                    alertDialog.setView(convertView);
-                    alertDialog.setTitle("I TUOI VIAGGI");
-                    ListView lv = (ListView) convertView.findViewById(R.id.alert_ituoi_viaggi_listaviaggi);
-                    lv.setAdapter(adapter);
-                    alertDialog.show();
-                    break;
+                                                        }
+                                                    });
+                                                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                                                        public void onClick(DialogInterface dialog, int which){
+
+                                                        }
+                                                    });
+                                                    builder.show();
+                                                    break;
+
+                                                    /*ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayListViaggi);
+                                                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                                                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                                                    View convertView = (View) inflater.inflate(R.layout.alert_ituoi_viaggi, null);
+                                                    alertDialog.setView(convertView);
+                                                    alertDialog.setTitle("I TUOI VIAGGI");
+                                                    ListView lv = (ListView) convertView.findViewById(R.id.alert_ituoi_viaggi_listaviaggi);
+                                                    lv.setAdapter(adapter);
+                                                    alertDialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
+                                                        public void onClick(DialogInterface dialog, int which){
+
+                                                        }
+                                                    });
+                                                    alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
+                                                        public void onClick(DialogInterface dialog, int which){
+
+                                                        }
+                                                    });
+                                                    alertDialog.show();
+                                                    break;*/
 
 
 
