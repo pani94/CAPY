@@ -50,7 +50,8 @@ public class RicercaActivityFragmentListItem extends Fragment{
     //private GoogleMap googleMap;
     private String TAG = RicercaActivityFragmentListItem.class.getSimpleName();
     private ArrayList<ItemRicercaActivity> arrayList;
-    private int position;
+    private String nomeViaggio = "";
+    private long id;
     ItemRicercaActivityFragmentList item=null;
    // private OnFragmentInteractionListener mListener;
 
@@ -163,21 +164,28 @@ public class RicercaActivityFragmentListItem extends Fragment{
                                                                 Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
                                                                 startActivity(viewIntent);
                     break;
-                case R.id.bottone_aggiungiaviaggio: String[] nomeViaggi = new String[arrayListViaggi.size()];
+                case R.id.bottone_aggiungiaviaggio: Attivita attivita = new Attivita(place_id, titolo.toString(), indirizzo.toString(), weekday.toString(), telefono.toString(), "", "", foto.toString(), "false");
+                                                    database.insertAttivita(attivita);
+                                                    String[] nomeViaggi = new String[arrayListViaggi.size()];
                                                     for(int k=0; k<arrayListViaggi.size(); k++){
                                                         nomeViaggi[k] = arrayListViaggi.get(k).getNome_viaggio();
                                                     }
                                                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                                                     builder.setTitle("I TUOI VIAGGI");
-                                                    builder.setSingleChoiceItems(nomeViaggi, 0, new  DialogInterface.OnClickListener() {
+                                                    builder.setSingleChoiceItems(nomeViaggi, -1, new  DialogInterface.OnClickListener() {
                                                         @Override
                                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                                            String nomeViaggio = arrayListViaggi.get(i).getNome_viaggio();
+                                                            nomeViaggio = arrayListViaggi.get(i).getNome_viaggio();
+                                                            id = arrayListViaggi.get(i).getId_viaggio();
                                                         }
 
                                                         });
                                                     builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
                                                         public void onClick(DialogInterface dialog, int which){
+                                                            ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, place_id);
+                                                            Toast.makeText(getActivity().getApplicationContext(),
+                                                                    "L'attività è stata aggiunta al viaggio",
+                                                                    Toast.LENGTH_LONG).show();
 
                                                         }
                                                     });
