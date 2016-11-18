@@ -33,7 +33,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     private ArrayList<ItemRicercaActivity> arrayList;
     private ListView itemsListView;
     private String TAG = MainActivity.class.getSimpleName();
-    private int selectedItem;
+    private String selectedItem;
     private String next_page = "";
     private int count = 0;
     private Button altro;
@@ -60,7 +60,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
 
         if (getArguments() != null) {
             selectedCity = getArguments().getString("selectedCity");
-            selectedItem = getArguments().getInt("selectedItem");
+            selectedItem = getArguments().getString("selectedItem");
 
         }
        // Log.e(TAG, "SelectedItem =  " + selectedCity);
@@ -113,7 +113,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             String type = "type=";
             String[] typesCoseDaVedere = {"amusement_park", "aquarium", "art_gallery", "casino", "church",  "museum", "stadium", "zoo"};
             String[] typesDoveMangiare = {"bar", "cafe", "restaurant"};
-            if(selectedItem == 0){
+            if(selectedItem.equals("vedere")){
                 for (int i = 0; i < typesCoseDaVedere.length; i++) {
                     if (i != 0) {
                         type += "|" + typesCoseDaVedere[i];
@@ -289,6 +289,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         args.putString("lat", arrayList.get(position).getLatitudine());
         args.putString("lng", arrayList.get(position).getLongitudine());
         args.putString("orario",arrayList.get(position).getOrario());
+        args.putString("selectedItem", selectedItem);
         newFragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

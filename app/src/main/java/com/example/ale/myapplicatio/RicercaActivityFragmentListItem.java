@@ -53,6 +53,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
     private String formatted_address ="";
     private String open_now = "";
     private String weekday = "";
+    private String selectedItem;
     //private MapView mapView;
     //private GoogleMap googleMap;
     private String TAG = RicercaActivityFragmentListItem.class.getSimpleName();
@@ -85,6 +86,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
             open_now = getArguments().getString("orario");
             latitudine = getArguments().getString("lat");
             longitudine = getArguments().getString("lng");
+            selectedItem = getArguments().getString("selectedItem");
         }
     }
 
@@ -285,7 +287,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
                     Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
                     startActivity(viewIntent);
                     break;
-                case R.id.bottone_aggiungiaviaggio: Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, "", photo_reference, "false");
+                case R.id.bottone_aggiungiaviaggio: Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false");
                     database.insertAttivita(attivita);
                     String[] nomeViaggi = new String[arrayListViaggi.size()];
                     for(int k=0; k<arrayListViaggi.size(); k++){
