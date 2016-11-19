@@ -277,22 +277,32 @@ public class DataBase {
         db.replace(ATTIVITA_TABLE, null, cv);
         this.closeDB();
     }
-    public ArrayList<Attivita> getAttivita(String nomeViaggio) {
+    public ArrayList<Attivita> getAttivita(String nomeViaggio,String tipologia) {
         ArrayList<ViaggioAttivita> viaggioAttivitas = getViaggiAttivita(getIdViaggio(nomeViaggio));
         this.openReadableDB();
         Cursor cursor1 = null;
         ArrayList<Attivita> attivitas = new ArrayList<Attivita>();
         for(int i=0; i<viaggioAttivitas.size(); i++){
-            String where1 = ATTIVITA_PLACE_ID + " = ?";
-            String[] whereArgs1 = { viaggioAttivitas.get(i).getPlace_id()};
-            cursor1 = db.query(ATTIVITA_TABLE, null,
-                    where1, whereArgs1,
-                    null, null, null);
-         int j=0;
+
+            String[] whereArgs1;
+            if(tipologia.equals("tutte")){
+                String where = ATTIVITA_PLACE_ID + " = ? "  ;
+                String[] whereArgs = { viaggioAttivitas.get(i).getPlace_id()};
+                cursor1 = db.query(ATTIVITA_TABLE, null,
+                        where, whereArgs,
+                        null, null, null);
+            }
+            else
+            {
+                String where = ATTIVITA_PLACE_ID + " = ? " + " AND " + ATTIVITA_TIPOLOGIA + " = ? "  ;
+                String[] whereArgs = { viaggioAttivitas.get(i).getPlace_id(),tipologia};
+                cursor1 = db.query(ATTIVITA_TABLE, null,
+                        where, whereArgs,
+                        null, null, null);
+            }
+
             while (cursor1.moveToNext()) {
                attivitas.add(getAttivitaFromCursor(cursor1));
-               // Log.e("attivita", attivitas.get(j).getNome());
-
             }
         }
 
@@ -305,7 +315,6 @@ public class DataBase {
 
     private static Attivita getAttivitaFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
-            Log.e("attivita", "è null");
             return null;
         }
         else {
@@ -320,7 +329,6 @@ public class DataBase {
                         cursor.getString(ATTIVITA_TIPOLOGIA_COL),
                         cursor.getString(ATTIVITA_FOTO_COL),
                         cursor.getString(ATTIVITA_PREFERITO_COL));
-                Log.e("attivita", attivita.getNome());
                 return attivita;
             }
             catch(Exception e) {
@@ -328,7 +336,46 @@ public class DataBase {
             }
         }
     }
+    public ArrayList<Attivita> getAttivitaPreferite() {
+        String where = ATTIVITA_PREFERITO + "= ?";
+        String[] whereArgs = {"true"};
+        this.openReadableDB();
+        Cursor cursor = db.query(ATTIVITA_TABLE, null,
+                where, whereArgs,
+                null, null, null);
+        ArrayList<Attivita> attivita_preferite = new ArrayList<Attivita>();
+        while (cursor.moveToNext()) {
+            attivita_preferite.add(getAttivitaPreferiteFromCursor(cursor));
+        }
+        if (cursor != null)
+            cursor.close();
+        this.closeDB();
 
+        return attivita_preferite;
+    }
+    private static Attivita getAttivitaPreferiteFromCursor(Cursor cursor) {
+        if (cursor == null || cursor.getCount() == 0){
+            return null;
+        }
+        else {
+            try {
+                Attivita attivita_preferita = new Attivita(
+                        cursor.getString(ATTIVITA_PLACE_ID_COL),
+                        cursor.getString(ATTIVITA_NOME_COL),
+                        cursor.getString(ATTIVITA_INDIRIZZO_COL),
+                        cursor.getString(ATTIVITA_ORARIO_COL),
+                        cursor.getString(ATTIVITA_TELEFONO_COL),
+                        cursor.getString(ATTIVITA_LINK_COL),
+                        cursor.getString(ATTIVITA_TIPOLOGIA_COL),
+                        cursor.getString(ATTIVITA_FOTO_COL),
+                        cursor.getString(ATTIVITA_PREFERITO_COL));
+                return attivita_preferita;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
+    }
     public long insertGiorno(Giorno giorno) {
         ContentValues cv = new ContentValues();
         cv.put(GIORNO_DATA, giorno.getData());
@@ -464,45 +511,6 @@ public class DataBase {
         return rowCount;
     }
 
-    public ArrayList<Attivita> getAttivitaPreferite() {
-        String where = ATTIVITA_PREFERITO + "= ?";
-        String[] whereArgs = {"true"};
-        this.openReadableDB();
-        Cursor cursor = db.query(ATTIVITA_TABLE, null,
-                where, whereArgs,
-                null, null, null);
-        ArrayList<Attivita> attivita_preferite = new ArrayList<Attivita>();
-        while (cursor.moveToNext()) {
-            attivita_preferite.add(getAttivitaPreferiteFromCursor(cursor));
-        }
-        if (cursor != null)
-            cursor.close();
-        this.closeDB();
 
-        return attivita_preferite;
-    }
-    private static Attivita getAttivitaPreferiteFromCursor(Cursor cursor) {
-        if (cursor == null || cursor.getCount() == 0){
-            return null;
-        }
-        else {
-            try {
-                Attivita attivita_preferita = new Attivita(
-                        cursor.getString(ATTIVITA_PLACE_ID_COL),
-                        cursor.getString(ATTIVITA_NOME_COL),
-                        cursor.getString(ATTIVITA_INDIRIZZO_COL),
-                        cursor.getString(ATTIVITA_ORARIO_COL),
-                        cursor.getString(ATTIVITA_TELEFONO_COL),
-                        cursor.getString(ATTIVITA_LINK_COL),
-                        cursor.getString(ATTIVITA_TIPOLOGIA_COL),
-                        cursor.getString(ATTIVITA_FOTO_COL),
-                        cursor.getString(ATTIVITA_PREFERITO_COL));
-                return attivita_preferita;
-            }
-            catch(Exception e) {
-                return null;
-            }
-        }
-    }
 
 }
