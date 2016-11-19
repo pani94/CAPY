@@ -66,17 +66,29 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
         preferiti_link= (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_link);
         preferiti_telefono = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_telefono);
         preferiti_indirizzo = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_indirizzo);
+        preferiti_bottoneaggiungi = (Button) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_bottoneaggiungi);
         preferiti_titolo.setText(preferiti_titolo_get);
         preferiti_orario.setText(preferiti_orario_get);
         preferiti_link.setText(preferiti_link_get);
         preferiti_telefono.setText(preferiti_telefono_get);
         preferiti_indirizzo.setText(preferiti_indirizzo_get);
 
+        ButtonListener buttonListener = new ButtonListener();
+        preferiti_bottoneaggiungi.setOnClickListener(buttonListener);
+
         String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + preferiti_foto_get + "&sensor=false&key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
         new LoadImageTask().execute(photo_reference_url);
 
         return view;
     }
+
+    public class ButtonListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+    
 
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
