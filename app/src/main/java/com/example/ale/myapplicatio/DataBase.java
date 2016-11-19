@@ -418,7 +418,7 @@ public class DataBase {
 
     }
     private static ViaggioAttivita getViaggioAttivitaFromCursor(Cursor cursor) {
-        if (cursor == null || cursor.getCount() == 0){
+        if (cursor == null || cursor.getCount() == 0f){
             return null;
         }
         else {
@@ -465,10 +465,11 @@ public class DataBase {
     }
 
     public ArrayList<Attivita> getAttivitaPreferite() {
-        String where = ATTIVITA_PREFERITO + "= true";
+        String where = ATTIVITA_PREFERITO + "= ?";
+        String[] whereArgs = {"true"};
         this.openReadableDB();
         Cursor cursor = db.query(ATTIVITA_TABLE, null,
-                where, null,
+                where, whereArgs,
                 null, null, null);
         ArrayList<Attivita> attivita_preferite = new ArrayList<Attivita>();
         while (cursor.moveToNext()) {

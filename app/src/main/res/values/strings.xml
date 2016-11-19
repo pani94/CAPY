@@ -20,4 +20,5 @@
     <string name="da_quando_a_quando">da quando a quando</string>
     <string name="title_activity_gestione_viaggio_attivita">Gestisci le tue attività</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="i_tuoi_preferiti">I tuoi preferiti</string>
 </resources>

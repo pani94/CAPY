@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,12 +88,54 @@ public class FragmentProfilo extends Fragment implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        FragmentITuoiViaggi viaggiFragment = new FragmentITuoiViaggi();
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container_profilo, viaggiFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        FragmentManager sceltaFragment;
+        FragmentTransaction transaction;
+        switch (scelte[i]){
+            case "I tuoi viaggi":
+                Log.e("ciaoviaggi", scelte[i]);
+                FragmentITuoiViaggi viaggiFragment = new FragmentITuoiViaggi();
+                //FragmentManager fragmentManager = getFragmentManager();
+                //FragmentTransaction transaction = fragmentManager.beginTransaction();
+                sceltaFragment =getFragmentManager();
+                transaction = sceltaFragment.beginTransaction();
+                transaction.replace(R.id.fragment_container_profilo, viaggiFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+            case "I tuoi Preferiti":
+                FragmentITuoiPreferiti preferitiFragment = new FragmentITuoiPreferiti();
+                //FragmentManager fragmentManager1 = getFragmentManager();
+               // FragmentTransaction transaction1 = fragmentManager1.beginTransaction();
+                sceltaFragment = getFragmentManager();
+                transaction = sceltaFragment.beginTransaction();
+                transaction.replace(R.id.fragment_container_profilo, preferitiFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+            default:
+                break;
+        }
+      /*  if(scelte[i].equals("I tuoi viaggi")){
+            Log.e("ciaoviaggi", scelte[i]);
+            FragmentITuoiViaggi viaggiFragment = new FragmentITuoiViaggi();
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment_container_profilo, viaggiFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else{
+            Log.e("ciao", scelte[i]);
+            FragmentITuoiPreferiti preferitiFragment = new FragmentITuoiPreferiti();
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment_container_profilo, preferitiFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+
+        */
+
 
     }
 
