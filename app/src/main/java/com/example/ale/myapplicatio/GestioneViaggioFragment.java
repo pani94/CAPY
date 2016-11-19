@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.zip.Inflater;
 
@@ -28,7 +29,7 @@ public class GestioneViaggioFragment extends Fragment {
     private String daquando_get;
     private String aquando_get;
     private String daquando_aquando_get;
-
+    private DataBase db ;
     public GestioneViaggioFragment() {
         // Required empty public constructor
     }
@@ -51,7 +52,6 @@ public class GestioneViaggioFragment extends Fragment {
             aquando_get = getArguments().getString("aquando");
             daquando_aquando_get = "da "+ daquando_get + " a " + aquando_get;
         }
-
 
     }
 
@@ -79,9 +79,15 @@ public class GestioneViaggioFragment extends Fragment {
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.gestione_viaggio_bottone_attivita:
-                    Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaActivity.class);
-                    intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
-                    startActivity(intent);
+                    DataBase db = new DataBase(getActivity());
+                    if(db.getViaggiAttivitaBool(db.getIdViaggio(nome_viaggio_get))){
+                        Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaActivity.class);
+                        intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getActivity(),"Non hai ancora inserito attivita per questo viaggio",Toast.LENGTH_SHORT).show();
+                    }
+
                     //Log.e("gestioneViaggioFrament", nome_viaggio_get);
                     break;
                 case R.id.gestione_viaggio_bottone_agenda:

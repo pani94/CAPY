@@ -202,6 +202,20 @@ public class DataBase {
 
         return viaggi;
     }
+    public int getIdViaggio(String nomeViaggio){
+        String where = VIAGGIO_NOME + " = ?" ;
+        String [] whereargs = { nomeViaggio};
+        this.openReadableDB();
+        //new String[] { VIAGGIO_ID , VIAGGIO_NOME , VIAGGIO_PARTENZA , VIAGGIO_ARRIVO}
+        Cursor cursor = db.query(VIAGGIO_TABLE,null,where,whereargs,null,null,null);
+        cursor.moveToFirst();
+        int id_viaggio = cursor.getInt(VIAGGIO_ID_COL);
+        cursor.close();
+        db.close();
+        return id_viaggio;
+
+
+    }
     private static Viaggio getViaggioFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
             return null;
@@ -264,20 +278,7 @@ public class DataBase {
         this.closeDB();
     }
     public ArrayList<Attivita> getAttivita(String nomeViaggio) {
-        String where = VIAGGIO_NOME + " = ?" ;
-        String [] whereargs = { nomeViaggio};
-        this.openReadableDB();
-        //new String[] { VIAGGIO_ID , VIAGGIO_NOME , VIAGGIO_PARTENZA , VIAGGIO_ARRIVO}
-        Cursor cursor = db.query(VIAGGIO_TABLE,null,where,whereargs,null,null,null);
-        if(cursor == null){
-            Log.e("cursor", "diooo");
-        }
-        cursor.moveToFirst();
-        int id_viaggio = cursor.getInt(VIAGGIO_ID_COL);
-        //Log.e("id", Integer.toString(id_viaggio));
-        cursor.close();
-
-        ArrayList<ViaggioAttivita> viaggioAttivitas = getViaggiAttivita(id_viaggio);
+        ArrayList<ViaggioAttivita> viaggioAttivitas = getViaggiAttivita(getIdViaggio(nomeViaggio));
         this.openReadableDB();
         Cursor cursor1 = null;
         ArrayList<Attivita> attivitas = new ArrayList<Attivita>();
@@ -287,8 +288,11 @@ public class DataBase {
             cursor1 = db.query(ATTIVITA_TABLE, null,
                     where1, whereArgs1,
                     null, null, null);
+         int j=0;
             while (cursor1.moveToNext()) {
-                attivitas.add(getAttivitaFromCursor(cursor1));
+               attivitas.add(getAttivitaFromCursor(cursor1));
+               // Log.e("attivita", attivitas.get(j).getNome());
+
             }
         }
 
@@ -301,6 +305,7 @@ public class DataBase {
 
     private static Attivita getAttivitaFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
+            Log.e("attivita", "è null");
             return null;
         }
         else {
@@ -313,7 +318,9 @@ public class DataBase {
                         cursor.getString(ATTIVITA_TELEFONO_COL),
                         cursor.getString(ATTIVITA_LINK_COL),
                         cursor.getString(ATTIVITA_TIPOLOGIA_COL),
+                        cursor.getString(ATTIVITA_FOTO_COL),
                         cursor.getString(ATTIVITA_PREFERITO_COL));
+                Log.e("attivita", attivita.getNome());
                 return attivita;
             }
             catch(Exception e) {
@@ -376,16 +383,39 @@ public class DataBase {
                 where,whereArgs,
                 null, null, null);
         if(cursor == null){
-            Log.e("cursorViaggioAttivita", "null");
+            return null;
         }
         ArrayList<ViaggioAttivita> viaggioAttivita = new ArrayList<ViaggioAttivita>();
-        cursor.moveToFirst();
-        viaggioAttivita.add(getViaggioAttivitaFromCursor(cursor));
+        while(cursor.moveToNext()){
+            viaggioAttivita.add(getViaggioAttivitaFromCursor(cursor));
+        }
+
         if (cursor != null)
             cursor.close();
         this.closeDB();
 
         return viaggioAttivita;
+    }
+    public boolean getViaggiAttivitaBool(int id) {
+        String where = VIAGGIOATTIVITA_ID_VIAGGIO + "= ?";
+        String[] whereArgs = { Integer.toString(id) };
+        this.openReadableDB();
+        Cursor cursor = db.query(VIAGGIOATTIVITA_TABLE, null,
+                where,whereArgs,
+                null, null, null);
+        if(cursor != null && cursor.getCount()>0){
+            cursor.close();
+            this.closeDB();
+
+            return true;
+        }
+        else
+        {
+            this.closeDB();
+
+            return false;
+        }
+
     }
     private static ViaggioAttivita getViaggioAttivitaFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
@@ -464,6 +494,7 @@ public class DataBase {
                         cursor.getString(ATTIVITA_TELEFONO_COL),
                         cursor.getString(ATTIVITA_LINK_COL),
                         cursor.getString(ATTIVITA_TIPOLOGIA_COL),
+                        cursor.getString(ATTIVITA_FOTO_COL),
                         cursor.getString(ATTIVITA_PREFERITO_COL));
                 return attivita_preferita;
             }

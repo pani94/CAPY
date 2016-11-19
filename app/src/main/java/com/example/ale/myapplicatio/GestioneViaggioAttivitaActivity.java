@@ -104,7 +104,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                     return GestioneViaggioAttivitaTabTutte.newInstance(0);
 
             }*/
-            return GestioneViaggioAttivitaTabTutte.newInstance(0);
+            return GestioneViaggioAttivitaTabTutte.newInstance(position);
         }
 
         @Override
@@ -160,11 +160,11 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         }
 
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            Log.e("gestione", NomeViaggio + "1");
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
             attivitas = new ArrayList<Attivita>();
             DataBase db = new DataBase(getActivity());
             attivitas = db.getAttivita(NomeViaggio);
+            Log.e("ciao", Integer.toString(attivitas.size()));
             itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
             ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
             adapter.notifyDataSetChanged();
