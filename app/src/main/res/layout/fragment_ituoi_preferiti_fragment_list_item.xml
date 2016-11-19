@@ -53,13 +53,15 @@
 
     <TextView
         android:text="TextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fragment_ituoi_preferiti_fragment_list_item_indirizzo"
         android:layout_marginBottom="26dp"
         android:layout_above="@+id/fragment_ituoi_preferiti_fragment_list_item_telefono"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/fragment_ituoi_preferiti_fragment_list_item_orario"
+        android:layout_alignEnd="@+id/fragment_ituoi_preferiti_fragment_list_item_orario" />
 
     <Button
         android:text="+"

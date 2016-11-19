@@ -303,6 +303,8 @@ public class DataBase {
 
             while (cursor1.moveToNext()) {
                attivitas.add(getAttivitaFromCursor(cursor1));
+               // Log.e("attivita", attivitas.get(j).getNome());
+
             }
         }
 
@@ -315,6 +317,7 @@ public class DataBase {
 
     private static Attivita getAttivitaFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
+            Log.e("attivita", "è null");
             return null;
         }
         else {
@@ -462,6 +465,27 @@ public class DataBase {
 
             return false;
         }
+
+    }
+
+    public boolean getPreferitiBool(){
+        String where = ATTIVITA_PREFERITO + "= ?";
+        String[] whereArgs = {"true"};
+        this.openReadableDB();
+        Cursor cursor = db.query(ATTIVITA_TABLE, null, where, whereArgs, null, null, null);
+        if(cursor != null && cursor.getCount()>0){
+            cursor.close();
+            this.closeDB();
+
+            return true;
+        }
+        else
+        {
+            this.closeDB();
+
+            return false;
+        }
+
 
     }
     private static ViaggioAttivita getViaggioAttivitaFromCursor(Cursor cursor) {

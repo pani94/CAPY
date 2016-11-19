@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FragmentProfilo extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -92,7 +93,6 @@ public class FragmentProfilo extends Fragment implements AdapterView.OnItemClick
         FragmentTransaction transaction;
         switch (scelte[i]){
             case "I tuoi viaggi":
-                Log.e("ciaoviaggi", scelte[i]);
                 FragmentITuoiViaggi viaggiFragment = new FragmentITuoiViaggi();
                 //FragmentManager fragmentManager = getFragmentManager();
                 //FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -103,15 +103,21 @@ public class FragmentProfilo extends Fragment implements AdapterView.OnItemClick
                 transaction.commit();
                 break;
             case "I tuoi Preferiti":
+                DataBase db = new DataBase(getActivity());
+                if(db.getPreferitiBool()){
+                    FragmentITuoiPreferiti preferitiFragment = new FragmentITuoiPreferiti();
+                    //FragmentManager fragmentManager1 = getFragmentManager();
+                    // FragmentTransaction transaction1 = fragmentManager1.beginTransaction();
+                    sceltaFragment = getFragmentManager();
+                    transaction = sceltaFragment.beginTransaction();
+                    transaction.replace(R.id.fragment_container_profilo, preferitiFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }else{
+                    Toast.makeText(getActivity(),"Non hai preferiti",Toast.LENGTH_SHORT).show();
+                }
 
-                FragmentITuoiPreferiti preferitiFragment = new FragmentITuoiPreferiti();
-                //FragmentManager fragmentManager1 = getFragmentManager();
-               // FragmentTransaction transaction1 = fragmentManager1.beginTransaction();
-                sceltaFragment = getFragmentManager();
-                transaction = sceltaFragment.beginTransaction();
-                transaction.replace(R.id.fragment_container_profilo, preferitiFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+
                 break;
             default:
                 break;
