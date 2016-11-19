@@ -16,23 +16,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
     private TextView attivita_nomeviaggio;
 
@@ -53,12 +47,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         //attivita_nomeviaggio = (TextView) findViewById(R.id.activity_gestione_viaggio_attivita_nomeviaggio);
 
         //attivita_nomeviaggio.setT
-        GestioneViaggioAttivitaTabTutte fragmentTutte = new GestioneViaggioAttivitaTabTutte();
-        Bundle bundle = new Bundle();
-        bundle.putString("attivita_nomeviaggio",getIntent().getStringExtra("attivita_nomeviaggio"));
-        Log.e("GestioneViaggioActivity", getIntent().getStringExtra("attivita_nomeviaggio"));
-        fragmentTutte.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().add(R.id.container_attivita, fragmentTutte);
+
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
@@ -92,12 +81,12 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+  /* public static class PlaceholderFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+       /* private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
         }
@@ -106,15 +95,15 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
+     /*   public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
         }
-
-        @Override
+        */
+    /*  @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
@@ -122,11 +111,12 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
-    }
+    }/*
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
+     * one of the sections/tabs/pages
+     * /*
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -136,17 +126,20 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
-                    GestioneViaggioAttivitaTabTutte tabTutte = new GestioneViaggioAttivitaTabTutte();
-                    return tabTutte;
+                    //GestioneViaggioAttivitaTabTutte tabTutte = new GestioneViaggioAttivitaTabTutte();
+                    return GestioneViaggioAttivitaTabTutte.newInstance(0);
                 case 1:
-                    GestioneViaggioAttivitaTabTutte tabVedere = new GestioneViaggioAttivitaTabTutte();
-                    return tabVedere;
+                    //GestioneViaggioAttivitaTabTutte tabVedere = new GestioneViaggioAttivitaTabTutte();
+                    return GestioneViaggioAttivitaTabTutte.newInstance(0);
                 case 2:
-                    GestioneViaggioAttivitaTabTutte tabMangiare = new GestioneViaggioAttivitaTabTutte();
-                    return tabMangiare;
-                default: return null;
+                   // GestioneViaggioAttivitaTabTutte tabMangiare = new GestioneViaggioAttivitaTabTutte();
+                     return GestioneViaggioAttivitaTabTutte.newInstance(0);
+                default:
+                    //GestioneViaggioAttivitaTabTutte tabMangiare1 = new GestioneViaggioAttivitaTabTutte();
+                    return GestioneViaggioAttivitaTabTutte.newInstance(0);
+
             }
         }
 
@@ -167,6 +160,58 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                     return "DOVE MANGIARE";
             }
             return null;
+        }
+
+        /**
+         * Created by Paola on 18/11/2016.
+         */
+
+    }
+    public static class GestioneViaggioAttivitaTabTutte extends Fragment implements AdapterView.OnItemClickListener {
+
+        private ArrayList<Attivita> attivitas;
+        private ListView itemListView;
+        private String nomeViaggio;
+
+        public GestioneViaggioAttivitaTabTutte() {
+
+        }
+
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            if (getArguments() != null) {
+                nomeViaggio = getArguments().getString("attivita_nomeviaggio");
+
+            }
+
+
+        }
+
+        public static GestioneViaggioAttivitaTabTutte newInstance(int sectionNumber) {
+            GestioneViaggioAttivitaTabTutte fragment = new GestioneViaggioAttivitaTabTutte();
+            Bundle args = new Bundle();
+            args.putString("ciao", "Nome viaggio");
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            Log.e("gestione", nomeViaggio + "1");
+            View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
+            attivitas = new ArrayList<Attivita>();
+            DataBase db = new DataBase(getActivity());
+            attivitas = db.getAttivita(nomeViaggio);
+            itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
+            ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
+            adapter.notifyDataSetChanged();
+            itemListView.setAdapter(adapter);
+            itemListView.setOnItemClickListener(this);
+            return rootView;
+        }
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
         }
     }
 }

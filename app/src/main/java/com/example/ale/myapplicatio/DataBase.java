@@ -263,6 +263,65 @@ public class DataBase {
         db.replace(ATTIVITA_TABLE, null, cv);
         this.closeDB();
     }
+    public ArrayList<Attivita> getAttivita(String nomeViaggio) {
+        String where = VIAGGIO_NOME + " = ?" ;
+        String [] whereargs = { nomeViaggio};
+        this.openReadableDB();
+        //new String[] { VIAGGIO_ID , VIAGGIO_NOME , VIAGGIO_PARTENZA , VIAGGIO_ARRIVO}
+        Cursor cursor = db.query(VIAGGIO_TABLE,null,where,whereargs,null,null,null);
+        if(cursor == null){
+            Log.e("cursor", "diooo");
+        }
+        cursor.moveToFirst();
+        int id_viaggio = cursor.getInt(VIAGGIO_ID_COL);
+        //Log.e("id", Integer.toString(id_viaggio));
+        cursor.close();
+
+        ArrayList<ViaggioAttivita> viaggioAttivitas = getViaggiAttivita(id_viaggio);
+        this.openReadableDB();
+        Cursor cursor1 = null;
+        ArrayList<Attivita> attivitas = new ArrayList<Attivita>();
+        for(int i=0; i<viaggioAttivitas.size(); i++){
+            String where1 = ATTIVITA_PLACE_ID + " = ?";
+            String[] whereArgs1 = { viaggioAttivitas.get(i).getPlace_id()};
+            cursor1 = db.query(ATTIVITA_TABLE, null,
+                    where1, whereArgs1,
+                    null, null, null);
+            while (cursor1.moveToNext()) {
+                attivitas.add(getAttivitaFromCursor(cursor1));
+            }
+        }
+
+        if (cursor1 != null)
+            cursor1.close();
+        //this.closeDB();
+
+        return attivitas;
+    }
+
+    private static Attivita getAttivitaFromCursor(Cursor cursor) {
+        if (cursor == null || cursor.getCount() == 0){
+            return null;
+        }
+        else {
+            try {
+                Attivita attivita = new Attivita(
+                        cursor.getString(ATTIVITA_PLACE_ID_COL),
+                        cursor.getString(ATTIVITA_NOME_COL),
+                        cursor.getString(ATTIVITA_INDIRIZZO_COL),
+                        cursor.getString(ATTIVITA_ORARIO_COL),
+                        cursor.getString(ATTIVITA_TELEFONO_COL),
+                        cursor.getString(ATTIVITA_LINK_COL),
+                        cursor.getString(ATTIVITA_TIPOLOGIA_COL),
+                        cursor.getString(ATTIVITA_PREFERITO_COL));
+                return attivita;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
+    }
+
     public long insertGiorno(Giorno giorno) {
         ContentValues cv = new ContentValues();
         cv.put(GIORNO_DATA, giorno.getData());
@@ -309,17 +368,19 @@ public class DataBase {
 
         return rowID;
     }
-    public ArrayList<ViaggioAttivita> getViaggiAttivita(long id) {
+    public ArrayList<ViaggioAttivita> getViaggiAttivita(int id) {
         String where = VIAGGIOATTIVITA_ID_VIAGGIO + "= ?";
-        String[] whereArgs = { Long.toString(id) };
+        String[] whereArgs = { Integer.toString(id) };
         this.openReadableDB();
         Cursor cursor = db.query(VIAGGIOATTIVITA_TABLE, null,
                 where,whereArgs,
                 null, null, null);
-        ArrayList<ViaggioAttivita> viaggioAttivita = new ArrayList<ViaggioAttivita>();
-        while (cursor.moveToNext()) {
-            viaggioAttivita.add(getViaggioAttivitaFromCursor(cursor));
+        if(cursor == null){
+            Log.e("cursorViaggioAttivita", "null");
         }
+        ArrayList<ViaggioAttivita> viaggioAttivita = new ArrayList<ViaggioAttivita>();
+        cursor.moveToFirst();
+        viaggioAttivita.add(getViaggioAttivitaFromCursor(cursor));
         if (cursor != null)
             cursor.close();
         this.closeDB();
@@ -332,10 +393,9 @@ public class DataBase {
         }
         else {
             try {
-                ViaggioAttivita viaggioAttivita = new ViaggioAttivita(
-                        cursor.getInt(VIAGGIOATTIVITA_ID_VIAGGIO_COL),
-                        cursor.getString(VIAGGIOATTIVITA_PLACE_ID_COL)
-                    );
+                int id = cursor.getInt(VIAGGIOATTIVITA_ID_VIAGGIO_COL);
+                String placeid = cursor.getString(VIAGGIOATTIVITA_PLACE_ID_COL);
+                ViaggioAttivita viaggioAttivita = new ViaggioAttivita(id,placeid);
                 return viaggioAttivita;
             }
             catch(Exception e) {
@@ -412,71 +472,5 @@ public class DataBase {
             }
         }
     }
-
-    public ArrayList<Attivita> getAttivita(String nomeViaggio) {
-        nomeViaggio = "'Viaggio a roma'";
-        String where = VIAGGIO_NOME + " = ?" ;
-        String [] whereargs = { nomeViaggio};
-        this.openReadableDB();
-        //String Query = "SELECT " + VIAGGIO_ID + " FROM " + VIAGGIO_TABLE + " WHERE " + where;
-        //Log.e("nome_viaggio", Query);
-        String [] array = new String[1];
-        array[0] = Integer.toString(VIAGGIO_ID_COL);
-        Cursor cursor = db.query(VIAGGIO_TABLE,array,where,whereargs,null,null,null);
-       // long id_viaggio = cursor.getInt(VIAGGIO_ID_COL);
-        long id_viaggio = 2;
-        cursor.close();
-
-        ArrayList<ViaggioAttivita> viaggioAttivitas = getViaggiAttivita(id_viaggio);
-        this.openReadableDB();
-        Cursor cursor1 = null;
-        ArrayList<Attivita> attivitas = new ArrayList<Attivita>();
-        for(int i=0; i<viaggioAttivitas.size(); i++){
-            String where1 = ATTIVITA_PLACE_ID + " = " + "'" + viaggioAttivitas.get(i).getPlace_id() + "'";
-             cursor1 = db.query(ATTIVITA_TABLE, null,
-                    where1, null,
-                    null, null, null);
-            while (cursor1.moveToNext()) {
-                attivitas.add(getAttivitaFromCursor(cursor1));
-            }
-        }
-
-        if (cursor1 != null)
-            cursor1.close();
-        //this.closeDB();
-
-        return attivitas;
-    }
-
-    private static Attivita getAttivitaFromCursor(Cursor cursor) {
-        if (cursor == null || cursor.getCount() == 0){
-            return null;
-        }
-        else {
-            try {
-                Attivita attivita_preferita = new Attivita(
-                        cursor.getString(ATTIVITA_PLACE_ID_COL),
-                        cursor.getString(ATTIVITA_NOME_COL),
-                        cursor.getString(ATTIVITA_INDIRIZZO_COL),
-                        cursor.getString(ATTIVITA_ORARIO_COL),
-                        cursor.getString(ATTIVITA_TELEFONO_COL),
-                        cursor.getString(ATTIVITA_LINK_COL),
-                        cursor.getString(ATTIVITA_TIPOLOGIA_COL),
-                        cursor.getString(ATTIVITA_PREFERITO_COL));
-                return attivita_preferita;
-            }
-            catch(Exception e) {
-                return null;
-            }
-        }
-    }
-
-
-
-
-
-
-
-
 
 }

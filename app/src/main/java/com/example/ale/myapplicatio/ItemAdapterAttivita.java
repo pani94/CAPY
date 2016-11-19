@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,16 +31,17 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita>{
 
     public View getView(int position, View convertView, ViewGroup parent) {
         Attivita item = arrayList.get(position);
+
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_gestione_viaggio_attivita, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_gestione_viaggio_attivita_item, parent, false);
         }
         // Lookup view for data population
         TextView name = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_nomeviaggio);
         TextView indirizzo = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_indirizzo);
-        ImageView foto = (ImageView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_foto);
+        //ImageView foto = (ImageView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_foto);
         name.setText(item.getNome());
         indirizzo.setText(item.getIndirizzo());
-        new LoadImageTask().execute(item.getFoto());
+        //new LoadImageTask().execute(item.getFoto());
         //Return the completed view to render on screen
         return convertView;
     }
