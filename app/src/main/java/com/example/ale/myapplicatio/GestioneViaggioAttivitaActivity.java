@@ -22,6 +22,9 @@ import java.util.ArrayList;
 
 public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
     private static String NomeViaggio;
+    float historicX = Float.NaN, historicY = Float.NaN;
+    static final int DELTA = 50;
+    enum Direction {LEFT, RIGHT;}
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -86,21 +89,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-          /*  switch (position) {
-                case 0:
-                    //GestioneViaggioAttivitaTabTutte tabTutte = new GestioneViaggioAttivitaTabTutte();
-                    return GestioneViaggioAttivitaTabTutte.newInstance(0);
-                case 1:
-                    //GestioneViaggioAttivitaTabTutte tabVedere = new GestioneViaggioAttivitaTabTutte();
-                    return GestioneViaggioAttivitaTabTutte.newInstance(0);
-                case 2:
-                   // GestioneViaggioAttivitaTabTutte tabMangiare = new GestioneViaggioAttivitaTabTutte();
-                     return GestioneViaggioAttivitaTabTutte.newInstance(0);
-                default:
-                    //GestioneViaggioAttivitaTabTutte tabMangiare1 = new GestioneViaggioAttivitaTabTutte();
-                    return GestioneViaggioAttivitaTabTutte.newInstance(0);
 
-            }*/
             return GestioneViaggioAttivitaTabTutte.newInstance(position);
         }
 
@@ -151,7 +140,22 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         public static GestioneViaggioAttivitaTabTutte newInstance(int sectionNumber) {
             GestioneViaggioAttivitaTabTutte fragment = new GestioneViaggioAttivitaTabTutte();
             Bundle args = new Bundle();
-            args.putString("attivita_nome_viaggio", NomeViaggio);
+            switch (sectionNumber){
+                case 0 :
+                        args.putString("tabselected", "tutte");
+                        break;
+                case 1 :
+                        args.putString("tabselected", "vedere");
+                        break;
+                case 2 :
+                        args.putString("tabselected", "mangiare");
+                        break;
+                default:
+                        args.putString("tabselected", "tutte");
+                        break;
+
+            }
+
             fragment.setArguments(args);
             return fragment;
         }
@@ -160,13 +164,13 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
             attivitas = new ArrayList<Attivita>();
             DataBase db = new DataBase(getActivity());
-            attivitas = db.getAttivita(NomeViaggio);
-            Log.e("ciao", Integer.toString(attivitas.size()));
+            attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
             itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
             ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
             adapter.notifyDataSetChanged();
             itemListView.setAdapter(adapter);
             itemListView.setOnItemClickListener(this);
+
             return rootView;
         }
 

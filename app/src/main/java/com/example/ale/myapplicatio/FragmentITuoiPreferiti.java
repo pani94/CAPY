@@ -2,11 +2,14 @@ package com.example.ale.myapplicatio;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -14,6 +17,7 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
 
     private ArrayList<Attivita> arrayList;
     private ListView itemListView;
+    private TextView titolo_ituoipreferiti;
 
     public FragmentITuoiPreferiti() {
         // Required empty public constructor
@@ -33,6 +37,7 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
         DataBase db = new DataBase(getActivity());
         arrayList = db.getAttivitaPreferite();
         itemListView = (ListView) view.findViewById(R.id.fragment_ituoi_preferiti_list);
+        titolo_ituoipreferiti = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_titolo);
         ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), arrayList);
         adapter.notifyDataSetChanged();
         itemListView.setAdapter(adapter);
@@ -42,6 +47,19 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        ITuoiPreferitiFragmentListItem newFragment = new ITuoiPreferitiFragmentListItem();
+        Bundle args = new Bundle();
+        args.putString("preferiti_titolo", arrayList.get(position).getNome());
+        args.putString("preferiti_foto", arrayList.get(position).getFoto());
+        args.putString("preferiti_orario", arrayList.get(position).getOrario());
+        args.putString("preferiti_link", arrayList.get(position).getLink());
+        args.putString("preferiti_telefono", arrayList.get(position).getTelefono());
+        args.putString("preferiti_indirizzo", arrayList.get(position).getIndirizzo());
+        newFragment.setArguments(args);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container_profilo, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

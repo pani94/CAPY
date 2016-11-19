@@ -44,6 +44,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
     private TextView link;
     private Button aggiungiaviaggio;
     private Button preferito;
+
     private DataBase database;
     private ArrayList <Viaggio> arrayListViaggi;
     private String name="";
