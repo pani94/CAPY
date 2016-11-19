@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:x="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_crea_il_tuo_viaggio"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,7 +28,7 @@
         android:ems="10"
         android:layout_marginTop="51dp"
         android:id="@+id/editTextNomeViaggio"
-        android:text="Nome viaggio"
+        android:hint="Nome viaggio"
         android:layout_below="@+id/testo"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
