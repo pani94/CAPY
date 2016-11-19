@@ -464,6 +464,27 @@ public class DataBase {
         }
 
     }
+
+    public boolean getPreferitiBool(){
+        String where = ATTIVITA_PREFERITO + "= ?";
+        String[] whereArgs = {"true"};
+        this.openReadableDB();
+        Cursor cursor = db.query(ATTIVITA_TABLE, null, where, whereArgs, null, null, null);
+        if(cursor != null && cursor.getCount()>0){
+            cursor.close();
+            this.closeDB();
+
+            return true;
+        }
+        else
+        {
+            this.closeDB();
+
+            return false;
+        }
+
+
+    }
     private static ViaggioAttivita getViaggioAttivitaFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0f){
             return null;
