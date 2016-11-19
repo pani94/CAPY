@@ -1,6 +1,7 @@
 package com.example.ale.myapplicatio;
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -23,7 +24,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
-
+    private static String NomeViaggio;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -37,6 +38,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        NomeViaggio = getIntent().getStringExtra("attivita_nomeviaggio");
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -78,47 +80,8 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-  /* public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-       /* private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-     /*   public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-        */
-    /*  @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
-            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }/*
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages
-     * /*
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -126,7 +89,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
+          /*  switch (position) {
                 case 0:
                     //GestioneViaggioAttivitaTabTutte tabTutte = new GestioneViaggioAttivitaTabTutte();
                     return GestioneViaggioAttivitaTabTutte.newInstance(0);
@@ -140,7 +103,8 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                     //GestioneViaggioAttivitaTabTutte tabMangiare1 = new GestioneViaggioAttivitaTabTutte();
                     return GestioneViaggioAttivitaTabTutte.newInstance(0);
 
-            }
+            }*/
+            return GestioneViaggioAttivitaTabTutte.newInstance(0);
         }
 
         @Override
@@ -190,17 +154,17 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         public static GestioneViaggioAttivitaTabTutte newInstance(int sectionNumber) {
             GestioneViaggioAttivitaTabTutte fragment = new GestioneViaggioAttivitaTabTutte();
             Bundle args = new Bundle();
-            args.putString("ciao", "Nome viaggio");
+            args.putString("attivita_nome_viaggio", NomeViaggio);
             fragment.setArguments(args);
             return fragment;
         }
 
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            Log.e("gestione", nomeViaggio + "1");
+            Log.e("gestione", NomeViaggio + "1");
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
             attivitas = new ArrayList<Attivita>();
             DataBase db = new DataBase(getActivity());
-            attivitas = db.getAttivita(nomeViaggio);
+            attivitas = db.getAttivita(NomeViaggio);
             itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
             ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
             adapter.notifyDataSetChanged();
