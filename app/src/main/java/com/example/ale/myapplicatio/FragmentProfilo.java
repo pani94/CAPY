@@ -103,6 +103,7 @@ public class FragmentProfilo extends Fragment implements AdapterView.OnItemClick
                 transaction.commit();
                 break;
             case "I tuoi Preferiti":
+
                 FragmentITuoiPreferiti preferitiFragment = new FragmentITuoiPreferiti();
                 //FragmentManager fragmentManager1 = getFragmentManager();
                // FragmentTransaction transaction1 = fragmentManager1.beginTransaction();

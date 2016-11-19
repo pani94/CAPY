@@ -27,16 +27,6 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
     public RicercaActivityFragmentMenu() {
     }
 
-
-   /* public static RicercaActivityFragmentMenu newInstance(String param1, String param2) {
-        RicercaActivityFragmentMenu fragment = new RicercaActivityFragmentMenu();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
