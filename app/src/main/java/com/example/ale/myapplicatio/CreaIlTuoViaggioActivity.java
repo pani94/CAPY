@@ -194,9 +194,9 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
             int month_iesimo = calendar.get(calendar.MONTH);
             int year_iesimo = calendar.get(calendar.YEAR);
             String p_iesimo = day_iesimo + "/" + (month_iesimo+1) + "/" + year_iesimo;
-            g = new Giorno(p);
+            g = new Giorno(p_iesimo);
             db.insertGiorno(g);
-            va = new ViaggioGiorno(id_viaggio, p);
+            va = new ViaggioGiorno(id_viaggio, p_iesimo);
             db.insertViaggioGiorno(va);
             //Log.e("messaggini", p_iesimo);
         }

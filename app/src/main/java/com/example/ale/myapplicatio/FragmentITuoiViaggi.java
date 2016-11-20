@@ -47,24 +47,26 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_ituoi_viaggi, container, false);
         arrayList = new ArrayList<Viaggio>();
-        DataBase db = new DataBase(getActivity());
+        final DataBase db = new DataBase(getActivity());
         arrayList = db.getViaggi();
         itemListView = (ListView) view.findViewById(R.id.lista_viaggi);
-        ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayList);
+        final ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayList);
         adapter.notifyDataSetChanged();
         itemListView.setAdapter(adapter);
         itemListView.setOnItemClickListener(this);
         itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
+                                           final int pos, long id) {
 
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Delete entry")
-                        .setMessage("Are you sure you want to delete this entry?")
+                        .setTitle("Elimina viaggio")
+                        .setMessage("Sei sicuro di voler eliminare " + arrayList.get(pos).getNome_viaggio() + " ?")
                         .setPositiveButton("si", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
+                                db.deleteViaggio(arrayList.get(pos).getId_viaggio());
+                                arrayList.remove(pos);
+                                adapter.notifyDataSetChanged();
                             }
                         })
                         .setNegativeButton("no", new DialogInterface.OnClickListener() {

@@ -379,6 +379,36 @@ public class DataBase {
             }
         }
     }
+    public boolean getPreferitiBool(){
+        String where = ATTIVITA_PREFERITO + "= ?";
+        String[] whereArgs = {"true"};
+        this.openReadableDB();
+        Cursor cursor = db.query(ATTIVITA_TABLE, null, where, whereArgs, null, null, null);
+        if(cursor != null && cursor.getCount()>0){
+            cursor.close();
+            this.closeDB();
+
+            return true;
+        }
+        else
+        {
+            this.closeDB();
+
+            return false;
+        }
+
+
+    }
+    public int deletePrefereriti(String id){
+        String where = ATTIVITA_PLACE_ID + "= ?";
+        String[] whereArgs = { id };
+
+        this.openWriteableDB();
+        int rowCount = db.delete(ATTIVITA_TABLE, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
+    }
     public long insertGiorno(Giorno giorno) {
         ContentValues cv = new ContentValues();
         cv.put(GIORNO_DATA, giorno.getData());
@@ -468,26 +498,6 @@ public class DataBase {
 
     }
 
-    public boolean getPreferitiBool(){
-        String where = ATTIVITA_PREFERITO + "= ?";
-        String[] whereArgs = {"true"};
-        this.openReadableDB();
-        Cursor cursor = db.query(ATTIVITA_TABLE, null, where, whereArgs, null, null, null);
-        if(cursor != null && cursor.getCount()>0){
-            cursor.close();
-            this.closeDB();
-
-            return true;
-        }
-        else
-        {
-            this.closeDB();
-
-            return false;
-        }
-
-
-    }
     private static ViaggioAttivita getViaggioAttivitaFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0f){
             return null;
@@ -505,8 +515,8 @@ public class DataBase {
         }
     }
     public int deleteViaggioAttivita(long id, String place_id) {
-        String where = VIAGGIOATTIVITA_ID_VIAGGIO + "= ? AND " + VIAGGIOATTIVITA_PLACE_ID + "= " + place_id ;
-        String[] whereArgs = { String.valueOf(id) };
+        String where = VIAGGIOATTIVITA_ID_VIAGGIO + "= ? " + "AND " + VIAGGIOATTIVITA_PLACE_ID + "= ?" ;
+        String[] whereArgs = { String.valueOf(id), place_id };
 
         this.openWriteableDB();
         int rowCount = db.delete(VIAGGIOATTIVITA_TABLE, where, whereArgs);

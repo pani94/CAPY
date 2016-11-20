@@ -36,24 +36,27 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ituoi_preferiti, container, false);
         arrayList = new ArrayList<Attivita>();
-        DataBase db = new DataBase(getActivity());
+        final DataBase db = new DataBase(getActivity());
         arrayList = db.getAttivitaPreferite();
         itemListView = (ListView) view.findViewById(R.id.fragment_ituoi_preferiti_list);
         titolo_ituoipreferiti = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_titolo);
-        ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), arrayList);
+        final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), arrayList);
         adapter.notifyDataSetChanged();
         itemListView.setAdapter(adapter);
         itemListView.setOnItemClickListener(this);
         itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                           int pos, long id) {
+                                           final int pos, long id) {
 
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Delete entry")
-                        .setMessage("Are you sure you want to delete this entry?")
+                        .setTitle("Elimina preferito")
+                        .setMessage("Sei sicuro di volere eliminare dai tuoi preferiti " + arrayList.get(pos).getNome() + " ?")
                         .setPositiveButton("si", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                db.deletePrefereriti(arrayList.get(pos).getPlace_id());
+                                arrayList.remove(pos);
+                                adapter.notifyDataSetChanged();
 
                             }
                         })

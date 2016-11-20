@@ -169,24 +169,27 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
             attivitas = new ArrayList<Attivita>();
-            DataBase db = new DataBase(getActivity());
+            final  DataBase db = new DataBase(getActivity());
             attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
             itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
-            ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
+            final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
             adapter.notifyDataSetChanged();
             itemListView.setAdapter(adapter);
             itemListView.setOnItemClickListener(this);
             itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-                                               int pos, long id) {
+                                               final int pos, long id) {
 
                     new AlertDialog.Builder(getActivity())
-                            .setTitle("Delete entry")
-                            .setMessage("Are you sure you want to delete this entry?")
+                            .setTitle("Elimina attività")
+                            .setMessage("Sei sicuro di volere eliminare " + attivitas.get(pos).getNome() + " da " + NomeViaggio + "?")
                             .setPositiveButton("si", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
+                                    db.deleteViaggioAttivita(db.getIdViaggio(NomeViaggio), attivitas.get(pos).getPlace_id());
+                                    Log.e("elimina",Integer.toString( db.getIdViaggio(NomeViaggio)) + attivitas.get(pos).getPlace_id() );
+                                    attivitas.remove(pos);
+                                    adapter.notifyDataSetChanged();
                                 }
                             })
                             .setNegativeButton("no", new DialogInterface.OnClickListener() {
