@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity  {
     private SlidingMenuAdapter adapter;
     private ListView listViewSliding;
     private DrawerLayout drawerLayout;
-    private RelativeLayout mainContent;
+    //private RelativeLayout mainContent;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity  {
         //sliding menu
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mainContent = (RelativeLayout) findViewById(R.id.main_content);
+        //mainContent = (RelativeLayout) findViewById(R.id.main_content);
         listSliding = new ArrayList<>();
 
         //add item for sliding list
