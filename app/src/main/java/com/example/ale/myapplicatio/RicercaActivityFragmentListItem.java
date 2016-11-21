@@ -353,7 +353,9 @@ public class RicercaActivityFragmentListItem extends Fragment{
                 case R.id.bottone_aggiungipreferiti:
                                             Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true");
                                             database.UpdateAttivitaPreferita(attivitapreferita);
-
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            "Attività aggiunta ai preferiti",
+                            Toast.LENGTH_SHORT).show();
                                                         break;
 
 
