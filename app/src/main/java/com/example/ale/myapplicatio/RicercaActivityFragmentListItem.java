@@ -288,38 +288,46 @@ public class RicercaActivityFragmentListItem extends Fragment{
                     Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
                     startActivity(viewIntent);
                     break;
-                case R.id.bottone_aggiungiaviaggio: Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false");
-                    database.insertAttivita(attivita);
-                    String[] nomeViaggi = new String[arrayListViaggi.size()];
-                    for(int k=0; k<arrayListViaggi.size(); k++){
-                        nomeViaggi[k] = arrayListViaggi.get(k).getNome_viaggio();
+                case R.id.bottone_aggiungiaviaggio:
+                    if(database.getViaggiBool()) {
+                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false");
+                        database.insertAttivita(attivita);
+                        final String[] nomeViaggi = new String[arrayListViaggi.size()];
+                        for (int k = 0; k < arrayListViaggi.size(); k++) {
+                            nomeViaggi[k] = arrayListViaggi.get(k).getNome_viaggio();
+                        }
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("I TUOI VIAGGI");
+                        builder.setSingleChoiceItems(nomeViaggi, 0, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                nomeViaggio = arrayListViaggi.get(i).getNome_viaggio();
+                                id = arrayListViaggi.get(i).getId_viaggio();
+                            }
+
+                        });
+                        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, place_id);
+                                database.insertViaggioAttivita(viaggioattivita);
+                                String stampa = "L'attività è stata aggiunta al viaggio: " + nomeViaggio;
+                                Toast.makeText(getActivity().getApplicationContext(),
+                                        stampa,
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        builder.show();
+                    }else{
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "Non hai viaggi",
+                                Toast.LENGTH_SHORT).show();
                     }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("I TUOI VIAGGI");
-                    builder.setSingleChoiceItems(nomeViaggi, -1, new  DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            nomeViaggio = arrayListViaggi.get(i).getNome_viaggio();
-                            id = arrayListViaggi.get(i).getId_viaggio();
-                        }
-
-                    });
-                    builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener(){
-                        public void onClick(DialogInterface dialog, int which){
-                            ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, place_id);
-                            database.insertViaggioAttivita(viaggioattivita);
-                            Toast.makeText(getActivity().getApplicationContext(),
-                                    "L'attività è stata aggiunta al viaggio",
-                                    Toast.LENGTH_LONG).show();
-
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener(){
-                        public void onClick(DialogInterface dialog, int which){
-
-                        }
-                    });
-                    builder.show();
                     break;
 
                                                     /*ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayListViaggi);

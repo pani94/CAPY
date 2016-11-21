@@ -234,6 +234,23 @@ public class DataBase {
             }
         }
     }
+    public boolean getViaggiBool(){
+        String where = "1 = 1";
+        this.openReadableDB();
+        Cursor cursor = db.query(VIAGGIO_TABLE, null, where, null, null, null, null);
+        if(cursor != null && cursor.getCount()>0){
+            cursor.close();
+            this.closeDB();
+            return true;
+        }
+        else
+        {
+            this.closeDB();
+            return false;
+        }
+
+
+    }
     public int deleteViaggio(long id) {
         String where = VIAGGIO_ID + "= ?";
         String[] whereArgs = { String.valueOf(id) };
