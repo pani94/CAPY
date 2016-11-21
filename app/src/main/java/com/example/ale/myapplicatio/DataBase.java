@@ -248,8 +248,39 @@ public class DataBase {
             this.closeDB();
             return false;
         }
+    }
+    public String getDataPartenza(long id_viaggio){
+        String where = VIAGGIO_ID + " = " + id_viaggio;
+        this.openReadableDB();
+        Cursor cursor = db.query(VIAGGIO_TABLE, null, where, null, null, null, null);
+        if(cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            return cursor.getString(VIAGGIO_PARTENZA_COL);
+        }else{
+            return null;
+        }
+    }
 
-
+    public String getDataArrivo(long id_viaggio){
+        String where = VIAGGIO_ID + " = " + id_viaggio;
+        this.openReadableDB();
+        Cursor cursor = db.query(VIAGGIO_TABLE, null, where, null, null, null, null);
+        if(cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            return cursor.getString(VIAGGIO_ARRIVO_COL);
+        }else{
+            return null;
+        }
+    }
+    public void UpdateViaggio(Viaggio viaggio) {
+        ContentValues cv = new ContentValues();
+        cv.put(VIAGGIO_ID, viaggio.getId_viaggio());
+        cv.put(VIAGGIO_NOME, viaggio.getNome_viaggio());
+        cv.put(VIAGGIO_PARTENZA, viaggio.getPartenza());
+        cv.put(VIAGGIO_ARRIVO, viaggio.getArrivo());
+        this.openReadableDB();
+        db.replace(VIAGGIO_TABLE, null, cv);
+        this.closeDB();
     }
     public int deleteViaggio(long id) {
         String where = VIAGGIO_ID + "= ?";
