@@ -298,7 +298,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
                         }
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle("I TUOI VIAGGI");
-                        builder.setSingleChoiceItems(nomeViaggi, 0, new DialogInterface.OnClickListener() {
+                        builder.setSingleChoiceItems(nomeViaggi,-1, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 nomeViaggio = arrayListViaggi.get(i).getNome_viaggio();
@@ -308,12 +308,19 @@ public class RicercaActivityFragmentListItem extends Fragment{
                         });
                         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, place_id);
-                                database.insertViaggioAttivita(viaggioattivita);
-                                String stampa = "L'attività è stata aggiunta al viaggio: " + nomeViaggio;
-                                Toast.makeText(getActivity().getApplicationContext(),
-                                        stampa,
-                                        Toast.LENGTH_SHORT).show();
+                                if(!nomeViaggio.equals("")){
+                                    ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, place_id);
+                                    database.insertViaggioAttivita(viaggioattivita);
+                                    String stampa = "L'attività è stata aggiunta al viaggio: " + nomeViaggio;
+                                    Toast.makeText(getActivity().getApplicationContext(),
+                                            stampa,
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    Toast.makeText(getActivity().getApplicationContext(),"Devi selezionare un viaggio",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+
 
                             }
                         });
