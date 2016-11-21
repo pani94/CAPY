@@ -3,7 +3,6 @@ package com.example.ale.myapplicatio;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -73,6 +72,27 @@ public class MainActivity extends AppCompatActivity  {
         cerca.addTextChangedListener(passwordWatcher);
         bottone.setOnClickListener(buttonListener);
         cerca.setOnEditorActionListener(editTextListener);
+        cerca.setValidator(new AutoCompleteTextView.Validator() {
+            @Override
+            public boolean isValid(CharSequence charSequence) {
+                String s = charSequence.toString();
+                Log.e("messaggini", s);
+                int commas = 0;
+                for(int i = 0; i < s.length(); i++) {
+                    if(s.charAt(i) == ',') commas++;
+                }
+                if(commas == 2){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+
+            @Override
+            public CharSequence fixText(CharSequence charSequence) {
+                return null;
+            }
+        });
 
         //sliding menu
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
@@ -304,13 +324,13 @@ public class MainActivity extends AppCompatActivity  {
         @Override
         public void onClick(View v) {
             String ricerca = cerca.getText().toString();
-            if(!ricerca.equals("")){
+            if(!ricerca.equals("") && cerca.getValidator().isValid(ricerca)){
                 Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
                 intent.putExtra("citta", ricerca);
                 startActivity(intent);
             }
             else{
-                Toast.makeText(getApplicationContext(),"Metti una city pezzo di negro bastardo infame",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
             }
 
 
@@ -330,7 +350,7 @@ public class MainActivity extends AppCompatActivity  {
                     startActivity(intent);
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"Metti una city pezzo di negro bastardo infame",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
                 }
             }
             return false;
