@@ -3,18 +3,13 @@ package com.example.ale.myapplicatio;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -97,7 +92,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -107,6 +102,8 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                     return "DA VEDERE";
                 case 1:
                     return "DOVE MANGIARE";
+                case 2:
+                    return "DOVE DORMIRE";
 
             }
             return null;
@@ -146,6 +143,9 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                         break;
                 case 1 :
                         args.putString("tabselected", "mangiare");
+                        break;
+                case 2:
+                        args.putString("tabselected", "dormire");
                         break;
                 default:
                         args.putString("tabselected", "tutte");
