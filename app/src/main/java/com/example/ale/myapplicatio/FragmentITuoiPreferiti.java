@@ -40,7 +40,7 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
         arrayList = db.getAttivitaPreferite();
         itemListView = (ListView) view.findViewById(R.id.fragment_ituoi_preferiti_list);
         titolo_ituoipreferiti = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_titolo);
-        final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), arrayList);
+        final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), arrayList,"");
         adapter.notifyDataSetChanged();
         itemListView.setAdapter(adapter);
         itemListView.setOnItemClickListener(this);

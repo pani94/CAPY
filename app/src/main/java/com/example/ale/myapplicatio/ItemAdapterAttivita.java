@@ -1,16 +1,21 @@
 package com.example.ale.myapplicatio;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,12 +26,15 @@ import java.util.ArrayList;
  * Created by ale on 18/11/2016.
  */
 
-public class ItemAdapterAttivita extends ArrayAdapter<Attivita>{
+public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.OnClickListener{
     ArrayList<Attivita> arrayList;
     ImageView foto;
-    public ItemAdapterAttivita(Context context, ArrayList<Attivita> Items) {
+    String nome_viaggio;
+    String data;
+    public ItemAdapterAttivita(Context context, ArrayList<Attivita> Items,String nomeViaggio) {
         super(context, 0, Items);
         arrayList = Items;
+        nome_viaggio = nomeViaggio;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -38,12 +46,64 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita>{
         // Lookup view for data population
         TextView name = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_nomeviaggio);
         TextView indirizzo = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_indirizzo);
+        Button aggiungi = (Button) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_bottone_aggiungi);
         //ImageView foto = (ImageView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_foto);
         name.setText(item.getNome());
         indirizzo.setText(item.getIndirizzo());
+        aggiungi.setOnClickListener(this);
         //new LoadImageTask().execute(item.getFoto());
         //Return the completed view to render on screen
         return convertView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.fragment_gestione_viaggio_attivita_bottone_aggiungi) {
+            View parentRow = (View) v.getParent();
+            ListView listView = (ListView) parentRow.getParent();
+            final int position = listView.getPositionForView(parentRow);
+            final DataBase dataBase = new DataBase(getContext());
+            final int id_viaggio = dataBase.getIdViaggio(nome_viaggio);
+            final ArrayList <ViaggioGiorno> giorni = dataBase.getGiorni(id_viaggio);
+            final String[] date = new String[giorni.size()];
+            for (int k = 0; k < giorni.size(); k++) {
+                date[k] = giorni.get(k).getData();
+            }
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("INSERISCI L'ATTIVITA' AD UN GIORNO");
+            builder.setSingleChoiceItems(date, -1, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    data = giorni.get(i).getData();
+                }
+
+            });
+            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    if (!data.equals("")) {
+                        AttivitaGiorno attivitaGiorno = new AttivitaGiorno(id_viaggio,arrayList.get(position).getPlace_id(),data);
+                        dataBase.insertAttivitaGiorno(attivitaGiorno);
+                        String stampa = "L'attività è stata aggiunta al giorno: " + data;
+                        Toast.makeText(getContext().getApplicationContext(),
+                                stampa,
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext().getApplicationContext(), "Devi selezionare un giorno",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            builder.show();
+
+
+        }
     }
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
@@ -73,4 +133,5 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita>{
             }
         }
     }
+
 }
