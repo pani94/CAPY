@@ -102,18 +102,17 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "TUTTE";
-                case 1:
                     return "DA VEDERE";
-                case 2:
+                case 1:
                     return "DOVE MANGIARE";
+
             }
             return null;
         }
@@ -148,12 +147,9 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             switch (sectionNumber){
                 case 0 :
-                        args.putString("tabselected", "tutte");
-                        break;
-                case 1 :
                         args.putString("tabselected", "vedere");
                         break;
-                case 2 :
+                case 1 :
                         args.putString("tabselected", "mangiare");
                         break;
                 default:
@@ -169,12 +165,14 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
             attivitas = new ArrayList<Attivita>();
-            final  DataBase db = new DataBase(getActivity());
+             final DataBase db = new DataBase(getActivity());
             attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
+            Log.e("elemAtt", Integer.toString(attivitas.size()));
             itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
             final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
             adapter.notifyDataSetChanged();
             itemListView.setAdapter(adapter);
+
             itemListView.setOnItemClickListener(this);
             itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
@@ -187,7 +185,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                             .setPositiveButton("si", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     db.deleteViaggioAttivita(db.getIdViaggio(NomeViaggio), attivitas.get(pos).getPlace_id());
-                                    Log.e("elimina",Integer.toString( db.getIdViaggio(NomeViaggio)) + attivitas.get(pos).getPlace_id() );
                                     attivitas.remove(pos);
                                     adapter.notifyDataSetChanged();
                                 }
@@ -206,7 +203,17 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
             return rootView;
         }
+     /*  public void onResume(){
+            super.onResume();
+            DataBase db = new DataBase(getActivity());
+           Log.e("aiuto", "onResume" + getArguments().getString("tabselected"));
+           attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
+            //itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
+            final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
+           adapter.notifyDataSetChanged();
+            itemListView.setAdapter(adapter);
 
+        }*/
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 

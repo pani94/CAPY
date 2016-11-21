@@ -484,6 +484,7 @@ public class DataBase {
                 where,whereArgs,
                 null, null, null);
         if(cursor != null && cursor.getCount()>0){
+           //Log.e( "viaggioAttBool", cursor.getString(VIAGGIOATTIVITA_PLACE_ID_COL));
             cursor.close();
             this.closeDB();
 
@@ -491,6 +492,7 @@ public class DataBase {
         }
         else
         {
+            Log.e("bool", "false");
             this.closeDB();
 
             return false;
