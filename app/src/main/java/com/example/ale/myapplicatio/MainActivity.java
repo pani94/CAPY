@@ -70,7 +70,9 @@ public class MainActivity extends AppCompatActivity  {
         cityList = new ArrayList<>();
         bottone = (Button) findViewById(R.id.bottone);
         cerca = (AutoCompleteTextView) findViewById(R.id.cerca);
-
+        cerca.addTextChangedListener(passwordWatcher);
+        bottone.setOnClickListener(buttonListener);
+        cerca.setOnEditorActionListener(editTextListener);
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mainContent = (RelativeLayout) findViewById(R.id.main_content);
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity  {
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
     }
 
-        /*final TextWatcher passwordWatcher = new TextWatcher() {
+        final TextWatcher passwordWatcher = new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
@@ -139,10 +141,8 @@ public class MainActivity extends AppCompatActivity  {
             public void afterTextChanged(Editable s) {
                 cityList.clear();
             }
-        };*/
-        //cerca.addTextChangedListener(passwordWatcher);
-       // bottone.setOnClickListener(buttonListener);
-        //cerca.setOnEditorActionListener(editTextListener);
+        };
+
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
