@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity  {
         cerca.addTextChangedListener(passwordWatcher);
         bottone.setOnClickListener(buttonListener);
         cerca.setOnEditorActionListener(editTextListener);
+
+        //sliding menu
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mainContent = (RelativeLayout) findViewById(R.id.main_content);
@@ -80,7 +82,9 @@ public class MainActivity extends AppCompatActivity  {
 
         //add item for sliding list
         listSliding.add(new ItemSlideMenu(R.drawable.ic_account_circle_black_24dp, "Profilo"));
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Settings"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "Crea un nuovo viaggio"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Impostazioni"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_info_black_24dp, "About"));
 
         adapter = new SlidingMenuAdapter(this, listSliding);
         listViewSliding.setAdapter(adapter);
@@ -124,7 +128,7 @@ public class MainActivity extends AppCompatActivity  {
             }
         };
 
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
 
         final TextWatcher passwordWatcher = new TextWatcher() {
@@ -146,7 +150,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+       // getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -187,7 +191,7 @@ public class MainActivity extends AppCompatActivity  {
                 startActivity(intent);
                 break;
             case 1:
-                Intent intent2 = new Intent(MainActivity.this, ProfiloViaggiActivity.class);
+                Intent intent2 = new Intent(MainActivity.this, CreaIlTuoViaggioActivity.class);
                 startActivity(intent2);
                 break;
             default:
