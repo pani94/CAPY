@@ -41,9 +41,10 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ricerca_activity_fragment_menu, container, false);
-        scelte = new String[2];
+        scelte = new String[3];
         scelte[0] = "Cosa vedere?";
         scelte[1] = "Dove mangiare?";
+        scelte[2] = "Dove dormire?";
         scelta_menu = (TextView) view.findViewById(R.id.scelta_menu);
         listaFragment = (ListView) view.findViewById(R.id.listaFragment);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, scelte);
@@ -64,6 +65,8 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
             selectedItem = "vedere";
         }else if(position == 1){
             selectedItem = "mangiare";
+        }else if(position == 2){
+            selectedItem = "dormire";
         }
         args.putString("selectedItem",selectedItem);
         newFragment.setArguments(args);

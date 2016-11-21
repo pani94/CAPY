@@ -114,7 +114,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             String[] typesCoseDaVedere = {"amusement_park", "aquarium", "art_gallery", "casino", "church",  "museum", "stadium", "zoo"};
             //String[] typesDoveMangiare = {"bar", "cafe", "restaurant"};
             String url = "";
-            String parameters;
+            String parameters = "";
             String tipo_ricerca = "";
             String key = "language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             if(selectedItem.equals("vedere")){
@@ -133,7 +133,11 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                 tipo_ricerca = "textsearch";
                 int k = selectedCity.indexOf(",");
                 String citta = selectedCity.substring(0, k);
-                parameters = "query=restaurant+in+" + citta + "&" + key;
+                if (selectedItem.equals("mangiare")) {
+                    parameters = "query=restaurant+in+" + citta + "&" + key;
+                } else if (selectedItem.equals("dormire")) {
+                    parameters = "query=hotel+in+" + citta + "&" + key;
+                }
             }
             url = "https://maps.googleapis.com/maps/api/place/" + tipo_ricerca + output + "?" + parameters;
 
