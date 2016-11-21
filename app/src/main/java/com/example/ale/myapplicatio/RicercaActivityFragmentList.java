@@ -109,11 +109,17 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         @Override
         protected Void doInBackground(String... message) {
             HttpHandler sh = new HttpHandler();
-            String output = "json";
+            String output = "/json";
             String type = "type=";
             String[] typesCoseDaVedere = {"amusement_park", "aquarium", "art_gallery", "casino", "church",  "museum", "stadium", "zoo"};
-            String[] typesDoveMangiare = {"bar", "cafe", "restaurant"};
+            //String[] typesDoveMangiare = {"bar", "cafe", "restaurant"};
+            String url = "";
+            String parameters;
+            String tipo_ricerca = "";
+            String key = "language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             if(selectedItem.equals("vedere")){
+                tipo_ricerca = "nearbysearch";
+                String radius_sensor = "radius=5000&sensor=false";
                 for (int i = 0; i < typesCoseDaVedere.length; i++) {
                     if (i != 0) {
                         type += "|" + typesCoseDaVedere[i];
@@ -121,27 +127,27 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                         type += typesCoseDaVedere[i];
                     }
                 }
+                parameters = message[0] + "&" + type + "&" + radius_sensor + "&" + key;
             }
             else {
-                for (int i = 0; i < typesDoveMangiare.length; i++) {
-                    if (i != 0) {
-                        type += "|" + typesDoveMangiare[i];
-                    } else {
-                        type += typesDoveMangiare[i];
-                    }
-                }
+                tipo_ricerca = "textsearch";
+                int k = selectedCity.indexOf(",");
+                String citta = selectedCity.substring(0, k);
+                parameters = "query=restaurant+in+" + citta + "&" + key;
             }
-            String radius_sensor = "radius=5000&sensor=false";
+            url = "https://maps.googleapis.com/maps/api/place/" + tipo_ricerca + output + "?" + parameters;
+
             //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             // METTERE LA TIPOLOGIA
-            String key = "language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
-            String parameters = message[0] + "&" + type + "&" + radius_sensor + "&" + key;
+
+
             boolean bool ;
             bool = false;
             //do{
-            String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/" + output + "?" + parameters;
+
+
                 if(count == 0){
-                    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/" + output + "?" + parameters;
+                    url = "https://maps.googleapis.com/maps/api/place/" + tipo_ricerca + output + "?" + parameters;
                 }
                 else if( count > 0  && next_page != ""){
                     url = url + "&pagetoken=" + next_page;
@@ -167,6 +173,10 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                         JSONArray places = jsonObj.getJSONArray("results");
                         for (int i = 0; i < places.length(); i++) {
                             JSONObject p = places.getJSONObject(i);
+                            String vicinity = "";
+                            if(p.has("formatted_address")){
+                                vicinity = p.getString("formatted_address");
+                            }
                             if (p.has("geometry")) {
                                 JSONObject geometry = p.getJSONObject("geometry");
                                 if (geometry.has("location")) {
@@ -243,7 +253,6 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                             if (p.has("types")) {
                                 String types1 = p.getString("types");
                             }*/
-                            String vicinity = "";
                             if (p.has("vicinity")) {
                                 vicinity = p.getString("vicinity");
                             }
