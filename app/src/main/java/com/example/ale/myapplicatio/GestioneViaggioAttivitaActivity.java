@@ -65,7 +65,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // as you s
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -164,7 +164,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
 
             itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
-            final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
+            final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas,NomeViaggio);
             adapter.notifyDataSetChanged();
             itemListView.setAdapter(adapter);
 
@@ -186,7 +186,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                             })
                             .setNegativeButton("no", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    // do nothing
+
                                 }
                             })
                             .setIcon(android.R.drawable.ic_dialog_alert)
@@ -211,7 +211,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         }*/
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            Log.e("adapter1","schiacciato1");
         }
     }
 }
