@@ -78,6 +78,7 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ITuoiPreferitiFragmentListItem newFragment = new ITuoiPreferitiFragmentListItem();
         Bundle args = new Bundle();
+        args.putString("preferiti_placeid", arrayList.get(position).getPlace_id());
         args.putString("preferiti_titolo", arrayList.get(position).getNome());
         args.putString("preferiti_foto", arrayList.get(position).getFoto());
         args.putString("preferiti_orario", arrayList.get(position).getOrario());
