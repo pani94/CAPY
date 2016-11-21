@@ -28,12 +28,7 @@ import java.util.ArrayList;
 
 public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
     private static String NomeViaggio;
-    float historicX = Float.NaN, historicY = Float.NaN;
-    static final int DELTA = 50;
-    enum Direction {LEFT, RIGHT;}
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     private ViewPager mViewPager;
     private TextView attivita_nomeviaggio;
 
@@ -42,7 +37,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestione_viaggio_attivita);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_attivita);
         setSupportActionBar(toolbar);
         NomeViaggio = getIntent().getStringExtra("attivita_nomeviaggio");
         // Create the adapter that will return a fragment for each of the three
@@ -57,7 +52,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         //attivita_nomeviaggio.setT
 
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_attivita);
         tabLayout.setupWithViewPager(mViewPager);
 
 

@@ -445,6 +445,53 @@ public class DataBase {
         this.closeDB();
         return rowCount;
     }
+    public ArrayList<ViaggioGiorno> getGiorni(int id) {
+        String where = VIAGGIOGIORNO_ID_VIAGGIO+ "= ?";
+        String[] whereArgs = { Integer.toString(id) };
+        this.openReadableDB();
+        Cursor cursor = db.query(VIAGGIOGIORNO_TABLE, null,
+                where, whereArgs,
+                null, null, null);
+        ArrayList<ViaggioGiorno> giorni_viaggio = new ArrayList<ViaggioGiorno>();
+        while (cursor.moveToNext()) {
+            giorni_viaggio.add(getViaggiGiornoFromCursor(cursor));
+        }
+        if (cursor != null)
+            cursor.close();
+        this.closeDB();
+
+        return giorni_viaggio;
+    }
+    private static ViaggioGiorno getViaggiGiornoFromCursor(Cursor cursor) {
+        if (cursor == null || cursor.getCount() == 0){
+            return null;
+        }
+        else {
+            try {
+                ViaggioGiorno giorno = new ViaggioGiorno(
+                        cursor.getInt(VIAGGIOGIORNO_ID_VIAGGIO_COL),
+                        cursor.getString(VIAGGIOGIORNO_DATA_COL));
+                return giorno;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
+    }
+    public int getNumeroDiGiorni(int id){
+        String where = VIAGGIOGIORNO_ID_VIAGGIO+ "= ?";
+        String[] whereArgs = { Integer.toString(id) };
+        this.openReadableDB();
+        Cursor cursor = db.query(VIAGGIOGIORNO_TABLE, null,
+                where,whereArgs,
+                null, null, null);
+        if(cursor == null){
+            return 0;
+        }
+       else{
+            return cursor.getCount();
+        }
+    }
     public long insertViaggioAttivita(ViaggioAttivita viaggioAttivita) {
         ContentValues cv = new ContentValues();
         cv.put(VIAGGIOATTIVITA_ID_VIAGGIO, viaggioAttivita.getId_Viaggio());
@@ -483,8 +530,8 @@ public class DataBase {
         Cursor cursor = db.query(VIAGGIOATTIVITA_TABLE, null,
                 where,whereArgs,
                 null, null, null);
+        cursor.moveToFirst();
         if(cursor != null && cursor.getCount()>0){
-           //Log.e( "viaggioAttBool", cursor.getString(VIAGGIOATTIVITA_PLACE_ID_COL));
             cursor.close();
             this.closeDB();
 
