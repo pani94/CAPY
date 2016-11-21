@@ -173,6 +173,10 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                         JSONArray places = jsonObj.getJSONArray("results");
                         for (int i = 0; i < places.length(); i++) {
                             JSONObject p = places.getJSONObject(i);
+                            String vicinity = "";
+                            if(p.has("formatted_address")){
+                                vicinity = p.getString("formatted_address");
+                            }
                             if (p.has("geometry")) {
                                 JSONObject geometry = p.getJSONObject("geometry");
                                 if (geometry.has("location")) {
@@ -249,7 +253,6 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                             if (p.has("types")) {
                                 String types1 = p.getString("types");
                             }*/
-                            String vicinity = "";
                             if (p.has("vicinity")) {
                                 vicinity = p.getString("vicinity");
                             }
