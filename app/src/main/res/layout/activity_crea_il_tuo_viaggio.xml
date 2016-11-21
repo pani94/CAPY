@@ -16,6 +16,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.ale.myapplicatio.CreaIlTuoViaggioActivity">
 
+
     <TextView
         android:text="Crea il tuo viaggio"
         android:layout_width="wrap_content"
@@ -25,6 +26,9 @@
         android:layout_marginTop="19dp"
         android:id="@+id/testo"
         android:textSize="40sp" />
+
+    <requestFocus android:id="@+id/requestFocus" />
+
 
     <EditText
         android:layout_width="wrap_content"
