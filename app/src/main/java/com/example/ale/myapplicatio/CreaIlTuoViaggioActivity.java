@@ -25,7 +25,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
     private Button bottone_fatto;
     private Boolean modifica = false;
     private TextView nomeActivity;
-    long id_viaggio;
+    int id_viaggio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         bottone_arrivo.setOnClickListener(buttonListener);
         bottone_partenza.setOnClickListener(buttonListener);
         if(getIntent().getExtras() != null){
-            id_viaggio = getIntent().getLongExtra("id_viaggio", 10);
+            id_viaggio = getIntent().getIntExtra("id_viaggio", 10);
             String stringa_nomeViaggio = getIntent().getStringExtra("nome_viaggio");
             DataBase db = new DataBase(this);
             String data_partenza = db.getDataPartenza(id_viaggio);

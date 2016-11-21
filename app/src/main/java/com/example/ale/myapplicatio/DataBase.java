@@ -249,7 +249,7 @@ public class DataBase {
             return false;
         }
     }
-    public String getDataPartenza(long id_viaggio){
+    public String getDataPartenza(int id_viaggio){
         String where = VIAGGIO_ID + " = " + id_viaggio;
         this.openReadableDB();
         Cursor cursor = db.query(VIAGGIO_TABLE, null, where, null, null, null, null);
@@ -261,7 +261,7 @@ public class DataBase {
         }
     }
 
-    public String getDataArrivo(long id_viaggio){
+    public String getDataArrivo(int id_viaggio){
         String where = VIAGGIO_ID + " = " + id_viaggio;
         this.openReadableDB();
         Cursor cursor = db.query(VIAGGIO_TABLE, null, where, null, null, null, null);
