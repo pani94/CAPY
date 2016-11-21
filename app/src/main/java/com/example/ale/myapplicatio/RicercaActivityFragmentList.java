@@ -131,6 +131,8 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             }
             else {
                 tipo_ricerca = "textsearch";
+                int k = selectedCity.indexOf(",");
+                selectedCity = selectedCity.substring(0, k);
                 parameters = "query=restaurant+in+" + selectedCity + "&" + key;
             }
             url = "https://maps.googleapis.com/maps/api/place/" + tipo_ricerca + output + "?" + parameters;
