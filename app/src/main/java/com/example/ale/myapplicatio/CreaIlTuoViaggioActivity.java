@@ -87,7 +87,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         listSliding.add(new ItemSlideMenu(R.drawable.ic_home, "Home"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_account_circle_black_24dp, "Profilo"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Impostazioni"));
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_about, "About"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_info_black_24dp, "About"));
 
         adapter = new SlidingMenuAdapter(this, listSliding);
         listViewSliding.setAdapter(adapter);
