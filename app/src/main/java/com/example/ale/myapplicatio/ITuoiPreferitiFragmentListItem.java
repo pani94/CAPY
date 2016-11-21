@@ -1,12 +1,12 @@
 package com.example.ale.myapplicatio;
 
-import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +14,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class ITuoiPreferitiFragmentListItem extends Fragment {
 
@@ -35,7 +37,12 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
     private String preferiti_link_get;
     private String preferiti_telefono_get;
     private String preferiti_indirizzo_get;
+    private String preferiti_placeid_get;
+    private ArrayList<Viaggio> arrayListViaggi;
+    private String nomeViaggio;
+    private long id;
 
+    DataBase database;
     public ITuoiPreferitiFragmentListItem() {
         // Required empty public constructor
     }
@@ -51,7 +58,7 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
             preferiti_link_get = getArguments().getString("preferiti_link");
             preferiti_telefono_get = getArguments().getString("preferiti_telefono");
             preferiti_indirizzo_get = getArguments().getString("preferiti_indirizzo");
-
+            preferiti_placeid_get = getArguments().getString("preferiti_placeid");
         }
     }
 
@@ -74,6 +81,8 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
         preferiti_indirizzo.setText(preferiti_indirizzo_get);
 
         ButtonListener buttonListener = new ButtonListener();
+        database = new DataBase(getActivity());
+        arrayListViaggi = database.getViaggi();
         preferiti_bottoneaggiungi.setOnClickListener(buttonListener);
 
         String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + preferiti_foto_get + "&sensor=false&key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
@@ -85,7 +94,44 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
     public class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            if(database.getViaggiBool()) {
+                Attivita attivita = new Attivita(preferiti_placeid_get, preferiti_titolo_get, preferiti_indirizzo_get, preferiti_orario_get, preferiti_telefono_get, preferiti_link_get, "true", preferiti_foto_get, "false");
+                database.insertAttivita(attivita);
+                String[] nomeViaggi = new String[arrayListViaggi.size()];
+                for (int k = 0; k < arrayListViaggi.size(); k++) {
+                    nomeViaggi[k] = arrayListViaggi.get(k).getNome_viaggio();
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("I TUOI VIAGGI");
+                builder.setSingleChoiceItems(nomeViaggi, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        nomeViaggio = arrayListViaggi.get(i).getNome_viaggio();
+                        id = arrayListViaggi.get(i).getId_viaggio();
+                    }
 
+                });
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, preferiti_placeid_get);
+                        database.insertViaggioAttivita(viaggioattivita);
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "L'attività è stata aggiunta al viaggio",
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
+            }else{
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Non hai viaggi",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     }
     
