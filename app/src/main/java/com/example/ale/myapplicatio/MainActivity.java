@@ -3,6 +3,12 @@ package com.example.ale.myapplicatio;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,9 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity  {
@@ -32,12 +42,20 @@ public class MainActivity extends AppCompatActivity  {
     private String TAG = MainActivity.class.getSimpleName();
     ArrayList<String> cityList;
 
+    //per SlideMenu
+    private List<ItemSlideMenu> listSliding;
+    private SlidingMenuAdapter adapter;
+    private ListView listViewSliding;
+    private DrawerLayout drawerLayout;
+    private RelativeLayout mainContent;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        if(findViewById(R.id.fragment_bottone_crea)!=null){
+        if (findViewById(R.id.fragment_bottone_crea) != null) {
             if (savedInstanceState != null) {
                 return;
             }
@@ -52,7 +70,62 @@ public class MainActivity extends AppCompatActivity  {
         cityList = new ArrayList<>();
         bottone = (Button) findViewById(R.id.bottone);
         cerca = (AutoCompleteTextView) findViewById(R.id.cerca);
-        final TextWatcher passwordWatcher = new TextWatcher() {
+
+        listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mainContent = (RelativeLayout) findViewById(R.id.main_content);
+        listSliding = new ArrayList<>();
+
+        //add item for sliding list
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_account_circle_black_24dp, "Profilo"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Settings"));
+
+        adapter = new SlidingMenuAdapter(this, listSliding);
+        listViewSliding.setAdapter(adapter);
+
+        //Display icon to open/close sliding list
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //set Title
+        //setTitle(listSliding.get(0).getTitle());
+        //item selected
+        listViewSliding.setItemChecked(0, true);
+        //close menu
+        drawerLayout.closeDrawer(listViewSliding);
+
+        //display fragmentProfilo when start
+
+        listViewSliding.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //set title
+                //setTitle(listSliding.get(position).getTitle());
+                //item selected
+                listViewSliding.setItemChecked(position, true);
+
+                replaceFragment(position);
+                //close menu
+                drawerLayout.closeDrawer(listViewSliding);
+            }
+        });
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_opened, R.string.drawer_closed) {
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                invalidateOptionsMenu();
+            }
+        };
+
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+    }
+
+        /*final TextWatcher passwordWatcher = new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
@@ -66,24 +139,24 @@ public class MainActivity extends AppCompatActivity  {
             public void afterTextChanged(Editable s) {
                 cityList.clear();
             }
-        };
-        cerca.addTextChangedListener(passwordWatcher);
-        bottone.setOnClickListener(buttonListener);
-        cerca.setOnEditorActionListener(editTextListener);
+        };*/
+        //cerca.addTextChangedListener(passwordWatcher);
+       // bottone.setOnClickListener(buttonListener);
+        //cerca.setOnEditorActionListener(editTextListener);
 
-
-
-    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.fragment_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        if(actionBarDrawerToggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        /*switch (item.getItemId()) {
             case R.id.menu_profilo:
                 startActivity(new Intent(getApplicationContext(), ProfiloViaggiActivity.class));
             case R.id.menu_settings:
@@ -95,9 +168,41 @@ public class MainActivity extends AppCompatActivity  {
 
             default:
                 return super.onOptionsItemSelected(item);
-        }
+        }*/
+        return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        actionBarDrawerToggle.syncState();
+    }
+
+    //create method replace fragment
+    private void replaceFragment(int pos){
+        Fragment fragment = null;
+        switch (pos){
+            case 0:
+                Intent intent = new Intent(MainActivity.this, ProfiloViaggiActivity.class);
+                startActivity(intent);
+                break;
+            case 1:
+                Intent intent2 = new Intent(MainActivity.this, ProfiloViaggiActivity.class);
+                startActivity(intent2);
+                break;
+            default:
+                break;
+        }
+
+        if (fragment != null){
+            FragmentManager  fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.activity_main, fragment);
+            transaction.commit();
+
+
+        }
+    }
 
     private class GetCity extends AsyncTask<String, Void, Void> {
         @Override
@@ -114,7 +219,6 @@ public class MainActivity extends AppCompatActivity  {
             String url2 ="&types=(cities)&language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             //String url2 ="&types=(cities)&key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
             String url= url1 + arg0[0] + url2 ;
-            Log.e(TAG, "url  " + url);
             String jsonStr = sh.makeServiceCall(url);
                        if (jsonStr != null) {
                 try {
