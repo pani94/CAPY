@@ -1,8 +1,7 @@
 package com.example.ale.myapplicatio;
 
-import android.content.Context;
 import android.content.DialogInterface;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -60,16 +59,26 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
                                            final int pos, long id) {
 
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Elimina viaggio")
-                        .setMessage("Sei sicuro di voler eliminare " + arrayList.get(pos).getNome_viaggio() + " ?")
-                        .setPositiveButton("si", new DialogInterface.OnClickListener() {
+                        .setTitle("Elimina/Modifica")
+                        .setMessage("Vuoi eliminare o modificare il viaggio " + arrayList.get(pos).getNome_viaggio() + " ?")
+                        .setPositiveButton("Modifica", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                String nomeViaggio = arrayList.get(pos).getNome_viaggio();
+                                int id_viaggio = db.getIdViaggio(arrayList.get(pos).getNome_viaggio());
+                                Intent intent = new Intent(getActivity(), CreaIlTuoViaggioActivity.class);
+                                intent.putExtra("id_viaggio", id_viaggio);
+                                intent.putExtra("nome_viaggio", nomeViaggio);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("Elimina", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 db.deleteViaggio(arrayList.get(pos).getId_viaggio());
                                 arrayList.remove(pos);
                                 adapter.notifyDataSetChanged();
                             }
                         })
-                        .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                        .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // do nothing
                             }

@@ -1,11 +1,9 @@
 package com.example.ale.myapplicatio;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,19 +89,24 @@ public class FragmentProfilo extends Fragment implements AdapterView.OnItemClick
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         FragmentManager sceltaFragment;
         FragmentTransaction transaction;
+        DataBase db = new DataBase(getActivity());
         switch (scelte[i]){
             case "I tuoi viaggi":
-                FragmentITuoiViaggi viaggiFragment = new FragmentITuoiViaggi();
-                //FragmentManager fragmentManager = getFragmentManager();
-                //FragmentTransaction transaction = fragmentManager.beginTransaction();
-                sceltaFragment =getFragmentManager();
-                transaction = sceltaFragment.beginTransaction();
-                transaction.replace(R.id.fragment_container_profilo, viaggiFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                if(db.getViaggiBool()){
+                    FragmentITuoiViaggi viaggiFragment = new FragmentITuoiViaggi();
+                    //FragmentManager fragmentManager = getFragmentManager();
+                    //FragmentTransaction transaction = fragmentManager.beginTransaction();
+                    sceltaFragment =getFragmentManager();
+                    transaction = sceltaFragment.beginTransaction();
+                    transaction.replace(R.id.fragment_container_profilo, viaggiFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }else{
+                    Toast.makeText(getActivity(),"Non hai viaggi",Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case "I tuoi Preferiti":
-                DataBase db = new DataBase(getActivity());
                 if(db.getPreferitiBool()){
                     FragmentITuoiPreferiti preferitiFragment = new FragmentITuoiPreferiti();
                     //FragmentManager fragmentManager1 = getFragmentManager();

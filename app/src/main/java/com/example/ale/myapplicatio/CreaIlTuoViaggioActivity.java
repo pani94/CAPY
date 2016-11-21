@@ -5,7 +5,6 @@ import android.net.ParseException;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,12 +23,16 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
     private Button bottone_partenza;
     private Button bottone_arrivo;
     private Button bottone_fatto;
+    private Boolean modifica = false;
+    private TextView nomeActivity;
+    long id_viaggio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crea_il_tuo_viaggio);
         ButtonListener buttonListener = new ButtonListener();
+        nomeActivity = (TextView) findViewById(R.id.testo);
         nomeViaggio = (EditText) findViewById(R.id.editTextNomeViaggio);
         partenza = (TextView) findViewById(R.id.partenza);
         arrivo = (TextView) findViewById(R.id.arrivo);
@@ -37,9 +40,22 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         bottone_arrivo = (Button) findViewById(R.id.button_arrivo);
         bottone_fatto = (Button) findViewById(R.id.buttonFatto);
         bottone_fatto.setOnClickListener(buttonListener);
-        bottone_arrivo.setEnabled(false);
         bottone_arrivo.setOnClickListener(buttonListener);
         bottone_partenza.setOnClickListener(buttonListener);
+        if(getIntent().getExtras() != null){
+            id_viaggio = getIntent().getLongExtra("id_viaggio", 10);
+            String stringa_nomeViaggio = getIntent().getStringExtra("nome_viaggio");
+            DataBase db = new DataBase(this);
+            String data_partenza = db.getDataPartenza(id_viaggio);
+            String data_arrivo = db.getDataArrivo(id_viaggio);
+            nomeActivity.setText("Modifica Viaggio");
+            nomeViaggio.setText(stringa_nomeViaggio);
+            partenza.setText(data_partenza);
+            arrivo.setText(data_arrivo);
+            modifica = true;
+        }else{
+            bottone_arrivo.setEnabled(false);
+        }
     }
 
     public class ButtonListener implements View.OnClickListener{
@@ -64,8 +80,13 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                         if(part != null & arr != null){
                             if(CheckDates(part, arr)){
                                 DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
-                                Viaggio viaggio = new Viaggio(NViaggio, p, a);
-                                db.insertViaggio(viaggio);
+                                if(modifica){
+                                    Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a);
+                                    db.UpdateViaggio(viaggio);
+                                }else{
+                                    Viaggio viaggio = new Viaggio(NViaggio, p, a);
+                                    db.insertViaggio(viaggio);
+                                }
                                 salvaGiorni(part, arr, NViaggio);
                                 Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
                                 intent.putExtra("viaggio_creato","viaggio creato");
@@ -104,7 +125,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
     }
 
     public static boolean CheckDates(Date partenza, Date arrivo)    {
-        Log.e("messaggini", "checkdates function");
+        //Log.e("messaggini", "checkdates function");
         Calendar c_partenza = Calendar.getInstance();
         Calendar c_arrivo = Calendar.getInstance();
         c_partenza.setTime(partenza);
@@ -140,7 +161,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
 
         int elapsedDays = (int) (different / daysInMilli);
         //elapsedDays = elapsedDays+1;
-        Log.e("messaggini", String.valueOf(elapsedDays));
+        //Log.e("messaggini", String.valueOf(elapsedDays));
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(startDate);
         int day = calendar.get(calendar.DAY_OF_MONTH);

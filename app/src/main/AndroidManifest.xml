@@ -41,6 +41,10 @@
         <activity
             android:name=".GestioneViaggioAttivitaActivity"
             android:label="@string/title_activity_gestione_viaggio_attivita"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".GestioneViaggioAgendaActivity"
+            android:label="@string/title_activity_gestione_viaggio_agenda"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

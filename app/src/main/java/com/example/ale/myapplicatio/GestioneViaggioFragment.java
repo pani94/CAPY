@@ -53,6 +53,8 @@ public class GestioneViaggioFragment extends Fragment {
             daquando_aquando_get = "da "+ daquando_get + " a " + aquando_get;
         }
 
+
+
     }
 
 
@@ -69,6 +71,7 @@ public class GestioneViaggioFragment extends Fragment {
         nome_viaggio.setText(nome_viaggio_get);
         daquando_aquando.setText(daquando_aquando_get);
         bottone_attivita.setOnClickListener(buttonListener);
+        bottone_agenda.setOnClickListener(buttonListener);
 
         return view;
     }
@@ -77,9 +80,9 @@ public class GestioneViaggioFragment extends Fragment {
 
         @Override
         public void onClick(View v) {
+            DataBase db = new DataBase(getActivity());
             switch (v.getId()){
                 case R.id.gestione_viaggio_bottone_attivita:
-                    DataBase db = new DataBase(getActivity());
                     if(db.getViaggiAttivitaBool(db.getIdViaggio(nome_viaggio_get))){
                         Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaActivity.class);
                         intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
@@ -91,7 +94,10 @@ public class GestioneViaggioFragment extends Fragment {
                     //Log.e("gestioneViaggioFrament", nome_viaggio_get);
                     break;
                 case R.id.gestione_viaggio_bottone_agenda:
-
+                    Intent intent = new Intent(getActivity(), GestioneViaggioAgendaActivity.class);
+                    intent.putExtra("numgiorni",db.getNumeroDiGiorni(db.getIdViaggio(nome_viaggio_get)));
+                    intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
+                    startActivity(intent);
                     break;
                 default:
 
