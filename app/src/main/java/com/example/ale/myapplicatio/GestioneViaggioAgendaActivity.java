@@ -192,36 +192,37 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
         public AgendaFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
 
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+
+        public static AgendaFragment newInstance(int sectionNumber,String data) {
+            AgendaFragment fragment = new AgendaFragment();
             Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            args.putString("data", data);
             fragment.setArguments(args);
             return fragment;
         }
-         */
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_agenda, container, false);
             expandableListView = (ExpandableListView) rootView.findViewById(R.id.exp_listview);
+            DataBase db = new DataBase(getContext());
+            String data = getArguments().getString("data");
+            int id_viaggio = db.getIdViaggio(NomeViaggio);
             List <String> headings = new ArrayList<String>();
             ArrayList<ArrayList <AttivitaGiorno>> arrayListParent = new ArrayList<>();
-            ArrayList <AttivitaGiorno> arrayListChildMattina;
-            ArrayList <AttivitaGiorno> arrayListChildPranzo;
-            ArrayList <AttivitaGiorno> arrayListChildPomeriggio;
-            ArrayList <AttivitaGiorno> arrayListChildCena;
-            ArrayList <AttivitaGiorno> arrayListChildSera;
+            ArrayList <AttivitaGiorno> arrayListChildMattina = db.getAttivitaGiorno(data,id_viaggio,"Mattina");
+            ArrayList <AttivitaGiorno> arrayListChildPranzo = db.getAttivitaGiorno(data,id_viaggio,"Pranzo");;
+            ArrayList <AttivitaGiorno> arrayListChildPomeriggio= db.getAttivitaGiorno(data,id_viaggio,"Pomeriggio");;
+            ArrayList <AttivitaGiorno> arrayListChildCena=db.getAttivitaGiorno(data,id_viaggio,"Cena");;
+            ArrayList <AttivitaGiorno> arrayListChildSera = db.getAttivitaGiorno(data,id_viaggio,"Sera");;
             arrayListParent.add(0,arrayListChildMattina);
-            arrayListParent.add(0,arrayListChildPranzo);
-            arrayListParent.add(0,arrayListChildPomeriggio);
-            arrayListParent.add(0,arrayListChildCena);
-            arrayListParent.add(0,arrayListChildSera);
+            arrayListParent.add(1,arrayListChildPranzo);
+            arrayListParent.add(2,arrayListChildPomeriggio);
+            arrayListParent.add(3,arrayListChildCena);
+            arrayListParent.add(4,arrayListChildSera);
             String headings_item[] = getResources().getStringArray(R.array.header_titles);
             for (String title : headings_item){
                 headings.add(title);
@@ -245,9 +246,9 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            DataBase db = new DataBase(getApplicationContext());
+            ArrayList<ViaggioGiorno> giorni = db.getGiorni(db.getIdViaggio(NomeViaggio));
+            return AgendaFragment.newInstance(position ,giorni.get(position).getData());
         }
 
         @Override

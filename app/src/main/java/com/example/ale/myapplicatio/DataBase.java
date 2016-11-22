@@ -667,6 +667,49 @@ public class DataBase {
         this.closeDB();
         return rowCount;
     }
+    public ArrayList<AttivitaGiorno> getAttivitaGiorno(String data, int id, String quando) {
+        String where = ATTIVITAGIORNO_DATA + " = ? " +  " AND " + ATTIVITAGIORNO_ID_VIAGGIO + " = ? " +  " AND " + ATTIVITAGIORNO_QUANDO + " =?";
+        String[] whereArgs = { data,Integer.toString(id),quando };
+        this.openReadableDB();
+        Cursor cursor = db.query(ATTIVITAGIORNO_TABLE, null,
+                where,whereArgs,
+                null, null, null);
+        if(cursor == null){
+            return null;
+        }
+        ArrayList<AttivitaGiorno> attivitaGiornos = new ArrayList<AttivitaGiorno>();
+        int j = 0;
+        while(cursor.moveToNext()){
+
+            attivitaGiornos.add(getAttivitaGiornoFromCursor(cursor));
+            Log.e("attivitagiorno",attivitaGiornos.get(j).getData() + " " + attivitaGiornos.get(j).getPlace_id());
+            j++;
+        }
+
+        if (cursor != null)
+            cursor.close();
+        this.closeDB();
+
+        return attivitaGiornos;
+    }
+    private static AttivitaGiorno getAttivitaGiornoFromCursor(Cursor cursor) {
+        if (cursor == null || cursor.getCount() == 0f){
+            return null;
+        }
+        else {
+            try {
+                String place_id = cursor.getString(ATTIVITAGIORNO_PLACE_ID_COL);
+                String data = cursor.getString(ATTIVITAGIORNO_DATA_COL);
+                int id = cursor.getInt(ATTIVITAGIORNO_ID_VIAGGIO_COL);
+                String quando = cursor.getString(ATTIVITAGIORNO_QUANDO_COL);
+                AttivitaGiorno attivitaGiorno = new AttivitaGiorno(id,place_id,data,quando);
+                return attivitaGiorno;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
+    }
 
 
 

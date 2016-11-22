@@ -27,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".CreaIlTuoViaggioActivity"
             android:windowSoftInputMode="stateHidden">
@@ -46,7 +45,6 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".RicercaActivity" />
-
         <activity android:name=".ProfiloViaggiActivity" />
         <activity
             android:name=".GestioneViaggioAttivitaActivity"
@@ -55,7 +53,8 @@
         <activity
             android:name=".GestioneViaggioAgendaActivity"
             android:label="@string/title_activity_gestione_viaggio_agenda"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".GestioneViaggioAttivitaListItemActivity"></activity>
     </application>
 
 </manifest>
