@@ -84,5 +84,17 @@
             android:layout_marginTop="56dp"
             android:id="@+id/fragment_gestione_viaggio_attivita_fragment_list_item_weekdaytext" />
 
+        <Button
+            android:text="+"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/fragment_gestione_viaggio_attivita_fragment_list_item_indirizzo"
+            android:layout_toEndOf="@+id/fragment_gestione_viaggio_attivita_fragment_list_item_indirizzo"
+            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="36dp"
+            android:id="@+id/fragment_gestione_viaggio_attivita_fragment_list_item_button" />
+
     </RelativeLayout>
 </FrameLayout>

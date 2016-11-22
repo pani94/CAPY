@@ -3,7 +3,6 @@ package com.example.ale.myapplicatio;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +14,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -320,7 +317,21 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         }*/
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Log.e("adapter1","schiacciato1");
+            GestioneViaggioAttivitaFragmentListItem newFragment = new GestioneViaggioAttivitaFragmentListItem();
+            Bundle args = new Bundle();
+            args.putString("placeid", attivitas.get(position).getPlace_id());
+            args.putString("titolo", attivitas.get(position).getNome());
+            args.putString("foto", attivitas.get(position).getFoto());
+            args.putString("orario", attivitas.get(position).getOrario());
+            args.putString("link", attivitas.get(position).getLink());
+            args.putString("telefono", attivitas.get(position).getTelefono());
+            args.putString("indirizzo", attivitas.get(position).getIndirizzo());
+            newFragment.setArguments(args);
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment_gestione_viaggio_attivita_lista, newFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
     }
 }

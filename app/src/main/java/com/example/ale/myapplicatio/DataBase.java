@@ -71,6 +71,8 @@ public class DataBase {
     public static final int ATTIVITAGIORNO_PLACE_ID_COL = 1;
     public static final String ATTIVITAGIORNO_DATA = "data";
     public static final int ATTIVITAGIORNO_DATA_COL = 2;
+    public static final String ATTIVITAGIORNO_QUANDO = "quando";
+    public static final int ATTIVITAGIORNO_QUANDO_COL = 3;
 
     public static final String CREATE_VIAGGIO_TABLE =
             "CREATE TABLE " + VIAGGIO_TABLE + " (" +
@@ -104,6 +106,7 @@ public class DataBase {
                     ATTIVITAGIORNO_PLACE_ID + " TEXT NOT NULL, " +
                     ATTIVITAGIORNO_DATA + " TEXT NOT NULL, " +
                     ATTIVITAGIORNO_ID_VIAGGIO + " TEXT NOT NULL, " +
+                    ATTIVITAGIORNO_QUANDO + " TEXT, " +
                     "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO + "))" +
                     ";";
     public static final String DROP_ATTIVITAGIORNO_TABLE =
@@ -626,6 +629,7 @@ public class DataBase {
         cv.put(ATTIVITAGIORNO_PLACE_ID,attivitaGiorno.getPlace_id());
         cv.put(ATTIVITAGIORNO_DATA, attivitaGiorno.getData());
         cv.put(ATTIVITAGIORNO_ID_VIAGGIO, attivitaGiorno.getId_viaggio());
+        cv.put(ATTIVITAGIORNO_QUANDO, attivitaGiorno.getQuando());
         this.openWriteableDB();
         long rowID = db.insert(ATTIVITAGIORNO_TABLE, null, cv);
         this.closeDB();

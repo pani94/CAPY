@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +30,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
     ImageView foto;
     String nome_viaggio;
     String data;
+    String parte_giornata;
     public ItemAdapterAttivita(Context context, ArrayList<Attivita> Items,String nomeViaggio) {
         super(context, 0, Items);
         arrayList = Items;
@@ -69,7 +69,8 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
             for (int k = 0; k < giorni.size(); k++) {
                 date[k] = giorni.get(k).getData();
             }
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            final String[] giornata = {"Mattina", "Pranzo", "Pomeriggio", "Cena", "Sera"};
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle("INSERISCI L'ATTIVITA' AD UN GIORNO");
             builder.setSingleChoiceItems(date, -1, new DialogInterface.OnClickListener() {
                 @Override
@@ -81,12 +82,37 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
             builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     if (!data.equals("")) {
-                        AttivitaGiorno attivitaGiorno = new AttivitaGiorno(id_viaggio,arrayList.get(position).getPlace_id(),data);
-                        dataBase.insertAttivitaGiorno(attivitaGiorno);
-                        String stampa = "L'attività è stata aggiunta al giorno: " + data;
-                        Toast.makeText(getContext().getApplicationContext(),
-                                stampa,
-                                Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+                        builder1.setTitle("INSERISCI L'ATTIVITA' NELLA TUA GIORNATA");
+                        builder1.setSingleChoiceItems(giornata, -1, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int k) {
+                                parte_giornata = giornata[k];
+                            }
+                        });
+                        builder1.setPositiveButton("Confirm", new DialogInterface.OnClickListener()  {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if(!parte_giornata.equals("")){
+                                    AttivitaGiorno attivitaGiorno = new AttivitaGiorno(id_viaggio,arrayList.get(position).getPlace_id(),data, parte_giornata);
+                                    dataBase.insertAttivitaGiorno(attivitaGiorno);
+                                    String stampa = "L'attività è stata aggiunta al " + parte_giornata + " del " + data;
+                                    Toast.makeText(getContext().getApplicationContext(),
+                                            stampa,
+                                            Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(getContext().getApplicationContext(),
+                                            "Devi selezionare un momento della giornata",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                        builder1.setNegativeButton("Cancel", new DialogInterface.OnClickListener()  {
+                            public void onClick(DialogInterface dialog, int which)  {
+
+                            }
+                        });
+                        builder1.show();
                     } else {
                         Toast.makeText(getContext().getApplicationContext(), "Devi selezionare un giorno",
                                 Toast.LENGTH_SHORT).show();
