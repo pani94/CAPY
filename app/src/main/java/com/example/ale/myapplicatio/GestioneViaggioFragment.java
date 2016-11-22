@@ -24,7 +24,7 @@ public class GestioneViaggioFragment extends Fragment {
     private TextView daquando_aquando;
     private Button bottone_attivita;
     private Button bottone_agenda;
-
+    private Button bottone_galleria;
     private String nome_viaggio_get;
     private String daquando_get;
     private String aquando_get;
@@ -68,6 +68,7 @@ public class GestioneViaggioFragment extends Fragment {
         daquando_aquando = (TextView) view.findViewById(R.id.gestione_viaggio_daquando_aquando);
         bottone_attivita = (Button) view.findViewById(R.id.gestione_viaggio_bottone_attivita);
         bottone_agenda = (Button) view.findViewById(R.id.gestione_viaggio_bottone_agenda);
+        bottone_galleria = (Button) view.findViewById(R.id.gestione_viaggio_bottone_galleria);
         nome_viaggio.setText(nome_viaggio_get);
         daquando_aquando.setText(daquando_aquando_get);
         bottone_attivita.setOnClickListener(buttonListener);

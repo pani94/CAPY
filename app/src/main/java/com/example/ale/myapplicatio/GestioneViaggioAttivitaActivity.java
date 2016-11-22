@@ -317,7 +317,18 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         }*/
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            GestioneViaggioAttivitaFragmentListItem newFragment = new GestioneViaggioAttivitaFragmentListItem();
+            Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaListItemActivity.class);
+            intent.putExtra("nomeViaggio", NomeViaggio);
+            intent.putExtra("placeid", attivitas.get(position).getPlace_id());
+            intent.putExtra("titolo", attivitas.get(position).getNome());
+            intent.putExtra("foto", attivitas.get(position).getFoto());
+            intent.putExtra("orario", attivitas.get(position).getOrario());
+            intent.putExtra("link", attivitas.get(position).getLink());
+            intent.putExtra("telefono", attivitas.get(position).getTelefono());
+            intent.putExtra("indirizzo", attivitas.get(position).getIndirizzo());
+            intent.putExtra("tipologia", getArguments().getString("tabselected"));
+            startActivity(intent);
+            /*GestioneViaggioAttivitaFragmentListItem newFragment = new GestioneViaggioAttivitaFragmentListItem();
             Bundle args = new Bundle();
             args.putString("placeid", attivitas.get(position).getPlace_id());
             args.putString("titolo", attivitas.get(position).getNome());
@@ -329,9 +340,10 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             newFragment.setArguments(args);
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id., newFragment);
             //transaction.replace(R.id., newFragment);
             transaction.addToBackStack(null);
-            transaction.commit();
+            transaction.commit();*/
         }
     }
 }

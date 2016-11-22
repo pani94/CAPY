@@ -7,7 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 
 /**
  * Created by Annalisa on 16/11/2016.
@@ -518,8 +524,17 @@ public class DataBase {
         this.closeDB();
         return rowCount;
     }
+    public int deleteViaggioGiorni(long id) {
+        String where = VIAGGIOGIORNO_ID_VIAGGIO + "= ?";
+        String[] whereArgs = { String.valueOf(id) };
+        this.openWriteableDB();
+        int rowCount = db.delete(VIAGGIOGIORNO_TABLE, where, whereArgs);
+        this.closeDB();
+        return rowCount;
+    }
+
     public ArrayList<ViaggioGiorno> getGiorni(int id) {
-        String where = VIAGGIOGIORNO_ID_VIAGGIO+ "= ?";
+        String where = VIAGGIOGIORNO_ID_VIAGGIO + "= ?";
         String[] whereArgs = { Integer.toString(id) };
         this.openReadableDB();
         Cursor cursor = db.query(VIAGGIOGIORNO_TABLE, null,
@@ -528,11 +543,12 @@ public class DataBase {
         ArrayList<ViaggioGiorno> giorni_viaggio = new ArrayList<ViaggioGiorno>();
         while (cursor.moveToNext()) {
             giorni_viaggio.add(getViaggiGiornoFromCursor(cursor));
+
         }
         if (cursor != null)
             cursor.close();
         this.closeDB();
-
+        Collections.sort(giorni_viaggio);
         return giorni_viaggio;
     }
     private static ViaggioGiorno getViaggiGiornoFromCursor(Cursor cursor) {
@@ -677,11 +693,12 @@ public class DataBase {
             return null;
         }
         ArrayList<AttivitaGiorno> attivitaGiornos = new ArrayList<AttivitaGiorno>();
-
+        int j = 0;
         while(cursor.moveToNext()){
 
             attivitaGiornos.add(getAttivitaGiornoFromCursor(cursor));
-
+            Log.e("attivitagiorno",attivitaGiornos.get(j).getData() + " " + attivitaGiornos.get(j).getPlace_id());
+                    j++;
         }
 
         if (cursor != null)
