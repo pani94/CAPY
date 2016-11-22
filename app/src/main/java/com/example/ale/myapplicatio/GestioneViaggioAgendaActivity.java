@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -261,6 +262,9 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
         public CharSequence getPageTitle(int position) {
             DataBase db = new DataBase(getApplicationContext());
             ArrayList<ViaggioGiorno> giorni = db.getGiorni(db.getIdViaggio(NomeViaggio));
+           /* for (int i = 0; i< giorni.size(); i++){
+                Log.e("giorni",giorni.get(i).getData());
+            }*/
             return giorni.get(position).getData();
 
         }

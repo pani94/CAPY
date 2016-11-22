@@ -305,6 +305,9 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         Giorno g = new Giorno(p);
         db.insertGiorno(g);
         long id_viaggio = db.getIdViaggio(NViaggio);
+        if(modifica){
+            db.deleteViaggioGiorni(id_viaggio);
+        }
         ViaggioGiorno va = new ViaggioGiorno(id_viaggio, p);
         db.insertViaggioGiorno(va);
         //Log.e("messaggini", p);

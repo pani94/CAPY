@@ -44,6 +44,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestione_viaggio_attivita);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_attivita);
         setSupportActionBar(toolbar);
         NomeViaggio = getIntent().getStringExtra("attivita_nomeviaggio");
@@ -340,6 +341,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id., newFragment);
+            //transaction.replace(R.id., newFragment);
             transaction.addToBackStack(null);
             transaction.commit();*/
         }
