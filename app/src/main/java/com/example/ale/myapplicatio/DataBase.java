@@ -362,7 +362,29 @@ public class DataBase {
 
         return attivitas;
     }
+    public Attivita getAttivita(String place_id) {
+        this.openReadableDB();
+        Cursor cursor1 = null;
+       Attivita attivita = null;
 
+
+
+                String where = ATTIVITA_PLACE_ID + " = ? "  ;
+                String[] whereArgs = { place_id};
+                cursor1 = db.query(ATTIVITA_TABLE, null,
+                        where, whereArgs,
+                        null, null, null);
+
+
+
+        cursor1.moveToFirst();
+        attivita = getAttivitaFromCursor(cursor1);
+        if (cursor1 != null)
+            cursor1.close();
+        this.closeDB();
+
+        return attivita;
+    }
     private static Attivita getAttivitaFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
             Log.e("attivita", "è null");

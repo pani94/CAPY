@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.app.ExpandableListActivity;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -23,17 +24,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestioneViaggioAgendaActivity extends AppCompatActivity {
+public class GestioneViaggioAgendaActivity extends AppCompatActivity{
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private static String NomeViaggio;
+
+
 
     //per SlideMenu
     private List<ItemSlideMenu> listSliding;
@@ -46,7 +50,6 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestione_viaggio_agenda);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_agenda);
         setSupportActionBar(toolbar);
         NomeViaggio = getIntent().getStringExtra("attivita_nomeviaggio");
@@ -183,20 +186,16 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
+    public static class AgendaFragment extends Fragment {
+        private ExpandableListView expandableListView;
 
-        public PlaceholderFragment() {
+        public AgendaFragment() {
         }
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
-         */
+
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -204,12 +203,31 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity {
             fragment.setArguments(args);
             return fragment;
         }
+         */
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_agenda, container, false);
-           // TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            expandableListView = (ExpandableListView) rootView.findViewById(R.id.exp_listview);
+            List <String> headings = new ArrayList<String>();
+            ArrayList<ArrayList <AttivitaGiorno>> arrayListParent = new ArrayList<>();
+            ArrayList <AttivitaGiorno> arrayListChildMattina;
+            ArrayList <AttivitaGiorno> arrayListChildPranzo;
+            ArrayList <AttivitaGiorno> arrayListChildPomeriggio;
+            ArrayList <AttivitaGiorno> arrayListChildCena;
+            ArrayList <AttivitaGiorno> arrayListChildSera;
+            arrayListParent.add(0,arrayListChildMattina);
+            arrayListParent.add(0,arrayListChildPranzo);
+            arrayListParent.add(0,arrayListChildPomeriggio);
+            arrayListParent.add(0,arrayListChildCena);
+            arrayListParent.add(0,arrayListChildSera);
+            String headings_item[] = getResources().getStringArray(R.array.header_titles);
+            for (String title : headings_item){
+                headings.add(title);
+            }
+            ExpandableListViewAttivitaGiornoAdapter adapter = new ExpandableListViewAttivitaGiornoAdapter(getContext(),headings,arrayListParent);
+            expandableListView.setAdapter(adapter);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
