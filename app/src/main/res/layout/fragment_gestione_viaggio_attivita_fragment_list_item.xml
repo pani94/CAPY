@@ -23,6 +23,8 @@
             android:layout_marginTop="27dp"
             android:id="@+id/fragment_gestione_viaggio_attivita_fragment_list_item_titolo" />
 
+
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
