@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
     private TextView link;
     private Button aggiungiaviaggio;
     private Button preferito;
+    private ImageButton preferiti_star;
 
     private DataBase database;
     private ArrayList <Viaggio> arrayListViaggi;
@@ -105,12 +107,16 @@ public class RicercaActivityFragmentListItem extends Fragment{
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
         aggiungiaviaggio = (Button) view.findViewById(R.id.bottone_aggiungiaviaggio);
         preferito = (Button) view.findViewById(R.id.bottone_aggiungipreferiti);
+        preferiti_star = (ImageButton) view.findViewById(R.id.preferiti_star);
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
         aggiungiaviaggio.setOnClickListener(buttonListener);
         preferito.setOnClickListener(buttonListener);
+        preferiti_star.setOnClickListener(buttonListener);
         database = new DataBase(getActivity());
         arrayListViaggi = database.getViaggi();
+
+        preferiti_star.setImageResource(R.drawable.ic_star_grey);
 
         for(int i = 0; i < arrayListViaggi.size(); i++){
             Log.e("viaggi", arrayListViaggi.get(i).getNome_viaggio());
@@ -358,12 +364,22 @@ public class RicercaActivityFragmentListItem extends Fragment{
                                                     alertDialog.show();
                                                     break;*/
                 case R.id.bottone_aggiungipreferiti:
-                                            Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true");
-                                            database.UpdateAttivitaPreferita(attivitapreferita);
+                                            Attivita attivitapreferita1 = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true");
+                                            database.UpdateAttivitaPreferita(attivitapreferita1);
                     Toast.makeText(getActivity().getApplicationContext(),
                             "Attività aggiunta ai preferiti",
                             Toast.LENGTH_SHORT).show();
                                                         break;
+
+                case R.id.preferiti_star:
+                    preferiti_star.setImageResource(R.drawable.ic_star_yellow);
+                    Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true");
+                    database.UpdateAttivitaPreferita(attivitapreferita);
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            "Attività aggiunta ai preferiti",
+                            Toast.LENGTH_SHORT).show();
+
+                    break;
 
 
 

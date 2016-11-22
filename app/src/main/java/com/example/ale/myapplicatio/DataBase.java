@@ -677,12 +677,11 @@ public class DataBase {
             return null;
         }
         ArrayList<AttivitaGiorno> attivitaGiornos = new ArrayList<AttivitaGiorno>();
-        int j = 0;
+
         while(cursor.moveToNext()){
 
             attivitaGiornos.add(getAttivitaGiornoFromCursor(cursor));
-            Log.e("attivitagiorno",attivitaGiornos.get(j).getData() + " " + attivitaGiornos.get(j).getPlace_id());
-                    j++;
+
         }
 
         if (cursor != null)

@@ -329,7 +329,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             newFragment.setArguments(args);
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.fragment_gestione_viaggio_attivita_lista, newFragment);
+            //transaction.replace(R.id., newFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         }
