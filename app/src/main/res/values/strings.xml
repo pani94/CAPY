@@ -24,4 +24,12 @@
     <string name="title_activity_gestione_viaggio_agenda">GestioneViaggioAgendaActivity</string>
     <string name="drawer_opened">Opened</string>
     <string name="drawer_closed">Closed</string>
+
+    <string-array name="header_titles">
+        <item>Mattina</item>
+        <item>Pranzo</item>
+        <item>Pomeriggio</item>
+        <item>Cena</item>
+        <item>Sera</item>
+    </string-array>
 </resources>
