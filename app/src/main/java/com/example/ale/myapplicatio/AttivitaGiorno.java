@@ -14,7 +14,7 @@ public class AttivitaGiorno {
         data="";
         quando="";
     }
-    public AttivitaGiorno(long id_viaggio, String place_id , String data, String quando){
+    public AttivitaGiorno( String place_id , String data,long id_viaggio, String quando){
         this.id_viaggio = id_viaggio;
         this.place_id = place_id;
         this.data = data;
@@ -32,14 +32,14 @@ public class AttivitaGiorno {
     }
     public void setQuando(String quando) { this.quando = quando; }
     public long getId_viaggio(){
-        return id_viaggio;
+        return this.id_viaggio;
     }
     public String getPlace_id(){
-        return place_id;
+        return this.place_id;
     }
     public String getData(){
-        return data;
+        return this.data;
     }
-    public String getQuando() { return quando; }
+    public String getQuando() { return this.quando; }
 
 }
