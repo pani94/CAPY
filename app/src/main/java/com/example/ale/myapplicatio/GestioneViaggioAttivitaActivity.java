@@ -44,7 +44,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestione_viaggio_attivita);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_attivita);
         setSupportActionBar(toolbar);
         NomeViaggio = getIntent().getStringExtra("attivita_nomeviaggio");
@@ -326,6 +325,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             intent.putExtra("link", attivitas.get(position).getLink());
             intent.putExtra("telefono", attivitas.get(position).getTelefono());
             intent.putExtra("indirizzo", attivitas.get(position).getIndirizzo());
+            intent.putExtra("tipologia", getArguments().getString("tabselected"));
             startActivity(intent);
             /*GestioneViaggioAttivitaFragmentListItem newFragment = new GestioneViaggioAttivitaFragmentListItem();
             Bundle args = new Bundle();

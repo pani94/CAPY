@@ -62,16 +62,6 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gestione_viaggio_attivita_list_item_indirizzo"
-        android:layout_alignLeft="@+id/gestione_viaggio_attivita_list_item_telefono"
-        android:layout_alignStart="@+id/gestione_viaggio_attivita_list_item_telefono"
-        android:layout_marginTop="56dp"
-        android:id="@+id/gestione_viaggio_attivita_list_item_weekdaytext" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/gestione_viaggio_attivita_list_item_telefono"
         android:layout_below="@+id/gestione_viaggio_attivita_list_item_link"
         android:layout_alignParentLeft="true"
@@ -83,8 +73,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/gestione_viaggio_attivita_list_item_button"
-        android:layout_below="@+id/gestione_viaggio_attivita_list_item_weekdaytext"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="74dp" />
+        android:layout_marginBottom="86dp" />
 
 </RelativeLayout>
