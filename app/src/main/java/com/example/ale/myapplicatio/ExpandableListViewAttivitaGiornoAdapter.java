@@ -2,6 +2,7 @@ package com.example.ale.myapplicatio;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,7 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         DataBase dataBase = new DataBase(context);
+        //Log.e("GCV",getChild(groupPosition,childPosition).);
         String title =  dataBase.getAttivita(getChild(groupPosition,childPosition).getPlace_id()).getNome();
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

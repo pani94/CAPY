@@ -94,7 +94,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if(!parte_giornata.equals("")){
-                                    AttivitaGiorno attivitaGiorno = new AttivitaGiorno(id_viaggio,arrayList.get(position).getPlace_id(),data, parte_giornata);
+                                    AttivitaGiorno attivitaGiorno = new AttivitaGiorno(arrayList.get(position).getPlace_id(),data,id_viaggio, parte_giornata);
                                     dataBase.insertAttivitaGiorno(attivitaGiorno);
                                     String stampa = "L'attività è stata aggiunta al " + parte_giornata + " del " + data;
                                     Toast.makeText(getContext().getApplicationContext(),
