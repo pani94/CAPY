@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -47,12 +48,13 @@ public class MainActivity extends AppCompatActivity  {
     private DrawerLayout drawerLayout;
     //private RelativeLayout mainContent;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private GetCity getCityRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        getCityRequest = null;
         if (findViewById(R.id.fragment_bottone_crea) != null) {
             if (savedInstanceState != null) {
                 return;
@@ -75,21 +77,32 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public boolean isValid(CharSequence charSequence) {
                 String s = charSequence.toString();
-                Log.e("messaggini", s);
-                int commas = 0;
-                for(int i = 0; i < s.length(); i++) {
-                    if(s.charAt(i) == ',') commas++;
+                Adapter a = cerca.getAdapter();
+                if(a != null){
+                    if(!a.isEmpty()){
+                        for(int i=0; i<a.getCount(); i++){
+                            Log.e("messaggini", a.getItem(i).toString());
+                            if(s.equals(a.getItem(i).toString())){
+                                return true;
+                            }
+                        }
+                    }else{
+                        Log.e("messaggini", "sono vuoto");
+                    }
                 }
-                if(commas == 2){
-                    return true;
-                }else{
-                    return false;
-                }
+                return false;
             }
 
             @Override
-            public CharSequence fixText(CharSequence charSequence) {
-                return null;
+            public String fixText(CharSequence charSequence) {
+                String s = charSequence.toString();
+                Adapter a = cerca.getAdapter();
+                if(a != null){
+                    if(!a.isEmpty()){
+                        return a.getItem(0).toString();
+                    }
+                }
+                return s;
             }
         });
 
@@ -156,8 +169,15 @@ public class MainActivity extends AppCompatActivity  {
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() >2) {
-                    new GetCity().execute(s.toString());
+                if(s.length() >0) {
+                    if(getCityRequest == null){
+                        getCityRequest = new GetCity();
+                        getCityRequest.execute(s.toString());
+                    }else{
+                        getCityRequest.cancel(true);
+                        getCityRequest = new GetCity();
+                        getCityRequest.execute(s.toString());
+                    }
                 }
             }
 
@@ -228,6 +248,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     private class GetCity extends AsyncTask<String, Void, Void> {
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -250,6 +271,9 @@ public class MainActivity extends AppCompatActivity  {
 
                     // looping through All Contacts
                     for (int i = 0; i < predictions.length(); i++) {
+                        if(isCancelled()){
+                            Log.e("messaggini", "cancellato");
+                        }
                         JSONObject c = predictions.getJSONObject(i);
                         String description = c.getString("description");
                         //String id = c.getString("id");
@@ -314,7 +338,7 @@ public class MainActivity extends AppCompatActivity  {
             if (!cerca.isPopupShowing()) {
                 cerca.showDropDown();
             }
-
+            getCityRequest = null;
         }
     }
 
@@ -323,12 +347,18 @@ public class MainActivity extends AppCompatActivity  {
         @Override
         public void onClick(View v) {
             String ricerca = cerca.getText().toString();
-            if(!ricerca.equals("") && cerca.getValidator().isValid(ricerca)){
-                Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
-                intent.putExtra("citta", ricerca);
-                startActivity(intent);
-            }
-            else{
+            if(!ricerca.equals("")){
+                if(ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122 ){
+                    if(!cerca.getValidator().isValid(ricerca)){
+                        ricerca = cerca.getValidator().fixText(ricerca).toString();
+                    }
+                    Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                    intent.putExtra("citta", ricerca);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                }
+            }else{
                 Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
             }
 
@@ -337,6 +367,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
     }
+
     private TextView.OnEditorActionListener editTextListener = new TextView.OnEditorActionListener() {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -344,11 +375,18 @@ public class MainActivity extends AppCompatActivity  {
                     actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
                 String ricerca = cerca.getText().toString();
                 if(!ricerca.equals("")){
-                    Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
-                    intent.putExtra("citta", ricerca);
-                    startActivity(intent);
-                }
-                else{
+
+                    if(ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122 ){
+                        if(!cerca.getValidator().isValid(ricerca)){
+                            ricerca = cerca.getValidator().fixText(ricerca).toString();
+                        }
+                        Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                        intent.putExtra("citta", ricerca);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                    }
+                }else{
                     Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
                 }
             }

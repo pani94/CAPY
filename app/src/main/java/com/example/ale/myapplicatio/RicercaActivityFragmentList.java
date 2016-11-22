@@ -4,7 +4,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -37,6 +36,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     private String next_page = "";
     private int count = 0;
     private Button altro;
+    private GetPOI request;
 
 
 
@@ -95,12 +95,13 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     @Override
     public void onClick(View view) {
         count++;
-        new GetPOI().execute(selectedCityLocation);
-        SystemClock.sleep(500);
+        request = new GetPOI();
+        request.execute(selectedCityLocation);
+        /*SystemClock.sleep(500);
         if(count > 1){
             altro.setEnabled(false);
 
-        }
+        }*/
     }
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
@@ -131,8 +132,14 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             }
             else {
                 tipo_ricerca = "textsearch";
-                int k = selectedCity.indexOf(",");
-                String citta = selectedCity.substring(0, k);
+                int virgola = selectedCity.indexOf(",");
+                int spazio = selectedCity.indexOf(" ");
+                String citta = "";
+                if(spazio < virgola) {
+                    citta = selectedCity.substring(0, spazio) + "+" + selectedCity.substring(spazio + 1, virgola);
+                }else{
+                    citta = selectedCity.substring(0, virgola);
+                }
                 if (selectedItem.equals("mangiare")) {
                     parameters = "query=restaurant+in+" + citta + "&" + key;
                 } else if (selectedItem.equals("dormire")) {
@@ -283,7 +290,9 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-
+            if(count > 1){
+                altro.setEnabled(false);
+            }
             ItemAdapterMenu adapter = new ItemAdapterMenu(getActivity(), arrayList);
             adapter.notifyDataSetChanged();
             itemsListView.setAdapter(adapter);
