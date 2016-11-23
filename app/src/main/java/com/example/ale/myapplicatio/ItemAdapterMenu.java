@@ -20,8 +20,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class ItemAdapterMenu extends ArrayAdapter<ItemRicercaActivity>  {
-    ArrayList<ItemRicercaActivity> arrayList;
-    ImageView icon;
+    private ArrayList<ItemRicercaActivity> arrayList;
+    private ImageView icon;
     public ItemAdapterMenu(Context context, ArrayList<ItemRicercaActivity> Items) {
         super(context, 0, Items);
         arrayList = Items;
@@ -40,7 +40,10 @@ public class ItemAdapterMenu extends ArrayAdapter<ItemRicercaActivity>  {
         // Populate the data into the template view using the data object
         name.setText(item.getName());
         vicinity.setText(item.getVicinity());
-       // new LoadImageTask().execute(item.getIcon());
+
+        String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getPhoto_reference()+"&sensor=false&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+       //icon.setImageResource(R.drawable.ic_about);
+        new LoadImageTask().execute(photo_reference_url);
         // Return the completed view to render on screen
         return convertView;
     }

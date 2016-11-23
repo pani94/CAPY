@@ -226,7 +226,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                                  open_now = opening_hours.getString("open_now");
                                 String weekday_text = opening_hours.getString("weekday_text");
                             }
-                            String photo_reference_url="";
+                            String photo_reference="";
                             if (p.has("photos")) {
                                 JSONArray photos = p.getJSONArray("photos");
                                 for (int j = 0; j < photos.length(); j++) {
@@ -235,13 +235,13 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                                     /*if (foto.has("html_attributes")) {
                                         String html_attributes = foto.getString("html_attributes");
                                     }*/
-                                   String photo_reference = foto.getString("photo_reference");
+                                   photo_reference = foto.getString("photo_reference");
                                    /* String photo_reference= "";
                                     if(p.has("icon")){
                                         photo_reference = foto.getString("icon");
                                     }
                                     */
-                                    photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photo_reference + "&sensor=false&" + key;
+                                    //photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photo_reference + "&sensor=false&" + key;
                                     //photo_reference_url = photo_reference;
                                     //String width = foto.getString("width");
                                 }
@@ -267,7 +267,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                             if (p.has("vicinity")) {
                                 vicinity = p.getString("vicinity");
                             }
-                            ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference,open_now, lat, lng);
+                            ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference,open_now, photo_reference, lat, lng);
                            // Log.e(TAG, "photo " + photo_reference_url);
                             arrayList.add(item);
                         }

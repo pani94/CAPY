@@ -44,7 +44,6 @@ public class RicercaActivityFragmentListItem extends Fragment{
     private TextView indirizzo;
     private TextView link;
     private Button aggiungiaviaggio;
-    private Button preferito;
     private ImageButton preferiti_star;
 
     private DataBase database;
@@ -108,12 +107,10 @@ public class RicercaActivityFragmentListItem extends Fragment{
         link = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemLink);
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
         aggiungiaviaggio = (Button) view.findViewById(R.id.bottone_aggiungiaviaggio);
-        preferito = (Button) view.findViewById(R.id.bottone_aggiungipreferiti);
         preferiti_star = (ImageButton) view.findViewById(R.id.preferiti_star);
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
         aggiungiaviaggio.setOnClickListener(buttonListener);
-        preferito.setOnClickListener(buttonListener);
 
         database = new DataBase(getActivity());
         arrayListViaggi = database.getViaggi();
@@ -373,27 +370,24 @@ public class RicercaActivityFragmentListItem extends Fragment{
                                                     });
                                                     alertDialog.show();
                                                     break;*/
-                case R.id.bottone_aggiungipreferiti:
-                                            Attivita attivitapreferita1 = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true");
-                                            database.UpdateAttivitaPreferita(attivitapreferita1);
-                    Toast.makeText(getActivity().getApplicationContext(),
-                            "Attività aggiunta ai preferiti",
-                            Toast.LENGTH_SHORT).show();
-                                                        break;
 
                 case R.id.preferiti_star:
                     if(!giallo){
-                        preferiti_star.setImageResource(R.drawable.ic_star_yellow);
-
                         Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true");
                         database.UpdateAttivitaPreferita(attivitapreferita);
-                        giallo = true;
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Attività aggiunta ai preferiti",
                                 Toast.LENGTH_SHORT).show();
+                        preferiti_star.setImageResource(R.drawable.ic_star_yellow);
+                        giallo = true;
                     }else{
-                        preferiti_star.setImageResource(R.drawable.ic_star_grey);
+
                         database.deletePreferiti(place_id);
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "Attività eliminata dai preferiti",
+                                Toast.LENGTH_SHORT).show();
+                        preferiti_star.setImageResource(R.drawable.ic_star_grey);
+                        giallo = false;
                     }
 
 

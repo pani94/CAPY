@@ -8,6 +8,7 @@ public class ItemRicercaActivity {
     private String orario;
     private String latitudine;
     private String longitudine;
+    private String photo_reference;
     public ItemRicercaActivity(){
         name = "";
         place_id="";
@@ -16,8 +17,9 @@ public class ItemRicercaActivity {
         orario="";
         latitudine = "";
         longitudine = "";
+        photo_reference = "";
     }
-    public ItemRicercaActivity(String n, String p , String v,String i,String o,String lat,String lng){
+    public ItemRicercaActivity(String n, String p , String v,String i,String o, String pr,String lat,String lng){
         name = n;
         place_id = p;
         vicinity = v;
@@ -25,10 +27,12 @@ public class ItemRicercaActivity {
         orario= o;
         latitudine = lat;
         longitudine = lng;
+        photo_reference = pr;
     }
     public void setName(String n){
         name=n;
     }
+    public void setPhoto_reference(String pr){photo_reference = pr;    }
     public void setPlace_id(String p){
         place_id = p;
     }
@@ -56,4 +60,5 @@ public class ItemRicercaActivity {
     public String getOrario(){ return orario;}
     public String getLatitudine(){ return latitudine; }
     public String getLongitudine(){ return longitudine; }
+    public String getPhoto_reference(){ return photo_reference; }
 }

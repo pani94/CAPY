@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:srcCompat="@drawable/common_full_open_on_phone"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:id="@+id/icon" />
+        android:id="@+id/icon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        />
 
     <TextView
-        android:text="TextView"
+        android:text="Indirizzo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
+        android:id="@+id/vicinity"
+        android:layout_marginLeft="56dp"
+        android:layout_marginStart="56dp"
+        android:layout_alignBottom="@+id/icon"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_toEndOf="@+id/icon" />
+
+    <TextView
+        android:text="Titolo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/name"
         android:textStyle="bold"
-        android:textSize="18sp" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:id="@+id/vicinity" />
-</LinearLayout>
+        android:textSize="18sp"
+        android:layout_alignTop="@+id/icon"
+        android:layout_alignLeft="@+id/vicinity"
+        android:layout_alignStart="@+id/vicinity" />
+</RelativeLayout>
