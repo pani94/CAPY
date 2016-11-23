@@ -73,6 +73,7 @@ public class GestioneViaggioFragment extends Fragment {
         daquando_aquando.setText(daquando_aquando_get);
         bottone_attivita.setOnClickListener(buttonListener);
         bottone_agenda.setOnClickListener(buttonListener);
+        bottone_galleria.setOnClickListener(buttonListener);
 
         return view;
     }
@@ -99,6 +100,10 @@ public class GestioneViaggioFragment extends Fragment {
                     intent.putExtra("numgiorni",db.getNumeroDiGiorni(db.getIdViaggio(nome_viaggio_get)));
                     intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
                     startActivity(intent);
+                    break;
+                case R.id.gestione_viaggio_bottone_galleria :
+                    Intent intentG = new Intent(getActivity(), GestioneViaggioGalleriaActivity.class);
+                    startActivity(intentG);
                     break;
                 default:
 
