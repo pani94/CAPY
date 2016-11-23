@@ -93,8 +93,8 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="29dp"
         android:layout_marginEnd="29dp"
-        android:background="@android:color/transparent"
-        app:srcCompat="@drawable/ic_star_grey"
+        app:srcCompat="@drawable/grey_star"
+        android:background="@null"
         android:layout_alignTop="@+id/bottone_aggiungiaviaggio"
         android:layout_alignLeft="@+id/RicercaActivityFragmentListItemImmagine"
         android:layout_alignStart="@+id/RicercaActivityFragmentListItemImmagine" />

@@ -117,9 +117,9 @@ public class RicercaActivityFragmentListItem extends Fragment{
 
         giallo = database.getAttivitaPreferita(place_id);
         if (giallo == true){
-            preferiti_star.setImageResource(R.drawable.ic_star_yellow);
+            preferiti_star.setImageResource(R.drawable.yellow_star);
         }else{
-            preferiti_star.setImageResource(R.drawable.ic_star_grey);
+            preferiti_star.setImageResource(R.drawable.grey_star);
         }
 
 

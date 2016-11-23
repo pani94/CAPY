@@ -119,6 +119,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             String tipo_ricerca = "";
             //String key = "language=it&key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk";
             String key = "language=it&key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
+            //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             //String key = "language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             if(selectedItem.equals("vedere")){
                 tipo_ricerca = "nearbysearch";

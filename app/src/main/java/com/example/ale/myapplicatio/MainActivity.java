@@ -88,26 +88,18 @@ public class MainActivity extends AppCompatActivity  {
                 String s = charSequence.toString();
                 Adapter a = cerca.getAdapter();
                 if(a != null){
-                    Log.e("messaggini", "a!=null");
                     if(!a.isEmpty()){
-                        Log.e("messaggini", "a!=empty");
                         for(int i=0; i<a.getCount(); i++){
-                            //stringa = a.getItem(0).toString();
-                            Log.e("messaggini", a.getItem(i).toString());
                             if(s.equals(a.getItem(i).toString())){
-                                Log.e("messaggini", "isValid return true");
                                 return true;
                             }
                         }
                     }else{
-                        Log.e("messaggini", "a vuoto");
                         if(check){
-                            Log.e("messaggini", "check true && isValid return true");
                             return true;
                         }
                     }
                 }
-                Log.e("messaggini", "isValid return false");
                 return false;
             }
 
@@ -116,22 +108,14 @@ public class MainActivity extends AppCompatActivity  {
                 String s = charSequence.toString();
                 Adapter a = cerca.getAdapter();
                 if (a != null) {
-                    Log.e("messaggini", "fix text: a!=null");
                     if (!a.isEmpty()) {
-                        Log.e("messaggini", "fix text: a!=empty");
-                        Log.e("messaggini", a.getItem(0).toString());
                         return a.getItem(0).toString();
-                    }else{
-                        //Log.e("messaggini", stringa);
-                        //return stringa;
                     }
                 } else {
                     if (check) {
-                        Log.e("messaggini", "check true && fix text return s: " + s);
                         return s;
                     }
                 }
-                Log.e("messaggini", "non puoi andare avanti");
                 return "";
             }
         });
@@ -297,7 +281,7 @@ public class MainActivity extends AppCompatActivity  {
             //String chiave = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             //String chiave = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             String url= url1 + arg0[0] + url2 + chiave;
-            Log.e("messaggini", url);
+            //Log.e("messaggini", url);
             String jsonStr = sh.makeServiceCall(url);
                        if (jsonStr != null) {
                 try {
@@ -306,7 +290,7 @@ public class MainActivity extends AppCompatActivity  {
                     // looping through All Contacts
                     for (int i = 0; i < predictions.length(); i++) {
                         if(isCancelled()){
-                            Log.e("messaggini", "cancellato");
+
                         }
                         JSONObject c = predictions.getJSONObject(i);
                         String description = c.getString("description");
