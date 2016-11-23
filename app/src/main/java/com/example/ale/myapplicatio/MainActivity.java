@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity  {
     //private RelativeLayout mainContent;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private GetCity getCityRequest;
+    private boolean check = false;
+    private String stringa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,23 +75,39 @@ public class MainActivity extends AppCompatActivity  {
         cerca.addTextChangedListener(passwordWatcher);
         bottone.setOnClickListener(buttonListener);
         cerca.setOnEditorActionListener(editTextListener);
+        cerca.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos,
+                                    long id) {
+                check = true;
+            }
+        });
         cerca.setValidator(new AutoCompleteTextView.Validator() {
             @Override
             public boolean isValid(CharSequence charSequence) {
                 String s = charSequence.toString();
                 Adapter a = cerca.getAdapter();
                 if(a != null){
+                    Log.e("messaggini", "a!=null");
                     if(!a.isEmpty()){
+                        Log.e("messaggini", "a!=empty");
                         for(int i=0; i<a.getCount(); i++){
+                            //stringa = a.getItem(0).toString();
                             Log.e("messaggini", a.getItem(i).toString());
                             if(s.equals(a.getItem(i).toString())){
+                                Log.e("messaggini", "isValid return true");
                                 return true;
                             }
                         }
                     }else{
-                        Log.e("messaggini", "sono vuoto");
+                        Log.e("messaggini", "a vuoto");
+                        if(check){
+                            Log.e("messaggini", "check true && isValid return true");
+                            return true;
+                        }
                     }
                 }
+                Log.e("messaggini", "isValid return false");
                 return false;
             }
 
@@ -97,12 +115,24 @@ public class MainActivity extends AppCompatActivity  {
             public String fixText(CharSequence charSequence) {
                 String s = charSequence.toString();
                 Adapter a = cerca.getAdapter();
-                if(a != null){
-                    if(!a.isEmpty()){
+                if (a != null) {
+                    Log.e("messaggini", "fix text: a!=null");
+                    if (!a.isEmpty()) {
+                        Log.e("messaggini", "fix text: a!=empty");
+                        Log.e("messaggini", a.getItem(0).toString());
                         return a.getItem(0).toString();
+                    }else{
+                        //Log.e("messaggini", stringa);
+                        //return stringa;
+                    }
+                } else {
+                    if (check) {
+                        Log.e("messaggini", "check true && fix text return s: " + s);
+                        return s;
                     }
                 }
-                return s;
+                Log.e("messaggini", "non puoi andare avanti");
+                return "";
             }
         });
 
@@ -169,6 +199,7 @@ public class MainActivity extends AppCompatActivity  {
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                check = false;
                 if(s.length() >0) {
                     if(getCityRequest == null){
                         getCityRequest = new GetCity();
@@ -263,12 +294,12 @@ public class MainActivity extends AppCompatActivity  {
             String url2 ="&types=(cities)&language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             //String url2 ="&types=(cities)&key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
             String url= url1 + arg0[0] + url2 ;
+            Log.e("messaggini", url);
             String jsonStr = sh.makeServiceCall(url);
                        if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     JSONArray predictions = jsonObj.getJSONArray("predictions");
-
                     // looping through All Contacts
                     for (int i = 0; i < predictions.length(); i++) {
                         if(isCancelled()){
@@ -351,17 +382,65 @@ public class MainActivity extends AppCompatActivity  {
                 if(ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122 ){
                     if(!cerca.getValidator().isValid(ricerca)){
                         ricerca = cerca.getValidator().fixText(ricerca).toString();
+                        if(!ricerca.equals("")){
+                            Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                            intent.putExtra("citta", ricerca);
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                        }
+                    }else{
+                        Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                        intent.putExtra("citta", ricerca);
+                        startActivity(intent);
                     }
-                    Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
-                    intent.putExtra("citta", ricerca);
-                    startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
                 }
             }else{
                 Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
             }
+            /*HttpHandler sh = new HttpHandler();
+            String url_part1 = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=";
+            String url_part2 = "&types=";
+            String vaffa1 = "(";
+            String vaffa2 = "cities";
+            String vaffa3 = ")";
+            String vaffa4 = "&language=it&key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
+                    //"key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+            String ricercaurl = ricerca.replace(" ", "+").toString();
+            String url_finale = url_part1 + ricercaurl + url_part2 + vaffa1 + vaffa2 + vaffa3 + vaffa4;
 
+
+            Log.e("messaggini", url_finale);
+            String jsonStr = sh.makeServiceCall(url_finale);
+            //Log.e("messaggini", jsonStr);
+            if (jsonStr != null) {
+                Log.e("messaggini", "dentro l'if");
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+                    JSONArray predictions = jsonObj.getJSONArray("predictions");
+                    JSONArray status = jsonObj.getJSONArray("status");
+                    Log.e("messaggini", status.getString(0));
+                    JSONObject c = predictions.getJSONObject(0);
+                    String description = c.getString("description");
+                    Log.e("messaggini", description);
+
+                }catch (final JSONException e){
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+                Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                intent.putExtra("citta", ricerca);
+                startActivity(intent);
+            }*/
 
         }
 
@@ -375,14 +454,26 @@ public class MainActivity extends AppCompatActivity  {
                     actionId == EditorInfo.IME_ACTION_UNSPECIFIED) {
                 String ricerca = cerca.getText().toString();
                 if(!ricerca.equals("")){
-
                     if(ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122 ){
                         if(!cerca.getValidator().isValid(ricerca)){
                             ricerca = cerca.getValidator().fixText(ricerca).toString();
+                            if(!ricerca.equals("")){
+                                Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                                intent.putExtra("citta", ricerca);
+                                startActivity(intent);
+                            }else {
+                                Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                            }
+                        }else{
+                            Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                            intent.putExtra("citta", ricerca);
+                            startActivity(intent);
                         }
-                        Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
-                        intent.putExtra("citta", ricerca);
-                        startActivity(intent);
+                        if(check){
+                            Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                            intent.putExtra("citta", ricerca);
+                            startActivity(intent);
+                        }
                     }else{
                         Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
                     }
