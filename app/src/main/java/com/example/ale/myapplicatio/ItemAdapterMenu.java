@@ -42,7 +42,9 @@ public class ItemAdapterMenu extends ArrayAdapter<ItemRicercaActivity>  {
         vicinity.setText(item.getVicinity());
 
         String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getPhoto_reference()+"&sensor=false&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
-       //icon.setImageResource(R.drawable.ic_about);
+       Log.e("RICHIESTA", photo_reference_url);
+        //icon.setImageResource(R.drawable.ic_about);
+
         new LoadImageTask().execute(photo_reference_url);
         // Return the completed view to render on screen
         return convertView;
