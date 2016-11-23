@@ -30,6 +30,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
+import static android.R.drawable.btn_star_big_off;
+import static android.R.drawable.btn_star_big_on;
+
 public class RicercaActivityFragmentListItem extends Fragment{
 
     private String place_id;
@@ -117,9 +120,9 @@ public class RicercaActivityFragmentListItem extends Fragment{
 
         giallo = database.getAttivitaPreferita(place_id);
         if (giallo == true){
-            preferiti_star.setImageResource(R.drawable.yellow_star);
+            preferiti_star.setImageResource(btn_star_big_on);
         }else{
-            preferiti_star.setImageResource(R.drawable.grey_star);
+            preferiti_star.setImageResource(btn_star_big_off);
         }
 
 
@@ -380,7 +383,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Attività aggiunta ai preferiti",
                                 Toast.LENGTH_SHORT).show();
-                        preferiti_star.setImageResource(R.drawable.ic_star_yellow);
+                        preferiti_star.setImageResource(btn_star_big_on);
                         giallo = true;
                     }else{
 
@@ -388,7 +391,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Attività eliminata dai preferiti",
                                 Toast.LENGTH_SHORT).show();
-                        preferiti_star.setImageResource(R.drawable.ic_star_grey);
+                        preferiti_star.setImageResource(btn_star_big_off);
                         giallo = false;
                     }
 

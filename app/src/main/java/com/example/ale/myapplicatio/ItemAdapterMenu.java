@@ -42,11 +42,10 @@ public class ItemAdapterMenu extends ArrayAdapter<ItemRicercaActivity>  {
         String key ="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
         //String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
         //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
-        String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getPhoto_reference()+"&sensor=false&" + key;
-       Log.e("richiesta", photo_reference_url);
+        //String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getPhoto_reference()+"&sensor=false&" + key;
         //icon.setImageResource(R.drawable.ic_about);
 
-        new LoadImageTask().execute(photo_reference_url);
+        //new LoadImageTask().execute(photo_reference_url);
         // Return the completed view to render on screen
         return convertView;
     }
