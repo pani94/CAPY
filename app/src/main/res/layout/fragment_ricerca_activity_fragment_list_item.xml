@@ -105,7 +105,7 @@
         android:layout_alignParentRight="false"
         android:layout_alignParentEnd="false"
         android:background="@android:color/transparent"
-        app:srcCompat="@drawable/bottone_preferiti" />
+        app:srcCompat="@drawable/ic_star_grey" />
 
 
 </RelativeLayout>

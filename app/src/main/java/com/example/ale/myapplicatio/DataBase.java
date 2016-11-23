@@ -418,6 +418,26 @@ public class DataBase {
             }
         }
     }
+    public boolean getAttivitaPreferita(String place_id) {
+        String where = ATTIVITA_PREFERITO + "= ? AND " + ATTIVITA_PLACE_ID + "= ?" ;
+        String[] whereArgs = {"true", place_id};
+        this.openReadableDB();
+        Cursor cursor = db.query(ATTIVITA_TABLE, null,
+                where, whereArgs,
+                null, null, null);
+
+        cursor.moveToFirst();
+
+
+        if (cursor != null && cursor.getCount() > 0){
+            cursor.close();
+            this.closeDB();
+            return true;
+        }else{
+            this.closeDB();
+            return false;
+        }
+    }
     public ArrayList<Attivita> getAttivitaPreferite() {
         String where = ATTIVITA_PREFERITO + "= ?";
         String[] whereArgs = {"true"};
@@ -478,7 +498,7 @@ public class DataBase {
 
 
     }
-    public int deletePrefereriti(String id){
+    public int deletePreferiti(String id){
         String where = ATTIVITA_PLACE_ID + "= ?";
         String[] whereArgs = { id };
 

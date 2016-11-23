@@ -54,7 +54,7 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
                         .setMessage("Sei sicuro di volere eliminare dai tuoi preferiti " + arrayList.get(pos).getNome() + " ?")
                         .setPositiveButton("si", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                db.deletePrefereriti(arrayList.get(pos).getPlace_id());
+                                db.deletePreferiti(arrayList.get(pos).getPlace_id());
                                 arrayList.remove(pos);
                                 adapter.notifyDataSetChanged();
 
