@@ -117,7 +117,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             String url = "";
             String parameters = "";
             String tipo_ricerca = "";
-            String key = "language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+            String key = "language=it&key=AIzaSyCGco1X1paVAe8XVn9MM5FhcXsFwqx6psc";
             if(selectedItem.equals("vedere")){
                 tipo_ricerca = "nearbysearch";
                 String radius_sensor = "radius=5000&sensor=false";

@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity  {
         protected Void doInBackground(String... arg0) {
             HttpHandler sh = new HttpHandler();
             String url1 = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=";
-            String url2 ="&types=(cities)&language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+            String url2 ="&types=(cities)&language=it&key=AIzaSyCGco1X1paVAe8XVn9MM5FhcXsFwqx6psc";
             //String url2 ="&types=(cities)&key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
             //key=AIzaSyCGco1X1paVAe8XVn9MM5FhcXsFwqx6psc
             String url= url1 + arg0[0] + url2 ;
