@@ -291,10 +291,12 @@ public class MainActivity extends AppCompatActivity  {
         protected Void doInBackground(String... arg0) {
             HttpHandler sh = new HttpHandler();
             String url1 = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=";
-            String url2 ="&types=(cities)&language=it&key=AIzaSyCGco1X1paVAe8XVn9MM5FhcXsFwqx6psc";
-            //String url2 ="&types=(cities)&key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
-            //key=AIzaSyCGco1X1paVAe8XVn9MM5FhcXsFwqx6psc
-            String url= url1 + arg0[0] + url2 ;
+            String url2 ="&types=(cities)&language=it&";
+            //String chiave = "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk";
+            String chiave ="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
+            //String chiave = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+            //String chiave = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
+            String url= url1 + arg0[0] + url2 + chiave;
             Log.e("messaggini", url);
             String jsonStr = sh.makeServiceCall(url);
                        if (jsonStr != null) {

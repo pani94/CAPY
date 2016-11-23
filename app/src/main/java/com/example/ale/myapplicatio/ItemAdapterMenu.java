@@ -14,8 +14,6 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -40,9 +38,11 @@ public class ItemAdapterMenu extends ArrayAdapter<ItemRicercaActivity>  {
         // Populate the data into the template view using the data object
         name.setText(item.getName());
         vicinity.setText(item.getVicinity());
-
-        String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getPhoto_reference()+"&sensor=false&key=AIzaSyCGco1X1paVAe8XVn9MM5FhcXsFwqx6psc";
-       Log.e("RICHIESTA", photo_reference_url);
+        //String key = "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk";
+        String key ="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
+        //String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+        String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getPhoto_reference()+"&sensor=false&" + key;
+       Log.e("richiesta", photo_reference_url);
         //icon.setImageResource(R.drawable.ic_about);
 
         new LoadImageTask().execute(photo_reference_url);

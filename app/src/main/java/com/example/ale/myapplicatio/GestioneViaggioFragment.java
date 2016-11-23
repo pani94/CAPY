@@ -199,9 +199,11 @@ public class GestioneViaggioFragment extends Fragment {
         @Override
         protected Void doInBackground(String... arg0) {
             HttpHandler sh = new HttpHandler();
+            //String chiave = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+            String chiave ="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
+            //String chiave = "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk";
             String url1 = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=";
-            String url2 ="&types=(cities)&language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
-            //String url2 ="&types=(cities)&key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
+            String url2 ="&types=(cities)&language=it&" + chiave;
             String url= url1 + arg0[0] + url2 ;
             Log.e("messaggini", url);
             String jsonStr = sh.makeServiceCall(url);

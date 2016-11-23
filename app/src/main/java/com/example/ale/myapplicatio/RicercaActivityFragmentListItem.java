@@ -185,7 +185,9 @@ public class RicercaActivityFragmentListItem extends Fragment{
             HttpHandler sh = new HttpHandler();
             String output = "json";
             //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
-            String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+            //String key = "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk";
+            String key = "key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
+            //String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             String parameters = "placeid=" + message[0] + "&language=it" + "&" + key;
 
 
