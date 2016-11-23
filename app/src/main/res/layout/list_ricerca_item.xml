@@ -5,9 +5,9 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/common_full_open_on_phone"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        app:srcCompat="@android:drawable/ic_menu_report_image"
         android:id="@+id/icon"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -23,11 +23,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/vicinity"
-        android:layout_marginLeft="56dp"
-        android:layout_marginStart="56dp"
-        android:layout_alignBottom="@+id/icon"
-        android:layout_toRightOf="@+id/icon"
-        android:layout_toEndOf="@+id/icon" />
+        android:textSize="18sp"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/name"
+        android:layout_alignLeft="@+id/name"
+        android:layout_alignStart="@+id/name" />
 
     <TextView
         android:text="Titolo"
@@ -35,8 +35,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/name"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="25sp"
+        android:layout_marginTop="21dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginStart="68dp"
         android:layout_alignTop="@+id/icon"
-        android:layout_alignLeft="@+id/vicinity"
-        android:layout_alignStart="@+id/vicinity" />
+        android:layout_toRightOf="@+id/icon"
+        android:layout_toEndOf="@+id/icon" />
 </RelativeLayout>
