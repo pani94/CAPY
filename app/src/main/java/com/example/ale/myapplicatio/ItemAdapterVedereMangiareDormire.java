@@ -1,14 +1,17 @@
 package com.example.ale.myapplicatio;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -19,13 +22,14 @@ import java.net.URL;
  * Created by Annalisa on 24/11/2016.
  */
 
-public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> {
+public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> implements View.OnClickListener {
     private String[] scelte;
     private ImageButton icon;
-
-    public ItemAdapterVedereMangiareDormire(Context context, String[] scelte){
+    private RicercaActivityFragmentMenu fragmentMenu;
+    public ItemAdapterVedereMangiareDormire(Context context, String[] scelte, RicercaActivityFragmentMenu fragment){
         super(context,0, scelte);
         this.scelte = scelte;
+        fragmentMenu = fragment;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -48,10 +52,19 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> {
             icon.setImageResource(R.drawable.dormire);
         }
 
+       icon.setOnClickListener(this);
         new LoadImageTask();
 
         // Return the completed view to render on screen
         return convertView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        View parentRow = (View) v.getParent();
+        ListView listView = (ListView) parentRow.getParent();
+        int position = listView.getPositionForView(parentRow);
+        fragmentMenu.fragmentStart(position);
     }
 
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {

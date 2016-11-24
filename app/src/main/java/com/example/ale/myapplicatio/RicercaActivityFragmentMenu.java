@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
-public class RicercaActivityFragmentMenu extends Fragment {
+public class RicercaActivityFragmentMenu extends Fragment  {
 
     private String[] scelte;
     private ListView listaFragment;
@@ -48,17 +48,15 @@ public class RicercaActivityFragmentMenu extends Fragment {
         scelte[3] = selectedCity;
         scelta_menu = (TextView) view.findViewById(R.id.scelta_menu);
         listaFragment = (ListView) view.findViewById(R.id.listaFragment);
-        ItemAdapterVedereMangiareDormire adapter = new ItemAdapterVedereMangiareDormire(getActivity(), scelte);
+        ItemAdapterVedereMangiareDormire adapter = new ItemAdapterVedereMangiareDormire(getActivity(), scelte,this);
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(RicercaActivityFragmentMenu.this, R.layout.fragment_ricerca_activity_menu_item, scelte);
         adapter.notifyDataSetChanged();
         listaFragment.setAdapter(adapter);
-        //listaFragment.setOnItemClickListener(this);
-        //listaFragment.setDescendantFocusability(container.FOCUS_BLOCK_DESCENDANTS);
         // Inflate the layout for this fragment
         return view;
     }
 
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public void fragmentStart(int i) {
         Log.e("messaggini", "click");
         RicercaActivityFragmentList newFragment = new RicercaActivityFragmentList();
         Bundle args = new Bundle();

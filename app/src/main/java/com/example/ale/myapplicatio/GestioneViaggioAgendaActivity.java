@@ -272,7 +272,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
                                 String data = adapter.getChild(groupPosition,childPosition).getData();
                                 long idViaggio =  adapter.getChild(groupPosition,childPosition).getId_viaggio();
                                 String quando = adapter.getChild(groupPosition,childPosition).getQuando();
-                             int rowCount =   db.deleteAttivitaGiorno(place_id,data,idViaggio,quando);
+                                int rowCount =   db.deleteAttivitaGiorno(place_id,data,idViaggio,quando);
                                 if(rowCount > 0){
                                     String stampa = db.getAttivita(place_id).getNome() + " è stato eliminato";
                                     Toast.makeText(getContext(), stampa ,
