@@ -411,6 +411,7 @@ public class DataBase {
     public int getNumeroAttivita(ArrayList<ViaggioAttivita> viaggioAttivitas,String tipologia) {
         this.openReadableDB();
         Cursor cursor1 = null;
+        int count = 0;
         for(int i=0; i<viaggioAttivitas.size(); i++) {
             if (tipologia.equals("tutte")) {
                 String where = ATTIVITA_PLACE_ID + " = ? ";
@@ -425,8 +426,12 @@ public class DataBase {
                         where, whereArgs,
                         null, null, null);
             }
+            while (cursor1.moveToNext()) {
+                count++;
+                // Log.e("attivita", attivitas.get(j).getNome());
+            }
         }
-        int count = cursor1.getCount();
+
         if (cursor1 != null)
             cursor1.close();
         this.closeDB();

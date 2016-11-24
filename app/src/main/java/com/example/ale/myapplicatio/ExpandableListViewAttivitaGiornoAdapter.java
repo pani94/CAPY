@@ -90,9 +90,10 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
 
                 final ArrayList<ViaggioAttivita> viaggioAttivitas = db.getViaggiAttivita(id_viaggio);
                  ArrayList<Attivita> attivitas = new ArrayList<Attivita>();
+                Log.e("viaggioattivitas", Integer.toString(viaggioAttivitas.size()));
                 final ArrayList <Integer> selectedItems = new ArrayList<Integer>();
-                View parentRow = (View) v.getParent();
-                final ExpandableListView expandableListView = (ExpandableListView) parentRow.findViewById(R.id.exp_listview);
+                View parentRow = (View) v.getParentForAccessibility();
+                final ExpandableListView expandableListView = (ExpandableListView) parentRow.getParentForAccessibility();
                 String [] nomi_attivita ;
                 boolean [] booleen ;
                 boolean nothing = false;
@@ -147,8 +148,10 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
 
                                     Log.e("pdpd",attivitasFinal.get(selectedItems.get(i)).getPlace_id());
                                 }
-                            ExpandableListViewAttivitaGiornoAdapter.this.notifyDataSetChanged();
-                            expandableListView.setAdapter(ExpandableListViewAttivitaGiornoAdapter.this);
+                            attivitaGiornos.remove(groupPosition);
+                            attivitaGiornos.add(groupPosition,db.getAttivitaGiorno(data,id_viaggio,giornata[groupPosition]));
+                            ExpandableListViewAttivitaGiornoAdapter adapter = new ExpandableListViewAttivitaGiornoAdapter(context,header_titles,attivitaGiornos,id_viaggio,data);
+                            expandableListView.setAdapter(adapter);
                         }
                         // PRENDERE LE ATTIVITA SELEZIONATE ED ANDARLE AD AGGIUNGERE AL GIORNO CHE MI SONO FATTO PASSARE PRIMA E CON L'ORA CHE OTTENGO DAL GROUP POSITION
 
