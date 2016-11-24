@@ -4,18 +4,19 @@
     xmlns:qwerjk="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+   >
     <ImageButton
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@android:drawable/bottom_bar"
         android:layout_marginTop="24dp"
         android:id="@+id/item_vedere_mangiare_dormire_image_button"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:focusable="false"
-        android:clickable="false" />
+
+        />
 
     <TextView
         android:text="TextView"
@@ -31,7 +32,8 @@
         android:layout_marginBottom="11dp"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textStyle="normal|bold"
-        android:clickable="true" />
+        android:textIsSelectable="false"
+         />
         <!-- android:strokeColor="#000000"
         qwerjk:strokeJoinStyle="miter"
         qwerjk:strokeWidth="5"

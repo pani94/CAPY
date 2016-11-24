@@ -288,7 +288,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                                     int delete = db.deleteViaggioAttivita(db.getIdViaggio(NomeViaggio), attivitas.get(pos).getPlace_id());
                                     if(delete > 0){
                                         String stampa =  attivitas.get(pos).getNome() + "è stato eliminato";
-                                        Toast.makeText(getContext(),stampa,Toast.LENGTH_SHORT);
+                                        Toast.makeText(getContext(),stampa,Toast.LENGTH_SHORT).show();
                                         attivitas.remove(pos);
                                         adapter.notifyDataSetChanged();
                                     }
