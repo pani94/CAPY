@@ -57,15 +57,14 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <fragment
+    <Button
+        android:text="CREA VIAGGIO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:name="com.example.ale.myapplicatio.FragmentBottoneCreaIlTuoViaggio"
         android:layout_below="@+id/cerca"
-        android:layout_alignLeft="@+id/RicercaActivityFragmentListItemTitolo"
-        android:layout_alignStart="@+id/RicercaActivityFragmentListItemTitolo"
-        android:layout_marginTop="64dp"
-        android:id="@+id/fragment_bottone_crea" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="97dp"
+        android:id="@+id/activity_main_button_crea_viaggio" />
 
 
 </RelativeLayout>

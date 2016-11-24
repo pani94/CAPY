@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity  {
 
     private AutoCompleteTextView cerca;
     private Button bottone;
+    private Button bottone_crea_viaggio;
     private String TAG = MainActivity.class.getSimpleName();
     ArrayList<String> cityList;
 
@@ -57,23 +58,25 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getCityRequest = null;
-        if (findViewById(R.id.fragment_bottone_crea) != null) {
+        /*if (findViewById(R.id.fragment_bottone_crea) != null) {
             if (savedInstanceState != null) {
                 return;
             }
 
             FragmentBottoneCreaIlTuoViaggio fragment_bottone = new FragmentBottoneCreaIlTuoViaggio();
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_bottone_crea, fragment_bottone).commit();
-        }
+        }*/
 
 
         DataBase db = new DataBase(this);
         ButtonListener buttonListener = new ButtonListener();
         cityList = new ArrayList<>();
         bottone = (Button) findViewById(R.id.bottone);
+        bottone_crea_viaggio = (Button) findViewById(R.id.activity_main_button_crea_viaggio);
         cerca = (AutoCompleteTextView) findViewById(R.id.cerca);
         cerca.addTextChangedListener(passwordWatcher);
         bottone.setOnClickListener(buttonListener);
+        bottone_crea_viaggio.setOnClickListener(buttonListener);
         cerca.setOnEditorActionListener(editTextListener);
         cerca.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -281,7 +284,7 @@ public class MainActivity extends AppCompatActivity  {
             //String chiave = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             String chiave = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             String url= url1 + arg0[0] + url2 + chiave;
-            //Log.e("messaggini", url);
+            Log.e("messaggini", url);
             String jsonStr = sh.makeServiceCall(url);
                        if (jsonStr != null) {
                 try {
@@ -364,29 +367,37 @@ public class MainActivity extends AppCompatActivity  {
 
         @Override
         public void onClick(View v) {
-            String ricerca = cerca.getText().toString();
-            if(!ricerca.equals("")){
-                if(ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122 ){
-                    if(!cerca.getValidator().isValid(ricerca)){
-                        ricerca = cerca.getValidator().fixText(ricerca).toString();
-                        if(!ricerca.equals("")){
-                            Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
-                            intent.putExtra("citta", ricerca);
-                            startActivity(intent);
-                        }else {
+            switch(v.getId()){
+                case R.id.bottone: String ricerca = cerca.getText().toString();
+                    if(!ricerca.equals("")){
+                        if(ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122 ){
+                            if(!cerca.getValidator().isValid(ricerca)){
+                                ricerca = cerca.getValidator().fixText(ricerca).toString();
+                                if(!ricerca.equals("")){
+                                    Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                                    intent.putExtra("citta", ricerca);
+                                    startActivity(intent);
+                                }else {
+                                    Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                                }
+                            }else{
+                                Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                                intent.putExtra("citta", ricerca);
+                                startActivity(intent);
+                            }
+                        }else{
                             Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
                         }
                     }else{
-                        Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
-                        intent.putExtra("citta", ricerca);
-                        startActivity(intent);
+                        Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
                     }
-                }else{
-                    Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
-                }
-            }else{
-                Toast.makeText(getApplicationContext(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                    break;
+                case R.id.activity_main_button_crea_viaggio:
+                    Intent intent = new Intent(MainActivity.this, CreaIlTuoViaggioActivity.class);
+                    startActivity(intent);
+                    break;
             }
+
             /*HttpHandler sh = new HttpHandler();
             String url_part1 = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=";
             String url_part2 = "&types=";
