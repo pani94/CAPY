@@ -113,26 +113,18 @@ public class GestioneViaggioFragment extends Fragment {
                 String s = charSequence.toString();
                 Adapter a = autoCompleteCerca.getAdapter();
                 if(a != null){
-                    Log.e("messaggini", "a!=null");
                     if(!a.isEmpty()){
-                        Log.e("messaggini", "a!=empty");
                         for(int i=0; i<a.getCount(); i++){
-                            //stringa = a.getItem(0).toString();
-                            Log.e("messaggini", a.getItem(i).toString());
                             if(s.equals(a.getItem(i).toString())){
-                                Log.e("messaggini", "isValid return true");
                                 return true;
                             }
                         }
                     }else{
-                        Log.e("messaggini", "a vuoto");
                         if(check){
-                            Log.e("messaggini", "check true && isValid return true");
                             return true;
                         }
                     }
                 }
-                Log.e("messaggini", "isValid return false");
                 return false;
             }
 
@@ -141,10 +133,7 @@ public class GestioneViaggioFragment extends Fragment {
                 String s = charSequence.toString();
                 Adapter a = autoCompleteCerca.getAdapter();
                 if (a != null) {
-                    Log.e("messaggini", "fix text: a!=null");
                     if (!a.isEmpty()) {
-                        Log.e("messaggini", "fix text: a!=empty");
-                        Log.e("messaggini", a.getItem(0).toString());
                         return a.getItem(0).toString();
                     }else{
                         //Log.e("messaggini", stringa);
@@ -152,11 +141,9 @@ public class GestioneViaggioFragment extends Fragment {
                     }
                 } else {
                     if (check) {
-                        Log.e("messaggini", "check true && fix text return s: " + s);
                         return s;
                     }
                 }
-                Log.e("messaggini", "non puoi andare avanti");
                 return "";
             }
         });

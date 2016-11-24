@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -54,9 +55,16 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
                         .setMessage("Sei sicuro di volere eliminare dai tuoi preferiti " + arrayList.get(pos).getNome() + " ?")
                         .setPositiveButton("si", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                db.deletePreferiti(arrayList.get(pos).getPlace_id());
-                                arrayList.remove(pos);
-                                adapter.notifyDataSetChanged();
+                                long delete = db.deletePreferiti(arrayList.get(pos).getPlace_id());
+                                if(delete > 0){
+                                    String stampa = arrayList.get(pos).getNome() + " è stato eliminato dai tuoi preferiti";
+                                    Toast.makeText(getContext(), stampa,
+                                            Toast.LENGTH_SHORT).show();
+                                    arrayList.remove(pos);
+                                    adapter.notifyDataSetChanged();
+
+                                }
+
 
                             }
                         })

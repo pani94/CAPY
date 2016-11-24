@@ -95,11 +95,14 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if(!parte_giornata.equals("")){
                                     AttivitaGiorno attivitaGiorno = new AttivitaGiorno(arrayList.get(position).getPlace_id(),data,id_viaggio, parte_giornata);
-                                    dataBase.insertAttivitaGiorno(attivitaGiorno);
-                                    String stampa = "L'attività è stata aggiunta al " + parte_giornata + " del " + data;
-                                    Toast.makeText(getContext().getApplicationContext(),
-                                            stampa,
-                                            Toast.LENGTH_SHORT).show();
+                                    long insert =dataBase.insertAttivitaGiorno(attivitaGiorno);
+                                    if(insert > 0){
+                                        String stampa = "L'attività è stata aggiunta al " + parte_giornata + " del " + data;
+                                        Toast.makeText(getContext().getApplicationContext(),
+                                                stampa,
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }else{
                                     Toast.makeText(getContext().getApplicationContext(),
                                             "Devi selezionare un momento della giornata",
