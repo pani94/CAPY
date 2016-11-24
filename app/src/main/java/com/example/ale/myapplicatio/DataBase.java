@@ -371,6 +371,68 @@ public class DataBase {
 
         return attivitas;
     }
+    public ArrayList<Attivita> getAttivita(int id_viaggio,String tipologia) {
+        ArrayList<ViaggioAttivita> viaggioAttivitas = getViaggiAttivita(id_viaggio);
+        this.openReadableDB();
+        Cursor cursor1 = null;
+        ArrayList<Attivita> attivitas = new ArrayList<Attivita>();
+        for(int i=0; i<viaggioAttivitas.size(); i++){
+
+            String[] whereArgs1;
+            if(tipologia.equals("tutte")){
+                String where = ATTIVITA_PLACE_ID + " = ? "  ;
+                String[] whereArgs = { viaggioAttivitas.get(i).getPlace_id()};
+                cursor1 = db.query(ATTIVITA_TABLE, null,
+                        where, whereArgs,
+                        null, null, null);
+            }
+            else
+            {
+                String where = ATTIVITA_PLACE_ID + " = ? " + " AND " + ATTIVITA_TIPOLOGIA + " = ? "  ;
+                String[] whereArgs = { viaggioAttivitas.get(i).getPlace_id(),tipologia};
+                cursor1 = db.query(ATTIVITA_TABLE, null,
+                        where, whereArgs,
+                        null, null, null);
+            }
+
+            while (cursor1.moveToNext()) {
+                attivitas.add(getAttivitaFromCursor(cursor1));
+                // Log.e("attivita", attivitas.get(j).getNome());
+
+            }
+        }
+
+        if (cursor1 != null)
+            cursor1.close();
+        //this.closeDB();
+
+        return attivitas;
+    }
+    public int getNumeroAttivita(ArrayList<ViaggioAttivita> viaggioAttivitas,String tipologia) {
+        this.openReadableDB();
+        Cursor cursor1 = null;
+        for(int i=0; i<viaggioAttivitas.size(); i++) {
+            if (tipologia.equals("tutte")) {
+                String where = ATTIVITA_PLACE_ID + " = ? ";
+                String[] whereArgs = {viaggioAttivitas.get(i).getPlace_id()};
+                cursor1 = db.query(ATTIVITA_TABLE, null,
+                        where, whereArgs,
+                        null, null, null);
+            } else {
+                String where = ATTIVITA_PLACE_ID + " = ? " + " AND " + ATTIVITA_TIPOLOGIA + " = ? ";
+                String[] whereArgs = {viaggioAttivitas.get(i).getPlace_id(), tipologia};
+                cursor1 = db.query(ATTIVITA_TABLE, null,
+                        where, whereArgs,
+                        null, null, null);
+            }
+        }
+        int count = cursor1.getCount();
+        if (cursor1 != null)
+            cursor1.close();
+        this.closeDB();
+
+        return count;
+    }
     public Attivita getAttivita(String place_id) {
         this.openReadableDB();
         Cursor cursor1 = null;

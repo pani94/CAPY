@@ -228,7 +228,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
             for (String title : headings_item){
                 headings.add(title);
             }
-            ExpandableListViewAttivitaGiornoAdapter adapter = new ExpandableListViewAttivitaGiornoAdapter(getContext(),headings,arrayListParent);
+            ExpandableListViewAttivitaGiornoAdapter adapter = new ExpandableListViewAttivitaGiornoAdapter(getContext(),headings,arrayListParent,id_viaggio,data);
             expandableListView.setAdapter(adapter);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
@@ -262,9 +262,6 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
         public CharSequence getPageTitle(int position) {
             DataBase db = new DataBase(getApplicationContext());
             ArrayList<ViaggioGiorno> giorni = db.getGiorni(db.getIdViaggio(NomeViaggio));
-           /* for (int i = 0; i< giorni.size(); i++){
-                Log.e("giorni",giorni.get(i).getData());
-            }*/
             return giorni.get(position).getData();
 
         }
