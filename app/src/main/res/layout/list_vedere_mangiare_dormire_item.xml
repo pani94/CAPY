@@ -31,7 +31,8 @@
         android:layout_marginBottom="11dp"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textStyle="normal|bold"
-        android:clickable="true" />
+        android:clickable="true"
+        android:shadowColor="@android:color/black" />
         <!-- android:strokeColor="#000000"
         qwerjk:strokeJoinStyle="miter"
         qwerjk:strokeWidth="5"

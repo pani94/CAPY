@@ -39,6 +39,7 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> {
         icon = (ImageButton) convertView.findViewById(R.id.item_vedere_mangiare_dormire_image_button);
         // Populate the data into the template view using the data object
         name.setText(scelta);
+        name.setShadowLayer(20,10,10, android.R.color.black);
         if(scelta.equals("Cosa vedere?")){
             icon.setImageResource(R.drawable.vedere);
         }else if(scelta.equals("Dove mangiare?")){

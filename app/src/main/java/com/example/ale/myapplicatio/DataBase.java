@@ -7,13 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 
 /**
  * Created by Annalisa on 16/11/2016.
@@ -762,9 +757,17 @@ public class DataBase {
 
         return rowID;
     }
-    public int deleteAttivitaGiorno( String place_id, String data, long id,String quando) {
+    public int deleteAttivitaGiorno( String place_id, String data, long id, String quando) {
         String where = ATTIVITAGIORNO_PLACE_ID + "= ?"  + " AND "  + ATTIVITAGIORNO_DATA + " = ? "  + " AND "  + ATTIVITAGIORNO_ID_VIAGGIO + "=  ?" + " AND " + ATTIVITAGIORNO_QUANDO + " = ?" ;
         String[] whereArgs = {place_id,data, String.valueOf(id),quando};
+        this.openWriteableDB();
+        int rowCount = db.delete(ATTIVITAGIORNO_TABLE, where, whereArgs);
+        this.closeDB();
+        return rowCount;
+    }
+    public int deleteAttivitaGiorno(String place_id, long id) {
+        String where = ATTIVITAGIORNO_PLACE_ID + "= ?"  + " AND " + ATTIVITAGIORNO_ID_VIAGGIO + "=  ?";
+        String[] whereArgs = {place_id, String.valueOf(id)};
         this.openWriteableDB();
         int rowCount = db.delete(ATTIVITAGIORNO_TABLE, where, whereArgs);
         this.closeDB();

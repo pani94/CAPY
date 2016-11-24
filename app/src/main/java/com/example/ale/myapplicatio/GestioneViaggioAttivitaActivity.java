@@ -271,7 +271,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
 
             itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
-            final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas,NomeViaggio);
+            final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas, NomeViaggio);
             adapter.notifyDataSetChanged();
             itemListView.setAdapter(adapter);
             itemListView.setOnItemClickListener(this);
@@ -286,11 +286,16 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                             .setPositiveButton("si", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     int delete = db.deleteViaggioAttivita(db.getIdViaggio(NomeViaggio), attivitas.get(pos).getPlace_id());
+                                    int delete2 = db.deleteAttivitaGiorno(attivitas.get(pos).getPlace_id(), db.getIdViaggio(NomeViaggio));
                                     if(delete > 0){
-                                        String stampa =  attivitas.get(pos).getNome() + "è stato eliminato";
+                                        String stampa =  attivitas.get(pos).getNome() + "è stato eliminato dalle attività";
                                         Toast.makeText(getContext(),stampa,Toast.LENGTH_SHORT);
                                         attivitas.remove(pos);
                                         adapter.notifyDataSetChanged();
+                                        if(delete2 > 0){
+                                            String stampa2 =  attivitas.get(pos).getNome() + "è stato eliminato dall'agenda";
+                                            Toast.makeText(getContext(),stampa2,Toast.LENGTH_SHORT);
+                                        }
                                     }
 
                                 }
