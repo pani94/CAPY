@@ -1,43 +1,22 @@
 package com.example.ale.myapplicatio;
 
-import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
-import android.net.Uri;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import org.apache.http.client.HttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class RicercaActivity extends AppCompatActivity {
     private ListView itemsListView;
@@ -179,10 +158,9 @@ public class RicercaActivity extends AppCompatActivity {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.activity_main, fragment);
             transaction.commit();
-
-
         }
     }
+
           /*  arrayList = new ArrayList<ItemRicercaActivity>();
             //itemsListView = (ListView) findViewById(R.id.lista);
             Intent intent = getIntent();
@@ -367,6 +345,7 @@ public class RicercaActivity extends AppCompatActivity {
                 // Return the completed view to render on screen
                 return convertView;
             }*/
+
 
     }
 

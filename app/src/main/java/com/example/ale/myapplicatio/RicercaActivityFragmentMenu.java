@@ -5,16 +5,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 
-public class RicercaActivityFragmentMenu extends Fragment implements AdapterView.OnItemClickListener {
+public class RicercaActivityFragmentMenu extends Fragment {
 
     private String[] scelte;
     private ListView listaFragment;
@@ -41,26 +41,51 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ricerca_activity_fragment_menu, container, false);
-        scelte = new String[3];
+        scelte = new String[4];
         scelte[0] = "Cosa vedere?";
         scelte[1] = "Dove mangiare?";
         scelte[2] = "Dove dormire?";
+        scelte[3] = selectedCity;
         scelta_menu = (TextView) view.findViewById(R.id.scelta_menu);
         listaFragment = (ListView) view.findViewById(R.id.listaFragment);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, scelte);
+        ItemAdapterVedereMangiareDormire adapter = new ItemAdapterVedereMangiareDormire(getActivity(), scelte);
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(RicercaActivityFragmentMenu.this, R.layout.fragment_ricerca_activity_menu_item, scelte);
         adapter.notifyDataSetChanged();
         listaFragment.setAdapter(adapter);
-        listaFragment.setOnItemClickListener(this);
+        //listaFragment.setOnItemClickListener(this);
+        //listaFragment.setDescendantFocusability(container.FOCUS_BLOCK_DESCENDANTS);
         // Inflate the layout for this fragment
         return view;
     }
 
-    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Log.e("messaggini", "click");
+        RicercaActivityFragmentList newFragment = new RicercaActivityFragmentList();
+        Bundle args = new Bundle();
+        args.putString("selectedCity", selectedCity);
+        if(scelte[i].equals("Cosa vedere?")){
+            selectedItem = "vedere";
+        }else if(scelte[i].equals("Dove mangiare?")){
+            selectedItem = "mangiare";
+        }else if(scelte[i].equals("Dove dormire?")){
+            selectedItem = "dormire";
+        }
+        args.putString("selectedItem", selectedItem);
+        newFragment.setArguments(args);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    /*@Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.e("messaggini", "click");
         RicercaActivityFragmentList newFragment = new RicercaActivityFragmentList();
         Bundle args = new Bundle();
         args.putString("selectedCity",selectedCity);
+        Log.e("messaggini", scelte[position]);
         if(position == 0){
             selectedItem = "vedere";
         }else if(position == 1){
@@ -77,7 +102,7 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
 
 // Commit the transaction
         transaction.commit();
-    }
+    }*/
 
 
 
