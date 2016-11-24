@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -128,6 +129,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
 
         preferiti_star.setOnClickListener(buttonListener);
 
+        titolo.setShadowLayer(5,0,0, Color.BLACK);
         for(int i = 0; i < arrayListViaggi.size(); i++){
             Log.e("viaggi", arrayListViaggi.get(i).getNome_viaggio());
         }
@@ -189,8 +191,8 @@ public class RicercaActivityFragmentListItem extends Fragment{
             String output = "json";
             //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             //String key = "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk";
-            String key = "key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
-            //String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+            //String key = "key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
+            String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             String parameters = "placeid=" + message[0] + "&language=it" + "&" + key;
 
 
@@ -273,8 +275,10 @@ public class RicercaActivityFragmentListItem extends Fragment{
             indirizzo.setText(item.getAddress());
             if(item.getOpen_now().equalsIgnoreCase("true")){
                 orario.setText("APERTO ORA");
+                orario.setTextColor(Color.GREEN);
             }else if(item.getOpen_now().equalsIgnoreCase("false")){
                 orario.setText("CHIUSO ORA");
+                orario.setTextColor(Color.RED);
             }else{
                 orario.setText("");
             }

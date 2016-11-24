@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
     private SlidingMenuAdapter adapter;
     private ListView listViewSliding;
     private DrawerLayout drawerLayout;
-   // private RelativeLayout mainContent;
+    // private RelativeLayout mainContent;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
@@ -245,17 +246,17 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             switch (sectionNumber){
                 case 0 :
-                        args.putString("tabselected", "vedere");
-                        break;
+                    args.putString("tabselected", "vedere");
+                    break;
                 case 1 :
-                        args.putString("tabselected", "mangiare");
-                        break;
+                    args.putString("tabselected", "mangiare");
+                    break;
                 case 2:
-                        args.putString("tabselected", "dormire");
-                        break;
+                    args.putString("tabselected", "dormire");
+                    break;
                 default:
-                        args.putString("tabselected", "tutte");
-                        break;
+                    args.putString("tabselected", "tutte");
+                    break;
 
             }
 
@@ -266,7 +267,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
             attivitas = new ArrayList<Attivita>();
-             final DataBase db = new DataBase(getActivity());
+            final DataBase db = new DataBase(getActivity());
             attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
 
             itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
@@ -284,9 +285,19 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                             .setMessage("Sei sicuro di volere eliminare " + attivitas.get(pos).getNome() + " da " + NomeViaggio + "?")
                             .setPositiveButton("si", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    db.deleteViaggioAttivita(db.getIdViaggio(NomeViaggio), attivitas.get(pos).getPlace_id());
-                                    attivitas.remove(pos);
-                                    adapter.notifyDataSetChanged();
+                                    int delete = db.deleteViaggioAttivita(db.getIdViaggio(NomeViaggio), attivitas.get(pos).getPlace_id());
+                                    int delete2 = db.deleteAttivitaGiorno(attivitas.get(pos).getPlace_id(), db.getIdViaggio(NomeViaggio));
+                                    if(delete > 0){
+                                        String stampa =  attivitas.get(pos).getNome() + "è stato eliminato dalle attività";
+                                        Toast.makeText(getContext(),stampa,Toast.LENGTH_SHORT);
+                                        attivitas.remove(pos);
+                                        adapter.notifyDataSetChanged();
+                                        if(delete2 > 0){
+                                            String stampa2 =  attivitas.get(pos).getNome() + "è stato eliminato dall'agenda";
+                                            Toast.makeText(getContext(),stampa2,Toast.LENGTH_SHORT);
+                                        }
+                                    }
+
                                 }
                             })
                             .setNegativeButton("no", new DialogInterface.OnClickListener() {
@@ -303,17 +314,17 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
             return rootView;
         }
-     /*  public void onResume(){
-            super.onResume();
-            DataBase db = new DataBase(getActivity());
-           Log.e("aiuto", "onResume" + getArguments().getString("tabselected"));
-           attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
-            //itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
-            final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
-           adapter.notifyDataSetChanged();
-            itemListView.setAdapter(adapter);
+        /*  public void onResume(){
+               super.onResume();
+               DataBase db = new DataBase(getActivity());
+              Log.e("aiuto", "onResume" + getArguments().getString("tabselected"));
+              attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
+               //itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
+               final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
+              adapter.notifyDataSetChanged();
+               itemListView.setAdapter(adapter);
 
-        }*/
+           }*/
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaListItemActivity.class);

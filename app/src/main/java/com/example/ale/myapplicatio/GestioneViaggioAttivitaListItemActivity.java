@@ -3,6 +3,7 @@ package com.example.ale.myapplicatio;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -79,6 +80,7 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
             id_viaggio = database.getIdViaggio(nomeViaggio);
             giorni = database.getGiorni(id_viaggio);
             attivita_listitem_button.setOnClickListener(buttonListener);
+            attivita_listitem_titolo.setShadowLayer(5,0,0, Color.BLACK);
             String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + foto_get + "&sensor=false&key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             new LoadImageTask().execute(photo_reference_url);
         }
