@@ -280,7 +280,6 @@ public class DataBase {
     }
 
     public long UpdateViaggio(Viaggio viaggio) {
-    public long UpdateViaggio(Viaggio viaggio) {
         ContentValues cv = new ContentValues();
         cv.put(VIAGGIO_ID, viaggio.getId_viaggio());
         cv.put(VIAGGIO_NOME, viaggio.getNome_viaggio());
@@ -765,9 +764,6 @@ public class DataBase {
         return rowID;
     }
 
-    public int deleteAttivitaGiorno(String place_id, String data, long id, String quando) {
-        String where = ATTIVITAGIORNO_PLACE_ID + "= ?" + " AND " + ATTIVITAGIORNO_DATA + " = ? " + " AND " + ATTIVITAGIORNO_ID_VIAGGIO + "=  ?" + " AND " + ATTIVITAGIORNO_QUANDO + " = ?";
-        String[] whereArgs = {place_id, data, String.valueOf(id), quando};
     public int deleteAttivitaGiorno( String place_id, String data, long id, String quando) {
         String where = ATTIVITAGIORNO_PLACE_ID + "= ?"  + " AND "  + ATTIVITAGIORNO_DATA + " = ? "  + " AND "  + ATTIVITAGIORNO_ID_VIAGGIO + "=  ?" + " AND " + ATTIVITAGIORNO_QUANDO + " = ?" ;
         String[] whereArgs = {place_id,data, String.valueOf(id),quando};
@@ -776,6 +772,7 @@ public class DataBase {
         this.closeDB();
         return rowCount;
     }
+
     public int deleteAttivitaGiorno(String place_id, long id) {
         String where = ATTIVITAGIORNO_PLACE_ID + "= ?"  + " AND " + ATTIVITAGIORNO_ID_VIAGGIO + "=  ?";
         String[] whereArgs = {place_id, String.valueOf(id)};
@@ -785,14 +782,6 @@ public class DataBase {
         return rowCount;
     }
 
-    public int deleteAttivitaGiorno(String place_id, long id) {
-        String where = ATTIVITAGIORNO_PLACE_ID + "= ?" + " AND " + ATTIVITAGIORNO_ID_VIAGGIO + "=  ?";
-        String[] whereArgs = {place_id, String.valueOf(id)};
-        this.openWriteableDB();
-        int rowCount = db.delete(ATTIVITAGIORNO_TABLE, where, whereArgs);
-        this.closeDB();
-        return rowCount;
-    }
 
     public ArrayList<AttivitaGiorno> getAttivitaGiorno(String data, int id, String quando) {
         String where = ATTIVITAGIORNO_DATA + " = ? " +  " AND " + ATTIVITAGIORNO_ID_VIAGGIO + " = ? " +  " AND " + ATTIVITAGIORNO_QUANDO + " =?";
