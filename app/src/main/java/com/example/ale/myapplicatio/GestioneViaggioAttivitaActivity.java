@@ -273,7 +273,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas,NomeViaggio);
             adapter.notifyDataSetChanged();
             itemListView.setAdapter(adapter);
-
             itemListView.setOnItemClickListener(this);
             itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override

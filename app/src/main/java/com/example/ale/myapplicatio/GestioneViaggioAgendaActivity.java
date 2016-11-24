@@ -187,9 +187,9 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class AgendaFragment extends Fragment {
+    public static class AgendaFragment extends Fragment implements ExpandableListView.OnChildClickListener {
         private ExpandableListView expandableListView;
-
+        ExpandableListViewAttivitaGiornoAdapter adapter=null;
         public AgendaFragment() {
         }
 
@@ -209,8 +209,8 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_agenda, container, false);
             expandableListView = (ExpandableListView) rootView.findViewById(R.id.exp_listview);
-            DataBase db = new DataBase(getContext());
             String data = getArguments().getString("data");
+            DataBase db = new DataBase(getContext());
             int id_viaggio = db.getIdViaggio(NomeViaggio);
             List <String> headings = new ArrayList<String>();
             ArrayList<ArrayList <AttivitaGiorno>> arrayListParent = new ArrayList<>();
@@ -228,10 +228,29 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
             for (String title : headings_item){
                 headings.add(title);
             }
-            ExpandableListViewAttivitaGiornoAdapter adapter = new ExpandableListViewAttivitaGiornoAdapter(getContext(),headings,arrayListParent,id_viaggio,data);
+            adapter = new ExpandableListViewAttivitaGiornoAdapter(getContext(),headings,arrayListParent,id_viaggio,data);
             expandableListView.setAdapter(adapter);
+            expandableListView.setOnChildClickListener(this);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
+        }
+
+        @Override
+        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            DataBase db = new DataBase(getContext());
+            Attivita attivita =db.getAttivita(adapter.getChild(groupPosition,childPosition).getPlace_id());
+            Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaListItemActivity.class);
+            intent.putExtra("nomeViaggio", NomeViaggio);
+            intent.putExtra("placeid", attivita.getPlace_id());
+            intent.putExtra("titolo", attivita.getNome());
+            intent.putExtra("foto", attivita.getFoto());
+            intent.putExtra("orario", attivita.getOrario());
+            intent.putExtra("link", attivita.getLink());
+            intent.putExtra("telefono", attivita.getTelefono());
+            intent.putExtra("indirizzo", attivita.getIndirizzo());
+            intent.putExtra("tipologia", attivita.getTipologia());
+            startActivity(intent);
+            return true;
         }
     }
 
