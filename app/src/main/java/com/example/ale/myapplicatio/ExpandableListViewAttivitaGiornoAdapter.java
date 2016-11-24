@@ -82,6 +82,8 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
         }
         final DataBase db = new DataBase(context);
         TextView textView = (TextView) convertView.findViewById(R.id.item_exp_listview_head);
+        TextView num = (TextView) convertView.findViewById(R.id.item_exp_listview_num);
+        num.setText(Integer.toString(getChildrenCount(groupPosition)));
         Button button = (Button) convertView.findViewById(R.id.item_exp_listview_bottone);
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -141,21 +143,32 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
                     builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            String[] giornata = {"Mattina", "Pranzo", "Pomeriggio", "Cena", "Sera"};
+                            if (selectedItems.size() == 0){
+                                dialog.dismiss();
+                                Toast.makeText(context, "DEVI SELEZIONARE ALMENO UN'ATTIVITA'",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                String[] giornata = {"Mattina", "Pranzo", "Pomeriggio", "Cena", "Sera"};
                                 for (int i = 0; i < selectedItems.size();i++){
                                     AttivitaGiorno attivitaGiorno = new AttivitaGiorno(attivitasFinal.get(selectedItems.get(i)).getPlace_id(),data,id_viaggio, giornata[groupPosition]);
                                     db.insertAttivitaGiorno(attivitaGiorno);
-
-                                    Log.e("pdpd",attivitasFinal.get(selectedItems.get(i)).getPlace_id());
                                 }
-                            attivitaGiornos.remove(groupPosition);
-                            attivitaGiornos.add(groupPosition,db.getAttivitaGiorno(data,id_viaggio,giornata[groupPosition]));
-                            ExpandableListViewAttivitaGiornoAdapter adapter = new ExpandableListViewAttivitaGiornoAdapter(context,header_titles,attivitaGiornos,id_viaggio,data);
-                            expandableListView.setAdapter(adapter);
+                                attivitaGiornos.remove(groupPosition);
+                                attivitaGiornos.add(groupPosition,db.getAttivitaGiorno(data,id_viaggio,giornata[groupPosition]));
+                                ExpandableListViewAttivitaGiornoAdapter adapter = new ExpandableListViewAttivitaGiornoAdapter(context,header_titles,attivitaGiornos,id_viaggio,data);
+                                expandableListView.setAdapter(adapter);
+                            }
+
                         }
                         // PRENDERE LE ATTIVITA SELEZIONATE ED ANDARLE AD AGGIUNGERE AL GIORNO CHE MI SONO FATTO PASSARE PRIMA E CON L'ORA CHE OTTENGO DAL GROUP POSITION
 
 
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()  {
+                        public void onClick(DialogInterface dialog, int which)  {
+
+                        }
                     });
                     builder.show();
                 }
