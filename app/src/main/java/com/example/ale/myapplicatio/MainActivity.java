@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity  {
             //String chiave = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
             String chiave = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             String url= url1 + arg0[0] + url2 + chiave;
-            //Log.e("messaggini", url);
+            Log.e("messaggini", url);
             String jsonStr = sh.makeServiceCall(url);
                        if (jsonStr != null) {
                 try {
