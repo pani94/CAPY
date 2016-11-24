@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -73,9 +74,14 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
                         })
                         .setNegativeButton("Elimina", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                db.deleteViaggio(arrayList.get(pos).getId_viaggio());
-                                arrayList.remove(pos);
-                                adapter.notifyDataSetChanged();
+                                long delete =db.deleteViaggio(arrayList.get(pos).getId_viaggio());
+                                String stampa = arrayList.get(pos).getNome_viaggio() +" è stato eliminato dai tuoi viaggi";
+                                if (delete > 0){
+                                    Toast.makeText(getContext(),stampa,Toast.LENGTH_SHORT);
+                                    arrayList.remove(pos);
+                                    adapter.notifyDataSetChanged();
+                                }
+
                             }
                         })
                         .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
