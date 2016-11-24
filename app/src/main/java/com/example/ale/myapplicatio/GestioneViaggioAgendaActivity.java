@@ -1,6 +1,7 @@
 package com.example.ale.myapplicatio;
 
 import android.app.ExpandableListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -28,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,9 +190,10 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class AgendaFragment extends Fragment {
+    public static class AgendaFragment extends Fragment implements ExpandableListView.OnChildClickListener,AdapterView.OnItemLongClickListener {
         private ExpandableListView expandableListView;
-
+        ExpandableListViewAttivitaGiornoAdapter adapter=null;
+        ArrayList<ArrayList <AttivitaGiorno>> arrayListParent = new ArrayList<>();
         public AgendaFragment() {
         }
 
@@ -209,11 +213,10 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_agenda, container, false);
             expandableListView = (ExpandableListView) rootView.findViewById(R.id.exp_listview);
-            DataBase db = new DataBase(getContext());
             String data = getArguments().getString("data");
+            DataBase db = new DataBase(getContext());
             int id_viaggio = db.getIdViaggio(NomeViaggio);
             List <String> headings = new ArrayList<String>();
-            ArrayList<ArrayList <AttivitaGiorno>> arrayListParent = new ArrayList<>();
             ArrayList <AttivitaGiorno> arrayListChildMattina = db.getAttivitaGiorno(data,id_viaggio,"Mattina");
             ArrayList <AttivitaGiorno> arrayListChildPranzo = db.getAttivitaGiorno(data,id_viaggio,"Pranzo");;
             ArrayList <AttivitaGiorno> arrayListChildPomeriggio= db.getAttivitaGiorno(data,id_viaggio,"Pomeriggio");;
@@ -228,11 +231,80 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
             for (String title : headings_item){
                 headings.add(title);
             }
-            ExpandableListViewAttivitaGiornoAdapter adapter = new ExpandableListViewAttivitaGiornoAdapter(getContext(),headings,arrayListParent,id_viaggio,data);
+            adapter = new ExpandableListViewAttivitaGiornoAdapter(getContext(),headings,arrayListParent,id_viaggio,data);
             expandableListView.setAdapter(adapter);
+            expandableListView.setOnChildClickListener(this);
+            expandableListView.setOnItemLongClickListener(this);
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
+
+        @Override
+        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            DataBase db = new DataBase(getContext());
+            Attivita attivita =db.getAttivita(adapter.getChild(groupPosition,childPosition).getPlace_id());
+            Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaListItemActivity.class);
+            intent.putExtra("nomeViaggio", NomeViaggio);
+            intent.putExtra("placeid", attivita.getPlace_id());
+            intent.putExtra("titolo", attivita.getNome());
+            intent.putExtra("foto", attivita.getFoto());
+            intent.putExtra("orario", attivita.getOrario());
+            intent.putExtra("link", attivita.getLink());
+            intent.putExtra("telefono", attivita.getTelefono());
+            intent.putExtra("indirizzo", attivita.getIndirizzo());
+            intent.putExtra("tipologia", attivita.getTipologia());
+            startActivity(intent);
+            return true;
+        }
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            final DataBase db = new DataBase(getContext());
+            if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+                final int groupPosition = ExpandableListView.getPackedPositionGroup(id);
+                final int childPosition = ExpandableListView.getPackedPositionChild(id);
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Elimina attività")
+                        .setMessage("Sei sicuro di volere eliminare " + db.getAttivita(adapter.getChild(groupPosition,childPosition).getPlace_id()).getNome() + " da " + NomeViaggio + "?")
+                        .setPositiveButton("si", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                String place_id = adapter.getChild(groupPosition,childPosition).getPlace_id();
+                                String data = adapter.getChild(groupPosition,childPosition).getData();
+                                long idViaggio =  adapter.getChild(groupPosition,childPosition).getId_viaggio();
+                                String quando = adapter.getChild(groupPosition,childPosition).getQuando();
+                             int rowCount =   db.deleteAttivitaGiorno(place_id,data,idViaggio,quando);
+                                if(rowCount > 0){
+                                    String stampa = db.getAttivita(place_id).getNome() + " è stato eliminato";
+                                    Toast.makeText(getContext(), stampa ,
+                                            Toast.LENGTH_SHORT).show();
+                                    arrayListParent.get(groupPosition).remove(childPosition);
+                                    adapter.notifyDataSetChanged();
+                                    expandableListView.setAdapter(adapter);
+
+                                }
+
+                            }
+                        })
+                        .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+
+
+                return true;
+        }
+
+            return false;
+        }
+
+
+
+
+
     }
 
     /**

@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/item_exp_listview_head"
         android:textSize="25dp"
@@ -13,16 +13,28 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="Button"
+        android:text="+"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="13dp"
-        android:layout_marginEnd="13dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginEnd="1dp"
         android:id="@+id/item_exp_listview_bottone"
         android:focusable="false"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/item_exp_listview_num"
+        android:text="0"
+        android:layout_alignBottom="@+id/item_exp_listview_head"
+        android:layout_toRightOf="@+id/item_exp_listview_head"
+        android:layout_toEndOf="@+id/item_exp_listview_head"
+        android:textColor="#FFF"
+        android:textSize="16sp"
+        android:textStyle="bold" 
+        android:background="@drawable/badge_circle"/>
 
 </RelativeLayout>

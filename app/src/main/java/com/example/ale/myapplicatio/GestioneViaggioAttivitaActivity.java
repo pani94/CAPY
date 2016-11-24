@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -273,7 +274,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas,NomeViaggio);
             adapter.notifyDataSetChanged();
             itemListView.setAdapter(adapter);
-
             itemListView.setOnItemClickListener(this);
             itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
@@ -285,9 +285,14 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                             .setMessage("Sei sicuro di volere eliminare " + attivitas.get(pos).getNome() + " da " + NomeViaggio + "?")
                             .setPositiveButton("si", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    db.deleteViaggioAttivita(db.getIdViaggio(NomeViaggio), attivitas.get(pos).getPlace_id());
-                                    attivitas.remove(pos);
-                                    adapter.notifyDataSetChanged();
+                                    int delete = db.deleteViaggioAttivita(db.getIdViaggio(NomeViaggio), attivitas.get(pos).getPlace_id());
+                                    if(delete > 0){
+                                        String stampa =  attivitas.get(pos).getNome() + "è stato eliminato";
+                                        Toast.makeText(getContext(),stampa,Toast.LENGTH_SHORT);
+                                        attivitas.remove(pos);
+                                        adapter.notifyDataSetChanged();
+                                    }
+
                                 }
                             })
                             .setNegativeButton("no", new DialogInterface.OnClickListener() {

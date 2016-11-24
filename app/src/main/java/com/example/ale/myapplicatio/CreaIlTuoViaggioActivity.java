@@ -215,10 +215,17 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                 DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
                                 if(modifica){
                                     Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a);
-                                    db.UpdateViaggio(viaggio);
+                                    long update =  db.UpdateViaggio(viaggio);
+                                   if(update > 0){
+                                       Toast.makeText(getApplicationContext(),"Viaggio modificato",Toast.LENGTH_SHORT).show();
+                                   }
+
                                 }else{
                                     Viaggio viaggio = new Viaggio(NViaggio, p, a);
-                                    db.insertViaggio(viaggio);
+                                    long update =  db.insertViaggio(viaggio);
+                                    if(update > 0){
+                                        Toast.makeText(getApplicationContext(),"Viaggio creato",Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                                 salvaGiorni(part, arr, NViaggio);
                                 Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
