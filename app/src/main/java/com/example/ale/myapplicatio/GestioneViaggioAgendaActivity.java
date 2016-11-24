@@ -187,7 +187,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class AgendaFragment extends Fragment implements ExpandableListView.OnChildClickListener {
+    public static class AgendaFragment extends Fragment implements ExpandableListView.OnChildClickListener,AdapterView.OnItemLongClickListener {
         private ExpandableListView expandableListView;
         ExpandableListViewAttivitaGiornoAdapter adapter=null;
         public AgendaFragment() {
@@ -231,6 +231,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
             adapter = new ExpandableListViewAttivitaGiornoAdapter(getContext(),headings,arrayListParent,id_viaggio,data);
             expandableListView.setAdapter(adapter);
             expandableListView.setOnChildClickListener(this);
+
             //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
@@ -252,6 +253,24 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
             startActivity(intent);
             return true;
         }
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+                int groupPosition = ExpandableListView.getPackedPositionGroup(id);
+                int childPosition = ExpandableListView.getPackedPositionChild(id);
+
+
+                return true;
+        }
+
+            return false;
+        }
+
+
+
+
+
     }
 
     /**
