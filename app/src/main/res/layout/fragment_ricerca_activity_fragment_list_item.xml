@@ -7,30 +7,97 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="209dp"
-        android:layout_height="30dp"
-        android:id="@+id/RicercaActivityFragmentListItemTitolo" />
-
-    <ImageView
-        android:layout_width="101dp"
-        android:layout_height="91dp"
-        app:srcCompat="@drawable/common_full_open_on_phone"
-        android:id="@+id/RicercaActivityFragmentListItemImmagine"
-        android:layout_alignParentTop="true"
+    <ImageButton
+        android:layout_height="55dp"
+        android:id="@+id/preferiti_star"
+        android:layout_width="55dp"
+        app:srcCompat="@drawable/grey_star"
+        android:background="@null"
+        android:layout_marginRight="98dp"
+        android:layout_marginEnd="98dp"
+        android:layout_alignBottom="@+id/bottone_aggiungiaviaggio"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/common_full_open_on_phone"
+        android:id="@+id/RicercaActivityFragmentListItemImmagine"
+        android:layout_height="500dp"
+        android:layout_above="@+id/RicercaActivityFragmentListItemIndirizzo"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:layout_width="1000dp" />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/RicercaActivityFragmentListItemOrario"
-        android:layout_alignBottom="@+id/RicercaActivityFragmentListItemImmagine"
+        android:id="@+id/RicercaActivityFragmentListItemIndirizzo"
+        android:textSize="20sp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/RicercaActivityFragmentListItemTitolo"
+        android:textSize="50sp"
+        android:textColor="#FFFFFF"
+        android:gravity="center_horizontal"
+        android:visibility="visible"
+        android:layout_centerInParent="false"
+        android:layout_above="@+id/RicercaActivityFragmentListItemIndirizzo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="13dp" />
+        android:layout_marginBottom="83dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/RicercaActivityFragmentListItemTelefono"
+        android:textSize="18sp"
+        android:layout_below="@+id/RicercaActivityFragmentListItemIndirizzo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp" />
+
+    <Button
+        android:text="+"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottone_aggiungiaviaggio"
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp"
+        android:layout_below="@+id/RicercaActivityFragmentListItemOrario"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="22dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:id="@+id/RicercaActivityFragmentListItemWeekDayText"
+        android:layout_below="@+id/RicercaActivityFragmentListItemTelefono"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:id="@+id/RicercaActivityFragmentListItemOrario"
+        android:layout_below="@+id/RicercaActivityFragmentListItemLink"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="19dp" />
 
     <TextView
         android:text="TextView"
@@ -38,66 +105,12 @@
         android:layout_height="wrap_content"
         android:linksClickable="true"
         android:autoLink="web"
+        android:textSize="18sp"
         android:id="@+id/RicercaActivityFragmentListItemLink"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/RicercaActivityFragmentListItemTelefono"
-        android:layout_alignBottom="@+id/RicercaActivityFragmentListItemLink"
+        android:layout_below="@+id/RicercaActivityFragmentListItemWeekDayText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="51dp" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/RicercaActivityFragmentListItemIndirizzo"
-        android:layout_marginBottom="26dp"
-        android:layout_above="@+id/RicercaActivityFragmentListItemTelefono"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/RicercaActivityFragmentListItemIndirizzo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="28dp"
-        android:id="@+id/RicercaActivityFragmentListItemWeekDayText" />
-
-    <Button
-        android:text="+"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottone_aggiungiaviaggio"
-        android:layout_marginLeft="21dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginBottom="113dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <ImageButton
-        android:layout_height="55dp"
-        android:id="@+id/preferiti_star"
-        android:layout_width="55dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="29dp"
-        android:layout_marginEnd="29dp"
-        app:srcCompat="@drawable/grey_star"
-        android:background="@null"
-        android:layout_alignTop="@+id/bottone_aggiungiaviaggio"
-        android:layout_alignLeft="@+id/RicercaActivityFragmentListItemImmagine"
-        android:layout_alignStart="@+id/RicercaActivityFragmentListItemImmagine" />
+        android:layout_marginTop="17dp" />
 
 
 </RelativeLayout>
