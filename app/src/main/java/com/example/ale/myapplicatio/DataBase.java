@@ -108,7 +108,7 @@ public class DataBase {
                     ATTIVITAGIORNO_DATA + " TEXT NOT NULL, " +
                     ATTIVITAGIORNO_ID_VIAGGIO + " TEXT NOT NULL, " +
                     ATTIVITAGIORNO_QUANDO + " TEXT, " +
-                    "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO + "))" +
+                    "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO +  "," + ATTIVITAGIORNO_QUANDO + "))" +
                     ";";
     public static final String DROP_ATTIVITAGIORNO_TABLE =
             "DROP TABLE IF EXISTS " + ATTIVITAGIORNO_TABLE;
