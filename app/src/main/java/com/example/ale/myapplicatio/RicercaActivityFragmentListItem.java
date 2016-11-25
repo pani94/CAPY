@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -129,6 +130,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
 
         preferiti_star.setOnClickListener(buttonListener);
 
+        titolo.setTypeface(Typeface.DEFAULT_BOLD);
         titolo.setShadowLayer(5,0,0, Color.BLACK);
         for(int i = 0; i < arrayListViaggi.size(); i++){
             Log.e("viaggi", arrayListViaggi.get(i).getNome_viaggio());

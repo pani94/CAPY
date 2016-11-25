@@ -56,9 +56,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container_attivita);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        //attivita_nomeviaggio = (TextView) findViewById(R.id.activity_gestione_viaggio_attivita_nomeviaggio);
-
-        //attivita_nomeviaggio.setT
 
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_attivita);
