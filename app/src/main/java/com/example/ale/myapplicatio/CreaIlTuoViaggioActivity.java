@@ -175,8 +175,14 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case 1:
-                Intent intent2 = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
-                startActivity(intent2);
+                Intent intent_viaggi = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
+                intent_viaggi.putExtra("viaggio", "viaggio");
+                startActivity(intent_viaggi);
+                break;
+            case 2:
+                Intent intent_preferiti = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
+                intent_preferiti.putExtra("preferiti", "preferiti");
+                startActivity(intent_preferiti);
                 break;
             default:
                 break;

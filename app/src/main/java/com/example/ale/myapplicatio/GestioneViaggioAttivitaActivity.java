@@ -71,8 +71,9 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
         //add item for sliding list
         listSliding.add(new ItemSlideMenu(R.drawable.ic_home, "Home"));
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_account_circle_black_24dp, "Profilo"));
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "Crea un nuovo viaggio"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_create_black_24dp, "Crea un nuovo viaggio"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "I miei viaggi"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_star_black_24dp, "I miei preferiti"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Impostazioni"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_info_black_24dp, "About"));
 
@@ -161,14 +162,19 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case 1:
-                Intent intent2 = new Intent(GestioneViaggioAttivitaActivity.this, ProfiloViaggiActivity.class);
-                startActivity(intent2);
-                break;
-            case 2:
                 Intent intent3 = new Intent(GestioneViaggioAttivitaActivity.this, CreaIlTuoViaggioActivity.class);
                 startActivity(intent3);
                 break;
-
+            case 2:
+                Intent intent_viaggi = new Intent(GestioneViaggioAttivitaActivity.this, ProfiloViaggiActivity.class);
+                intent_viaggi.putExtra("viaggio", "viaggio");
+                startActivity(intent_viaggi);
+                break;
+            case 3:
+                Intent intent_preferiti = new Intent(GestioneViaggioAttivitaActivity.this, ProfiloViaggiActivity.class);
+                intent_preferiti.putExtra("preferiti", "preferiti");
+                startActivity(intent_preferiti);
+                break;
             default:
                 break;
         }
