@@ -85,7 +85,8 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
 
         //add item for sliding list
         listSliding.add(new ItemSlideMenu(R.drawable.ic_home, "Home"));
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_account_circle_black_24dp, "Profilo"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "I miei viaggi"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_star_black_24dp, "I miei preferiti"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Impostazioni"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_info_black_24dp, "About"));
 
@@ -229,7 +230,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                 }
                                 salvaGiorni(part, arr, NViaggio);
                                 Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
-                                intent.putExtra("viaggio_creato","viaggio creato");
+                                intent.putExtra("viaggio","viaggio");
                                 startActivity(intent);
                                 /*int i = p.indexOf("/");
                                 String giorno = p.substring(0, i);

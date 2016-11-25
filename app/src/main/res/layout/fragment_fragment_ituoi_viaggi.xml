@@ -7,21 +7,34 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
-        android:layout_width="370dp"
-        android:layout_height="50dp"
-        android:id="@+id/i_tuoi_viaggi"
-        android:textSize="36sp"
-        tools:textStyle="bold"
-        android:text="@string/i_tuoi_viaggi"
-        tools:textAlignment="center" />
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment_ituoi_viaggi_textview"
+        android:layout_below="@+id/i_tuoi_viaggi"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="78dp" />
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/lista_viaggi"
         android:layout_below="@+id/i_tuoi_viaggi"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/lista_viaggi" />
+        android:layout_marginTop="39dp" />
+
+    <TextView
+        android:layout_width="373dp"
+        android:layout_height="50dp"
+        android:id="@+id/i_tuoi_viaggi"
+        android:textSize="36sp"
+        tools:textStyle="bold"
+        android:text="Viaggi"
+        android:textStyle="normal|bold"
+        android:layout_marginTop="27dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

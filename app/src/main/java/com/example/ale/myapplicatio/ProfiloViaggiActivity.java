@@ -1,13 +1,13 @@
 package com.example.ale.myapplicatio;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,20 +33,19 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_viaggi);
         if (findViewById(R.id.fragment_container_profilo) != null) {
-
             if (savedInstanceState != null) {
                 return;
             }
-            if(getIntent().hasExtra("viaggio_creato")){
+            if (getIntent().hasExtra("viaggio")) {
                 FragmentITuoiViaggi fragmentITuoiViaggi = new FragmentITuoiViaggi();
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_profilo,fragmentITuoiViaggi).commit();
-            }
-            else{
-                FragmentProfilo profiloFragment = new FragmentProfilo();
-                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_profilo, profiloFragment).commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_profilo, fragmentITuoiViaggi).commit();
+            } else if(getIntent().hasExtra("preferiti")){
+                FragmentITuoiPreferiti fragmentITuoiPreferiti = new FragmentITuoiPreferiti();
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_profilo, fragmentITuoiPreferiti).commit();
             }
 
         }
+
 
         //sliding menu
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
