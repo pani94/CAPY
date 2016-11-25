@@ -89,18 +89,19 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
             builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     if (!data.equals("")) {
+                        //Log.e("messaggini", tipologia);
                         if(tipologia.equals("vedere")){
-                            String[] momento = new String[momento_vedere.length];
+                            momento = new String[momento_vedere.length];
                             for(int j=0; j<momento_vedere.length; j++){
                                 momento[j] = momento_vedere[j];
                             }
                         }else if(tipologia.equals("mangiare")){
-                            String[] momento = new String[momento_mangiare.length];
+                            momento = new String[momento_mangiare.length];
                             for(int j=0; j<momento_mangiare.length; j++){
                                 momento[j] = momento_mangiare[j];
                             }
                         }else if(tipologia.equals("dormire")){
-                            String[] momento = new String[momento_dormire.length];
+                            momento = new String[momento_dormire.length];
                             for(int j=0; j<momento_dormire.length; j++){
                                 momento[j] = momento_dormire[j];
                             }
