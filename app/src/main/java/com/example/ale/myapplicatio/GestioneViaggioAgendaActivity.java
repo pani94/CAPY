@@ -221,11 +221,13 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
             ArrayList <AttivitaGiorno> arrayListChildPranzo = db.getAttivitaGiorno(data,id_viaggio,"Pranzo");;
             ArrayList <AttivitaGiorno> arrayListChildPomeriggio= db.getAttivitaGiorno(data,id_viaggio,"Pomeriggio");;
             ArrayList <AttivitaGiorno> arrayListChildCena=db.getAttivitaGiorno(data,id_viaggio,"Cena");;
-            ArrayList <AttivitaGiorno> arrayListChildSera = db.getAttivitaGiorno(data,id_viaggio,"Sera");;
+            ArrayList <AttivitaGiorno> arrayListChildSera = db.getAttivitaGiorno(data,id_viaggio,"Sera");
+            ArrayList <AttivitaGiorno> arrayListChildNotte = db.getAttivitaGiorno(data,id_viaggio,"Notte");
             arrayListParent.add(0,arrayListChildMattina);
             arrayListParent.add(1,arrayListChildPranzo);
             arrayListParent.add(2,arrayListChildPomeriggio);
             arrayListParent.add(3,arrayListChildCena);
+            arrayListParent.add(4,arrayListChildSera);
             arrayListParent.add(4,arrayListChildSera);
             String headings_item[] = getResources().getStringArray(R.array.header_titles);
             for (String title : headings_item){
