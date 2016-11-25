@@ -222,7 +222,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
             ArrayList <AttivitaGiorno> arrayListChildPomeriggio= db.getAttivitaGiorno(data,id_viaggio,"Pomeriggio");;
             ArrayList <AttivitaGiorno> arrayListChildCena=db.getAttivitaGiorno(data,id_viaggio,"Cena");;
             ArrayList <AttivitaGiorno> arrayListChildSera = db.getAttivitaGiorno(data,id_viaggio,"Sera");
-            ArrayList <AttivitaGiorno> arrayListChildNotte = db.getAttivitaGiorno(data,id_viaggio,"Notte");
+            ArrayList <AttivitaGiorno> arrayListChildNotte = db.getAttivitaGiorno(data,id_viaggio,"Dormire");
             arrayListParent.add(0,arrayListChildMattina);
             arrayListParent.add(1,arrayListChildPranzo);
             arrayListParent.add(2,arrayListChildPomeriggio);
