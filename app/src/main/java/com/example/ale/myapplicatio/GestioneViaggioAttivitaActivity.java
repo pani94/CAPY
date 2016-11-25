@@ -292,10 +292,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                                         Toast.makeText(getContext(),stampa,Toast.LENGTH_SHORT).show();
                                         attivitas.remove(pos);
                                         adapter.notifyDataSetChanged();
-                                        if(delete2 > 0){
-                                            String stampa2 =  attivitas.get(pos).getNome() + "è stato eliminato dall'agenda";
-                                            Toast.makeText(getContext(),stampa2,Toast.LENGTH_SHORT).show();
-                                        }
+
                                     }
 
                                 }

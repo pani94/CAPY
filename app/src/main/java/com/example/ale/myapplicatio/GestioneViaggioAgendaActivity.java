@@ -228,7 +228,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
             arrayListParent.add(2,arrayListChildPomeriggio);
             arrayListParent.add(3,arrayListChildCena);
             arrayListParent.add(4,arrayListChildSera);
-            arrayListParent.add(4,arrayListChildSera);
+            arrayListParent.add(5,arrayListChildNotte);
             String headings_item[] = getResources().getStringArray(R.array.header_titles);
             for (String title : headings_item){
                 headings.add(title);

@@ -109,10 +109,19 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
                         booleen [j] = false;
                     }
                 }
+                else if(groupPosition == 5){
+                    count = db.getNumeroAttivita(viaggioAttivitas,"dormire");
+                    attivitas = db.getAttivita(id_viaggio,"dormire");
+                    nomi_attivita = new String[count];
+                    booleen = new boolean[count];
+                    for (int j = 0; j < count; j++){
+                        nomi_attivita [j] = db.getAttivita(attivitas.get(j).getPlace_id()).getNome();
+                        booleen [j] = false;
+                    }
+                }
                 else{
                     count = db.getNumeroAttivita(viaggioAttivitas,"vedere");
                     attivitas = db.getAttivita(id_viaggio,"vedere");
-                    Log.e("count",Integer.toString(count));
                     nomi_attivita = new String[count];
                     booleen = new boolean[count];
                     for (int j = 0; j < count; j++){
@@ -148,7 +157,7 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
                                         Toast.LENGTH_LONG).show();
                             }
                             else{
-                                String[] giornata = {"Mattina", "Pranzo", "Pomeriggio", "Cena", "Sera"};
+                                String[] giornata = {"Mattina", "Pranzo", "Pomeriggio", "Cena", "Sera", "Notte"};
                                 long insert = 0;
                                 for (int i = 0; i < selectedItems.size();i++){
                                     AttivitaGiorno attivitaGiorno = new AttivitaGiorno(attivitasFinal.get(selectedItems.get(i)).getPlace_id(),data,id_viaggio, giornata[groupPosition]);
