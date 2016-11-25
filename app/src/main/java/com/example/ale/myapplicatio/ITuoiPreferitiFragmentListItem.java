@@ -114,10 +114,13 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
                 builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, preferiti_placeid_get);
-                        database.insertViaggioAttivita(viaggioattivita);
-                        Toast.makeText(getActivity().getApplicationContext(),
-                                "L'attività è stata aggiunta al viaggio",
-                                Toast.LENGTH_SHORT).show();
+                        long insert =database.insertViaggioAttivita(viaggioattivita);
+                        if(insert > 0){
+                            Toast.makeText(getActivity().getApplicationContext(),
+                                    "L'attività è stata aggiunta al viaggio",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
 
                     }
                 });

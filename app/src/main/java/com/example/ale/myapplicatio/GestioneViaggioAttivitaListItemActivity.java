@@ -75,6 +75,12 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
             attivita_listitem_link.setText(link_get);
             attivita_listitem_telefono.setText(telefono_get);
             attivita_listitem_indirizzo.setText(indirizzo_get);
+            if(getIntent().hasExtra("provenienza")){
+                if(getIntent().getStringExtra("provenienza").equals("agenda")){
+                    attivita_listitem_button.setVisibility(View.GONE);
+                }
+            }
+
             ButtonListener buttonListener = new ButtonListener();
             database = new DataBase(GestioneViaggioAttivitaListItemActivity.this);
             id_viaggio = database.getIdViaggio(nomeViaggio);

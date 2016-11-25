@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +63,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fragment_gestione_viaggio_attivita_bottone_aggiungi) {
+        if (v.getId() == R.id.fragment_gestione_viaggio_attivita_bottone_aggiungi && !nome_viaggio.equals("")) {
             View parentRow = (View) v.getParent();
             ListView listView = (ListView) parentRow.getParent();
             final int position = listView.getPositionForView(parentRow);
@@ -119,6 +120,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if(!parte_giornata.equals("")){
                                     AttivitaGiorno attivitaGiorno = new AttivitaGiorno(arrayList.get(position).getPlace_id(),data,id_viaggio, parte_giornata);
+                                    Log.e("pd",parte_giornata);
                                     long insert =dataBase.insertAttivitaGiorno(attivitaGiorno);
                                     if(insert > 0){
                                         String stampa = "L'attività è stata aggiunta al " + parte_giornata + " del " + data;
@@ -156,6 +158,57 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
             builder.show();
 
 
+        }
+        else if (v.getId() == R.id.fragment_gestione_viaggio_attivita_bottone_aggiungi && nome_viaggio.equals("")){
+            final DataBase database = new DataBase(getContext());
+             View parentRow = (View) v.getParent();
+             ListView listView = (ListView) parentRow.getParent();
+            final int position = listView.getPositionForView(parentRow);
+            if(database.getViaggiBool()) {
+                final ArrayList <Viaggio>arrayListViaggi = database.getViaggi();
+                final String[] nomeViaggi = new String[arrayListViaggi.size()];
+                for (int k = 0; k < arrayListViaggi.size(); k++) {
+                    nomeViaggi[k] = arrayListViaggi.get(k).getNome_viaggio();
+                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("I TUOI VIAGGI");
+                builder.setSingleChoiceItems(nomeViaggi,-1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        nome_viaggio = arrayListViaggi.get(i).getNome_viaggio();
+
+                    }
+
+                });
+                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(!nome_viaggio.equals("")){
+                            ViaggioAttivita viaggioattivita = new ViaggioAttivita(database.getIdViaggio(nome_viaggio), arrayList.get(position).getPlace_id());
+                            database.insertViaggioAttivita(viaggioattivita);
+                            String stampa = "L'attività è stata aggiunta al viaggio: " + nome_viaggio;
+                            Toast.makeText(getContext(),
+                                    stampa,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(getContext(),"Devi selezionare un viaggio",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.show();
+            }else{
+                Toast.makeText(getContext(),
+                        "Non hai viaggi",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
     }
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
