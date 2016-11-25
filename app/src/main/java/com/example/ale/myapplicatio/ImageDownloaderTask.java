@@ -48,7 +48,7 @@ class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
                 if (bitmap != null) {
                     imageView.setImageBitmap(bitmap);
                 } else {
-                    Drawable placeholder = imageView.getContext().getResources().getDrawable(R.drawable.common_full_open_on_phone);
+                    Drawable placeholder = imageView.getContext().getResources().getDrawable(R.drawable.ic_wallpaper_black_36dp);
                     imageView.setImageDrawable(placeholder);
                 }
             }
