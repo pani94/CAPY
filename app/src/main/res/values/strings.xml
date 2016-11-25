@@ -31,5 +31,6 @@
         <item>Pomeriggio</item>
         <item>Cena</item>
         <item>Sera</item>
+        <item>Notte</item>
     </string-array>
 </resources>
