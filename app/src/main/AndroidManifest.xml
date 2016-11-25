@@ -11,8 +11,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:allowBackup="true"
         android:name=".PortraitOrientation"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -21,7 +21,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM" />
         <!-- "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk" -->
-            <!-- "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U" -->
+        <!-- "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U" -->
         <!-- "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ" -->
 
         <activity
@@ -35,7 +35,7 @@
         </activity>
         <activity
             android:name=".CreaIlTuoViaggioActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -55,7 +55,7 @@
             android:label="@string/title_activity_gestione_viaggio_agenda"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".GestioneViaggioAttivitaListItemActivity" />
-        <activity android:name=".GestioneViaggioGalleriaActivity"></activity>
+        <activity android:name=".GestioneViaggioGalleriaActivity" />
     </application>
 
 </manifest>

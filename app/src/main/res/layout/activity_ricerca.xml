@@ -23,11 +23,10 @@
 
 </RelativeLayout>
     <ListView
-        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:id="@+id/lv_sliding_menu"
         android:background="#FFFFFF"
         android:choiceMode="singleChoice"
         android:layout_gravity="start"
-        />
+        android:layout_width="400dp" />
 </android.support.v4.widget.DrawerLayout>
