@@ -255,6 +255,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
             intent.putExtra("telefono", attivita.getTelefono());
             intent.putExtra("indirizzo", attivita.getIndirizzo());
             intent.putExtra("tipologia", attivita.getTipologia());
+            intent.putExtra("provenienza", "agenda");
             startActivity(intent);
             return true;
         }

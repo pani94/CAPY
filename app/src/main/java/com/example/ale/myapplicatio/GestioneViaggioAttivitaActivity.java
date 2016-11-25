@@ -334,6 +334,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             intent.putExtra("telefono", attivitas.get(position).getTelefono());
             intent.putExtra("indirizzo", attivitas.get(position).getIndirizzo());
             intent.putExtra("tipologia", getArguments().getString("tabselected"));
+            intent.putExtra("provenienza", "attivita");
             startActivity(intent);
             /*GestioneViaggioAttivitaFragmentListItem newFragment = new GestioneViaggioAttivitaFragmentListItem();
             Bundle args = new Bundle();
