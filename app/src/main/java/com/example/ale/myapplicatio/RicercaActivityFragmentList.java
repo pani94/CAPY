@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.app.ProgressDialog;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -105,7 +106,13 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     }
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
-
+        ProgressDialog pd;
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+            pd= ProgressDialog.show(getContext(), "", "Caricamento in corso...", true, false);
+        }
 
         @Override
         protected Void doInBackground(String... message) {
@@ -304,9 +311,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             if(count >0 ){
                 itemsListView.setSelection(itemsListView.getAdapter().getCount()-21);
             }
-
-
-
+            pd.dismiss();
         }
     }
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

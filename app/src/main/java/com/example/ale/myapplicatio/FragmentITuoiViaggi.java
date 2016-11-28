@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
 
     private ArrayList <Viaggio> arrayList;
     private ListView itemListView;
+    private TextView listavuota;
+
     public FragmentITuoiViaggi() {
         // Required empty public constructor
     }
@@ -46,9 +49,15 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_ituoi_viaggi, container, false);
+        listavuota = (TextView) view.findViewById(R.id.fragment_ituoi_viaggi_textview);
         arrayList = new ArrayList<Viaggio>();
         final DataBase db = new DataBase(getActivity());
         arrayList = db.getViaggi();
+        if(arrayList.isEmpty()){
+            listavuota.setText("Non hai viaggi");
+        }else{
+            listavuota.setText("");
+        }
         itemListView = (ListView) view.findViewById(R.id.lista_viaggi);
         final ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayList);
         adapter.notifyDataSetChanged();
@@ -80,6 +89,9 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
                                     Toast.makeText(getContext(),stampa,Toast.LENGTH_SHORT);
                                     arrayList.remove(pos);
                                     adapter.notifyDataSetChanged();
+                                    if(arrayList.isEmpty()){
+                                        listavuota.setText("Non hai viaggi");
+                                    }
                                 }
 
                             }

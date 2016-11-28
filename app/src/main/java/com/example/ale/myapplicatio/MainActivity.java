@@ -130,8 +130,9 @@ public class MainActivity extends AppCompatActivity  {
         listSliding = new ArrayList<>();
 
         //add item for sliding list
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_account_circle_black_24dp, "Profilo"));
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "Crea un nuovo viaggio"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_create_black_24dp, "Crea un nuovo viaggio"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "I miei viaggi"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_star_black_24dp, "I miei preferiti"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Impostazioni"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_info_black_24dp, "About"));
 
@@ -244,12 +245,18 @@ public class MainActivity extends AppCompatActivity  {
         Fragment fragment = null;
         switch (pos){
             case 0:
-                Intent intent = new Intent(MainActivity.this, ProfiloViaggiActivity.class);
-                startActivity(intent);
+                Intent intent_creaViaggio = new Intent(MainActivity.this, CreaIlTuoViaggioActivity.class);
+                startActivity(intent_creaViaggio);
                 break;
             case 1:
-                Intent intent2 = new Intent(MainActivity.this, CreaIlTuoViaggioActivity.class);
-                startActivity(intent2);
+                Intent intent_viaggi = new Intent(MainActivity.this, ProfiloViaggiActivity.class);
+                intent_viaggi.putExtra("viaggio", "viaggio");
+                startActivity(intent_viaggi);
+                break;
+            case 2:
+                Intent intent_preferiti = new Intent(MainActivity.this, ProfiloViaggiActivity.class);
+                intent_preferiti.putExtra("preferiti", "preferiti");
+                startActivity(intent_preferiti);
                 break;
             default:
                 break;

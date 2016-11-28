@@ -1,11 +1,9 @@
 package com.example.ale.myapplicatio;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +24,7 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> imple
     private String[] scelte;
     private ImageButton icon;
     private RicercaActivityFragmentMenu fragmentMenu;
+
     public ItemAdapterVedereMangiareDormire(Context context, String[] scelte, RicercaActivityFragmentMenu fragment){
         super(context,0, scelte);
         this.scelte = scelte;
@@ -45,7 +44,7 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> imple
         name.setText(scelta);
         name.setShadowLayer(20,10,10, android.R.color.black);
         if(scelta.equals("Cosa vedere?")){
-            icon.setImageResource(R.drawable.vedere);
+            icon.setImageResource(R.drawable.vedere1);
         }else if(scelta.equals("Dove mangiare?")){
             icon.setImageResource(R.drawable.mangiare);
         }else if(scelta.equals("Dove dormire?")){

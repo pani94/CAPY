@@ -85,7 +85,8 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
 
         //add item for sliding list
         listSliding.add(new ItemSlideMenu(R.drawable.ic_home, "Home"));
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_account_circle_black_24dp, "Profilo"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "I miei viaggi"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_star_black_24dp, "I miei preferiti"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Impostazioni"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_info_black_24dp, "About"));
 
@@ -174,8 +175,14 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case 1:
-                Intent intent2 = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
-                startActivity(intent2);
+                Intent intent_viaggi = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
+                intent_viaggi.putExtra("viaggio", "viaggio");
+                startActivity(intent_viaggi);
+                break;
+            case 2:
+                Intent intent_preferiti = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
+                intent_preferiti.putExtra("preferiti", "preferiti");
+                startActivity(intent_preferiti);
                 break;
             default:
                 break;
@@ -229,7 +236,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                 }
                                 salvaGiorni(part, arr, NViaggio);
                                 Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
-                                intent.putExtra("viaggio_creato","viaggio creato");
+                                intent.putExtra("viaggio","viaggio");
                                 startActivity(intent);
                                 /*int i = p.indexOf("/");
                                 String giorno = p.substring(0, i);

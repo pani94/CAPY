@@ -21,6 +21,7 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
     private ArrayList<Attivita> arrayList;
     private ListView itemListView;
     private TextView titolo_ituoipreferiti;
+    private TextView listavuota;
 
     public FragmentITuoiPreferiti() {
         // Required empty public constructor
@@ -36,11 +37,17 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ituoi_preferiti, container, false);
+        titolo_ituoipreferiti = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_titolo);
+        listavuota = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_textview);
         arrayList = new ArrayList<Attivita>();
         final DataBase db = new DataBase(getActivity());
         arrayList = db.getAttivitaPreferite();
+        if(arrayList.isEmpty()){
+            listavuota.setText("Non hai ancora aggiunto preferiti");
+        }else{
+            listavuota.setText("");
+        }
         itemListView = (ListView) view.findViewById(R.id.fragment_ituoi_preferiti_list);
-        titolo_ituoipreferiti = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_titolo);
         final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), arrayList,"");
         adapter.notifyDataSetChanged();
         itemListView.setAdapter(adapter);
@@ -62,7 +69,9 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
                                             Toast.LENGTH_SHORT).show();
                                     arrayList.remove(pos);
                                     adapter.notifyDataSetChanged();
-
+                                    if(arrayList.isEmpty()){
+                                        listavuota.setText("Non hai preferiti");
+                                    }
                                 }
 
 

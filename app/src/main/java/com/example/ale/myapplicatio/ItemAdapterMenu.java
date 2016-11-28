@@ -16,37 +16,63 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ItemAdapterMenu extends ArrayAdapter<ItemRicercaActivity>  {
+public class ItemAdapterMenu extends ArrayAdapter<ItemRicercaActivity>{
     private ArrayList<ItemRicercaActivity> arrayList;
     private ImageView icon;
+
     public ItemAdapterMenu(Context context, ArrayList<ItemRicercaActivity> Items) {
         super(context, 0, Items);
         arrayList = Items;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
+
         ItemRicercaActivity item = arrayList.get(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_ricerca_item, parent, false);
+            ViewHolder viewHolder = new ViewHolder();
+            viewHolder.name = (TextView) convertView.findViewById(R.id.name);
+            viewHolder.vicinity = (TextView) convertView.findViewById(R.id.vicinity);
+            viewHolder.icon = (ImageView) convertView.findViewById(R.id.icon);
+            convertView.setTag(viewHolder);
         }
-        // Lookup view for data population
-        TextView name = (TextView) convertView.findViewById(R.id.name);
-        TextView vicinity = (TextView) convertView.findViewById(R.id.vicinity);
-        icon = (ImageView) convertView.findViewById(R.id.icon);
-        // Populate the data into the template view using the data object
-        name.setText(item.getName());
-        vicinity.setText(item.getVicinity());
+        ViewHolder holder = (ViewHolder) convertView.getTag();
+        String nome = item.getName();
+        String indirizzo = item.getVicinity();
+        holder.name.setText(nome);
+        holder.vicinity.setText(indirizzo);
         //String key = "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk";
-        String key ="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
+        //String key ="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
+        //String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+        //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
+        //String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getPhoto_reference()+"&sensor=false&" + key;
+        //holder.icon.setTag(photo_reference_url);
+        //if(photo_reference_url != holder.icon.getTag()){
+           //new ImageDownloaderTask(holder.icon).execute(photo_reference_url);
+        //}
+
+
+
+        //holder.icon.setImageResource(R.drawable.no);
+        return convertView;
+
+
+        //TextView name = (TextView) convertView.findViewById(R.id.name);
+        //TextView vicinity = (TextView) convertView.findViewById(R.id.vicinity);
+        //icon = (ImageView) convertView.findViewById(R.id.icon);
+        //name.setText(item.getName());
+        //vicinity.setText(item.getVicinity());
+        //String key = "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk";
+        //String key ="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
         //String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
         //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
         //String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getPhoto_reference()+"&sensor=false&" + key;
         //icon.setImageResource(R.drawable.ic_about);
-
+        //new ImageDownloaderTask(icon).execute(photo_reference_url);
         //new LoadImageTask().execute(photo_reference_url);
         // Return the completed view to render on screen
-        return convertView;
+        //return convertView;
     }
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
@@ -76,4 +102,11 @@ public class ItemAdapterMenu extends ArrayAdapter<ItemRicercaActivity>  {
             }
         }
     }
+
+    public class ViewHolder{
+        TextView name;
+        TextView vicinity;
+        ImageView icon;
+    }
+
 }
