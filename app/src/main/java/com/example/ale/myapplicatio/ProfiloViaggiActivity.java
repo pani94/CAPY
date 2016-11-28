@@ -46,6 +46,9 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
                 b  = false;
                 FragmentITuoiPreferiti fragmentITuoiPreferiti = new FragmentITuoiPreferiti();
                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_profilo, fragmentITuoiPreferiti).commit();
+            } else if(getIntent().hasExtra("viaggio_creato")){
+                FragmentITuoiViaggi fragmentITuoiViaggi = new FragmentITuoiViaggi();
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_profilo, fragmentITuoiViaggi).commit();
             }
 
         }
