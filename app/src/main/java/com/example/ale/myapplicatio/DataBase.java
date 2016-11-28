@@ -75,6 +75,13 @@ public class DataBase {
     public static final String ATTIVITAGIORNO_QUANDO = "quando";
     public static final int ATTIVITAGIORNO_QUANDO_COL = 3;
 
+    public static final String FOTO_TABLE = "foto";
+    public static final String FOTO_ID_VIAGGIO = "id_viaggio";
+    public static final int  FOTO_ID_VIAGGIO_COL = 0;
+    public static final String FOTO_PATH = "path";
+    public static final int FOTO_PATH_COL = 1;
+
+
     public static final String CREATE_VIAGGIO_TABLE =
             "CREATE TABLE " + VIAGGIO_TABLE + " (" +
                     VIAGGIO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -129,6 +136,14 @@ public class DataBase {
     public static final String DROP_VIAGGIOGIORNO_TABLE =
             "DROP TABLE IF EXISTS " + VIAGGIOGIORNO_TABLE;
 
+    public static final String CREATE_FOTO_TABLE =
+            "CREATE TABLE " + FOTO_TABLE + " (" +
+                    FOTO_ID_VIAGGIO + " INTEGER, " +
+                    FOTO_PATH + " TEXT NOT NULL, " +
+                    "PRIMARY KEY (" + FOTO_ID_VIAGGIO + "," + FOTO_PATH + "));";
+    public static final String DROP_FOTO_TABLE =
+            "DROP TABLE IF EXISTS " + FOTO_TABLE;
+
     private static class DBHelper extends SQLiteOpenHelper {
         public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
             super(context, name, factory, version);
@@ -142,6 +157,7 @@ public class DataBase {
             db.execSQL(CREATE_ATTIVITAGIORNO_TABLE);
             db.execSQL(CREATE_VIAGGIOATTIVITA_TABLE);
             db.execSQL(CREATE_VIAGGIOGIORNO_TABLE);
+            db.execSQL(CREATE_FOTO_TABLE);
         }
 
         @Override
@@ -726,7 +742,7 @@ public class DataBase {
     }
 
     private static ViaggioAttivita getViaggioAttivitaFromCursor(Cursor cursor) {
-        if (cursor == null || cursor.getCount() == 0f){
+        if (cursor == null || cursor.getCount() == 0){
             return null;
         }
         else {
@@ -810,7 +826,7 @@ public class DataBase {
     }
 
     private static AttivitaGiorno getAttivitaGiornoFromCursor(Cursor cursor) {
-        if (cursor == null || cursor.getCount() == 0f){
+        if (cursor == null || cursor.getCount() == 0){
             return null;
         }
         else {
@@ -827,6 +843,64 @@ public class DataBase {
             }
         }
     }
+    public long insertFoto(Foto foto) {
+        ContentValues cv = new ContentValues();
+        cv.put(FOTO_ID_VIAGGIO, foto.getId_viaggio());
+        cv.put(FOTO_PATH, foto.getPath());
+        this.openWriteableDB();
+        long rowID = db.insert(FOTO_TABLE, null, cv);
+        this.closeDB();
+        return rowID;
+    }
+    public ArrayList<Foto> getFoto(String nome_viaggio) {
+        int id_viaggio = getIdViaggio(nome_viaggio);
+        String where =  FOTO_ID_VIAGGIO + " = ? " ;
+        String[] whereArgs = { Integer.toString(id_viaggio) };
+        this.openReadableDB();
+        Cursor cursor = db.query(FOTO_TABLE, null,
+                where,whereArgs,
+                null, null, null);
+        if(cursor == null){
+            return null;
+        }
+        ArrayList<Foto> fotos = new ArrayList<>();
+        while(cursor.moveToNext()){
+            fotos.add(getFotoFromCursor(cursor));
+        }
+
+        if (cursor != null)
+            cursor.close();
+        this.closeDB();
+
+        return fotos;
+    }
+
+    private static Foto getFotoFromCursor(Cursor cursor) {
+        if (cursor == null || cursor.getCount() == 0){
+            return null;
+        }
+        else {
+            try {
+                int id = cursor.getInt(FOTO_ID_VIAGGIO_COL);
+                String path = cursor.getString(FOTO_PATH_COL);
+                Foto foto = new Foto(id,path);
+                return foto;
+            }
+            catch(Exception e) {
+                return null;
+            }
+        }
+    }
+    public int deleteFoto(String path,String nome_viaggio) {
+        int id =  getIdViaggio(nome_viaggio);
+        String where = FOTO_PATH + "= ?"  + " AND " + FOTO_ID_VIAGGIO + "=  ?";
+        String[] whereArgs = {path, String.valueOf(id)};
+        this.openWriteableDB();
+        int rowCount = db.delete(FOTO_TABLE, where, whereArgs);
+        this.closeDB();
+        return rowCount;
+    }
+
 
 
 

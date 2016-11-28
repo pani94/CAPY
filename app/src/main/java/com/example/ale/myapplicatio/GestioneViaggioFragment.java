@@ -270,6 +270,7 @@ public class GestioneViaggioFragment extends Fragment {
                     break;
                 case R.id.gestione_viaggio_bottone_galleria :
                     Intent intentG = new Intent(getActivity(), GestioneViaggioGalleriaActivity.class);
+                    intentG.putExtra("attivita_nomeviaggio",nome_viaggio_get);
                     startActivity(intentG);
                     break;
                 case R.id.gestione_viaggio_bottone_cerca:
