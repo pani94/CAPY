@@ -1,8 +1,17 @@
 package com.example.ale.myapplicatio;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.ParseException;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +19,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +47,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
     private Button bottone_fatto;
     private Boolean modifica = false;
     private TextView nomeActivity;
+
     int id_viaggio;
 
     //per SlideMenu
@@ -62,7 +73,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         bottone_fatto.setOnClickListener(buttonListener);
         bottone_arrivo.setOnClickListener(buttonListener);
         bottone_partenza.setOnClickListener(buttonListener);
-        if(getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             id_viaggio = getIntent().getIntExtra("id_viaggio", 10);
             String stringa_nomeViaggio = getIntent().getStringExtra("nome_viaggio");
             DataBase db = new DataBase(this);
@@ -73,7 +84,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
             partenza.setText(data_partenza);
             arrivo.setText(data_arrivo);
             modifica = true;
-        }else{
+        } else {
             bottone_arrivo.setEnabled(false);
         }
 
@@ -141,7 +152,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(actionBarDrawerToggle.onOptionsItemSelected(item)){
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         /*switch (item.getItemId()) {
@@ -167,9 +178,9 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
     }
 
     //create method replace fragment
-    private void replaceFragment(int pos){
+    private void replaceFragment(int pos) {
         Fragment fragment = null;
-        switch (pos){
+        switch (pos) {
             case 0:
                 Intent intent = new Intent(CreaIlTuoViaggioActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -188,7 +199,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                 break;
         }
 
-        if (fragment != null){
+        if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.activity_main, fragment);
@@ -198,11 +209,11 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         }
     }
 
-    public class ButtonListener implements View.OnClickListener{
+    public class ButtonListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.buttonFatto:
                     String NViaggio = nomeViaggio.getText().toString();
                     String p = partenza.getText().toString();
@@ -210,45 +221,47 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                     DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Date part = null;
                     Date arr = null;
-                    if(!NViaggio.equals("") && !p.equals("gg/mm/aaaa") && !a.equals("gg/mm/aaaa")){
+                    if (!NViaggio.equals("") && !p.equals("gg/mm/aaaa") && !a.equals("gg/mm/aaaa")) {
                         try {
                             part = formatter.parse(p);
                             arr = formatter.parse(a);
                         } catch (java.text.ParseException e) {
                             e.printStackTrace();
                         }
-                        if(part != null & arr != null){
-                            if(CheckDates(part, arr)){
+                        if (part != null & arr != null) {
+                            if (CheckDates(part, arr)) {
                                 DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
-                                if(modifica){
+                                if (modifica) {
                                     Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a);
-                                    long update =  db.UpdateViaggio(viaggio);
-                                    if(update > 0){
-                                        Toast.makeText(getApplicationContext(),"Viaggio modificato",Toast.LENGTH_SHORT).show();
+                                    long update = db.UpdateViaggio(viaggio);
+                                    if (update > 0) {
+                                        Toast.makeText(getApplicationContext(), "Viaggio modificato", Toast.LENGTH_SHORT).show();
                                     }
 
-                                }else{
+                                } else {
                                     Viaggio viaggio = new Viaggio(NViaggio, p, a);
-                                    long update =  db.insertViaggio(viaggio);
-                                    if(update > 0){
-                                        Toast.makeText(getApplicationContext(),"Viaggio creato",Toast.LENGTH_SHORT).show();
+                                    long update = db.insertViaggio(viaggio);
+                                    if (update > 0) {
+                                        Toast.makeText(getApplicationContext(), "Viaggio creato", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                                 salvaGiorni(part, arr, NViaggio);
+                                MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
+                                myCalendar.addViaggioToCalendar(part,arr,NViaggio,false,CreaIlTuoViaggioActivity.this);
                                 Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
-                                intent.putExtra("viaggio_creato","viaggio creato");
+                                intent.putExtra("viaggio_creato", "viaggio creato");
                                 startActivity(intent);
                                 /*int i = p.indexOf("/");
                                 String giorno = p.substring(0, i);
                                 int day = Integer.parseInt(giorno);
                                 String culo = String.valueOf(day);
                                 Log.e("giorno", culo);*/
-                            }else{
-                                Toast.makeText(getApplicationContext(),"Date non valide",Toast.LENGTH_LONG).show();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Date non valide", Toast.LENGTH_LONG).show();
                             }
                         }
-                    }else{
-                        Toast.makeText(getApplicationContext(),"Inserisci i dati del viaggio",Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Inserisci i dati del viaggio", Toast.LENGTH_LONG).show();
                     }
                     break;
 
@@ -271,7 +284,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    public static boolean CheckDates(Date partenza, Date arrivo)    {
+    public static boolean CheckDates(Date partenza, Date arrivo) {
         //Log.e("messaggini", "checkdates function");
         Calendar c_partenza = Calendar.getInstance();
         Calendar c_arrivo = Calendar.getInstance();
@@ -279,16 +292,11 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         c_arrivo.setTime(arrivo);
         boolean b = false;
         try {
-            if(c_partenza.before(c_arrivo))
-            {
+            if (c_partenza.before(c_arrivo)) {
                 b = true;
-            }
-            else if(c_partenza.equals(c_arrivo))
-            {
+            } else if (c_partenza.equals(c_arrivo)) {
                 b = true;//If two dates are equal
-            }
-            else
-            {
+            } else {
                 b = false; //If start date is after the end date
             }
         } catch (ParseException e) {
@@ -298,7 +306,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         return b;
     }
 
-    public void salvaGiorni(Date startDate, Date endDate, String NViaggio){
+    public void salvaGiorni(Date startDate, Date endDate, String NViaggio) {
         long different = endDate.getTime() - startDate.getTime();
 
         long secondsInMilli = 1000;
@@ -314,46 +322,46 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         int day = calendar.get(calendar.DAY_OF_MONTH);
         int month = calendar.get(calendar.MONTH);
         int year = calendar.get(calendar.YEAR);
-        String p = day + "/" + (month+1) + "/" + year;
+        String p = day + "/" + (month + 1) + "/" + year;
         DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
         Giorno g = new Giorno(p);
         db.insertGiorno(g);
         long id_viaggio = db.getIdViaggio(NViaggio);
-        if(modifica){
+        if (modifica) {
             db.deleteViaggioGiorni(id_viaggio);
         }
         ViaggioGiorno va = new ViaggioGiorno(id_viaggio, p);
         db.insertViaggioGiorno(va);
         //Log.e("messaggini", p);
-        for(int k=0; k<elapsedDays; k++){
-            if(month == 0 || month == 2 || month == 4 || month == 6 || month == 7 || month == 9){
-                if(day == 31){
-                    month = month+1;
+        for (int k = 0; k < elapsedDays; k++) {
+            if (month == 0 || month == 2 || month == 4 || month == 6 || month == 7 || month == 9) {
+                if (day == 31) {
+                    month = month + 1;
                     day = 1;
-                }else{
-                    day = day+1;
+                } else {
+                    day = day + 1;
                 }
-            }else if(month == 1){
-                if(day == 28){
-                    month = month+1;
+            } else if (month == 1) {
+                if (day == 28) {
+                    month = month + 1;
                     day = 1;
-                }else{
-                    day = day+1;
+                } else {
+                    day = day + 1;
                 }
-            }else if(month == 11){
-                if(day == 31){
-                    year = year+1;
+            } else if (month == 11) {
+                if (day == 31) {
+                    year = year + 1;
                     month = 0;
                     day = 1;
-                }else{
-                    day = day+1;
+                } else {
+                    day = day + 1;
                 }
-            }else{
-                if(day == 30){
-                    month = month+1;
+            } else {
+                if (day == 30) {
+                    month = month + 1;
                     day = 1;
-                }else{
-                    day = day+1;
+                } else {
+                    day = day + 1;
                 }
             }
 
@@ -364,7 +372,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
             int day_iesimo = calendar.get(calendar.DAY_OF_MONTH);
             int month_iesimo = calendar.get(calendar.MONTH);
             int year_iesimo = calendar.get(calendar.YEAR);
-            String p_iesimo = day_iesimo + "/" + (month_iesimo+1) + "/" + year_iesimo;
+            String p_iesimo = day_iesimo + "/" + (month_iesimo + 1) + "/" + year_iesimo;
             g = new Giorno(p_iesimo);
             db.insertGiorno(g);
             va = new ViaggioGiorno(id_viaggio, p_iesimo);
@@ -372,4 +380,8 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
             //Log.e("messaggini", p_iesimo);
         }
     }
+
+
+
+
 }
