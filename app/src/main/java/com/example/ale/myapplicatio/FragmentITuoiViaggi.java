@@ -48,7 +48,7 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fragment_ituoi_viaggi, container, false);
+        View view = inflater.inflate(R.layout.fragment_ituoi_viaggi, container, false);
         listavuota = (TextView) view.findViewById(R.id.fragment_ituoi_viaggi_textview);
         arrayList = new ArrayList<Viaggio>();
         final DataBase db = new DataBase(getActivity());

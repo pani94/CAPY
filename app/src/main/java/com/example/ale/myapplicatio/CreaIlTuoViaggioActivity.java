@@ -223,9 +223,9 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                 if(modifica){
                                     Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a);
                                     long update =  db.UpdateViaggio(viaggio);
-                                   if(update > 0){
-                                       Toast.makeText(getApplicationContext(),"Viaggio modificato",Toast.LENGTH_SHORT).show();
-                                   }
+                                    if(update > 0){
+                                        Toast.makeText(getApplicationContext(),"Viaggio modificato",Toast.LENGTH_SHORT).show();
+                                    }
 
                                 }else{
                                     Viaggio viaggio = new Viaggio(NViaggio, p, a);
@@ -236,7 +236,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                 }
                                 salvaGiorni(part, arr, NViaggio);
                                 Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
-                                intent.putExtra("viaggio","viaggio");
+                                intent.putExtra("viaggio_creato","viaggio creato");
                                 startActivity(intent);
                                 /*int i = p.indexOf("/");
                                 String giorno = p.substring(0, i);
