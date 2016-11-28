@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context="com.example.ale.myapplicatio.GestioneViaggioFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,7 +13,10 @@
         android:id="@+id/gestione_viaggio_nome"
         android:text="Nome del viaggio"
         android:textSize="40sp"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textStyle="normal|bold"
+        android:fontFamily="casual"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
     <TextView
         android:text="TextView"
@@ -25,7 +29,9 @@
         android:textSize="20sp"
         android:layout_below="@+id/gestione_viaggio_nome"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:fontFamily="casual"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
     <Button
         android:text="@string/bottone_attivita"
