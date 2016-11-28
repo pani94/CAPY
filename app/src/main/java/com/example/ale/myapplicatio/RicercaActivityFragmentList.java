@@ -1,13 +1,18 @@
 package com.example.ale.myapplicatio;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,33 +76,67 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ricerca_activity_fragment_list, container, false);
-        arrayList = new ArrayList<ItemRicercaActivity>();
-        itemsListView = (ListView) view.findViewById(R.id.lista);
-        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-        //avalenza89@gmail.com
-        altro = (Button) view.findViewById(R.id.altri_risultati);
-        List<Address> addresses = null;
-        try {
-            addresses = geocoder.getFromLocationName(selectedCity, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
+        ConnectivityManager cm = (ConnectivityManager)  getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null &&
+                networkInfo.isConnected()){
+            arrayList = new ArrayList<ItemRicercaActivity>();
+            itemsListView = (ListView) view.findViewById(R.id.lista);
+            altro = (Button) view.findViewById(R.id.altri_risultati);
+            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+            List<Address> addresses = null;
+            try {
+                addresses = geocoder.getFromLocationName(selectedCity, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Address address = addresses.get(0);
+            double longitude = address.getLongitude();
+            double latitude = address.getLatitude();
+            selectedCityLocation = "location=" + Double.toString(latitude) + "," + Double.toString(longitude);
+            new GetPOI().execute(selectedCityLocation);
+            itemsListView.setOnItemClickListener(this);
+            altro.setOnClickListener(this);
+        }else {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Attenzione")
+                    .setMessage("Non hai connessione.")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
-        Address address = addresses.get(0);
-        double longitude = address.getLongitude();
-        double latitude = address.getLatitude();
-        selectedCityLocation = "location=" + Double.toString(latitude) + "," + Double.toString(longitude);
-        new GetPOI().execute(selectedCityLocation);
-        itemsListView.setOnItemClickListener(this);
-        altro.setOnClickListener(this);
+
         // Inflate the layout for this fragment
         return view;
     }
 
     @Override
     public void onClick(View view) {
-        count++;
-        request = new GetPOI();
-        request.execute(selectedCityLocation);
+        ConnectivityManager cm = (ConnectivityManager)  getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()){
+            count++;
+            request = new GetPOI();
+            request.execute(selectedCityLocation);
+        }else{
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Attenzione")
+                    .setMessage("Non hai connessione.")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+
         /*SystemClock.sleep(500);
         if(count > 1){
             altro.setEnabled(false);
@@ -116,7 +155,8 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
 
         @Override
         protected Void doInBackground(String... message) {
-            HttpHandler sh = new HttpHandler();
+
+                HttpHandler sh = new HttpHandler();
             String output = "/json";
             String type = "type=";
             String[] typesCoseDaVedere = {"amusement_park", "aquarium", "art_gallery", "casino", "church",  "museum", "stadium", "zoo"};
@@ -159,7 +199,6 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             }
             url = "https://maps.googleapis.com/maps/api/place/" + tipo_ricerca + output + "?" + parameters;
 
-            Log.e("messaggini", url);
             //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             // METTERE LA TIPOLOGIA
 
@@ -315,23 +354,35 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         }
     }
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        RicercaActivityFragmentListItem newFragment = new RicercaActivityFragmentListItem();
-        Bundle args = new Bundle();
-        args.putString("place_id",arrayList.get(position).getPlace_id());
-        args.putString("lat", arrayList.get(position).getLatitudine());
-        args.putString("lng", arrayList.get(position).getLongitudine());
-        args.putString("orario",arrayList.get(position).getOrario());
-        args.putString("selectedItem", selectedItem);
-        newFragment.setArguments(args);
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, newFragment);
-        transaction.addToBackStack(null);
+        ConnectivityManager cm = (ConnectivityManager)  getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()){
+            RicercaActivityFragmentListItem newFragment = new RicercaActivityFragmentListItem();
+            Bundle args = new Bundle();
+            args.putString("place_id",arrayList.get(position).getPlace_id());
+            args.putString("lat", arrayList.get(position).getLatitudine());
+            args.putString("lng", arrayList.get(position).getLongitudine());
+            args.putString("orario",arrayList.get(position).getOrario());
+            args.putString("selectedItem", selectedItem);
+            newFragment.setArguments(args);
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }else{
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Attenzione")
+                    .setMessage("Non hai connessione.")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
 
-// Commit the transaction
-        transaction.commit();
     }
 
 

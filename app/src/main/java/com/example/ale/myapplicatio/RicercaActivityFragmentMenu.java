@@ -59,7 +59,6 @@ public class RicercaActivityFragmentMenu extends Fragment  {
     }
 
     public void fragmentStart(int i) {
-        Log.e("messaggini", "click");
         RicercaActivityFragmentList newFragment = new RicercaActivityFragmentList();
         Bundle args = new Bundle();
         args.putString("selectedCity", selectedCity);

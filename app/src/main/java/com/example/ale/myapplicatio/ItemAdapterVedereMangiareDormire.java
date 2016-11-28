@@ -1,9 +1,13 @@
 package com.example.ale.myapplicatio;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,10 +65,28 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> imple
 
     @Override
     public void onClick(View v) {
-        View parentRow = (View) v.getParent();
-        ListView listView = (ListView) parentRow.getParent();
-        int position = listView.getPositionForView(parentRow);
-        fragmentMenu.fragmentStart(position);
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()){
+            View parentRow = (View) v.getParent();
+            ListView listView = (ListView) parentRow.getParent();
+            int position = listView.getPositionForView(parentRow);
+            fragmentMenu.fragmentStart(position);
+        }else{
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Attenzione")
+                    .setMessage("Non hai connessione.")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
+        }
+
     }
 
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {

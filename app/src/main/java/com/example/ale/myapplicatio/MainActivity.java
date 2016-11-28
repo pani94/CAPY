@@ -58,16 +58,6 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getCityRequest = null;
-        /*if (findViewById(R.id.fragment_bottone_crea) != null) {
-            if (savedInstanceState != null) {
-                return;
-            }
-
-            FragmentBottoneCreaIlTuoViaggio fragment_bottone = new FragmentBottoneCreaIlTuoViaggio();
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_bottone_crea, fragment_bottone).commit();
-        }*/
-
-
         DataBase db = new DataBase(this);
         ButtonListener buttonListener = new ButtonListener();
         cityList = new ArrayList<>();
