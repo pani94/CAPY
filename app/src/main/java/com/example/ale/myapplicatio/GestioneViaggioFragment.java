@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,13 +30,10 @@ import java.util.ArrayList;
 import static android.content.ContentValues.TAG;
 
 
-public class GestioneViaggioFragment extends Fragment {
+public class GestioneViaggioFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private TextView nome_viaggio;
     private TextView daquando_aquando;
-    private Button bottone_attivita;
-    private Button bottone_agenda;
-    private Button bottone_galleria;
     private String nome_viaggio_get;
     private String daquando_get;
     private String aquando_get;
@@ -46,6 +44,9 @@ public class GestioneViaggioFragment extends Fragment {
     private boolean check;
     private GetCity getCityRequest;
     ArrayList<String> cityList;
+
+    private String[] scelte;
+    private ListView listView;
 
 
     public GestioneViaggioFragment() {
@@ -86,17 +87,24 @@ public class GestioneViaggioFragment extends Fragment {
         ButtonListener buttonListener = new ButtonListener();
         nome_viaggio = (TextView) view.findViewById(R.id.gestione_viaggio_nome);
         daquando_aquando = (TextView) view.findViewById(R.id.gestione_viaggio_daquando_aquando);
-        bottone_attivita = (Button) view.findViewById(R.id.gestione_viaggio_bottone_attivita);
-        bottone_agenda = (Button) view.findViewById(R.id.gestione_viaggio_bottone_agenda);
-        bottone_galleria = (Button) view.findViewById(R.id.gestione_viaggio_bottone_galleria);
         autoCompleteCerca = (AutoCompleteTextView) view.findViewById(R.id.gestione_viaggio_autocomplete);
         bottone_cerca = (Button) view.findViewById(R.id.gestione_viaggio_bottone_cerca);
+        listView = (ListView) view.findViewById(R.id.lista_gestione_viaggio);
         nome_viaggio.setText(nome_viaggio_get);
         daquando_aquando.setText(daquando_aquando_get);
-        bottone_attivita.setOnClickListener(buttonListener);
-        bottone_agenda.setOnClickListener(buttonListener);
-        bottone_galleria.setOnClickListener(buttonListener);
         bottone_cerca.setOnClickListener(buttonListener);
+
+        scelte = new String[3];
+        scelte[0] = "Attivita";
+        scelte[1] = "Agenda";
+        scelte[2] = "Galleria";
+
+       ItemAdapterGestioneViaggio adapter = new ItemAdapterGestioneViaggio(getActivity(), scelte, nome_viaggio_get);
+        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(this);
+
 
         autoCompleteCerca.addTextChangedListener(passwordWatcher);
         autoCompleteCerca.setOnEditorActionListener(editTextListener);
@@ -174,6 +182,29 @@ public class GestioneViaggioFragment extends Fragment {
         }
     };
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        db = new DataBase(getActivity());
+        if(scelte[position].equals("Attivita")){
+            if(db.getViaggiAttivitaBool(db.getIdViaggio(nome_viaggio_get))){
+                Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaActivity.class);
+                intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
+                startActivity(intent);
+            }else{
+                Toast.makeText(getContext(),"Non hai ancora inserito attivita per questo viaggio",Toast.LENGTH_SHORT).show();
+            }
+        }else if(scelte[position].equals("Agenda")){
+            Intent intent = new Intent(getActivity(), GestioneViaggioAgendaActivity.class);
+            intent.putExtra("numgiorni",db.getNumeroDiGiorni(db.getIdViaggio(nome_viaggio_get)));
+            intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
+            startActivity(intent);
+        }else if(scelte[position].equals("Galleria")){
+            Intent intentG = new Intent(getActivity(), GestioneViaggioGalleriaActivity.class);
+            intentG.putExtra("attivita_nomeviaggio",nome_viaggio_get);
+            startActivity(intentG);
+        }
+    }
+
     private class GetCity extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -250,61 +281,33 @@ public class GestioneViaggioFragment extends Fragment {
         @Override
         public void onClick(View v) {
             DataBase db = new DataBase(getActivity());
-            switch (v.getId()){
-                case R.id.gestione_viaggio_bottone_attivita:
-                    if(db.getViaggiAttivitaBool(db.getIdViaggio(nome_viaggio_get))){
-                        Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaActivity.class);
-                        intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(getActivity(),"Non hai ancora inserito attivita per questo viaggio",Toast.LENGTH_SHORT).show();
-                    }
-
-                    //Log.e("gestioneViaggioFrament", nome_viaggio_get);
-                    break;
-                case R.id.gestione_viaggio_bottone_agenda:
-                    Intent intent = new Intent(getActivity(), GestioneViaggioAgendaActivity.class);
-                    intent.putExtra("numgiorni",db.getNumeroDiGiorni(db.getIdViaggio(nome_viaggio_get)));
-                    intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
-                    startActivity(intent);
-                    break;
-                case R.id.gestione_viaggio_bottone_galleria :
-                    Intent intentG = new Intent(getActivity(), GestioneViaggioGalleriaActivity.class);
-                    intentG.putExtra("attivita_nomeviaggio",nome_viaggio_get);
-                    startActivity(intentG);
-                    break;
-                case R.id.gestione_viaggio_bottone_cerca:
-                    String ricerca = autoCompleteCerca.getText().toString();
-                    if(!ricerca.equals("")){
-                        if(ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122 ){
-                            if(!autoCompleteCerca.getValidator().isValid(ricerca)){
-                                ricerca = autoCompleteCerca.getValidator().fixText(ricerca).toString();
-                                if(!ricerca.equals("")){
-                                    Intent intent_cerca = new Intent(getActivity(), RicercaActivity.class);
-                                    intent_cerca.putExtra("citta", ricerca);
-                                    startActivity(intent_cerca);
-                                }else {
-                                    Toast.makeText(getActivity(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
-                                }
-                            }else{
-                                Intent intent_cerca = new Intent(getActivity(), RicercaActivity.class);
-                                intent_cerca.putExtra("citta", ricerca);
-                                startActivity(intent_cerca);
-                            }
-                        }else{
+            String ricerca = autoCompleteCerca.getText().toString();
+            if(!ricerca.equals("")){
+                if(ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122 ){
+                    if(!autoCompleteCerca.getValidator().isValid(ricerca)){
+                        ricerca = autoCompleteCerca.getValidator().fixText(ricerca).toString();
+                        if(!ricerca.equals("")){
+                            Intent intent_cerca = new Intent(getActivity(), RicercaActivity.class);
+                            intent_cerca.putExtra("citta", ricerca);
+                            startActivity(intent_cerca);
+                        }else {
                             Toast.makeText(getActivity(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
                         }
                     }else{
-                        Toast.makeText(getActivity(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                        Intent intent_cerca = new Intent(getActivity(), RicercaActivity.class);
+                        intent_cerca.putExtra("citta", ricerca);
+                        startActivity(intent_cerca);
                     }
-                    break;
-                default:
-
-
+                }else{
+                    Toast.makeText(getActivity(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                }
+            }else{
+                Toast.makeText(getActivity(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
             }
 
         }
     }
+
 
     private TextView.OnEditorActionListener editTextListener = new TextView.OnEditorActionListener() {
         @Override

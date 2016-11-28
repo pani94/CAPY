@@ -62,6 +62,7 @@
         android:id="@+id/editTextNomeViaggio"
         android:textColor="#000000"
         android:hint="        Nome del viaggio"
+        android:fontFamily="casual"
         android:textSize="25sp"
         android:textColorLink="@color/colorPrimaryDark"
         android:layout_below="@+id/testo"
@@ -73,15 +74,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PARTENZA"
+        android:fontFamily="casual"
         android:onClick="showDatePickerDialog (CreaIlTuoViaggioActivity)"
         android:layout_below="@+id/editTextNomeViaggio"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp" />
+        android:layout_marginTop="46dp"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:id="@+id/partenza"
         android:text="@string/init_text"
         android:layout_width="wrap_content"
+        android:fontFamily="casual"
         android:textSize="20sp"
         android:textColor="#000000"
         android:layout_height="wrap_content"
@@ -94,11 +98,13 @@
         android:text="ARRIVO"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="casual"
         android:id="@+id/button_arrivo"
         android:layout_below="@+id/partenza"
         android:layout_alignLeft="@+id/buttonFatto"
         android:layout_alignStart="@+id/buttonFatto"
-        android:layout_marginTop="64dp" />
+        android:layout_marginTop="64dp"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:text="@string/init_text"
@@ -107,6 +113,7 @@
         android:id="@+id/arrivo"
         android:textSize="20sp"
         android:textColor="#000000"
+        android:fontFamily="casual"
         android:layout_below="@+id/button_arrivo"
         android:layout_alignLeft="@+id/partenza"
         android:layout_alignStart="@+id/partenza"
