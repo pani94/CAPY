@@ -11,7 +11,8 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/fragment_ricerca_activity_menu_selectedCity"
         android:textSize="30sp"
-        android:text="Text View" />
+        android:text="Text View"
+        android:fontFamily="casual" />
 
     <ListView
         android:layout_height="388dp"

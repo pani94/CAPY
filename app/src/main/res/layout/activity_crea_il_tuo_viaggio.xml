@@ -20,17 +20,6 @@
     tools:context="com.example.ale.myapplicatio.CreaIlTuoViaggioActivity">
 
 
-    <TextView
-        android:text="Crea il tuo viaggio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="19dp"
-        android:textColor="#000000"
-        android:id="@+id/testo"
-        android:textSize="40sp" />
-
     <requestFocus android:id="@+id/requestFocus" />
 
 
@@ -39,9 +28,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonFatto"
+        android:layout_marginBottom="100dp"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_create_black_24dp"
+        android:id="@+id/imageView5"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="144dp" />
+        android:layout_marginTop="17dp" />
+
+    <TextView
+        android:text="Crea il tuo viaggio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:id="@+id/testo"
+        android:textSize="36sp"
+        android:layout_below="@+id/imageView5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="casual"
+        android:textStyle="normal|bold" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextNomeViaggio"
+        android:textColor="#000000"
+        android:hint="        Nome del viaggio"
+        android:textSize="25sp"
+        android:textColorLink="@color/colorPrimaryDark"
+        android:layout_below="@+id/testo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/button_partenza"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PARTENZA"
+        android:onClick="showDatePickerDialog (CreaIlTuoViaggioActivity)"
+        android:layout_below="@+id/editTextNomeViaggio"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp" />
 
     <TextView
         android:id="@+id/partenza"
@@ -50,8 +85,8 @@
         android:textSize="20sp"
         android:textColor="#000000"
         android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
         android:textAlignment="center"
+        android:layout_marginTop="24dp"
         android:layout_below="@+id/button_partenza"
         android:layout_centerHorizontal="true" />
 
@@ -60,9 +95,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button_arrivo"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/partenza"
         android:layout_alignLeft="@+id/buttonFatto"
-        android:layout_alignStart="@+id/buttonFatto" />
+        android:layout_alignStart="@+id/buttonFatto"
+        android:layout_marginTop="64dp" />
 
     <TextView
         android:text="@string/init_text"
@@ -71,34 +107,10 @@
         android:id="@+id/arrivo"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:layout_marginTop="32dp"
         android:layout_below="@+id/button_arrivo"
         android:layout_alignLeft="@+id/partenza"
-        android:layout_alignStart="@+id/partenza" />
-
-    <Button
-        android:id="@+id/button_partenza"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PARTENZA"
-        android:onClick="showDatePickerDialog (CreaIlTuoViaggioActivity)"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/editTextNomeViaggio"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_marginTop="24dp"
-        android:id="@+id/editTextNomeViaggio"
-        android:textColor="#000000"
-        android:hint="        Nome del viaggio"
-        android:textSize="25sp"
-        android:textColorLink="@color/colorPrimaryDark"
-        android:layout_below="@+id/testo"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignStart="@+id/partenza"
+        android:layout_marginTop="28dp" />
 
 
 </RelativeLayout>
