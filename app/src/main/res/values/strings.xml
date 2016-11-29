@@ -38,5 +38,5 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="i_miei_preferiti">I Miei Preferiti</string>
-    <string name="inserisci_una_citta">Inserisci una citta</string>
+    <string name="inserisci_una_citta">Cerca una citta e arricchisci il tuo viaggio!</string>
 </resources>
