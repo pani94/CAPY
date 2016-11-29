@@ -24,6 +24,8 @@ public class DataBase {
     private static final int VIAGGIO_PARTENZA_COL = 2;
     private static final String VIAGGIO_ARRIVO = "arrivo";
     private static final int VIAGGIO_ARRIVO_COL = 3;
+    private static final String VIAGGIO_EVENTO_ID = "evento_id";
+    private static final int VIAGGIO_EVENTO_ID_COL = 4;
 
     private static final String ATTIVITA_TABLE = "attivita";
     private static final String ATTIVITA_PLACE_ID = "place_id";
@@ -85,7 +87,8 @@ public class DataBase {
                     VIAGGIO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     VIAGGIO_NOME + " TEXT NOT NULL UNIQUE, " +
                     VIAGGIO_PARTENZA + " TEXT NOT NULL, " +
-                    VIAGGIO_ARRIVO + " TEXT NOT NULL);";
+                    VIAGGIO_ARRIVO + " TEXT NOT NULL, " +
+                     VIAGGIO_EVENTO_ID + " INTEGER );";
     private static final String DROP_VIAGGIO_TABLE =
             "DROP TABLE IF EXISTS " + VIAGGIO_TABLE;
 
@@ -199,6 +202,7 @@ public class DataBase {
         cv.put(VIAGGIO_NOME, viaggio.getNome_viaggio());
         cv.put(VIAGGIO_ARRIVO, viaggio.getArrivo());
         cv.put(VIAGGIO_PARTENZA, viaggio.getPartenza());
+        cv.put(VIAGGIO_EVENTO_ID, viaggio.getEvento_id());
 
         this.openWriteableDB();
         long rowID = db.insert(VIAGGIO_TABLE, null, cv);
@@ -247,7 +251,9 @@ public class DataBase {
                         cursor.getInt(VIAGGIO_ID_COL),
                         cursor.getString(VIAGGIO_NOME_COL),
                         cursor.getString(VIAGGIO_PARTENZA_COL),
-                        cursor.getString(VIAGGIO_ARRIVO_COL));
+                        cursor.getString(VIAGGIO_ARRIVO_COL),
+                        cursor.getInt(VIAGGIO_EVENTO_ID_COL));
+
                 return viaggio;
             }
             catch(Exception e) {

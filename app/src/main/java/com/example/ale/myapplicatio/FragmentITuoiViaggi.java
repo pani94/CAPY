@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,10 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
                                 long delete =db.deleteViaggio(arrayList.get(pos).getId_viaggio());
                                 String stampa = arrayList.get(pos).getNome_viaggio() +" è stato eliminato dai tuoi viaggi";
                                 if (delete > 0){
-                                    Toast.makeText(getContext(),stampa,Toast.LENGTH_SHORT);
+                                    MyCalendar myCalendar = new MyCalendar(getActivity());
+                                    myCalendar.deleteEvent(arrayList.get(pos).getEvento_id(),getContext());
+                                    Log.e("eliminato", Long.toString(arrayList.get(pos).getEvento_id()));
+                                    Toast.makeText(getContext(),stampa,Toast.LENGTH_SHORT).show();
                                     arrayList.remove(pos);
                                     adapter.notifyDataSetChanged();
                                     if(arrayList.isEmpty()){

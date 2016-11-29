@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -87,23 +88,9 @@ public class MyCalendar {
             values.put(CalendarContract.Events.CALENDAR_ID, calId);
             values.put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Rome");
             if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-
-
             }
             Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
             eventID = Long.parseLong(uri.getLastPathSegment());
-            if (needReminder) {
-
-                String reminderUriString = "content://com.android.calendar/reminders";
-                ContentValues reminderValues = new ContentValues();
-                reminderValues.put("event_id", eventID);
-                reminderValues.put("minutes", 5);
-                reminderValues.put("method", 1);
-
-                Uri reminderUri = Activity.getApplicationContext()
-                        .getContentResolver()
-                        .insert(Uri.parse(reminderUriString), reminderValues);
-            }
 
 
         }catch (Exception ex) {
@@ -183,5 +170,21 @@ public class MyCalendar {
             }
         }
 
+    }
+
+    public void deleteEvent(long event_id, Context context) {
+        String[] selArgs =
+                new String[]{Long.toString(event_id)};
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        int deleted = context.getContentResolver().delete(CalendarContract.Events.CONTENT_URI,CalendarContract.Events._ID + " =? ", selArgs);
     }
 }

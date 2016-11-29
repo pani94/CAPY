@@ -209,15 +209,19 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                         if (part != null & arr != null) {
                             if (CheckDates(part, arr)) {
                                 DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
+                                MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
+                                long evento_id =myCalendar.addViaggioToCalendar(part,arr,NViaggio,CreaIlTuoViaggioActivity.this);
                                 if (modifica) {
-                                    Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a);
+                                    Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a,evento_id);
                                     long update = db.UpdateViaggio(viaggio);
                                     if (update > 0) {
                                         Toast.makeText(getApplicationContext(), "Viaggio modificato", Toast.LENGTH_SHORT).show();
                                     }
 
                                 } else {
-                                    Viaggio viaggio = new Viaggio(NViaggio, p, a);
+                                    Viaggio viaggio = new Viaggio(NViaggio, p, a,evento_id);
+                                    Log.e("creato", Long.toString(evento_id));
+                                    Log.e("creato", Long.toString(viaggio.getEvento_id()));
                                     long update = db.insertViaggio(viaggio);
                                     if (update > 0) {
                                         Toast.makeText(getApplicationContext(), "Viaggio creato", Toast.LENGTH_SHORT).show();
