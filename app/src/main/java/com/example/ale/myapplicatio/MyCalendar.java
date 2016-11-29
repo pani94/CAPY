@@ -76,11 +76,10 @@ public class MyCalendar {
             long endMillis = 0;
             Calendar beginTime = Calendar.getInstance();
             Calendar endTime = Calendar.getInstance();
-            Log.e("ciao", arrivo.toString());
             beginTime.setTime(partenza);
             endTime.setTime(arrivo);
             startMillis = beginTime.getTimeInMillis();
-            endMillis = endTime.getTimeInMillis();
+            endMillis = endTime.getTimeInMillis() + 86400000;
             ContentResolver cr = activity.getContentResolver();
             ContentValues values = new ContentValues();
             values.put(CalendarContract.Events.DTSTART, startMillis);
