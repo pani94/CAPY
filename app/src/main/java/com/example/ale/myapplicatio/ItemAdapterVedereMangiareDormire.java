@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +35,7 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> imple
         fragmentMenu = fragment;
     }
 
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         final String scelta = scelte[position];
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {

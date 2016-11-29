@@ -160,7 +160,9 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
                                 String[] giornata = {"Mattina", "Pranzo", "Pomeriggio", "Cena", "Sera", "Notte"};
                                 long insert = 0;
                                 for (int i = 0; i < selectedItems.size();i++){
-                                    AttivitaGiorno attivitaGiorno = new AttivitaGiorno(attivitasFinal.get(selectedItems.get(i)).getPlace_id(),data,id_viaggio, giornata[groupPosition]);
+                                    // DEVO CREARE L'EVENTO E PRENDERE L'ID
+                                    int evento_id = 0;
+                                    AttivitaGiorno attivitaGiorno = new AttivitaGiorno(attivitasFinal.get(selectedItems.get(i)).getPlace_id(),data,id_viaggio, giornata[groupPosition],evento_id);
                                     insert = db.insertAttivitaGiorno(attivitaGiorno);
                                 }
                                 attivitaGiornos.remove(groupPosition);

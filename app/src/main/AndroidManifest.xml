@@ -57,6 +57,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".GestioneViaggioAttivitaListItemActivity" />
         <activity android:name=".GestioneViaggioGalleriaActivity" />
+        <receiver android:name=".ReminderBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.example.ale.alarm.ACTION"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
