@@ -24,16 +24,15 @@ import java.util.Date;
  */
 public class MyCalendar {
     Activity activity;
-
     public MyCalendar(Activity activity) {
         this.activity = activity;
     }
 
-    public long addViaggioToCalendar(Date partenza, Date arrivo, String nome_viaggio, Activity Activity) {
+    public long addViaggioToCalendar(Date partenza, Date arrivo, String nome_viaggio, boolean needReminder, Activity Activity) {
         long calId = getCalendarId("My calendar");
-        if (calId == -1) {
+        if (calId == -1){
             calId = getCalendarId("my applicatio calendar");
-            if (calId == -1) {
+            if(calId == -1){
                 ContentValues values = new ContentValues();
                 values.put(
                         CalendarContract.Calendars.ACCOUNT_NAME, "my applicatio calendar");
@@ -72,7 +71,7 @@ public class MyCalendar {
 
         }
         long eventID = -1;
-        try {
+        try{
             long startMillis = 0;
             long endMillis = 0;
             Calendar beginTime = Calendar.getInstance();
@@ -85,7 +84,7 @@ public class MyCalendar {
             ContentValues values = new ContentValues();
             values.put(CalendarContract.Events.DTSTART, startMillis);
             values.put(CalendarContract.Events.DTEND, endMillis);
-            values.put(CalendarContract.Events.TITLE, nome_viaggio);
+            values.put(CalendarContract.Events.TITLE,nome_viaggio);
             values.put(CalendarContract.Events.CALENDAR_ID, calId);
             values.put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Rome");
             if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
@@ -94,7 +93,7 @@ public class MyCalendar {
             eventID = Long.parseLong(uri.getLastPathSegment());
 
 
-        } catch (Exception ex) {
+        }catch (Exception ex) {
             // log.error("Error in adding event on calendar" + ex.getMessage());
         }
 
@@ -107,37 +106,70 @@ public class MyCalendar {
         String[] projection = new String[]{CalendarContract.Calendars._ID};
         String selection =
                 CalendarContract.Calendars.ACCOUNT_NAME +
-                        " = ? ";
+                        " = ? " ;
         // use the same values as above:
         String[] selArgs =
-                new String[]{nome};
+                new String[]{ nome};
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
 
         }
         Cursor cursor = activity.getContentResolver().
-                query(
-                        CalendarContract.Calendars.CONTENT_URI,
-                        projection,
-                        selection,
-                        selArgs,
-                        null);
+                        query(
+                                CalendarContract.Calendars.CONTENT_URI,
+                                projection,
+                                selection,
+                                selArgs,
+                                null);
         if (cursor.moveToFirst()) {
             return cursor.getLong(0);
         }
         return -1;
     }
 
-    public void addNotify(Context ctx) {
+    public void addNotify(Context ctx, Date partenza, Date arrivo, String NomeViaggio, String action){
         Intent intent = new Intent(ctx, ReminderBroadcastReceiver.class);
+        intent.setAction(action);
+        intent.putExtra("nomeviaggio", NomeViaggio);
+        Calendar calendar_partenza = Calendar.getInstance();
+        calendar_partenza.setTime(partenza);
+        int day_partenza = calendar_partenza.get(Calendar.DAY_OF_MONTH);
+        int month_partenza = calendar_partenza.get(Calendar.MONTH);
+        int year_partenza = calendar_partenza.get(Calendar.YEAR);
+        String string_partenza = day_partenza + "/" + (month_partenza + 1) + "/" + year_partenza;
+        intent.putExtra("daquando", string_partenza);
+        Calendar calendar_arrivo = Calendar.getInstance();
+        calendar_arrivo.setTime(arrivo);
+        int day_arrivo = calendar_arrivo.get(Calendar.DAY_OF_MONTH);
+        int month_arrivo = calendar_arrivo.get(Calendar.MONTH);
+        int year_arrivo = calendar_arrivo.get(Calendar.YEAR);
+        String string_arrivo = day_arrivo + "/" + (month_arrivo + 1) + "/" + year_arrivo;
+        intent.putExtra("aquando", string_arrivo);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) ctx.getSystemService(Activity.ALARM_SERVICE);
-// time of of next reminder. Unix time.
-        long timeMs = 0;
-        if (Build.VERSION.SDK_INT < 19) {
-            am.set(AlarmManager.RTC_WAKEUP, timeMs, pendingIntent);
-        } else {
-            am.setExact(AlarmManager.RTC_WAKEUP, timeMs, pendingIntent);
+
+        if(action.equals("one_day_before")){
+            long timeMsOneDayBefore = partenza.getTime() - 86400000 + 43200000;
+            if (Build.VERSION.SDK_INT < 19) {
+                am.set(AlarmManager.RTC_WAKEUP, timeMsOneDayBefore, pendingIntent);
+            } else {
+                am.setExact(AlarmManager.RTC_WAKEUP, timeMsOneDayBefore, pendingIntent);
+            }
+        }else if(action.equals("one_week_before")){
+            long timeMsOneWeekBefore = partenza.getTime() - 604800000 + 43200000;
+            if (Build.VERSION.SDK_INT < 19) {
+                am.set(AlarmManager.RTC_WAKEUP, timeMsOneWeekBefore, pendingIntent);
+            } else {
+                am.setExact(AlarmManager.RTC_WAKEUP, timeMsOneWeekBefore, pendingIntent);
+            }
+        }else if(action.equals("one_day_after")){
+            long timeMsOneDayAfter = arrivo.getTime() + 43200000;
+            if (Build.VERSION.SDK_INT < 19) {
+                am.set(AlarmManager.RTC_WAKEUP, timeMsOneDayAfter, pendingIntent);
+            } else {
+                am.setExact(AlarmManager.RTC_WAKEUP, timeMsOneDayAfter, pendingIntent);
+            }
         }
+
     }
 
     public void deleteEvent(long event_id, Context context) {

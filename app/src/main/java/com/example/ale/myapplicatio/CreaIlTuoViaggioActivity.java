@@ -11,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -229,6 +228,11 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                     }
                                 }
                                 salvaGiorni(part, arr, NViaggio);
+                                MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
+                                myCalendar.addViaggioToCalendar(part,arr,NViaggio,true,CreaIlTuoViaggioActivity.this);
+                                myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_week_before");
+                                myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_before");
+                                myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_after");
                                 Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
                                 intent.putExtra("viaggio_creato", "viaggio creato");
                                 startActivity(intent);

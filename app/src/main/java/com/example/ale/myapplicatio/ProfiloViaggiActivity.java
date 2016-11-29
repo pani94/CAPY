@@ -49,6 +49,14 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
             } else if(getIntent().hasExtra("viaggio_creato")){
                 FragmentITuoiViaggi fragmentITuoiViaggi = new FragmentITuoiViaggi();
                 getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_profilo, fragmentITuoiViaggi).commit();
+            }else if(getIntent().hasExtra("notifica")){
+                GestioneViaggioFragment newFragment = new GestioneViaggioFragment();
+                Bundle args = new Bundle();
+                args.putString("nome_viaggio", getIntent().getStringExtra("notifica"));
+                args.putString("daquando", getIntent().getStringExtra("partenza"));
+                args.putString("aquando", getIntent().getStringExtra("arrivo"));
+                newFragment.setArguments(args);
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment_container_profilo, newFragment).commit();
             }
 
         }
