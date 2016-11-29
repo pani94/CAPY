@@ -9,18 +9,6 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ImageButton
-        android:layout_height="55dp"
-        android:id="@+id/preferiti_star"
-        android:layout_width="55dp"
-        app:srcCompat="@drawable/grey_star"
-        android:background="@null"
-        android:layout_marginRight="98dp"
-        android:layout_marginEnd="98dp"
-        android:layout_alignBottom="@+id/bottone_aggiungiaviaggio"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
     <ImageView
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
@@ -53,18 +41,6 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp" />
-
-    <Button
-        android:text="+"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bottone_aggiungiaviaggio"
-        android:layout_marginLeft="31dp"
-        android:layout_marginStart="31dp"
-        android:layout_below="@+id/RicercaActivityFragmentListItemOrario"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="22dp" />
 
     <TextView
         android:text="TextView"
@@ -117,6 +93,30 @@
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:shadowColor="@android:color/black" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
+        android:id="@+id/fragment_ricerca_activity_list_item_bottonepiu"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_marginLeft="46dp"
+        android:layout_marginStart="46dp"
+        android:layout_marginBottom="57dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_height="55dp"
+        android:id="@+id/preferiti_star"
+        android:layout_width="55dp"
+        app:srcCompat="@drawable/grey_star"
+        android:background="@null"
+        android:layout_marginBottom="11dp"
+        android:layout_alignBottom="@+id/fragment_ricerca_activity_list_item_bottonepiu"
+        android:layout_toRightOf="@+id/RicercaActivityFragmentListItemTitolo"
+        android:layout_toEndOf="@+id/RicercaActivityFragmentListItemTitolo" />
 
 
 </RelativeLayout>

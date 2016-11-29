@@ -3,6 +3,7 @@ package com.example.ale.myapplicatio;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.ConnectivityManager;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,8 +43,8 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     private String selectedItem;
     private String next_page = "";
     private int count = 0;
-    private Button altro;
     private GetPOI request;
+    private Button altri;
 
 
 
@@ -82,7 +84,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                 networkInfo.isConnected()){
             arrayList = new ArrayList<ItemRicercaActivity>();
             itemsListView = (ListView) view.findViewById(R.id.lista);
-            altro = (Button) view.findViewById(R.id.altri_risultati);
+            altri = (Button) view.findViewById(R.id.ricerca_activity_fragment_list_altri);
             Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
             List<Address> addresses = null;
             try {
@@ -96,7 +98,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             selectedCityLocation = "location=" + Double.toString(latitude) + "," + Double.toString(longitude);
             new GetPOI().execute(selectedCityLocation);
             itemsListView.setOnItemClickListener(this);
-            altro.setOnClickListener(this);
+            altri.setOnClickListener(this);
         }else {
             new AlertDialog.Builder(getContext())
                     .setTitle("Attenzione")
@@ -342,7 +344,8 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             if(count > 1){
-                altro.setEnabled(false);
+                altri.setEnabled(false);
+                altri.setTextColor(Color.LTGRAY);
             }
             ItemAdapterMenu adapter = new ItemAdapterMenu(getActivity(), arrayList);
             adapter.notifyDataSetChanged();

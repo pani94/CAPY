@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,11 +19,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemClickListener {
+public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener {
 
     private ArrayList <Viaggio> arrayList;
     private ListView itemListView;
-    private TextView listavuota;
+    private ImageButton bottone_aggiungi;
+    private TextView testo_aggiungi;
 
     public FragmentITuoiViaggi() {
         // Required empty public constructor
@@ -48,19 +50,25 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ituoi_viaggi, container, false);
-        listavuota = (TextView) view.findViewById(R.id.fragment_ituoi_viaggi_textview);
+        final View view = inflater.inflate(R.layout.fragment_ituoi_viaggi, container, false);
+        bottone_aggiungi = (ImageButton) view.findViewById(R.id.fragment_ituoi_viaggi_bottoneaggiungi);
+        testo_aggiungi = (TextView) view.findViewById(R.id.fragment_ituoi_viaggi_testoaggiungi);
         arrayList = new ArrayList<Viaggio>();
         final DataBase db = new DataBase(getActivity());
         arrayList = db.getViaggi();
+
         if(arrayList.isEmpty()){
-            listavuota.setText("Non hai viaggi");
+            testo_aggiungi.setText("Crea un nuovo viaggio");
+            bottone_aggiungi.setImageResource(R.drawable.ic_add_circle_outline_black_24dp);
+            bottone_aggiungi.setVisibility(View.VISIBLE);
         }else{
-            listavuota.setText("");
+            testo_aggiungi.setText("");
+            bottone_aggiungi.setVisibility(View.INVISIBLE);
         }
         itemListView = (ListView) view.findViewById(R.id.lista_viaggi);
         final ItemAdapterViaggio adapter = new ItemAdapterViaggio(getActivity(), arrayList);
         adapter.notifyDataSetChanged();
+        bottone_aggiungi.setOnClickListener(this);
         itemListView.setAdapter(adapter);
         itemListView.setOnItemClickListener(this);
         itemListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -90,7 +98,9 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
                                     arrayList.remove(pos);
                                     adapter.notifyDataSetChanged();
                                     if(arrayList.isEmpty()){
-                                        listavuota.setText("Non hai viaggi");
+                                        testo_aggiungi.setText("Crea un nuovo viaggio");
+                                        bottone_aggiungi.setImageResource(R.drawable.ic_add_circle_outline_black_24dp);
+                                        bottone_aggiungi.setVisibility(View.VISIBLE);
                                     }
                                 }
 
@@ -127,7 +137,12 @@ public class FragmentITuoiViaggi extends Fragment implements AdapterView.OnItemC
         }
 
 
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getActivity(), CreaIlTuoViaggioActivity.class);
+        startActivity(intent);
     }
+}
 
    /*
     @Override

@@ -5,24 +5,23 @@
     android:background="#FFFFFF"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        app:srcCompat="@drawable/ic_wallpaper_black_36dp"
-        android:id="@+id/icon"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-
-        />
+    <TextView
+        android:text="Titolo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/name"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginTop="17dp"
+        android:layout_alignTop="@+id/icon"
+        android:layout_alignLeft="@+id/icon"
+        android:layout_alignStart="@+id/icon"
+        android:layout_marginLeft="186dp"
+        android:layout_marginStart="186dp" />
 
     <TextView
         android:text="Indirizzo"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/vicinity"
         android:textSize="18sp"
@@ -31,17 +30,25 @@
         android:layout_alignLeft="@+id/name"
         android:layout_alignStart="@+id/name" />
 
-    <TextView
-        android:text="Titolo"
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/name"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:layout_marginTop="21dp"
-        android:layout_marginLeft="68dp"
-        android:layout_marginStart="68dp"
-        android:layout_alignTop="@+id/icon"
-        android:layout_toRightOf="@+id/icon"
-        android:layout_toEndOf="@+id/icon" />
+        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_18dp"
+        android:id="@+id/imageView"
+        android:layout_alignBottom="@+id/vicinity"
+        android:layout_toRightOf="@+id/name"
+        android:layout_toEndOf="@+id/name" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/ic_wallpaper_black_36dp"
+        android:id="@+id/icon"
+        android:layout_marginTop="32dp"
+
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="3004dp"
+        android:layout_marginEnd="414dp" />
 </RelativeLayout>

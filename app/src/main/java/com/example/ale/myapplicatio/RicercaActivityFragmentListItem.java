@@ -48,8 +48,8 @@ public class RicercaActivityFragmentListItem extends Fragment{
     private TextView telefono;
     private TextView indirizzo;
     private TextView link;
-    private Button aggiungiaviaggio;
     private ImageButton preferiti_star;
+    private ImageButton bottone_piu;
 
     private DataBase database;
     private ArrayList <Viaggio> arrayListViaggi;
@@ -111,11 +111,11 @@ public class RicercaActivityFragmentListItem extends Fragment{
         telefono = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemTelefono);
         link = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemLink);
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
-        aggiungiaviaggio = (Button) view.findViewById(R.id.bottone_aggiungiaviaggio);
         preferiti_star = (ImageButton) view.findViewById(R.id.preferiti_star);
+        bottone_piu = (ImageButton) view.findViewById(R.id.fragment_ricerca_activity_list_item_bottonepiu);
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
-        aggiungiaviaggio.setOnClickListener(buttonListener);
+        bottone_piu.setOnClickListener(buttonListener);
 
         database = new DataBase(getActivity());
         arrayListViaggi = database.getViaggi();
@@ -312,7 +312,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
                     Intent viewIntent = new Intent(Intent.ACTION_VIEW, viewUri);
                     startActivity(viewIntent);
                     break;
-                case R.id.bottone_aggiungiaviaggio:
+                case R.id.fragment_ricerca_activity_list_item_bottonepiu:
                     if(database.getViaggiBool()) {
                         Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false");
                         database.insertAttivita(attivita);

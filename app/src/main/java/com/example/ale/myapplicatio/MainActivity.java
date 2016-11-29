@@ -1,11 +1,15 @@
 package com.example.ale.myapplicatio;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,8 +41,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity  {
 
+    private TextView titolo;
+    private TextView footer;
+    private ImageButton bottone_cerca;
     private AutoCompleteTextView cerca;
-    private Button bottone;
     private Button bottone_crea_viaggio;
     private String TAG = MainActivity.class.getSimpleName();
     ArrayList<String> cityList;
@@ -61,12 +68,18 @@ public class MainActivity extends AppCompatActivity  {
         DataBase db = new DataBase(this);
         ButtonListener buttonListener = new ButtonListener();
         cityList = new ArrayList<>();
-        bottone = (Button) findViewById(R.id.bottone);
         bottone_crea_viaggio = (Button) findViewById(R.id.activity_main_button_crea_viaggio);
         cerca = (AutoCompleteTextView) findViewById(R.id.cerca);
+        titolo = (TextView) findViewById(R.id.activity_main_titolo);
+        footer = (TextView) findViewById(R.id.footer);
         cerca.addTextChangedListener(passwordWatcher);
-        bottone.setOnClickListener(buttonListener);
+        bottone_cerca = (ImageButton) findViewById(R.id.activity_main_cerca);
         bottone_crea_viaggio.setOnClickListener(buttonListener);
+        bottone_cerca.setOnClickListener(buttonListener);
+
+        titolo.setShadowLayer(5,0,0, Color.WHITE);
+        footer.setShadowLayer(1,0,0, Color.WHITE);
+
         cerca.setOnEditorActionListener(editTextListener);
         cerca.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -365,7 +378,7 @@ public class MainActivity extends AppCompatActivity  {
         @Override
         public void onClick(View v) {
             switch(v.getId()){
-                case R.id.bottone: String ricerca = cerca.getText().toString();
+                case R.id.activity_main_cerca: String ricerca = cerca.getText().toString();
                     if(!ricerca.equals("")){
                         if(ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122 ){
                             if(!cerca.getValidator().isValid(ricerca)){
