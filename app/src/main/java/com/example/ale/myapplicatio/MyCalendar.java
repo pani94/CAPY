@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -139,16 +138,50 @@ public class MyCalendar {
         }
         return -1;
     }
-    public void addNotify(Context ctx){
+
+    public void addNotify(Context ctx, Date partenza, Date arrivo, String NomeViaggio, String action){
         Intent intent = new Intent(ctx, ReminderBroadcastReceiver.class);
+        intent.setAction(action);
+        intent.putExtra("nomeviaggio", NomeViaggio);
+        Calendar calendar_partenza = Calendar.getInstance();
+        calendar_partenza.setTime(partenza);
+        int day_partenza = calendar_partenza.get(Calendar.DAY_OF_MONTH);
+        int month_partenza = calendar_partenza.get(Calendar.MONTH);
+        int year_partenza = calendar_partenza.get(Calendar.YEAR);
+        String string_partenza = day_partenza + "/" + (month_partenza + 1) + "/" + year_partenza;
+        intent.putExtra("daquando", string_partenza);
+        Calendar calendar_arrivo = Calendar.getInstance();
+        calendar_arrivo.setTime(arrivo);
+        int day_arrivo = calendar_arrivo.get(Calendar.DAY_OF_MONTH);
+        int month_arrivo = calendar_arrivo.get(Calendar.MONTH);
+        int year_arrivo = calendar_arrivo.get(Calendar.YEAR);
+        String string_arrivo = day_arrivo + "/" + (month_arrivo + 1) + "/" + year_arrivo;
+        intent.putExtra("aquando", string_arrivo);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) ctx.getSystemService(Activity.ALARM_SERVICE);
-// time of of next reminder. Unix time.
-        long timeMs = 0;
-        if (Build.VERSION.SDK_INT < 19) {
-            am.set(AlarmManager.RTC_WAKEUP, timeMs, pendingIntent);
-        } else {
-            am.setExact(AlarmManager.RTC_WAKEUP, timeMs, pendingIntent);
+
+        if(action.equals("one_day_before")){
+            long timeMsOneDayBefore = partenza.getTime() - 86400000 + 43200000;
+            if (Build.VERSION.SDK_INT < 19) {
+                am.set(AlarmManager.RTC_WAKEUP, timeMsOneDayBefore, pendingIntent);
+            } else {
+                am.setExact(AlarmManager.RTC_WAKEUP, timeMsOneDayBefore, pendingIntent);
+            }
+        }else if(action.equals("one_week_before")){
+            long timeMsOneWeekBefore = partenza.getTime() - 604800000 + 43200000;
+            if (Build.VERSION.SDK_INT < 19) {
+                am.set(AlarmManager.RTC_WAKEUP, timeMsOneWeekBefore, pendingIntent);
+            } else {
+                am.setExact(AlarmManager.RTC_WAKEUP, timeMsOneWeekBefore, pendingIntent);
+            }
+        }else if(action.equals("one_day_after")){
+            long timeMsOneDayAfter = arrivo.getTime() + 43200000;
+            if (Build.VERSION.SDK_INT < 19) {
+                am.set(AlarmManager.RTC_WAKEUP, timeMsOneDayAfter, pendingIntent);
+            } else {
+                am.setExact(AlarmManager.RTC_WAKEUP, timeMsOneDayAfter, pendingIntent);
+            }
         }
+
     }
 }
