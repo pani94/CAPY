@@ -4,6 +4,7 @@ public class Viaggio {
     private String nome_viaggio;
     private String partenza;
     private String arrivo;
+    private long evento_id;
 
     public Viaggio(){
         nome_viaggio ="";
@@ -21,6 +22,22 @@ public class Viaggio {
         partenza = part;
         arrivo = arr;
     }
+    public Viaggio(long id,String nome, String part , String arr,long evento_id){
+        id_viaggio = id;
+        nome_viaggio = nome;
+        partenza = part;
+        arrivo = arr;
+        this.evento_id = evento_id;
+    }
+    public Viaggio(String nome, String part , String arr,long evento_id){
+        nome_viaggio = nome;
+        partenza = part;
+        arrivo = arr;
+        this.evento_id = evento_id;
+    }
+
+
+
 
     public void setId_viaggio(long id){
         id_viaggio = id;
@@ -34,6 +51,9 @@ public class Viaggio {
     public void setArrivo(String a){
         arrivo = a;
     }
+    public void setEvento_id(long evento_id) {
+        this.evento_id = evento_id;
+    }
     public long getId_viaggio(){
         return id_viaggio;
     }
@@ -45,6 +65,9 @@ public class Viaggio {
     }
     public String getArrivo(){
         return arrivo;
+    }
+    public long getEvento_id() {
+        return evento_id;
     }
 }
 

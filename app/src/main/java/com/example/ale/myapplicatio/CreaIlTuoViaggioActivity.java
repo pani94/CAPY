@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -209,23 +210,25 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                         if (part != null & arr != null) {
                             if (CheckDates(part, arr)) {
                                 DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
+                                MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
+                                long evento_id =myCalendar.addViaggioToCalendar(part,arr,NViaggio,CreaIlTuoViaggioActivity.this);
                                 if (modifica) {
-                                    Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a);
+                                    Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a,evento_id);
                                     long update = db.UpdateViaggio(viaggio);
                                     if (update > 0) {
                                         Toast.makeText(getApplicationContext(), "Viaggio modificato", Toast.LENGTH_SHORT).show();
                                     }
 
                                 } else {
-                                    Viaggio viaggio = new Viaggio(NViaggio, p, a);
+                                    Viaggio viaggio = new Viaggio(NViaggio, p, a,evento_id);
+                                    Log.e("creato", Long.toString(evento_id));
+                                    Log.e("creato", Long.toString(viaggio.getEvento_id()));
                                     long update = db.insertViaggio(viaggio);
                                     if (update > 0) {
                                         Toast.makeText(getApplicationContext(), "Viaggio creato", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                                 salvaGiorni(part, arr, NViaggio);
-                                MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
-                                myCalendar.addViaggioToCalendar(part,arr,NViaggio,true,CreaIlTuoViaggioActivity.this);
                                 Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
                                 intent.putExtra("viaggio_creato", "viaggio creato");
                                 startActivity(intent);

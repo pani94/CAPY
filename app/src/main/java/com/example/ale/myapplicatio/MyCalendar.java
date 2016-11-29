@@ -24,15 +24,16 @@ import java.util.Date;
  */
 public class MyCalendar {
     Activity activity;
+
     public MyCalendar(Activity activity) {
         this.activity = activity;
     }
 
-    public long addViaggioToCalendar(Date partenza, Date arrivo, String nome_viaggio, boolean needReminder, Activity Activity) {
+    public long addViaggioToCalendar(Date partenza, Date arrivo, String nome_viaggio, Activity Activity) {
         long calId = getCalendarId("My calendar");
-        if (calId == -1){
+        if (calId == -1) {
             calId = getCalendarId("my applicatio calendar");
-            if(calId == -1){
+            if (calId == -1) {
                 ContentValues values = new ContentValues();
                 values.put(
                         CalendarContract.Calendars.ACCOUNT_NAME, "my applicatio calendar");
@@ -71,7 +72,7 @@ public class MyCalendar {
 
         }
         long eventID = -1;
-        try{
+        try {
             long startMillis = 0;
             long endMillis = 0;
             Calendar beginTime = Calendar.getInstance();
@@ -84,30 +85,16 @@ public class MyCalendar {
             ContentValues values = new ContentValues();
             values.put(CalendarContract.Events.DTSTART, startMillis);
             values.put(CalendarContract.Events.DTEND, endMillis);
-            values.put(CalendarContract.Events.TITLE,nome_viaggio);
+            values.put(CalendarContract.Events.TITLE, nome_viaggio);
             values.put(CalendarContract.Events.CALENDAR_ID, calId);
             values.put(CalendarContract.Events.EVENT_TIMEZONE, "Europe/Rome");
             if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-
-
             }
             Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
             eventID = Long.parseLong(uri.getLastPathSegment());
-            if (needReminder) {
-
-                String reminderUriString = "content://com.android.calendar/reminders";
-                ContentValues reminderValues = new ContentValues();
-                reminderValues.put("event_id", eventID);
-                reminderValues.put("minutes", 5);
-                reminderValues.put("method", 1);
-
-                Uri reminderUri = Activity.getApplicationContext()
-                        .getContentResolver()
-                        .insert(Uri.parse(reminderUriString), reminderValues);
-            }
 
 
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             // log.error("Error in adding event on calendar" + ex.getMessage());
         }
 
@@ -120,26 +107,27 @@ public class MyCalendar {
         String[] projection = new String[]{CalendarContract.Calendars._ID};
         String selection =
                 CalendarContract.Calendars.ACCOUNT_NAME +
-                        " = ? " ;
+                        " = ? ";
         // use the same values as above:
         String[] selArgs =
-                new String[]{ nome};
+                new String[]{nome};
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
 
         }
         Cursor cursor = activity.getContentResolver().
-                        query(
-                                CalendarContract.Calendars.CONTENT_URI,
-                                projection,
-                                selection,
-                                selArgs,
-                                null);
+                query(
+                        CalendarContract.Calendars.CONTENT_URI,
+                        projection,
+                        selection,
+                        selArgs,
+                        null);
         if (cursor.moveToFirst()) {
             return cursor.getLong(0);
         }
         return -1;
     }
-    public void addNotify(Context ctx){
+
+    public void addNotify(Context ctx) {
         Intent intent = new Intent(ctx, ReminderBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) ctx.getSystemService(Activity.ALARM_SERVICE);
@@ -150,5 +138,21 @@ public class MyCalendar {
         } else {
             am.setExact(AlarmManager.RTC_WAKEUP, timeMs, pendingIntent);
         }
+    }
+
+    public void deleteEvent(long event_id, Context context) {
+        String[] selArgs =
+                new String[]{Long.toString(event_id)};
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        int deleted = context.getContentResolver().delete(CalendarContract.Events.CONTENT_URI,CalendarContract.Events._ID + " =? ", selArgs);
     }
 }
