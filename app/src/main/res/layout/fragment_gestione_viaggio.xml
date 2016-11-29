@@ -45,7 +45,7 @@
         android:layout_marginTop="19dp" />
 
     <AutoCompleteTextView
-        android:hint="@string/inserisci_una_citta"
+        android:hint="@string/inserisci_una_citt_e_arricchisci_il_tuo_viaggio"
         android:fontFamily="casual"
         android:layout_width="400dp"
         android:layout_height="wrap_content"

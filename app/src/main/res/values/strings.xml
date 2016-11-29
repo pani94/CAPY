@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">My Applicatio</string>
-    <string name="titolo">APP TESI</string>
     <string name="footer">Organizza il tuo viaggio</string>
     <string name="bottone">Cerca</string>
     <string name="bottone_crea">Crea il tuo viaggio</string>
@@ -39,4 +37,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="i_miei_preferiti">I Miei Preferiti</string>
     <string name="inserisci_una_citta">Cerca una citta e arricchisci il tuo viaggio!</string>
+    <string name="inserisci_una_citt_e_arricchisci_il_tuo_viaggio">Inserisci una città e arricchisci il tuo viaggio!</string>
 </resources>
