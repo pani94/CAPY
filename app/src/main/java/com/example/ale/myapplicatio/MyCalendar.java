@@ -28,7 +28,7 @@ public class MyCalendar {
         this.activity = activity;
     }
 
-    public long addViaggioToCalendar(Date partenza, Date arrivo, String nome_viaggio, boolean needReminder, Activity Activity) {
+    public long addViaggioToCalendar(Date partenza, Date arrivo, String nome_viaggio, Activity Activity) {
         long calId = getCalendarId("My calendar");
         if (calId == -1){
             calId = getCalendarId("my applicatio calendar");

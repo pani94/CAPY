@@ -220,16 +220,13 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
 
                                 } else {
                                     Viaggio viaggio = new Viaggio(NViaggio, p, a,evento_id);
-                                    Log.e("creato", Long.toString(evento_id));
-                                    Log.e("creato", Long.toString(viaggio.getEvento_id()));
                                     long update = db.insertViaggio(viaggio);
                                     if (update > 0) {
                                         Toast.makeText(getApplicationContext(), "Viaggio creato", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                                 salvaGiorni(part, arr, NViaggio);
-                                MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
-                                myCalendar.addViaggioToCalendar(part,arr,NViaggio,true,CreaIlTuoViaggioActivity.this);
+                                myCalendar.addViaggioToCalendar(part,arr,NViaggio,CreaIlTuoViaggioActivity.this);
                                 myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_week_before");
                                 myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_before");
                                 myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_after");
