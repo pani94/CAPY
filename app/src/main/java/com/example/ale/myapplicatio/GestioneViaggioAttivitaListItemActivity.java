@@ -286,7 +286,9 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if(!parte_giornata.equals("")){
-                                    AttivitaGiorno attivitaGiorno = new AttivitaGiorno(placeid_get,data,id_viaggio,parte_giornata);
+                                    // CREARE L'EVENTO
+                                    int evento_id ;
+                                    AttivitaGiorno attivitaGiorno = new AttivitaGiorno(placeid_get,data,id_viaggio,parte_giornata,evento_id);
                                     database.insertAttivitaGiorno(attivitaGiorno);
                                     String stampa = "L'attività è stata aggiunta al " + parte_giornata + " del " + data;
                                     Toast.makeText(GestioneViaggioAttivitaListItemActivity.this,

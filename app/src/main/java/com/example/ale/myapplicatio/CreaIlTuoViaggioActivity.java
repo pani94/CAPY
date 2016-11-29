@@ -247,7 +247,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                 }
                                 salvaGiorni(part, arr, NViaggio);
                                 MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
-                                myCalendar.addViaggioToCalendar(part,arr,NViaggio,false,CreaIlTuoViaggioActivity.this);
+                                myCalendar.addViaggioToCalendar(part,arr,NViaggio,true,CreaIlTuoViaggioActivity.this);
                                 Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
                                 intent.putExtra("viaggio_creato", "viaggio creato");
                                 startActivity(intent);

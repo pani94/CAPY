@@ -2,11 +2,16 @@ package com.example.ale.myapplicatio;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -17,7 +22,6 @@ import java.util.Date;
 /**
  * Created by ale on 28/11/2016.
  */
-
 public class MyCalendar {
     Activity activity;
     public MyCalendar(Activity activity) {
@@ -95,10 +99,8 @@ public class MyCalendar {
                 String reminderUriString = "content://com.android.calendar/reminders";
                 ContentValues reminderValues = new ContentValues();
                 reminderValues.put("event_id", eventID);
-                reminderValues.put("minutes", 5); // Default value of the
-                // system. Minutes is a integer
-                reminderValues.put("method", 1); // Alert Methods: Default(0),
-                // Alert(1), Email(2),SMS(3)
+                reminderValues.put("minutes", 5);
+                reminderValues.put("method", 1);
 
                 Uri reminderUri = Activity.getApplicationContext()
                         .getContentResolver()
@@ -137,5 +139,17 @@ public class MyCalendar {
             return cursor.getLong(0);
         }
         return -1;
+    }
+    public void addNotify(Context ctx){
+        Intent intent = new Intent(ctx, ReminderBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) ctx.getSystemService(Activity.ALARM_SERVICE);
+// time of of next reminder. Unix time.
+        long timeMs = 0;
+        if (Build.VERSION.SDK_INT < 19) {
+            am.set(AlarmManager.RTC_WAKEUP, timeMs, pendingIntent);
+        } else {
+            am.setExact(AlarmManager.RTC_WAKEUP, timeMs, pendingIntent);
+        }
     }
 }

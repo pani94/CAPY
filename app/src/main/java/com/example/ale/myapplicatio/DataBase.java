@@ -74,6 +74,8 @@ public class DataBase {
     public static final int ATTIVITAGIORNO_DATA_COL = 1;
     public static final String ATTIVITAGIORNO_QUANDO = "quando";
     public static final int ATTIVITAGIORNO_QUANDO_COL = 3;
+    public static final String ATTIVITAGIORNO_EVENTO_ID = "evento_id";
+    public static final int ATTIVITAGIORNO_EVENTO_ID_COL = 4;
 
     public static final String FOTO_TABLE = "foto";
     public static final String FOTO_ID_VIAGGIO = "id_viaggio";
@@ -113,9 +115,10 @@ public class DataBase {
             "CREATE TABLE " + ATTIVITAGIORNO_TABLE + " (" +
                     ATTIVITAGIORNO_PLACE_ID + " TEXT NOT NULL, " +
                     ATTIVITAGIORNO_DATA + " TEXT NOT NULL, " +
-                    ATTIVITAGIORNO_ID_VIAGGIO + " TEXT NOT NULL, " +
-                    ATTIVITAGIORNO_QUANDO + " TEXT, " +
-                    "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO +  "," + ATTIVITAGIORNO_QUANDO + "))" +
+                    ATTIVITAGIORNO_ID_VIAGGIO + " INTEGER, " +
+                    ATTIVITAGIORNO_QUANDO + " TEXT, "  +
+                    ATTIVITAGIORNO_EVENTO_ID + " INTEGER, " +
+                    "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO +  "," + ATTIVITAGIORNO_QUANDO +  "," + ATTIVITAGIORNO_QUANDO+"))" +
                     ";";
     public static final String DROP_ATTIVITAGIORNO_TABLE =
             "DROP TABLE IF EXISTS " + ATTIVITAGIORNO_TABLE;
@@ -835,7 +838,8 @@ public class DataBase {
                 String data = cursor.getString(ATTIVITAGIORNO_DATA_COL);
                 int id = cursor.getInt(ATTIVITAGIORNO_ID_VIAGGIO_COL);
                 String quando = cursor.getString(ATTIVITAGIORNO_QUANDO_COL);
-                AttivitaGiorno attivitaGiorno = new AttivitaGiorno(place_id,data,id,quando);
+                int evento_id = cursor.getInt(ATTIVITAGIORNO_EVENTO_ID_COL);
+                AttivitaGiorno attivitaGiorno = new AttivitaGiorno(place_id,data,id,quando,evento_id);
                 return attivitaGiorno;
             }
             catch(Exception e) {
