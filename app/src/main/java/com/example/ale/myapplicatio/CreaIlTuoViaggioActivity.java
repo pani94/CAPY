@@ -226,7 +226,6 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                     }
                                 }
                                 salvaGiorni(part, arr, NViaggio);
-                                myCalendar.addViaggioToCalendar(part,arr,NViaggio,CreaIlTuoViaggioActivity.this);
                                 myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_week_before");
                                 myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_before");
                                 myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_after");
