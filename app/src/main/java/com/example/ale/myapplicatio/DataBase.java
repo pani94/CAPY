@@ -255,7 +255,7 @@ public class DataBase {
             }
         }
     }
-    public boolean getViaggiBool(){
+    boolean getViaggiBool(){
         String where = "1 = 1";
         this.openReadableDB();
         Cursor cursor = db.query(VIAGGIO_TABLE, null, where, null, null, null, null);
@@ -270,7 +270,7 @@ public class DataBase {
             return false;
         }
     }
-    public String getDataPartenza(int id_viaggio){
+    String getDataPartenza(int id_viaggio){
         String where = VIAGGIO_ID + " = " + id_viaggio;
         this.openReadableDB();
         Cursor cursor = db.query(VIAGGIO_TABLE, null, where, null, null, null, null);
@@ -282,7 +282,7 @@ public class DataBase {
         }
     }
 
-    public String getDataArrivo(int id_viaggio){
+    String getDataArrivo(int id_viaggio){
         String where = VIAGGIO_ID + " = " + id_viaggio;
         this.openReadableDB();
         Cursor cursor = db.query(VIAGGIO_TABLE, null, where, null, null, null, null);
@@ -294,7 +294,7 @@ public class DataBase {
         }
     }
 
-    public long UpdateViaggio(Viaggio viaggio) {
+    long UpdateViaggio(Viaggio viaggio) {
         ContentValues cv = new ContentValues();
         cv.put(VIAGGIO_ID, viaggio.getId_viaggio());
         cv.put(VIAGGIO_NOME, viaggio.getNome_viaggio());
