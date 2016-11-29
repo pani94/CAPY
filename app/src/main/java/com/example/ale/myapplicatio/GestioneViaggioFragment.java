@@ -1,9 +1,14 @@
 package com.example.ale.myapplicatio;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -165,15 +170,30 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
 
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             check = false;
-            if(s.length() >0) {
-                if(getCityRequest == null){
-                    getCityRequest = new GetCity();
-                    getCityRequest.execute(s.toString());
-                }else{
-                    getCityRequest.cancel(true);
-                    getCityRequest = new GetCity();
-                    getCityRequest.execute(s.toString());
+            ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+                if (s.length() > 0) {
+                    if (getCityRequest == null) {
+                        getCityRequest = new GetCity();
+                        getCityRequest.execute(s.toString());
+                    } else {
+                        getCityRequest.cancel(true);
+                        getCityRequest = new GetCity();
+                        getCityRequest.execute(s.toString());
+                    }
                 }
+            }else{
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Attenzione")
+                        .setMessage("Non hai connessione.")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         }
 

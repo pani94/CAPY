@@ -1,17 +1,19 @@
 package com.example.ale.myapplicatio;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -37,7 +39,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -191,15 +192,31 @@ public class MainActivity extends AppCompatActivity  {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 check = false;
-                if(s.length() >0) {
-                    if(getCityRequest == null){
-                        getCityRequest = new GetCity();
-                        getCityRequest.execute(s.toString());
-                    }else{
-                        getCityRequest.cancel(true);
-                        getCityRequest = new GetCity();
-                        getCityRequest.execute(s.toString());
+                ConnectivityManager cm = (ConnectivityManager) MainActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+                if (networkInfo != null && networkInfo.isConnected()){
+                    if(s.length() >0) {
+                        if(getCityRequest == null){
+                            getCityRequest = new GetCity();
+                            getCityRequest.execute(s.toString());
+                        }else{
+                            getCityRequest.cancel(true);
+                            getCityRequest = new GetCity();
+                            getCityRequest.execute(s.toString());
+                        }
                     }
+                }else{
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Attenzione")
+                            .setMessage("Non hai connessione.")
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+
                 }
             }
 
@@ -339,9 +356,9 @@ public class MainActivity extends AppCompatActivity  {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getApplicationContext(),
+                            /*Toast.makeText(getApplicationContext(),
                                     "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_LONG).show();*/
                         }
                     });
 
