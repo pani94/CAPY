@@ -4,37 +4,55 @@
     android:orientation="vertical"
     android:background="#FFFFFF"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
 
     <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
+        android:text="Titolo"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio"
         android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:textSize="25sp"
+        android:layout_marginTop="17dp"
+        android:layout_alignTop="@+id/fragment_gestione_viaggio_attivita_icon"
+        android:layout_alignLeft="@+id/fragment_gestione_viaggio_attivita_icon"
+        android:layout_alignStart="@+id/fragment_gestione_viaggio_attivita_icon"
+        android:layout_marginLeft="186dp"
+        android:layout_marginStart="186dp" />
 
     <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
+        android:text="Indirizzo"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/fragment_gestione_viaggio_attivita_item_indirizzo"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio" />
+        android:textSize="18sp"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio"
+        android:layout_alignLeft="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio"
+        android:layout_alignStart="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio" />
 
-    <Button
-        android:text="+"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:id="@+id/fragment_gestione_viaggio_attivita_bottone_aggiungi"
-        android:layout_marginRight="1dp"
-        android:layout_marginEnd="1dp"
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/ic_wallpaper_black_36dp"
+        android:id="@+id/fragment_gestione_viaggio_attivita_icon"
+        android:layout_marginTop="32dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:focusable="false"
-        />
+        android:layout_marginRight="3004dp"
+        android:layout_marginEnd="414dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
+        android:id="@+id/imageButton"
+        android:layout_alignTop="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio"
+        android:layout_toRightOf="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio"
+        android:layout_toEndOf="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@android:color/transparent" />
+
 </RelativeLayout>

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.OnClickListener{
     ArrayList<Attivita> arrayList;
     ImageView foto;
+    ImageButton bottonepiu;
     String nome_viaggio;
     String data;
     String parte_giornata;
@@ -50,11 +52,11 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
         // Lookup view for data population
         TextView name = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_nomeviaggio);
         TextView indirizzo = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_indirizzo);
-        Button aggiungi = (Button) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_bottone_aggiungi);
+        bottonepiu = (ImageButton) convertView.findViewById(R.id.imageButton);
         //ImageView foto = (ImageView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_foto);
         name.setText(item.getNome());
         indirizzo.setText(item.getIndirizzo());
-        aggiungi.setOnClickListener(this);
+        bottonepiu.setOnClickListener(this);
         tipologia = item.getTipologia();
         //new LoadImageTask().execute(item.getFoto());
         //Return the completed view to render on screen
@@ -63,7 +65,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fragment_gestione_viaggio_attivita_bottone_aggiungi && !nome_viaggio.equals("")) {
+        if (v.getId() == R.id.imageButton && !nome_viaggio.equals("")) {
             View parentRow = (View) v.getParent();
             ListView listView = (ListView) parentRow.getParent();
             final int position = listView.getPositionForView(parentRow);
@@ -160,7 +162,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
 
 
         }
-        else if (v.getId() == R.id.fragment_gestione_viaggio_attivita_bottone_aggiungi && nome_viaggio.equals("")){
+        else if (v.getId() == R.id.imageButton && nome_viaggio.equals("")){
             final DataBase database = new DataBase(getContext());
              View parentRow = (View) v.getParent();
              ListView listView = (ListView) parentRow.getParent();
