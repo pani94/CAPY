@@ -1,17 +1,9 @@
 package com.example.ale.myapplicatio;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentValues;
+//import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.ParseException;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +11,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,20 +32,10 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
     private EditText nomeViaggio;
     private TextView partenza;
     private TextView arrivo;
-    private Button bottone_partenza;
-    private Button bottone_arrivo;
-    private Button bottone_fatto;
     private Boolean modifica = false;
-    private TextView nomeActivity;
-
-    int id_viaggio;
-
-    //per SlideMenu
-    private List<ItemSlideMenu> listSliding;
-    private SlidingMenuAdapter adapter;
+    private int id_viaggio;
     private ListView listViewSliding;
     private DrawerLayout drawerLayout;
-    private RelativeLayout mainContent;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
@@ -63,13 +43,13 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crea_il_tuo_viaggio);
         ButtonListener buttonListener = new ButtonListener();
-        nomeActivity = (TextView) findViewById(R.id.testo);
+        TextView nomeActivity = (TextView) findViewById(R.id.testo);
         nomeViaggio = (EditText) findViewById(R.id.editTextNomeViaggio);
         partenza = (TextView) findViewById(R.id.partenza);
         arrivo = (TextView) findViewById(R.id.arrivo);
-        bottone_partenza = (Button) findViewById(R.id.button_partenza);
-        bottone_arrivo = (Button) findViewById(R.id.button_arrivo);
-        bottone_fatto = (Button) findViewById(R.id.buttonFatto);
+        Button bottone_partenza = (Button) findViewById(R.id.button_partenza);
+        Button bottone_arrivo = (Button) findViewById(R.id.button_arrivo);
+        Button bottone_fatto = (Button) findViewById(R.id.buttonFatto);
         bottone_fatto.setOnClickListener(buttonListener);
         bottone_arrivo.setOnClickListener(buttonListener);
         bottone_partenza.setOnClickListener(buttonListener);
@@ -91,8 +71,8 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         //sliding menu
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mainContent = (RelativeLayout) findViewById(R.id.main_content);
-        listSliding = new ArrayList<>();
+       // RelativeLayout mainContent = (RelativeLayout) findViewById(R.id.main_content);
+        List<ItemSlideMenu> listSliding = new ArrayList<>();
 
         //add item for sliding list
         listSliding.add(new ItemSlideMenu(R.drawable.ic_home, "Home"));
@@ -101,7 +81,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Impostazioni"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_info_black_24dp, "About"));
 
-        adapter = new SlidingMenuAdapter(this, listSliding);
+        SlidingMenuAdapter adapter = new SlidingMenuAdapter(this, listSliding);
         listViewSliding.setAdapter(adapter);
 
         //Display icon to open/close sliding list
@@ -204,8 +184,6 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.activity_main, fragment);
             transaction.commit();
-
-
         }
     }
 
@@ -266,17 +244,17 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                     break;
 
                 case R.id.button_partenza:
-                    showDatePickerDialog(bottone_partenza, "partenza");
+                    showDatePickerDialog("partenza");
                     break;
 
                 case R.id.button_arrivo:
-                    showDatePickerDialog(bottone_arrivo, "arrivo");
+                    showDatePickerDialog("arrivo");
                     break;
             }
         }
     }
 
-    public void showDatePickerDialog(View v, String selezione) {
+    public void showDatePickerDialog(String selezione) {
         DialogFragment newFragment = new DatePickerFragment();
         Bundle arg = new Bundle();
         arg.putString("selezionato", selezione);
@@ -294,13 +272,10 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         try {
             if (c_partenza.before(c_arrivo)) {
                 b = true;
-            } else if (c_partenza.equals(c_arrivo)) {
-                b = true;//If two dates are equal
-            } else {
-                b = false; //If start date is after the end date
-            }
+            } else //If two dates are equal
+//If start date is after the end date
+                b = c_partenza.equals(c_arrivo);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             //e.printStackTrace();
         }
         return b;
@@ -319,9 +294,9 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         //Log.e("messaggini", String.valueOf(elapsedDays));
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(startDate);
-        int day = calendar.get(calendar.DAY_OF_MONTH);
-        int month = calendar.get(calendar.MONTH);
-        int year = calendar.get(calendar.YEAR);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
         String p = day + "/" + (month + 1) + "/" + year;
         DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
         Giorno g = new Giorno(p);
@@ -365,13 +340,13 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                 }
             }
 
-            calendar.set(calendar.DAY_OF_MONTH, day);
-            calendar.set(calendar.MONTH, month);
-            calendar.set(calendar.YEAR, year);
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.YEAR, year);
 
-            int day_iesimo = calendar.get(calendar.DAY_OF_MONTH);
-            int month_iesimo = calendar.get(calendar.MONTH);
-            int year_iesimo = calendar.get(calendar.YEAR);
+            int day_iesimo = calendar.get(Calendar.DAY_OF_MONTH);
+            int month_iesimo = calendar.get(Calendar.MONTH);
+            int year_iesimo = calendar.get(Calendar.YEAR);
             String p_iesimo = day_iesimo + "/" + (month_iesimo + 1) + "/" + year_iesimo;
             g = new Giorno(p_iesimo);
             db.insertGiorno(g);
