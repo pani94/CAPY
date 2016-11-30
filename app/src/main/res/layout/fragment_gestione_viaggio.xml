@@ -68,5 +68,13 @@
             android:layout_toRightOf="@+id/gestione_viaggio_autocomplete"
             android:layout_toEndOf="@+id/gestione_viaggio_autocomplete" />
 
-    </RelativeLayout>
+    <com.google.android.gms.maps.MapView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lista_gestione_viaggio"
+        android:layout_alignLeft="@+id/gestione_viaggio_autocomplete"
+        android:layout_alignStart="@+id/gestione_viaggio_autocomplete"
+        android:id="@+id/fragment_gestione_viaggio_mappa" />
+
+</RelativeLayout>
 

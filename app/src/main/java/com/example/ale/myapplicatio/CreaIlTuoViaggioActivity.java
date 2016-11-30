@@ -2,8 +2,10 @@ package com.example.ale.myapplicatio;
 
 //import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ParseException;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -38,6 +40,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
     private ListView listViewSliding;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,11 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         } else {
             bottone_arrivo.setEnabled(false);
         }
+        // set the default values for the preferences
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
+        // get default SharedPreferences object
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         //sliding menu
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
@@ -176,6 +184,10 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                 intent_preferiti.putExtra("preferiti", "preferiti");
                 startActivity(intent_preferiti);
                 break;
+            case 3:
+                Intent intent_impostazioni = new Intent(CreaIlTuoViaggioActivity.this, SettingsActivity.class);
+                startActivity(intent_impostazioni);
+                break;
             default:
                 break;
         }
@@ -227,12 +239,17 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                     }
                                 }
                                 salvaGiorni(part, arr, NViaggio);
-                                myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_week_before");
-                                myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_before");
-                                myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_after");
-                                Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
-                                intent.putExtra("viaggio_creato", "viaggio creato");
-                                startActivity(intent);
+
+                                //if(prefs.getBoolean("preference_notification", true)){
+                                    //Log.e("messaggini", "preference notification true");
+                                    myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_week_before");
+                                    myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_before");
+                                    myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_after");
+                                    Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
+                                    intent.putExtra("viaggio_creato", "viaggio creato");
+                                    startActivity(intent);
+                                //}
+
                                 /*int i = p.indexOf("/");
                                 String giorno = p.substring(0, i);
                                 int day = Integer.parseInt(giorno);

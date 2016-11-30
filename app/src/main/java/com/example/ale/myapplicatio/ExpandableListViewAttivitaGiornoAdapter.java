@@ -4,13 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +30,9 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
     private int id_viaggio;
     private String data;
     private ArrayList<ArrayList <AttivitaGiorno> >attivitaGiornos ;
+    private TextView textView;
+    private ImageButton bottone_aggiungi;
+    private ImageView freccia;
     public ExpandableListViewAttivitaGiornoAdapter(Context context,List<String> header_titles,ArrayList<ArrayList <AttivitaGiorno> > attivitaGiornos,int id_viaggio,String data){
         this.context = context;
         this.header_titles = header_titles;
@@ -81,11 +85,16 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
             convertView = inflater.inflate(R.layout.item_exp_listview,null);
         }
         final DataBase db = new DataBase(context);
-        TextView textView = (TextView) convertView.findViewById(R.id.item_exp_listview_head);
-        TextView num = (TextView) convertView.findViewById(R.id.item_exp_listview_num);
-        num.setText(Integer.toString(getChildrenCount(groupPosition)));
-        Button button = (Button) convertView.findViewById(R.id.item_exp_listview_bottone);
-        button.setOnClickListener(new View.OnClickListener() {
+        textView = (TextView) convertView.findViewById(R.id.item_exp_listview_head);
+        bottone_aggiungi = (ImageButton) convertView.findViewById(R.id.item_exp_listview_bottone);
+        freccia =(ImageView) convertView.findViewById(R.id.item_exp_listview_frecciagiu);
+        if(getChildrenCount(groupPosition)>0){
+            freccia.setVisibility(View.VISIBLE);
+        }else{
+            freccia.setVisibility(View.INVISIBLE);
+        }
+
+        bottone_aggiungi.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

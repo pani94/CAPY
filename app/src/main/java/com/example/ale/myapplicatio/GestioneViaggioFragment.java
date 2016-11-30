@@ -120,7 +120,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
         listView = (ListView) view.findViewById(R.id.lista_gestione_viaggio);
         nome_viaggio.setText(nome_viaggio_get);
         daquando_aquando.setText(daquando_aquando_get);
-        mMapView = (MapView) view.findViewById(R.id.mapView_ricerca_activity_list_item);
+        mMapView = (MapView) view.findViewById(R.id.fragment_gestione_viaggio_mappa);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume(); // needed to get the map to display immediately
         try {
@@ -132,7 +132,6 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
             checkLocationPermission();
         }
         MapGetMapAsync();
-
         bottone_cerca.setOnClickListener(buttonListener);
 
         scelte = new String[3];
@@ -450,7 +449,6 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                 }
                 LatLng position=null;
                 DataBase db = new DataBase(getContext());
-
                 ArrayList<Attivita> attivitas = db.getAttivita(nome_viaggio_get,"tutte");
                 if(attivitas.size() > 0){
                     for (int i = 0; i < attivitas.size();i++){
@@ -571,7 +569,6 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
             // You can add here other case statements according to your requirement.
         }
     }
-
    /* // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

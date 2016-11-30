@@ -172,6 +172,10 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
                 intent_preferiti.putExtra("preferiti", "preferiti");
                 startActivity(intent_preferiti);
                 break;
+            case 4:
+                Intent intent_impostazioni = new Intent(GestioneViaggioAttivitaActivity.this, SettingsActivity.class);
+                startActivity(intent_impostazioni);
+                break;
             default:
                 break;
         }

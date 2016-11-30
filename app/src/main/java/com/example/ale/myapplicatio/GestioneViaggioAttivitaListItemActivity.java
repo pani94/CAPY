@@ -54,7 +54,7 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
     private String data;
     private String parte_giornata;
     private String[] date;
-    private String[] momento_mangiare = {"Pranzo", "Cena", "Sera"};
+    private String[] momento_mangiare = {"Pranzo", "Cena"};
     private String[] momento_vedere = {"Mattina", "Pomeriggio", "Sera"};
     private String[] momento_dormire = {"Dormire"};
     private String[] momento;
@@ -224,6 +224,10 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
                 Intent intent_preferiti = new Intent(GestioneViaggioAttivitaListItemActivity.this, ProfiloViaggiActivity.class);
                 intent_preferiti.putExtra("preferiti", "preferiti");
                 startActivity(intent_preferiti);
+                break;
+            case 4:
+                Intent intent_impostazioni = new Intent(GestioneViaggioAttivitaListItemActivity.this, SettingsActivity.class);
+                startActivity(intent_impostazioni);
                 break;
             default:
                 break;

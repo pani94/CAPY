@@ -305,6 +305,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                 case R.id.fragment_ricerca_activity_list_item_bottonepiu:
                     if(database.getViaggiBool()) {
                         Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false",latitudine,longitudine);
+                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false", latitudine,longitudine);
                         database.insertAttivita(attivita);
                         final String[] nomeViaggi = new String[arrayListViaggi.size()];
                         for (int k = 0; k < arrayListViaggi.size(); k++) {
@@ -619,43 +620,6 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
             // other 'case' lines to check for other permissions this app might request.
             // You can add here other case statements according to your requirement.
-        }
-    }
-    public class CustomMapView extends MapView {
-
-        private ViewParent mViewParent;
-        public CustomMapView(Context context) {
-            super(context);
-        }
-
-
-
-        public void setViewParent(@Nullable final ViewParent viewParent) { //any ViewGroup
-            mViewParent = viewParent;
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(final MotionEvent event) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    if (null == mViewParent) {
-                        getParent().requestDisallowInterceptTouchEvent(true);
-                    } else {
-                        mViewParent.requestDisallowInterceptTouchEvent(true);
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    if (null == mViewParent) {
-                        getParent().requestDisallowInterceptTouchEvent(false);
-                    } else {
-                        mViewParent.requestDisallowInterceptTouchEvent(false);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            return super.onInterceptTouchEvent(event);
         }
     }
 
