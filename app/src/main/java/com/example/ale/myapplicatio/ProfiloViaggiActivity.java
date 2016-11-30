@@ -69,7 +69,7 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
         listSliding = new ArrayList<>();
 
         //add item for sliding list
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_home, "Home"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_home_black_24dp, "Home"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_create_black_24dp, "Crea un nuovo viaggio"));
         if(b){
             listSliding.add(new ItemSlideMenu(R.drawable.ic_star_black_24dp, "I miei preferiti"));

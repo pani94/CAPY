@@ -17,8 +17,7 @@
         android:id="@+id/item_vedere_mangiare_dormire_image_button"
         android:layout_alignParentTop="true"
         android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
-        android:elevation="0dp" />
+        android:adjustViewBounds="true" />
 
     <TextView
         android:text="TextView"

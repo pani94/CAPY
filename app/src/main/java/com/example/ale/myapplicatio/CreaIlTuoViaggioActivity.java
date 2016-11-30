@@ -13,7 +13,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -84,7 +83,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         List<ItemSlideMenu> listSliding = new ArrayList<>();
 
         //add item for sliding list
-        listSliding.add(new ItemSlideMenu(R.drawable.ic_home, "Home"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_home_black_24dp, "Home"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "I miei viaggi"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_star_black_24dp, "I miei preferiti"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Impostazioni"));

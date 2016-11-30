@@ -25,7 +25,7 @@
             >
 
             <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/RicercaActivityFragmentListItemTitolo"
@@ -42,14 +42,14 @@
             <ImageView
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                app:srcCompat="@drawable/ic_photo_black_36dp"
+
                 android:id="@+id/RicercaActivityFragmentListItemImmagine"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/RicercaActivityFragmentListItemIndirizzo"
                 android:layout_width="match_parent" />
 
             <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/RicercaActivityFragmentListItemIndirizzo"
@@ -60,7 +60,7 @@
                 android:layout_alignParentStart="true" />
 
             <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/RicercaActivityFragmentListItemTelefono"
@@ -73,7 +73,7 @@
                 android:layout_marginBottom="15dp" />
 
             <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
@@ -84,7 +84,7 @@
                 android:layout_alignParentStart="true" />
 
             <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
@@ -95,7 +95,7 @@
                 android:layout_marginTop="19dp" />
 
             <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:linksClickable="true"
