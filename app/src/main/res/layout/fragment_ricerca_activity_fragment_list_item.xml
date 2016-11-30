@@ -130,7 +130,7 @@
 
             <com.google.android.gms.maps.MapView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="500dp"
                 android:id="@+id/mapView_ricerca_activity_list_item"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/fragment_ricerca_activity_list_item_bottonepiu"

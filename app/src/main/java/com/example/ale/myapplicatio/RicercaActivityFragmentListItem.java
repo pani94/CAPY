@@ -140,7 +140,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
-        MapGetMapAsync(latitudine,longitudine,name,formatted_address);
+        MapGetMapAsync(latitudine,longitudine);
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
         bottone_piu.setOnClickListener(buttonListener);
@@ -156,10 +156,6 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         preferiti_star.setOnClickListener(buttonListener);
         titolo.setTypeface(Typeface.DEFAULT_BOLD);
         titolo.setShadowLayer(5,0,0, Color.BLACK);
-        for(int i = 0; i < arrayListViaggi.size(); i++){
-            Log.e("viaggi", arrayListViaggi.get(i).getNome_viaggio());
-        }
-
         new GetPOI().execute(place_id);
 
         return view;
@@ -294,7 +290,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                     break;
                 case R.id.fragment_ricerca_activity_list_item_bottonepiu:
                     if(database.getViaggiBool()) {
-                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false");
+                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false",latitudine,longitudine);
                         database.insertAttivita(attivita);
                         final String[] nomeViaggi = new String[arrayListViaggi.size()];
                         for (int k = 0; k < arrayListViaggi.size(); k++) {
@@ -364,7 +360,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
                 case R.id.preferiti_star:
                     if(!giallo){
-                        Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true");
+                        Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true",latitudine,longitudine);
                         database.UpdateAttivitaPreferita(attivitapreferita);
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Attività aggiunta ai preferiti",
@@ -383,9 +379,6 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
 
                     break;
-
-
-
             }
 
         }
@@ -475,7 +468,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         super.onLowMemory();
         mMapView.onLowMemory();
     }
-    public void MapGetMapAsync(final String latitudine, final String longitudine, final String nome, final String via){
+    public void MapGetMapAsync(final String latitudine, final String longitudine){
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
@@ -498,9 +491,9 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                     buildGoogleApiClient();
                     mMap.setMyLocationEnabled(true);
                 }
-                LatLng position = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
-                googleMap.addMarker(new MarkerOptions().position(position).title(nome).snippet(via));
-                // For zooming automatically to the location of the marker
+
+                LatLng position= new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));;
+                googleMap.addMarker(new MarkerOptions().position(position));
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
