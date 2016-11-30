@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.OnClickListener{
     ArrayList<Attivita> arrayList;
-    ImageView foto;
+    ImageView icon;
     ImageButton bottonepiu;
     String nome_viaggio;
     String data;
@@ -48,18 +48,37 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_gestione_viaggio_attivita_item, parent, false);
+            ViewHolder viewHolder = new ViewHolder();
+            viewHolder.name = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_nomeviaggio);
+            viewHolder.vicinity = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_indirizzo);
+            viewHolder.icon = (ImageView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_icon);
+            convertView.setTag(viewHolder);
         }
         // Lookup view for data population
-        TextView name = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_nomeviaggio);
-        TextView indirizzo = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_indirizzo);
+        //TextView name = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_nomeviaggio);
+        //TextView indirizzo = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_indirizzo);
         bottonepiu = (ImageButton) convertView.findViewById(R.id.imageButton);
-        //ImageView foto = (ImageView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_foto);
-        name.setText(item.getNome());
-        indirizzo.setText(item.getIndirizzo());
+        //ImageView icon = (ImageView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_icon);
+
+        ViewHolder holder = (ViewHolder) convertView.getTag();
+        String nome = item.getNome();
+        String indirizzo = item.getIndirizzo();
+        holder.name.setText(nome);
+        holder.vicinity.setText(indirizzo);
+
+        //name.setText(item.getNome());
+        //indirizzo.setText(item.getIndirizzo());
         bottonepiu.setOnClickListener(this);
         tipologia = item.getTipologia();
         //new LoadImageTask().execute(item.getFoto());
         //Return the completed view to render on screen
+
+        String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
+        String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getFoto()+"&sensor=false&" + key;
+        holder.icon.setTag(photo_reference_url);
+        //if(photo_reference_url != holder.icon.getTag()){
+        new ImageDownloaderTask(holder.icon).execute(photo_reference_url);
+        //}
         return convertView;
     }
 
@@ -236,11 +255,18 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
         protected void onPostExecute(Bitmap bitmap) {
 
             if (bitmap != null) {
-                foto.setImageBitmap(bitmap);
+                icon.setImageBitmap(bitmap);
 
 
             }
         }
     }
+
+    public class ViewHolder{
+        TextView name;
+        TextView vicinity;
+        ImageView icon;
+    }
+
 
 }
