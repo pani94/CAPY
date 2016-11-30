@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -95,7 +94,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
             for (int k = 0; k < giorni.size(); k++) {
                 date[k] = giorni.get(k).getData();
             }
-            final String[] momento_mangiare = {"Pranzo", "Cena", "Sera"};
+            final String[] momento_mangiare = {"Pranzo", "Cena"};
             final String[] momento_vedere = {"Mattina", "Pomeriggio", "Sera"};
             final String[] momento_dormire = {"Dormire"};
             //final String[] giornata = {"Mattina", "Pranzo", "Pomeriggio", "Cena", "Sera"};

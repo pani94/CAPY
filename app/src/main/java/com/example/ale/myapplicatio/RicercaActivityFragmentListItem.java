@@ -146,15 +146,8 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
-       MapGetMapAsync(latitudine,longitudine,name,formatted_address);
-        /*GoogleMap.OnMapClickListener onMapClickListener = new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                scrollView.requestDisallowInterceptTouchEvent(true);
-            }
-        };*/
-       // googleMap.setOnMapClickListener(onMapClickListener);
-        /*mMapView.setOnTouchListener(new View.OnTouchListener() {
+        MapGetMapAsync(latitudine,longitudine,name,formatted_address);
+        mMapView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -168,8 +161,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                 }
                 return mMapView.onTouchEvent(event);
             }
-
-        });*/
+        });
 
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);

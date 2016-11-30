@@ -54,7 +54,7 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
     private String data;
     private String parte_giornata;
     private String[] date;
-    private String[] momento_mangiare = {"Pranzo", "Cena", "Sera"};
+    private String[] momento_mangiare = {"Pranzo", "Cena"};
     private String[] momento_vedere = {"Mattina", "Pomeriggio", "Sera"};
     private String[] momento_dormire = {"Dormire"};
     private String[] momento;
