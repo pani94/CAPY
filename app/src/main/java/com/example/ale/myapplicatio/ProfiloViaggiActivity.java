@@ -177,6 +177,10 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
                     startActivity(intent_viaggi);
                 }
                 break;
+            case 3:
+                Intent intent_impostazioni = new Intent(ProfiloViaggiActivity.this, SettingsActivity.class);
+                startActivity(intent_impostazioni);
+                break;
             default:
                 break;
         }
