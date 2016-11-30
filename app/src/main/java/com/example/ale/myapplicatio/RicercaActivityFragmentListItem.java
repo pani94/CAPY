@@ -188,6 +188,10 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
     }
 
 
+
+
+
+
     private class GetPOI extends AsyncTask<String, Void, Void> {
 
 
@@ -554,14 +558,6 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
     @Override
     public void onConnected( Bundle bundle) {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(1000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-       /* if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest,this);
-        }*/
 
     }
 
@@ -637,4 +633,5 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
             // You can add here other case statements according to your requirement.
         }
     }
+
 }

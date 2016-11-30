@@ -1,4 +1,4 @@
-<LinearLayout
+<RelativeLayout
     android:background="#FFFFFF"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,8 +9,6 @@
     android:descendantFocusability="blocksDescendants"
     tools:context="com.example.ale.myapplicatio.RicercaActivityFragmentListItem"
     >
-
-    <!-- Paola puzza -->
 
     <ScrollView
         android:id="@+id/ricerca_activity_fragment_list_item_scrollview"
@@ -130,6 +128,8 @@
                 app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
                 android:id="@+id/fragment_ricerca_activity_list_item_bottonepiu"
                 android:backgroundTint="@android:color/transparent"
+                android:layout_marginLeft="46dp"
+                android:layout_marginBottom="57dp"
                 android:layout_alignParentBottom="false"
                 android:layout_alignParentLeft="false"
                 android:layout_alignParentStart="false"
@@ -149,6 +149,13 @@
         </LinearLayout>
 
     </ScrollView>
+    <!-- Paola puzza -->
 
 
-</LinearLayout>
+
+
+
+
+
+
+</RelativeLayout>

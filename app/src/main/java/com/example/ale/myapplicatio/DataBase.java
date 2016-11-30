@@ -46,6 +46,10 @@ public class DataBase {
     private static final int ATTIVITA_FOTO_COL = 7;
     private static final String ATTIVITA_PREFERITO = "preferito";
     private static final int ATTIVITA_PREFERITO_COL = 8;
+    private static final String ATTIVITA_LATITUDINE = "latitudine";
+    private static final int ATTIVITA_LATITUDINE_COL = 9;
+    private static final String ATTIVITA_LONGITUDINE = "longitudine";
+    private static final int ATTIVITA_LONGITUDINE_COL = 10;
 
     private static final String GIORNO_TABLE = "giorno";
     private static final String GIORNO_DATA = "data";
@@ -102,7 +106,9 @@ public class DataBase {
                     ATTIVITA_LINK + " TEXT, " +
                     ATTIVITA_TIPOLOGIA + " TEXT, " +
                     ATTIVITA_FOTO + " TEXT, " +
-                    ATTIVITA_PREFERITO + " TEXT NOT NULL);";
+                    ATTIVITA_PREFERITO + " TEXT NOT NULL," +
+                    ATTIVITA_LATITUDINE + " TEXT ," +
+                    ATTIVITA_LONGITUDINE + " TEXT );";
     public static final String DROP_ATTIVITA_TABLE =
             "DROP TABLE IF EXISTS " + ATTIVITA_TABLE;
 
@@ -333,6 +339,8 @@ public class DataBase {
         cv.put(ATTIVITA_TIPOLOGIA, attivita.getTipologia());
         cv.put(ATTIVITA_FOTO, attivita.getFoto());
         cv.put(ATTIVITA_PREFERITO, attivita.getPreferito());
+        cv.put(ATTIVITA_LATITUDINE, attivita.getLatitudine());
+        cv.put(ATTIVITA_LONGITUDINE,attivita.getLongitudine());
 
 
         this.openWriteableDB();
@@ -353,6 +361,8 @@ public class DataBase {
         cv.put(ATTIVITA_TIPOLOGIA, attivita.getTipologia());
         cv.put(ATTIVITA_FOTO, attivita.getFoto());
         cv.put(ATTIVITA_PREFERITO, attivita.getPreferito());
+        cv.put(ATTIVITA_LATITUDINE, attivita.getLatitudine());
+        cv.put(ATTIVITA_LONGITUDINE,attivita.getLongitudine());
         this.openReadableDB();
         db.replace(ATTIVITA_TABLE, null, cv);
         this.closeDB();
@@ -500,7 +510,9 @@ public class DataBase {
                         cursor.getString(ATTIVITA_LINK_COL),
                         cursor.getString(ATTIVITA_TIPOLOGIA_COL),
                         cursor.getString(ATTIVITA_FOTO_COL),
-                        cursor.getString(ATTIVITA_PREFERITO_COL));
+                        cursor.getString(ATTIVITA_PREFERITO_COL),
+                        cursor.getString(ATTIVITA_LATITUDINE_COL),
+                        cursor.getString(ATTIVITA_LONGITUDINE_COL));
                 return attivita;
             }
             catch(Exception e) {
@@ -560,7 +572,9 @@ public class DataBase {
                         cursor.getString(ATTIVITA_LINK_COL),
                         cursor.getString(ATTIVITA_TIPOLOGIA_COL),
                         cursor.getString(ATTIVITA_FOTO_COL),
-                        cursor.getString(ATTIVITA_PREFERITO_COL));
+                        cursor.getString(ATTIVITA_PREFERITO_COL),
+                        cursor.getString(ATTIVITA_LATITUDINE_COL),
+                        cursor.getString(ATTIVITA_LONGITUDINE_COL));
                 return attivita_preferita;
             }
             catch(Exception e) {

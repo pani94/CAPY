@@ -100,7 +100,7 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
         @Override
         public void onClick(View v) {
             if(database.getViaggiBool()) {
-                Attivita attivita = new Attivita(preferiti_placeid_get, preferiti_titolo_get, preferiti_indirizzo_get, preferiti_orario_get, preferiti_telefono_get, preferiti_link_get, "true", preferiti_foto_get, "false");
+                Attivita attivita = new Attivita(preferiti_placeid_get, preferiti_titolo_get, preferiti_indirizzo_get, preferiti_orario_get, preferiti_telefono_get, preferiti_link_get, "true", preferiti_foto_get, "false","","");
                 database.insertAttivita(attivita);
                 String[] nomeViaggi = new String[arrayListViaggi.size()];
                 for (int k = 0; k < arrayListViaggi.size(); k++) {
