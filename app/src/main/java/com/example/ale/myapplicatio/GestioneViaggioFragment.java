@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -25,6 +26,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +55,9 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
     private boolean check;
     private GetCity getCityRequest;
     ArrayList<String> cityList;
-
+    private MapView mMapView;
+    private GoogleMap googleMap;
+    GoogleApiClient mGoogleApiClient;
     private String[] scelte;
     private ListView listView;
 
@@ -97,6 +105,8 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
         listView = (ListView) view.findViewById(R.id.lista_gestione_viaggio);
         nome_viaggio.setText(nome_viaggio_get);
         daquando_aquando.setText(daquando_aquando_get);
+        mMapView = (MapView) view.findViewById(R.id.mapView_ricerca_activity_list_item);
+        mMapView.onCreate(savedInstanceState);
         bottone_cerca.setOnClickListener(buttonListener);
 
         scelte = new String[3];
