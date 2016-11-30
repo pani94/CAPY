@@ -4,14 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -157,7 +155,7 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
                                         Toast.LENGTH_LONG).show();
                             }
                             else{
-                                String[] giornata = {"Mattina", "Pranzo", "Pomeriggio", "Cena", "Sera", "Notte"};
+                                String[] giornata = {"Mattina", "Pranzo", "Pomeriggio", "Cena", "Sera", "Dormire"};
                                 long insert = 0;
                                 for (int i = 0; i < selectedItems.size();i++){
                                     // DEVO CREARE L'EVENTO E PRENDERE L'ID

@@ -14,7 +14,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -32,7 +31,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.*;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -316,7 +316,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                     break;
                 case R.id.fragment_ricerca_activity_list_item_bottonepiu:
                     if(database.getViaggiBool()) {
-                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false");
+                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false", latitudine, longitudine);
                         database.insertAttivita(attivita);
                         final String[] nomeViaggi = new String[arrayListViaggi.size()];
                         for (int k = 0; k < arrayListViaggi.size(); k++) {
@@ -386,7 +386,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
                 case R.id.preferiti_star:
                     if(!giallo){
-                        Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true");
+                        Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true", latitudine, longitudine);
                         database.UpdateAttivitaPreferita(attivitapreferita);
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Attività aggiunta ai preferiti",
