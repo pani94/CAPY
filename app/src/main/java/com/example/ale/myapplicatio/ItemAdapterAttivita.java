@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +29,8 @@ import java.util.ArrayList;
 
 public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.OnClickListener{
     ArrayList<Attivita> arrayList;
-    ImageView foto;
+    ImageView icon;
+    ImageButton bottonepiu;
     String nome_viaggio;
     String data;
     String parte_giornata;
@@ -46,24 +48,43 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_gestione_viaggio_attivita_item, parent, false);
+            ViewHolder viewHolder = new ViewHolder();
+            viewHolder.name = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_nomeviaggio);
+            viewHolder.vicinity = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_indirizzo);
+            viewHolder.icon = (ImageView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_icon);
+            convertView.setTag(viewHolder);
         }
         // Lookup view for data population
-        TextView name = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_nomeviaggio);
-        TextView indirizzo = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_indirizzo);
-        Button aggiungi = (Button) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_bottone_aggiungi);
-        //ImageView foto = (ImageView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_foto);
-        name.setText(item.getNome());
-        indirizzo.setText(item.getIndirizzo());
-        aggiungi.setOnClickListener(this);
+        //TextView name = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_nomeviaggio);
+        //TextView indirizzo = (TextView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_item_indirizzo);
+        bottonepiu = (ImageButton) convertView.findViewById(R.id.imageButton);
+        //ImageView icon = (ImageView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_icon);
+
+        ViewHolder holder = (ViewHolder) convertView.getTag();
+        String nome = item.getNome();
+        String indirizzo = item.getIndirizzo();
+        holder.name.setText(nome);
+        holder.vicinity.setText(indirizzo);
+
+        //name.setText(item.getNome());
+        //indirizzo.setText(item.getIndirizzo());
+        bottonepiu.setOnClickListener(this);
         tipologia = item.getTipologia();
         //new LoadImageTask().execute(item.getFoto());
         //Return the completed view to render on screen
+
+        String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
+        String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getFoto()+"&sensor=false&" + key;
+        holder.icon.setTag(photo_reference_url);
+        //if(photo_reference_url != holder.icon.getTag()){
+        new ImageDownloaderTask(holder.icon).execute(photo_reference_url);
+        //}
         return convertView;
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fragment_gestione_viaggio_attivita_bottone_aggiungi && !nome_viaggio.equals("")) {
+        if (v.getId() == R.id.imageButton && !nome_viaggio.equals("")) {
             View parentRow = (View) v.getParent();
             ListView listView = (ListView) parentRow.getParent();
             final int position = listView.getPositionForView(parentRow);
@@ -160,7 +181,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
 
 
         }
-        else if (v.getId() == R.id.fragment_gestione_viaggio_attivita_bottone_aggiungi && nome_viaggio.equals("")){
+        else if (v.getId() == R.id.imageButton && nome_viaggio.equals("")){
             final DataBase database = new DataBase(getContext());
              View parentRow = (View) v.getParent();
              ListView listView = (ListView) parentRow.getParent();
@@ -234,11 +255,18 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
         protected void onPostExecute(Bitmap bitmap) {
 
             if (bitmap != null) {
-                foto.setImageBitmap(bitmap);
+                icon.setImageBitmap(bitmap);
 
 
             }
         }
     }
+
+    public class ViewHolder{
+        TextView name;
+        TextView vicinity;
+        ImageView icon;
+    }
+
 
 }

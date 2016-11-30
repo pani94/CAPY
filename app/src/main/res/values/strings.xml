@@ -38,4 +38,5 @@
     <string name="i_miei_preferiti">I Miei Preferiti</string>
     <string name="inserisci_una_citta">Cerca una citta e arricchisci il tuo viaggio!</string>
     <string name="inserisci_una_citt_e_arricchisci_il_tuo_viaggio">Inserisci una città e arricchisci il tuo viaggio!</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

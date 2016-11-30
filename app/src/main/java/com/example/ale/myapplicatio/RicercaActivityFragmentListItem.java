@@ -2,26 +2,45 @@ package com.example.ale.myapplicatio;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.location.Location;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.*;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +54,7 @@ import java.util.ArrayList;
 import static android.R.drawable.btn_star_big_off;
 import static android.R.drawable.btn_star_big_on;
 
-public class RicercaActivityFragmentListItem extends Fragment{
+public class RicercaActivityFragmentListItem extends Fragment implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,LocationListener {
 
     private String place_id;
     private String latitudine;
@@ -44,33 +63,35 @@ public class RicercaActivityFragmentListItem extends Fragment{
     private ImageView foto;
     private TextView orario;
     private TextView weekdayTextView;
-    //private String open_now;
     private TextView telefono;
     private TextView indirizzo;
     private TextView link;
     private ImageButton preferiti_star;
     private ImageButton bottone_piu;
-
+    private ScrollView scrollView;
     private DataBase database;
-    private ArrayList <Viaggio> arrayListViaggi;
-    private String name="";
-    private String international_phone_number="";
-    private String website ="";
+    private ArrayList<Viaggio> arrayListViaggi;
+    private String name = "";
+    private String international_phone_number = "";
+    private String website = "";
     private String photo_reference = "";
-    private String formatted_address ="";
+    private String formatted_address = "";
     private String open_now = "";
     private String weekday = "";
     private String selectedItem;
-    //private MapView mapView;
-    //private GoogleMap googleMap;
+    private MapView mMapView;
+    private GoogleMap googleMap;
+    GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
+    LocationRequest mLocationRequest;
     private String TAG = RicercaActivityFragmentListItem.class.getSimpleName();
     private ArrayList<ItemRicercaActivity> arrayList;
+
     private String nomeViaggio = "";
     private long id;
     private boolean giallo;
+    ItemRicercaActivityFragmentList item = null;
 
-    ItemRicercaActivityFragmentList item=null;
-   // private OnFragmentInteractionListener mListener;
 
     public RicercaActivityFragmentListItem() {
         // Required empty public constructor
@@ -87,8 +108,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
         return fragment;
     }*/
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             place_id = getArguments().getString("place_id");
@@ -97,6 +117,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
             longitudine = getArguments().getString("lng");
             selectedItem = getArguments().getString("selectedItem");
         }
+
     }
 
     @Override
@@ -113,13 +134,40 @@ public class RicercaActivityFragmentListItem extends Fragment{
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
         preferiti_star = (ImageButton) view.findViewById(R.id.preferiti_star);
         bottone_piu = (ImageButton) view.findViewById(R.id.fragment_ricerca_activity_list_item_bottonepiu);
+        scrollView = (ScrollView) view.findViewById(R.id.ricerca_activity_fragment_list_item_scrollview);
+        mMapView = (MapView) view.findViewById(R.id.mapView_ricerca_activity_list_item);
+        mMapView.onCreate(savedInstanceState);
+        mMapView.onResume();  // needed to get the map to display immediately
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkLocationPermission();
+        }
+        MapGetMapAsync(latitudine,longitudine,name,formatted_address);
+        mMapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        scrollView.requestDisallowInterceptTouchEvent(true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        scrollView.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return mMapView.onTouchEvent(event);
+            }
+        });
+
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
         bottone_piu.setOnClickListener(buttonListener);
-
         database = new DataBase(getActivity());
         arrayListViaggi = database.getViaggi();
-
         giallo = database.getAttivitaPreferita(place_id);
         if (giallo == true){
             preferiti_star.setImageResource(btn_star_big_on);
@@ -127,62 +175,22 @@ public class RicercaActivityFragmentListItem extends Fragment{
             preferiti_star.setImageResource(btn_star_big_off);
         }
 
-
         preferiti_star.setOnClickListener(buttonListener);
-
         titolo.setTypeface(Typeface.DEFAULT_BOLD);
         titolo.setShadowLayer(5,0,0, Color.BLACK);
         for(int i = 0; i < arrayListViaggi.size(); i++){
             Log.e("viaggi", arrayListViaggi.get(i).getNome_viaggio());
         }
-        //mapView = (MapView) view.findViewById(R.id.mapView);
-        //mapView.onCreate(savedInstanceState);
-        //mapView.onResume();
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        /*mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-                // For dropping a marker at a point on the Map
-                LatLng sydney = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
-                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            }
-        });*/
         new GetPOI().execute(place_id);
 
         return view;
     }
 
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
 
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }*/
+
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
 
@@ -242,12 +250,6 @@ public class RicercaActivityFragmentListItem extends Fragment{
                         //  Log.e(TAG, "photo " + photo_reference_url);
 
                         item = new ItemRicercaActivityFragmentList(name,international_phone_number,website,photo_reference,formatted_address, open_now, weekday);
-
-
-
-
-
-
                           //  Log.e(TAG, "photo " + photo_reference_url);
 
                         }
@@ -414,13 +416,8 @@ public class RicercaActivityFragmentListItem extends Fragment{
 
 
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
-
-
-
-
         @Override
         protected Bitmap doInBackground(String... args) {
-
             try {
 
                 return BitmapFactory.decodeStream((InputStream)new URL(args[0]).getContent());
@@ -433,11 +430,8 @@ public class RicercaActivityFragmentListItem extends Fragment{
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-
             if (bitmap != null) {
                 foto.setImageBitmap(bitmap);
-
-
             }
         }
     }
@@ -481,5 +475,163 @@ public class RicercaActivityFragmentListItem extends Fragment{
         void onFragmentInteraction(Uri uri);
     }
        */
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+    public void MapGetMapAsync(final String latitudine, final String longitudine, final String nome, final String via){
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+                // For showing a move to my location button
+              /*  if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    Log.e("perm","permesso negato");
+                    return;
+                }
+                googleMap.setMyLocationEnabled(true);*/
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(getContext(),
+                           android.Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        buildGoogleApiClient();
+                        mMap.setMyLocationEnabled(true);
+                    }
+                }
+                else {
+                    buildGoogleApiClient();
+                    mMap.setMyLocationEnabled(true);
+                }
+                LatLng position = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
+                googleMap.addMarker(new MarkerOptions().position(position).title(nome).snippet(via));
+                // For zooming automatically to the location of the marker
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
+        });
+    }
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
+    }
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onConnected( Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    public boolean checkLocationPermission(){
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Asking user if explanation is needed
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+                //Prompt the user once explanation has been shown
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted. Do the
+                    // contacts-related task you need to do.
+                    if (ContextCompat.checkSelfPermission(getActivity(),
+                            android.Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+
+                        if (mGoogleApiClient == null) {
+                            buildGoogleApiClient();
+                        }
+                        googleMap.setMyLocationEnabled(true);
+                    }
+
+                } else {
+
+                    // Permission denied, Disable the functionality that depends on this permission.
+                    Toast.makeText(getContext(), "permission denied", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other permissions this app might request.
+            // You can add here other case statements according to your requirement.
+        }
+    }
 
 }

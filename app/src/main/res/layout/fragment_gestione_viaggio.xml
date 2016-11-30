@@ -8,65 +8,65 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/gestione_viaggio_nome"
-        android:text="Nome del viaggio"
-        android:textSize="50sp"
-        android:textAlignment="center"
-        android:textStyle="normal|bold"
-        android:fontFamily="casual"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gestione_viaggio_nome"
+            android:text="Nome del viaggio"
+            android:textSize="50sp"
+            android:textAlignment="center"
+            android:textStyle="normal|bold"
+            android:fontFamily="casual"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:id="@+id/gestione_viaggio_daquando_aquando"
-        tools:text="da quando a quando"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:layout_below="@+id/gestione_viaggio_nome"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:fontFamily="casual"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
-
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:id="@+id/lista_gestione_viaggio"
-        android:layout_below="@+id/gestione_viaggio_autocomplete"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="19dp" />
-
-    <AutoCompleteTextView
-        android:hint="@string/inserisci_una_citt_e_arricchisci_il_tuo_viaggio"
-        android:fontFamily="casual"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/gestione_viaggio_autocomplete"
-        android:layout_marginTop="36dp"
-        android:textAlignment="center"
-        android:layout_below="@+id/gestione_viaggio_daquando_aquando"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:inputType="textPersonName" />
-
-    <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/gestione_viaggio_bottone_cerca"
-        android:layout_alignBottom="@+id/gestione_viaggio_autocomplete"
-        android:layout_toRightOf="@+id/gestione_viaggio_autocomplete"
-        android:layout_toEndOf="@+id/gestione_viaggio_autocomplete" />
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:id="@+id/gestione_viaggio_daquando_aquando"
+            tools:text="da quando a quando"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:layout_below="@+id/gestione_viaggio_nome"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:fontFamily="casual"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
 
-</RelativeLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:id="@+id/lista_gestione_viaggio"
+            android:layout_below="@+id/gestione_viaggio_autocomplete"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="19dp" />
+
+        <AutoCompleteTextView
+            android:hint="@string/inserisci_una_citt_e_arricchisci_il_tuo_viaggio"
+            android:fontFamily="casual"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/gestione_viaggio_autocomplete"
+            android:layout_marginTop="36dp"
+            android:textAlignment="center"
+            android:layout_below="@+id/gestione_viaggio_daquando_aquando"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gestione_viaggio_bottone_cerca"
+            android:layout_alignBottom="@+id/gestione_viaggio_autocomplete"
+            android:layout_toRightOf="@+id/gestione_viaggio_autocomplete"
+            android:layout_toEndOf="@+id/gestione_viaggio_autocomplete" />
+
+    </RelativeLayout>
+

@@ -10,6 +10,8 @@ public class Attivita {
     private String tipologia;
     private String foto;
     private String preferito;
+    private String latitudine;
+    private String longitudine;
 
     public Attivita(){
         this.place_id = null;
@@ -21,9 +23,11 @@ public class Attivita {
         this.tipologia = null;
         this.foto = null;
         this.preferito = null;
+        this.latitudine = null;
+        this.longitudine = null;
     }
 
-    public Attivita(String place_id, String nome, String indirizzo, String orario, String telefono, String link, String tipologia, String foto, String preferito){
+    public Attivita(String place_id, String nome, String indirizzo, String orario, String telefono, String link, String tipologia, String foto, String preferito,String latitudine,String longitudine){
         this.place_id = place_id;
         this.nome = nome;
         this.indirizzo = indirizzo;
@@ -33,6 +37,9 @@ public class Attivita {
         this.tipologia = tipologia;
         this.foto = foto;
         this.preferito = preferito;
+        this.foto = foto;
+        this.latitudine = latitudine;
+        this.longitudine = longitudine;
     }
 
     public void setPlace_id(String place_id){
@@ -70,7 +77,13 @@ public class Attivita {
     public void setPreferito(String preferito){
         this.preferito = preferito;
     }
+    public void setLatitudine(String latitudine) {
+        this.latitudine = latitudine;
+    }
 
+    public void setLongitudine(String longitudine) {
+        this.longitudine = longitudine;
+    }
     public String getPlace_id(){
         return this.place_id;
     }
@@ -105,5 +118,13 @@ public class Attivita {
 
     public String getPreferito(){
         return this.preferito;
+    }
+    public String getLongitudine() {
+        return longitudine;
+    }
+
+
+    public String getLatitudine() {
+        return latitudine;
     }
 }
