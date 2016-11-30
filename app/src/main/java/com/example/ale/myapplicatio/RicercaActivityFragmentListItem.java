@@ -21,10 +21,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +68,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
     private TextView link;
     private ImageButton preferiti_star;
     private ImageButton bottone_piu;
+    private ScrollView scrollView;
     private DataBase database;
     private ArrayList<Viaggio> arrayListViaggi;
     private String name = "";
@@ -79,6 +82,8 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
     private MapView mMapView;
     private GoogleMap googleMap;
     GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
+    LocationRequest mLocationRequest;
     private String TAG = RicercaActivityFragmentListItem.class.getSimpleName();
     private ArrayList<ItemRicercaActivity> arrayList;
 
@@ -129,9 +134,10 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
         preferiti_star = (ImageButton) view.findViewById(R.id.preferiti_star);
         bottone_piu = (ImageButton) view.findViewById(R.id.fragment_ricerca_activity_list_item_bottonepiu);
+        scrollView = (ScrollView) view.findViewById(R.id.ricerca_activity_fragment_list_item_scrollview);
         mMapView = (MapView) view.findViewById(R.id.mapView_ricerca_activity_list_item);
         mMapView.onCreate(savedInstanceState);
-        mMapView.onResume(); // needed to get the map to display immediately
+        mMapView.onResume();  // needed to get the map to display immediately
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
@@ -141,6 +147,22 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
             checkLocationPermission();
         }
         MapGetMapAsync(latitudine,longitudine,name,formatted_address);
+        mMapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        scrollView.requestDisallowInterceptTouchEvent(true);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        scrollView.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                return mMapView.onTouchEvent(event);
+            }
+        });
+
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
         bottone_piu.setOnClickListener(buttonListener);
@@ -164,10 +186,6 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
         return view;
     }
-
-
-
-
 
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
@@ -536,6 +554,14 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
     @Override
     public void onConnected( Bundle bundle) {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+       /* if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest,this);
+        }*/
 
     }
 
@@ -611,5 +637,4 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
             // You can add here other case statements according to your requirement.
         }
     }
-
 }
