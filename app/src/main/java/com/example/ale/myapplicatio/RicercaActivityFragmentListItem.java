@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -146,22 +148,8 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
-        MapGetMapAsync(latitudine,longitudine,name,formatted_address);
-        mMapView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-                        scrollView.requestDisallowInterceptTouchEvent(true);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        scrollView.requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                return mMapView.onTouchEvent(event);
-            }
-        });
+        MapGetMapAsync(latitudine,longitudine);
+
 
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
@@ -316,7 +304,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                     break;
                 case R.id.fragment_ricerca_activity_list_item_bottonepiu:
                     if(database.getViaggiBool()) {
-                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false");
+                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false",latitudine,longitudine);
                         database.insertAttivita(attivita);
                         final String[] nomeViaggi = new String[arrayListViaggi.size()];
                         for (int k = 0; k < arrayListViaggi.size(); k++) {
@@ -386,7 +374,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
                 case R.id.preferiti_star:
                     if(!giallo){
-                        Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true");
+                        Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true",latitudine,longitudine);
                         database.UpdateAttivitaPreferita(attivitapreferita);
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Attività aggiunta ai preferiti",
@@ -497,7 +485,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         super.onLowMemory();
         mMapView.onLowMemory();
     }
-    public void MapGetMapAsync(final String latitudine, final String longitudine, final String nome, final String via){
+    public void MapGetMapAsync(final String latitudine, final String longitudine){
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
@@ -521,9 +509,9 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                     mMap.setMyLocationEnabled(true);
                 }
                 LatLng position = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
-                googleMap.addMarker(new MarkerOptions().position(position).title(nome).snippet(via));
+                googleMap.addMarker(new MarkerOptions().position(position));
                 // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(15).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
@@ -631,6 +619,43 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
             // other 'case' lines to check for other permissions this app might request.
             // You can add here other case statements according to your requirement.
+        }
+    }
+    public class CustomMapView extends MapView {
+
+        private ViewParent mViewParent;
+        public CustomMapView(Context context) {
+            super(context);
+        }
+
+
+
+        public void setViewParent(@Nullable final ViewParent viewParent) { //any ViewGroup
+            mViewParent = viewParent;
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(final MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    if (null == mViewParent) {
+                        getParent().requestDisallowInterceptTouchEvent(true);
+                    } else {
+                        mViewParent.requestDisallowInterceptTouchEvent(true);
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (null == mViewParent) {
+                        getParent().requestDisallowInterceptTouchEvent(false);
+                    } else {
+                        mViewParent.requestDisallowInterceptTouchEvent(false);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return super.onInterceptTouchEvent(event);
         }
     }
 

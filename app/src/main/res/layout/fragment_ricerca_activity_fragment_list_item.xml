@@ -13,8 +13,7 @@
     <ScrollView
         android:id="@+id/ricerca_activity_fragment_list_item_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="false">
@@ -135,12 +134,10 @@
                 android:layout_alignParentStart="false"
                 android:layout_gravity="left" />
 
-            <com.google.android.gms.maps.MapView
-                android:layout_width="match_parent"
+            <com.example.ale.myapplicatio.CustomMapView
+                android:layout_width="wrap_content"
                 android:layout_height="500dp"
                 android:id="@+id/mapView_ricerca_activity_list_item"
-                android:elevation="1dp"
-                android:clickable="true"
                 android:layout_alignParentBottom="false"
                 android:layout_alignParentRight="false"
                 android:layout_alignParentEnd="false" />

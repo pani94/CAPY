@@ -21,6 +21,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -30,6 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -130,6 +132,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
             checkLocationPermission();
         }
         MapGetMapAsync();
+
         bottone_cerca.setOnClickListener(buttonListener);
 
         scelte = new String[3];
@@ -447,7 +450,8 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                 }
                 LatLng position=null;
                 DataBase db = new DataBase(getContext());
-                ArrayList<Attivita> attivitas = db.getAttivita("ciao","tutte");
+
+                ArrayList<Attivita> attivitas = db.getAttivita(nome_viaggio_get,"tutte");
                 if(attivitas.size() > 0){
                     for (int i = 0; i < attivitas.size();i++){
                         position = new LatLng(Double.parseDouble(attivitas.get(i).getLatitudine()), Double.parseDouble(attivitas.get(i).getLongitudine()));
@@ -567,6 +571,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
             // You can add here other case statements according to your requirement.
         }
     }
+
    /* // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
