@@ -2,6 +2,7 @@ package com.example.ale.myapplicatio;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -9,7 +10,9 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +24,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +46,7 @@ import java.util.ArrayList;
 import static android.R.drawable.btn_star_big_off;
 import static android.R.drawable.btn_star_big_on;
 
-public class RicercaActivityFragmentListItem extends Fragment{
+public class RicercaActivityFragmentListItem extends Fragment {
 
     private String place_id;
     private String latitudine;
@@ -44,33 +55,30 @@ public class RicercaActivityFragmentListItem extends Fragment{
     private ImageView foto;
     private TextView orario;
     private TextView weekdayTextView;
-    //private String open_now;
     private TextView telefono;
     private TextView indirizzo;
     private TextView link;
     private ImageButton preferiti_star;
     private ImageButton bottone_piu;
-
     private DataBase database;
-    private ArrayList <Viaggio> arrayListViaggi;
-    private String name="";
-    private String international_phone_number="";
-    private String website ="";
+    private ArrayList<Viaggio> arrayListViaggi;
+    private String name = "";
+    private String international_phone_number = "";
+    private String website = "";
     private String photo_reference = "";
-    private String formatted_address ="";
+    private String formatted_address = "";
     private String open_now = "";
     private String weekday = "";
     private String selectedItem;
-    //private MapView mapView;
-    //private GoogleMap googleMap;
+    private MapView mMapView;
+    private GoogleMap googleMap;
     private String TAG = RicercaActivityFragmentListItem.class.getSimpleName();
     private ArrayList<ItemRicercaActivity> arrayList;
     private String nomeViaggio = "";
     private long id;
     private boolean giallo;
-
-    ItemRicercaActivityFragmentList item=null;
-   // private OnFragmentInteractionListener mListener;
+    ItemRicercaActivityFragmentList item = null;
+    // private OnFragmentInteractionListener mListener;
 
     public RicercaActivityFragmentListItem() {
         // Required empty public constructor
@@ -87,8 +95,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
         return fragment;
     }*/
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             place_id = getArguments().getString("place_id");
@@ -97,6 +104,7 @@ public class RicercaActivityFragmentListItem extends Fragment{
             longitudine = getArguments().getString("lng");
             selectedItem = getArguments().getString("selectedItem");
         }
+
     }
 
     @Override
@@ -113,10 +121,18 @@ public class RicercaActivityFragmentListItem extends Fragment{
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
         preferiti_star = (ImageButton) view.findViewById(R.id.preferiti_star);
         bottone_piu = (ImageButton) view.findViewById(R.id.fragment_ricerca_activity_list_item_bottonepiu);
+        mMapView = (MapView) view.findViewById(R.id.mapView_ricerca_activity_list_item);
+        mMapView.onCreate(savedInstanceState);
+        mMapView.onResume(); // needed to get the map to display immediately
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        MapGetMapAsync(latitudine,longitudine);
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
         bottone_piu.setOnClickListener(buttonListener);
-
         database = new DataBase(getActivity());
         arrayListViaggi = database.getViaggi();
 
@@ -127,62 +143,18 @@ public class RicercaActivityFragmentListItem extends Fragment{
             preferiti_star.setImageResource(btn_star_big_off);
         }
 
-
         preferiti_star.setOnClickListener(buttonListener);
-
         titolo.setTypeface(Typeface.DEFAULT_BOLD);
         titolo.setShadowLayer(5,0,0, Color.BLACK);
         for(int i = 0; i < arrayListViaggi.size(); i++){
             Log.e("viaggi", arrayListViaggi.get(i).getNome_viaggio());
         }
-        //mapView = (MapView) view.findViewById(R.id.mapView);
-        //mapView.onCreate(savedInstanceState);
-        //mapView.onResume();
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        /*mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-                // For dropping a marker at a point on the Map
-                LatLng sydney = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
-                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            }
-        });*/
         new GetPOI().execute(place_id);
 
         return view;
     }
 
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }*/
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
 
@@ -414,13 +386,8 @@ public class RicercaActivityFragmentListItem extends Fragment{
 
 
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
-
-
-
-
         @Override
         protected Bitmap doInBackground(String... args) {
-
             try {
 
                 return BitmapFactory.decodeStream((InputStream)new URL(args[0]).getContent());
@@ -433,11 +400,8 @@ public class RicercaActivityFragmentListItem extends Fragment{
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-
             if (bitmap != null) {
                 foto.setImageBitmap(bitmap);
-
-
             }
         }
     }
@@ -481,5 +445,47 @@ public class RicercaActivityFragmentListItem extends Fragment{
         void onFragmentInteraction(Uri uri);
     }
        */
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+    public void MapGetMapAsync( final String latitudine, final String longitudine){
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+
+                // For showing a move to my location button
+                if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    Log.e("perm","permesso negato");
+                    return;
+                }
+                googleMap.setMyLocationEnabled(true);
+                LatLng position = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
+                googleMap.addMarker(new MarkerOptions().position(position).title("Marker Title").snippet("Marker Description"));
+
+                // For zooming automatically to the location of the marker
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
+        });
+    }
 }
