@@ -7,29 +7,34 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.location.Location;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.*;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -46,7 +51,7 @@ import java.util.ArrayList;
 import static android.R.drawable.btn_star_big_off;
 import static android.R.drawable.btn_star_big_on;
 
-public class RicercaActivityFragmentListItem extends Fragment {
+public class RicercaActivityFragmentListItem extends Fragment implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,LocationListener {
 
     private String place_id;
     private String latitudine;
@@ -72,13 +77,17 @@ public class RicercaActivityFragmentListItem extends Fragment {
     private String selectedItem;
     private MapView mMapView;
     private GoogleMap googleMap;
+    GoogleApiClient mGoogleApiClient;
+    Location mLastLocation;
+    LocationRequest mLocationRequest;
     private String TAG = RicercaActivityFragmentListItem.class.getSimpleName();
     private ArrayList<ItemRicercaActivity> arrayList;
+
     private String nomeViaggio = "";
     private long id;
     private boolean giallo;
     ItemRicercaActivityFragmentList item = null;
-    // private OnFragmentInteractionListener mListener;
+
 
     public RicercaActivityFragmentListItem() {
         // Required empty public constructor
@@ -129,13 +138,15 @@ public class RicercaActivityFragmentListItem extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        MapGetMapAsync(latitudine,longitudine);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkLocationPermission();
+        }
+        MapGetMapAsync(latitudine,longitudine,name,formatted_address);
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
         bottone_piu.setOnClickListener(buttonListener);
         database = new DataBase(getActivity());
         arrayListViaggi = database.getViaggi();
-
         giallo = database.getAttivitaPreferita(place_id);
         if (giallo == true){
             preferiti_star.setImageResource(btn_star_big_on);
@@ -154,6 +165,10 @@ public class RicercaActivityFragmentListItem extends Fragment {
 
         return view;
     }
+
+
+
+
 
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
@@ -214,12 +229,6 @@ public class RicercaActivityFragmentListItem extends Fragment {
                         //  Log.e(TAG, "photo " + photo_reference_url);
 
                         item = new ItemRicercaActivityFragmentList(name,international_phone_number,website,photo_reference,formatted_address, open_now, weekday);
-
-
-
-
-
-
                           //  Log.e(TAG, "photo " + photo_reference_url);
 
                         }
@@ -467,25 +476,85 @@ public class RicercaActivityFragmentListItem extends Fragment {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
-    public void MapGetMapAsync( final String latitudine, final String longitudine){
+    public void MapGetMapAsync(final String latitudine, final String longitudine, final String nome, final String via){
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
-
                 // For showing a move to my location button
-                if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+              /*  if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     Log.e("perm","permesso negato");
                     return;
                 }
-                googleMap.setMyLocationEnabled(true);
+                googleMap.setMyLocationEnabled(true);*/
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ContextCompat.checkSelfPermission(getContext(),
+                           android.Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        buildGoogleApiClient();
+                        mMap.setMyLocationEnabled(true);
+                    }
+                }
+                else {
+                    buildGoogleApiClient();
+                    mMap.setMyLocationEnabled(true);
+                }
                 LatLng position = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
-                googleMap.addMarker(new MarkerOptions().position(position).title("Marker Title").snippet("Marker Description"));
-
+                googleMap.addMarker(new MarkerOptions().position(position).title(nome).snippet(via));
                 // For zooming automatically to the location of the marker
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
+    }
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
+    }
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onConnected( Bundle bundle) {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(1000);
+        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest,this);
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }
