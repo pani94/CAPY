@@ -33,6 +33,7 @@ public class Attivita {
         this.tipologia = tipologia;
         this.foto = foto;
         this.preferito = preferito;
+        this.foto = foto;
     }
 
     public void setPlace_id(String place_id){
