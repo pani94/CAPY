@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
@@ -23,7 +24,7 @@ import java.util.List;
  * Created by ale on 22/11/2016.
  */
 
-public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListAdapter {
+public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListAdapter{
    private LayoutInflater inflater;
     private List <String> header_titles;
     private Context context;
@@ -224,4 +225,5 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
 }

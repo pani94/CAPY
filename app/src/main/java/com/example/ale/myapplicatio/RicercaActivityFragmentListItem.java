@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.content.Context;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -149,22 +152,8 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
-        MapGetMapAsync(latitudine,longitudine,name,formatted_address);
-        mMapView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-                        scrollView.requestDisallowInterceptTouchEvent(true);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_CANCEL:
-                        scrollView.requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-                return mMapView.onTouchEvent(event);
-            }
-        });
+        MapGetMapAsync(latitudine,longitudine);
+
 
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
@@ -321,6 +310,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                     break;
                 case R.id.fragment_ricerca_activity_list_item_bottonepiu:
                     if(database.getViaggiBool()) {
+                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false",latitudine,longitudine);
                         Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false", latitudine,longitudine);
                         database.insertAttivita(attivita);
                         final String[] nomeViaggi = new String[arrayListViaggi.size()];
@@ -510,7 +500,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         super.onLowMemory();
         mMapView.onLowMemory();
     }
-    public void MapGetMapAsync(final String latitudine, final String longitudine, final String nome, final String via){
+    public void MapGetMapAsync(final String latitudine, final String longitudine){
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
@@ -534,9 +524,9 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                     mMap.setMyLocationEnabled(true);
                 }
                 LatLng position = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
-                googleMap.addMarker(new MarkerOptions().position(position).title(nome).snippet(via));
+                googleMap.addMarker(new MarkerOptions().position(position));
                 // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(15).build();
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
