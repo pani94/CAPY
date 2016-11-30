@@ -123,42 +123,16 @@ public class RicercaActivityFragmentListItem extends Fragment {
         bottone_piu = (ImageButton) view.findViewById(R.id.fragment_ricerca_activity_list_item_bottonepiu);
         mMapView = (MapView) view.findViewById(R.id.mapView_ricerca_activity_list_item);
         mMapView.onCreate(savedInstanceState);
-
         mMapView.onResume(); // needed to get the map to display immediately
-
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-
-                // For showing a move to my location button
-                if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    Log.e("perm","permesso negato");
-                    return;
-                }
-                googleMap.setMyLocationEnabled(true);
-
-                // For dropping a marker at a point on the Map
-                Log.e("lat", latitudine);
-                Log.e("lon",longitudine);
-                LatLng position = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
-                googleMap.addMarker(new MarkerOptions().position(position).title("Marker Title").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            }
-        });
+        MapGetMapAsync(latitudine,longitudine);
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
         bottone_piu.setOnClickListener(buttonListener);
-
         database = new DataBase(getActivity());
         arrayListViaggi = database.getViaggi();
 
@@ -169,64 +143,18 @@ public class RicercaActivityFragmentListItem extends Fragment {
             preferiti_star.setImageResource(btn_star_big_off);
         }
 
-
         preferiti_star.setOnClickListener(buttonListener);
-
         titolo.setTypeface(Typeface.DEFAULT_BOLD);
         titolo.setShadowLayer(5,0,0, Color.BLACK);
         for(int i = 0; i < arrayListViaggi.size(); i++){
             Log.e("viaggi", arrayListViaggi.get(i).getNome_viaggio());
         }
-        //mapView = (MapView) view.findViewById(R.id.mapView);
-        //mapView.onCreate(savedInstanceState);
-        //mapView.onResume();
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        /*mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-                // For dropping a marker at a point on the Map
-                LatLng sydney = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
-                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            }
-        });*/
         new GetPOI().execute(place_id);
 
         return view;
     }
 
-
-
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        mapView.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        mapView.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }*/
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
 
@@ -458,13 +386,8 @@ public class RicercaActivityFragmentListItem extends Fragment {
 
 
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
-
-
-
-
         @Override
         protected Bitmap doInBackground(String... args) {
-
             try {
 
                 return BitmapFactory.decodeStream((InputStream)new URL(args[0]).getContent());
@@ -477,11 +400,8 @@ public class RicercaActivityFragmentListItem extends Fragment {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-
             if (bitmap != null) {
                 foto.setImageBitmap(bitmap);
-
-
             }
         }
     }
@@ -546,5 +466,26 @@ public class RicercaActivityFragmentListItem extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+    public void MapGetMapAsync( final String latitudine, final String longitudine){
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+
+                // For showing a move to my location button
+                if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    Log.e("perm","permesso negato");
+                    return;
+                }
+                googleMap.setMyLocationEnabled(true);
+                LatLng position = new LatLng(Double.parseDouble(latitudine), Double.parseDouble(longitudine));
+                googleMap.addMarker(new MarkerOptions().position(position).title("Marker Title").snippet("Marker Description"));
+
+                // For zooming automatically to the location of the marker
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
+        });
     }
 }

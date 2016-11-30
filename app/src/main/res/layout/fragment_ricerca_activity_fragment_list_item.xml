@@ -119,8 +119,8 @@
         android:layout_toEndOf="@+id/RicercaActivityFragmentListItemTitolo" />
 
     <com.google.android.gms.maps.MapView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/RicercaActivityFragmentListItemOrario"
         android:layout_toEndOf="@+id/RicercaActivityFragmentListItemOrario"
