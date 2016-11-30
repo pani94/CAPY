@@ -134,12 +134,10 @@
                 android:layout_alignParentStart="false"
                 android:layout_gravity="left" />
 
-            <com.google.android.gms.maps.MapView
-                android:layout_width="match_parent"
+            <com.example.ale.myapplicatio.CustomMapView
+                android:layout_width="wrap_content"
                 android:layout_height="500dp"
                 android:id="@+id/mapView_ricerca_activity_list_item"
-                android:elevation="1dp"
-                android:clickable="false"
                 android:layout_alignParentBottom="false"
                 android:layout_alignParentRight="false"
                 android:layout_alignParentEnd="false" />
