@@ -146,8 +146,15 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
-        MapGetMapAsync(latitudine,longitudine,name,formatted_address);
-        mMapView.setOnTouchListener(new View.OnTouchListener() {
+       MapGetMapAsync(latitudine,longitudine,name,formatted_address);
+        /*GoogleMap.OnMapClickListener onMapClickListener = new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                scrollView.requestDisallowInterceptTouchEvent(true);
+            }
+        };*/
+       // googleMap.setOnMapClickListener(onMapClickListener);
+        /*mMapView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
@@ -161,7 +168,8 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                 }
                 return mMapView.onTouchEvent(event);
             }
-        });
+
+        });*/
 
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
@@ -316,7 +324,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                     break;
                 case R.id.fragment_ricerca_activity_list_item_bottonepiu:
                     if(database.getViaggiBool()) {
-                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false");
+                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false", latitudine,longitudine);
                         database.insertAttivita(attivita);
                         final String[] nomeViaggi = new String[arrayListViaggi.size()];
                         for (int k = 0; k < arrayListViaggi.size(); k++) {
@@ -386,7 +394,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
                 case R.id.preferiti_star:
                     if(!giallo){
-                        Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true");
+                        Attivita attivitapreferita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "true",latitudine,longitudine);
                         database.UpdateAttivitaPreferita(attivitapreferita);
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Attività aggiunta ai preferiti",

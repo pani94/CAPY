@@ -1,41 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:background="#FFFFFF"
     android:layout_height="match_parent">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/item_exp_listview_head"
-        android:textSize="25dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        app:srcCompat="@drawable/ic_keyboard_arrow_down_black_18dp"
+        android:id="@+id/item_exp_listview_frecciagiu"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_alignBottom="@+id/item_exp_listview_bottone"
+        android:layout_toRightOf="@+id/item_exp_listview_head"
+        android:layout_toEndOf="@+id/item_exp_listview_head"
+        android:layout_marginLeft="21dp"
+        android:layout_marginStart="21dp" />
 
-    <Button
-        android:text="+"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
+        android:id="@+id/item_exp_listview_bottone"
+        android:backgroundTint="@android:color/transparent"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="1dp"
-        android:layout_marginEnd="1dp"
-        android:id="@+id/item_exp_listview_bottone"
-        android:focusable="false"/>
+        android:layout_marginRight="26dp"
+        android:layout_marginEnd="26dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:text="ciao"
         android:layout_height="wrap_content"
-        android:id="@+id/item_exp_listview_num"
-        android:text="0"
-        android:layout_alignBottom="@+id/item_exp_listview_head"
-        android:layout_toRightOf="@+id/item_exp_listview_head"
-        android:layout_toEndOf="@+id/item_exp_listview_head"
-        android:textColor="#FFF"
-        android:textSize="16sp"
-        android:textStyle="bold" 
-        android:background="@drawable/badge_circle"/>
+        android:id="@+id/item_exp_listview_head"
+        android:textSize="25dp"
+        android:layout_width="300dp"
+        android:layout_alignTop="@+id/item_exp_listview_frecciagiu"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
 
 </RelativeLayout>
