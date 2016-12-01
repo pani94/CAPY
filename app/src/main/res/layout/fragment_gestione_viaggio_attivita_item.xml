@@ -1,60 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:background="#FFFFFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
     >
 
-    <TextView
-        android:text="Indirizzo"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_gestione_viaggio_attivita_item_indirizzo"
-        android:textSize="18sp"
-        android:layout_marginTop="32dp"
-        android:layout_below="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio"
-        android:layout_alignLeft="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio"
-        android:layout_alignStart="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio" />
-
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:srcCompat="@drawable/ic_wallpaper_black_36dp"
         android:id="@+id/fragment_gestione_viaggio_attivita_icon"
-        android:layout_marginTop="32dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="3004dp"
-        android:layout_marginEnd="414dp" />
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:layout_width="wrap_content"
 
-    <TextView
-        android:text="Titolo"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio"
-        android:textStyle="bold"
-        android:textSize="25sp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp" />
 
-        android:layout_alignTop="@+id/fragment_gestione_viaggio_attivita_icon"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="104dp"
-        android:layout_marginEnd="104dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:text="Titolo"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_weight="0.5"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/fragment_gestione_viaggio_attivita_item_indirizzo"
+            android:layout_alignStart="@+id/fragment_gestione_viaggio_attivita_item_indirizzo" />
+
+        <TextView
+            android:text="Indirizzo"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_gestione_viaggio_attivita_item_indirizzo"
+            android:textSize="18sp"
+            android:layout_below="@+id/fragment_gestione_viaggio_attivita_item_nomeviaggio"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="0.5"
+            />
+
+
+    </LinearLayout>
+
 
     <ImageButton
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
         android:id="@+id/imageButton"
         android:backgroundTint="@android:color/transparent"
         android:layout_alignTop="@+id/fragment_gestione_viaggio_attivita_icon"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="72dp"
-        android:layout_marginEnd="72dp" />
+        android:layout_marginRight="23dp"
+        android:layout_marginEnd="23dp"  />
 
-</RelativeLayout>
+</LinearLayout>
