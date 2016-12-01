@@ -17,7 +17,7 @@
 
     <ImageView
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/ic_photo_black_36dp"
+        app:srcCompat="@drawable/ic_wallpaper_black_18dp"
         android:id="@+id/gestione_viaggio_attivita_list_item_foto"
         android:layout_height="500dp"
         android:layout_above="@+id/gestione_viaggio_attivita_list_item_indirizzo"
@@ -40,15 +40,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="+"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/gestione_viaggio_attivita_list_item_button"
-        android:layout_below="@+id/gestione_viaggio_attivita_list_item_link"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
 
     <TextView
         android:text="TextView"
@@ -98,6 +89,17 @@
         android:textSize="20sp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
+        android:id="@+id/gestione_viaggio_attivita_list_item_button"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_gravity="left"
+        android:layout_below="@+id/gestione_viaggio_attivita_list_item_link"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
 
 </RelativeLayout>
 

@@ -42,7 +42,7 @@
             <ImageView
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-
+                app:srcCompat="@drawable/ic_wallpaper_black_18dp"
                 android:id="@+id/RicercaActivityFragmentListItemImmagine"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/RicercaActivityFragmentListItemIndirizzo"

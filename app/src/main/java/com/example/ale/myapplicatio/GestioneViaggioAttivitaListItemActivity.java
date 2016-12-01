@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,7 +37,7 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
     private TextView attivita_listitem_link;
     private TextView attivita_listitem_telefono;
     private TextView attivita_listitem_indirizzo;
-    private Button attivita_listitem_button;
+    private ImageView attivita_listitem_button;
 
     private String titolo_get;
     private String orario_get;
@@ -88,7 +88,7 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
             attivita_listitem_link = (TextView) findViewById(R.id.gestione_viaggio_attivita_list_item_link);
             attivita_listitem_telefono = (TextView) findViewById(R.id.gestione_viaggio_attivita_list_item_telefono);
             attivita_listitem_indirizzo = (TextView) findViewById(R.id.gestione_viaggio_attivita_list_item_indirizzo);
-            attivita_listitem_button = (Button) findViewById(R.id.gestione_viaggio_attivita_list_item_button);
+            attivita_listitem_button = (ImageView) findViewById(R.id.gestione_viaggio_attivita_list_item_button);
             attivita_listitem_titolo.setText(titolo_get);
             attivita_listitem_orario.setText(orario_get);
             attivita_listitem_link.setText(link_get);
@@ -329,6 +329,13 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
     }
 
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ProgressDialog pd;
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            pd = ProgressDialog.show(GestioneViaggioAttivitaListItemActivity.this, "", "Caricamento in corso...", true, false);
+        }
+
         @Override
         protected Bitmap doInBackground(String... args) {
 
@@ -347,8 +354,7 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
 
             if (bitmap != null) {
                 attivita_listitem_foto.setImageBitmap(bitmap);
-
-
+                pd.dismiss();
             }
         }
     }
