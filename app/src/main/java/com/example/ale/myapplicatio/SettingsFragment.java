@@ -1,35 +1,22 @@
 package com.example.ale.myapplicatio;
 
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.widget.Switch;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class SettingsFragment extends PreferenceFragment {
-
-    private SharedPreferences preferences;
-    private boolean remember_notification;
-    private Switch mySwitch;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TextView titolo = new TextView(getActivity());
+        ImageView icon = new ImageView(getActivity());
+        //titolo.setText("Impostazioni");
+        //getActivity().setTheme(R.style.PreferenceNotifiche);
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences);
-
-        //PreferenceManager.setDefaultValues(getActivity(), R.xml.preferences, true);
-        //preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-        //preferences = getActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-
-        /*SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("preference_notification", "true");
-        editor.commit();*/
     }
-
-    /*public void onResume(){
-        remember_notification = preferences.getBoolean("preference_notification", true);
-    }*/
 
 }

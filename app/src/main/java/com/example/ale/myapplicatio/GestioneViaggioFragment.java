@@ -23,7 +23,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -33,7 +32,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -263,12 +261,11 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
     }
 
     private class GetCity extends AsyncTask<String, Void, Void> {
-
+        //ProgressDialog pd;
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute(){
             super.onPreExecute();
-            // Toast.makeText(MainActivity.this, "Json Data is downloading " , Toast.LENGTH_LONG).show();
-
+            //pd = ProgressDialog.show(getActivity(), "", "Caricamento in corso...", true, false);
         }
 
         @Override
@@ -329,6 +326,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                 autoCompleteCerca.showDropDown();
             }
             getCityRequest = null;
+            //pd.dismiss();
         }
     }
 

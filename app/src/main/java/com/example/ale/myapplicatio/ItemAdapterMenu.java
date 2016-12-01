@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,11 +46,12 @@ public class ItemAdapterMenu extends ArrayAdapter<ItemRicercaActivity>{
         //String key = "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk";
         //String key ="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
         //String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
-       /* String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
-        String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getPhoto_reference()+"&sensor=false&" + key;
+      /*String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
+        String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&maxheight=200&photoreference="+item.getPhoto_reference()+"&sensor=false&" + key;
         holder.icon.setTag(photo_reference_url);
         //if(photo_reference_url != holder.icon.getTag()){
-           new ImageDownloaderTask(holder.icon).execute(photo_reference_url);*/
+           new ImageDownloaderTask(holder.icon).execute(photo_reference_url);
+        Log.e("url", photo_reference_url);*/
         //}
 
 

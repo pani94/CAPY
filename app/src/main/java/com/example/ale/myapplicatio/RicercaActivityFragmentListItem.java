@@ -1,6 +1,7 @@
 package com.example.ale.myapplicatio;
 
 import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,7 +16,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -34,7 +34,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.*;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -93,6 +94,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
     private long id;
     private boolean giallo;
     ItemRicercaActivityFragmentList item = null;
+    private ProgressDialog pd;
 
 
     public RicercaActivityFragmentListItem() {
@@ -112,6 +114,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pd= ProgressDialog.show(getContext(), "", "Caricamento in corso...", true, false);
         if (getArguments() != null) {
             place_id = getArguments().getString("place_id");
             open_now = getArguments().getString("orario");
@@ -181,7 +184,12 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
-
+        ProgressDialog pd;
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            pd = ProgressDialog.show(getActivity(), "", "Caricamento in corso...", true, false);
+        }
 
         @Override
         protected Void doInBackground(String... message) {
@@ -285,9 +293,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
             String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + item.getPhoto_reference() + "&sensor=false&key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             new LoadImageTask().execute(photo_reference_url);
-
-
-
+            pd.dismiss();
         }
 
     }
@@ -404,6 +410,13 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
 
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
+        //ProgressDialog pd;
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            //pd= ProgressDialog.show(getContext(), "", "Caricamento in corso...", true, false);
+        }
+
         @Override
         protected Bitmap doInBackground(String... args) {
             try {
@@ -421,6 +434,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
             if (bitmap != null) {
                 foto.setImageBitmap(bitmap);
             }
+            pd.dismiss();
         }
     }
 

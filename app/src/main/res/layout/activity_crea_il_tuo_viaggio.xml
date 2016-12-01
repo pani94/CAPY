@@ -41,19 +41,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="17dp" />
 
-    <TextView
-        android:text="Crea il tuo viaggio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:id="@+id/testo"
-        android:textSize="36sp"
-        android:layout_below="@+id/imageView5"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:fontFamily="casual"
-        android:textStyle="normal|bold" />
-
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,6 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PARTENZA"
+        android:src="@drawable/badge_circle"
         android:fontFamily="casual"
         android:onClick="showDatePickerDialog (CreaIlTuoViaggioActivity)"
         android:layout_below="@+id/editTextNomeViaggio"
@@ -104,6 +92,7 @@
         android:layout_alignLeft="@+id/buttonFatto"
         android:layout_alignStart="@+id/buttonFatto"
         android:layout_marginTop="64dp"
+        android:src="@drawable/badge_circle"
         android:textStyle="normal|bold" />
 
     <TextView
@@ -118,6 +107,18 @@
         android:layout_alignLeft="@+id/partenza"
         android:layout_alignStart="@+id/partenza"
         android:layout_marginTop="28dp" />
+
+    <TextView
+        android:text="Crea il tuo viaggio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:id="@+id/testo"
+        android:textSize="36sp"
+        android:fontFamily="casual"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/imageView5"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

@@ -23,33 +23,47 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/RicercaActivityFragmentListItemTitolo"
-                android:textSize="40sp"
-                android:textColor="#FFFFFF"
-                android:gravity="center_horizontal"
-                android:visibility="visible"
-                android:layout_centerInParent="false"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:textAlignment="center"
-                android:shadowColor="@android:color/black" />
-
-            <ImageView
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                app:srcCompat="@drawable/ic_photo_black_36dp"
-                android:id="@+id/RicercaActivityFragmentListItemImmagine"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/RicercaActivityFragmentListItemIndirizzo"
-                android:layout_width="match_parent" />
+                android:layout_weight="0.3"
+                >
+
+                <ImageView
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    app:srcCompat="@drawable/ic_wallpaper_black_18dp"
+                    android:id="@+id/RicercaActivityFragmentListItemImmagine"
+                    android:layout_width="match_parent"
+                    android:layout_height="600dp" />
+
+                <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/RicercaActivityFragmentListItemTitolo"
+                    android:textSize="40sp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_horizontal"
+                    android:visibility="visible"
+                    android:layout_centerInParent="false"
+                    android:textAlignment="center"
+                    android:shadowColor="@android:color/black"
+                    android:layout_weight="0.2"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginTop="132dp" />
+
+
+            </RelativeLayout>
+
+
 
             <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/RicercaActivityFragmentListItemIndirizzo"
@@ -57,10 +71,12 @@
                 android:textSize="20sp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_weight="0.2"
+                />
 
             <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/RicercaActivityFragmentListItemTelefono"
@@ -70,10 +86,12 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp" />
+                android:layout_marginBottom="15dp"
+                android:layout_weight="0.2"
+                />
 
             <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
@@ -81,10 +99,12 @@
                 android:textColor="#000000"
                 android:layout_below="@+id/RicercaActivityFragmentListItemTelefono"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_weight="0.2"
+                />
 
             <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
@@ -92,10 +112,12 @@
                 android:layout_below="@+id/RicercaActivityFragmentListItemLink"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginTop="19dp" />
+                android:layout_marginTop="19dp"
+                android:layout_weight="0.2"
+                />
 
             <TextView
-                android:text="TextView"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:linksClickable="true"
@@ -106,33 +128,47 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="17dp"
-                android:textColorLink="?attr/actionModeSplitBackground" />
+                android:textColorLink="?attr/actionModeSplitBackground"
+                android:layout_weight="0.2"
+                />
 
-            <ImageButton
-                android:layout_height="55dp"
-                android:id="@+id/preferiti_star"
-                android:layout_width="55dp"
-                app:srcCompat="@drawable/grey_star"
-                android:background="@null"
-                android:layout_marginBottom="11dp"
-                android:layout_alignBottom="@+id/fragment_ricerca_activity_list_item_bottonepiu"
-                android:layout_toRightOf="@+id/RicercaActivityFragmentListItemTitolo"
-                android:layout_toEndOf="@+id/RicercaActivityFragmentListItemTitolo"
-                android:layout_gravity="right" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
+                    android:id="@+id/fragment_ricerca_activity_list_item_bottonepiu"
+                    android:backgroundTint="@android:color/transparent"
+                    android:layout_marginLeft="46dp"
+                    android:layout_marginBottom="57dp"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_gravity="left"
+                    android:layout_weight="0.5"
+                    />
+
+                <ImageButton
+                    android:layout_height="55dp"
+                    android:id="@+id/preferiti_star"
+                    android:layout_width="55dp"
+                    app:srcCompat="@drawable/grey_star"
+                    android:background="@null"
+                    android:layout_marginBottom="11dp"
+                    android:layout_alignBottom="@+id/fragment_ricerca_activity_list_item_bottonepiu"
+                    android:layout_toRightOf="@+id/RicercaActivityFragmentListItemTitolo"
+                    android:layout_toEndOf="@+id/RicercaActivityFragmentListItemTitolo"
+                    android:layout_gravity="right"
+                    android:layout_weight="0.5"
+                    />
 
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
-                android:id="@+id/fragment_ricerca_activity_list_item_bottonepiu"
-                android:backgroundTint="@android:color/transparent"
-                android:layout_marginLeft="46dp"
-                android:layout_marginBottom="57dp"
-                android:layout_alignParentBottom="false"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentStart="false"
-                android:layout_gravity="left" />
+            </LinearLayout>
 
             <com.example.ale.myapplicatio.CustomMapView
                 android:layout_width="wrap_content"
@@ -147,12 +183,4 @@
 
     </ScrollView>
     <!-- Paola puzza -->
-
-
-
-
-
-
-
-
 </RelativeLayout>

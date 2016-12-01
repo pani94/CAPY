@@ -392,12 +392,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class GetCity extends AsyncTask<String, Void, Void> {
-
+        //ProgressDialog pd;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             // Toast.makeText(MainActivity.this, "Json Data is downloading " , Toast.LENGTH_LONG).show();
-
+            //pd= ProgressDialog.show(MainActivity.this, "", "Caricamento in corso...", true, false);
         }
 
         @Override
@@ -486,6 +486,7 @@ public class MainActivity extends AppCompatActivity {
                 cerca.showDropDown();
             }
             getCityRequest = null;
+            //pd.dismiss();
         }
     }
 
