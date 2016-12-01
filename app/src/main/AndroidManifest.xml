@@ -51,24 +51,24 @@
         <!--
 <application android:name=".PortraitOrientation" android:allowBackup="true" android:icon="@drawable/logo_app"
     android:label="Let's go!" android:supportsRtl="true" android:theme="@style/AppTheme">
-    <!--   <meta-data android:name="com.google.android.geo.API_KEY" android:value="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM" /> -->
-      <meta-data
-          android:name="com.google.android.geo.API_KEY"
-          android:value="@string/google_maps_key"/>
-      <!-- "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk" -->
-    <!-- "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U" -->
-    <!-- "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ" -->
-    <activity android:name=".MainActivity" android:windowSoftInputMode="stateHidden">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-    <activity android:name=".CreaIlTuoViaggioActivity" android:windowSoftInputMode="stateHidden"/>
-    <!--
- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM" /> -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key"/>
+        <!-- "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk" -->
+        <!-- "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U" -->
+        <!-- "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ" -->
+        <activity android:name=".MainActivity" android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".CreaIlTuoViaggioActivity" android:windowSoftInputMode="stateHidden"/>
+        <!--
+     ATTENTION: This was auto-generated to add Google Play services to your project for
+         App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+            -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

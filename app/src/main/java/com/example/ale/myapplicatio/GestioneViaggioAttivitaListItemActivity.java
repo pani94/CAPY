@@ -331,17 +331,17 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
     }
 
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ProgressDialog pd;
+        //ProgressDialog pd;
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            pd = ProgressDialog.show(GestioneViaggioAttivitaListItemActivity.this, "", "Caricamento in corso...", true, false);
+            //pd = ProgressDialog.show(GestioneViaggioAttivitaListItemActivity.this, "", "Caricamento in corso...", true, false);
         }
 
         @Override
         protected Bitmap doInBackground(String... args) {
-
             try {
+
 
                 return BitmapFactory.decodeStream((InputStream)new URL(args[0]).getContent());
 
@@ -356,7 +356,7 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
 
             if (bitmap != null) {
                 attivita_listitem_foto.setImageBitmap(bitmap);
-                pd.dismiss();
+                //pd.dismiss();
             }
         }
     }
