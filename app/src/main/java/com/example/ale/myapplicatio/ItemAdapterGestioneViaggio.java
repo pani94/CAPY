@@ -15,13 +15,10 @@ import android.widget.TextView;
 public class ItemAdapterGestioneViaggio extends ArrayAdapter<String> {
     private String[] opzioni;
     private ImageView icon;
-    private DataBase db;
-    private String nome_viaggio_get;
 
-    public ItemAdapterGestioneViaggio(Context context, String[] opzioni, String nome_viaggio_get){
+    public ItemAdapterGestioneViaggio(Context context, String[] opzioni){
         super(context, 0, opzioni);
         this.opzioni= opzioni;
-        this.nome_viaggio_get = nome_viaggio_get;
     }
 
     public View getView(final int position, View view, ViewGroup parent){
@@ -32,7 +29,6 @@ public class ItemAdapterGestioneViaggio extends ArrayAdapter<String> {
             TextView name = (TextView) view.findViewById(R.id.lista_gestione_viaggio_item_testo);
             icon = (ImageView) view.findViewById(R.id.vedere_mangiare_dormire_image_view);
             name.setText(scelta);
-            db=new DataBase(getContext());
 
             if(scelta.equals("Attivita")){
                 icon.setImageResource(R.drawable.ic_work_black_24dp);

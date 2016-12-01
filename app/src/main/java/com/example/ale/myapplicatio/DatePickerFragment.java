@@ -2,6 +2,7 @@ package com.example.ale.myapplicatio;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.Button;
@@ -35,6 +36,7 @@ public class DatePickerFragment extends DialogFragment
             TextView tv1= (TextView) getActivity().findViewById(R.id.partenza);
             tv1.setText(view.getDayOfMonth() + "/" + (view.getMonth()+1) + "/" + view.getYear());
             Button b = (Button) getActivity().findViewById(R.id.button_arrivo);
+            b.setBackgroundResource(R.drawable.bottone_crea_viaggio);
             b.setEnabled(true);
         }else{
             //int giornoarrivo = view.getDayOfMonth();

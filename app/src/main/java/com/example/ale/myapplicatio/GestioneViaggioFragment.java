@@ -101,12 +101,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
             aquando_get = getArguments().getString("aquando");
             daquando_aquando_get = "da "+ daquando_get + " a " + aquando_get;
         }
-
-
-
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -139,7 +134,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
         scelte[1] = "Agenda";
         scelte[2] = "Galleria";
 
-       ItemAdapterGestioneViaggio adapter = new ItemAdapterGestioneViaggio(getActivity(), scelte, nome_viaggio_get);
+       ItemAdapterGestioneViaggio adapter = new ItemAdapterGestioneViaggio(getActivity(), scelte);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
 
@@ -457,17 +452,6 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                     }
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                }else{
-                    LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                    Criteria criteria = new Criteria();
-                    String provider = locationManager.getBestProvider(criteria, true);
-                    Location myLocation = locationManager.getLastKnownLocation(provider);
-                    double latitude = myLocation.getLatitude();
-                    double longitude = myLocation.getLongitude();
-                    LatLng latLng = new LatLng(latitude, longitude);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("").snippet(""));
                 }
 
 
