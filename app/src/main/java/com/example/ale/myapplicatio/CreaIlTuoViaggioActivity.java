@@ -3,6 +3,7 @@ package com.example.ale.myapplicatio;
 //import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +42,9 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private SharedPreferences prefs;
-
+    Button bottone_partenza;
+    Button bottone_arrivo;
+    ImageButton bottone_fatto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +54,9 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         nomeViaggio = (EditText) findViewById(R.id.editTextNomeViaggio);
         partenza = (TextView) findViewById(R.id.partenza);
         arrivo = (TextView) findViewById(R.id.arrivo);
-        Button bottone_partenza = (Button) findViewById(R.id.button_partenza);
-        Button bottone_arrivo = (Button) findViewById(R.id.button_arrivo);
-        Button bottone_fatto = (Button) findViewById(R.id.buttonFatto);
+        bottone_partenza = (Button) findViewById(R.id.button_partenza);
+        bottone_arrivo = (Button) findViewById(R.id.button_arrivo);
+       bottone_fatto = (ImageButton) findViewById(R.id.buttonFatto);
         bottone_fatto.setOnClickListener(buttonListener);
         bottone_arrivo.setOnClickListener(buttonListener);
         bottone_partenza.setOnClickListener(buttonListener);
@@ -69,6 +73,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
             modifica = true;
         } else {
             bottone_arrivo.setEnabled(false);
+            bottone_arrivo.setBackgroundResource(R.drawable.bottone_crea_viaggio_false);;
         }
         // set the default values for the preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -223,8 +228,8 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                         if (part != null & arr != null) {
                             if (CheckDates(part, arr)) {
                                 DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
-                                MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
-                                long evento_id =myCalendar.addViaggioToCalendar(part,arr,NViaggio,CreaIlTuoViaggioActivity.this);
+                               MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
+                                long evento_id = myCalendar.addViaggioToCalendar(part,arr,NViaggio,CreaIlTuoViaggioActivity.this);
                                 if (modifica) {
                                     Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a,evento_id);
                                     long update = db.UpdateViaggio(viaggio);
@@ -241,7 +246,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                 }
                                 salvaGiorni(part, arr, NViaggio);
 
-                                //if(prefs.getBoolean("preference_notification", true)){
+                                if(prefs.getBoolean("preference_notification", true)){
                                     //Log.e("messaggini", "preference notification true");
                                     myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_week_before");
                                     myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_before");
@@ -250,7 +255,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                     intent.putExtra("viaggio_creato", "viaggio creato");
                                     startActivity(intent);
                                     finish();
-                                //}
+                                }
 
                                 /*int i = p.indexOf("/");
                                 String giorno = p.substring(0, i);

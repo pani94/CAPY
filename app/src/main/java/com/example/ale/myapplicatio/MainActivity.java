@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             } else {
-                new AlertDialog.Builder(MainActivity.this)
+                /*new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Attenzione")
                         .setMessage("Non hai connessione.")
                         .setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+                        .show();*/
 
             }
         }
@@ -494,30 +494,45 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+            ConnectivityManager cm = (ConnectivityManager) MainActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
             switch (v.getId()) {
                 case R.id.activity_main_cerca:
                     String ricerca = cerca.getText().toString();
-                    if (!ricerca.equals("")) {
-                        if (ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122) {
-                            if (!cerca.getValidator().isValid(ricerca)) {
-                                ricerca = cerca.getValidator().fixText(ricerca).toString();
-                                if (!ricerca.equals("")) {
+                    if (networkInfo != null && networkInfo.isConnected()) {
+                        if (!ricerca.equals("")) {
+                            if (ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122) {
+                                if (!cerca.getValidator().isValid(ricerca)) {
+                                    ricerca = cerca.getValidator().fixText(ricerca).toString();
+                                    if (!ricerca.equals("")) {
+                                        Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
+                                        intent.putExtra("citta", ricerca);
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "Inserisci una città valida", Toast.LENGTH_LONG).show();
+                                    }
+                                } else {
                                     Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
                                     intent.putExtra("citta", ricerca);
                                     startActivity(intent);
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Inserisci una città valida", Toast.LENGTH_LONG).show();
                                 }
                             } else {
-                                Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
-                                intent.putExtra("citta", ricerca);
-                                startActivity(intent);
+                                Toast.makeText(getApplicationContext(), "Inserisci una città valida", Toast.LENGTH_LONG).show();
                             }
                         } else {
                             Toast.makeText(getApplicationContext(), "Inserisci una città valida", Toast.LENGTH_LONG).show();
                         }
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Inserisci una città valida", Toast.LENGTH_LONG).show();
+                    }else{
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Attenzione")
+                                .setMessage("Non hai connessione.")
+                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
                     }
                     break;
                 case R.id.activity_main_button_crea_viaggio:

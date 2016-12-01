@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -44,6 +42,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -102,12 +101,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
             aquando_get = getArguments().getString("aquando");
             daquando_aquando_get = "da "+ daquando_get + " a " + aquando_get;
         }
-
-
-
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -140,7 +134,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
         scelte[1] = "Agenda";
         scelte[2] = "Galleria";
 
-       ItemAdapterGestioneViaggio adapter = new ItemAdapterGestioneViaggio(getActivity(), scelte, nome_viaggio_get);
+       ItemAdapterGestioneViaggio adapter = new ItemAdapterGestioneViaggio(getActivity(), scelte);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
 
@@ -219,17 +213,6 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                         getCityRequest.execute(s.toString());
                     }
                 }
-            }else{
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Attenzione")
-                        .setMessage("Non hai connessione.")
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
             }
         }
 
@@ -336,29 +319,44 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
 
         @Override
         public void onClick(View v) {
+            ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
             DataBase db = new DataBase(getActivity());
             String ricerca = autoCompleteCerca.getText().toString();
-            if(!ricerca.equals("")){
-                if(ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122 ){
-                    if(!autoCompleteCerca.getValidator().isValid(ricerca)){
-                        ricerca = autoCompleteCerca.getValidator().fixText(ricerca).toString();
-                        if(!ricerca.equals("")){
+            if (networkInfo != null && networkInfo.isConnected()) {
+                if (!ricerca.equals("")) {
+                    if (ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122) {
+                        if (!autoCompleteCerca.getValidator().isValid(ricerca)) {
+                            ricerca = autoCompleteCerca.getValidator().fixText(ricerca).toString();
+                            if (!ricerca.equals("")) {
+                                Intent intent_cerca = new Intent(getActivity(), RicercaActivity.class);
+                                intent_cerca.putExtra("citta", ricerca);
+                                startActivity(intent_cerca);
+                            } else {
+                                Toast.makeText(getActivity(), "Inserisci una città valida", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
                             Intent intent_cerca = new Intent(getActivity(), RicercaActivity.class);
                             intent_cerca.putExtra("citta", ricerca);
                             startActivity(intent_cerca);
-                        }else {
-                            Toast.makeText(getActivity(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
                         }
-                    }else{
-                        Intent intent_cerca = new Intent(getActivity(), RicercaActivity.class);
-                        intent_cerca.putExtra("citta", ricerca);
-                        startActivity(intent_cerca);
+                    } else {
+                        Toast.makeText(getActivity(), "Inserisci una città valida", Toast.LENGTH_LONG).show();
                     }
-                }else{
-                    Toast.makeText(getActivity(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Inserisci una città valida", Toast.LENGTH_LONG).show();
                 }
             }else{
-                Toast.makeText(getActivity(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Attenzione")
+                        .setMessage("Non hai connessione.")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
 
         }
@@ -454,21 +452,17 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                 if(attivitas.size() > 0){
                     for (int i = 0; i < attivitas.size();i++){
                         position = new LatLng(Double.parseDouble(attivitas.get(i).getLatitudine()), Double.parseDouble(attivitas.get(i).getLongitudine()));
-                        googleMap.addMarker(new MarkerOptions().position(position).title(attivitas.get(i).getNome()));
+                        MarkerOptions markerOptions = new MarkerOptions().position(position).title(attivitas.get(i).getNome());
+                        if (attivitas.get(i).getTipologia().equals("mangiare")){
+                            markerOptions = new MarkerOptions().position(position).title(attivitas.get(i).getNome()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                        }
+                        else if(attivitas.get(i).getTipologia().equals("dormire")){
+                            markerOptions = new MarkerOptions().position(position).title(attivitas.get(i).getNome()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                        }
+                        googleMap.addMarker(markerOptions);
                     }
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                }else{
-                    LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                    Criteria criteria = new Criteria();
-                    String provider = locationManager.getBestProvider(criteria, true);
-                    Location myLocation = locationManager.getLastKnownLocation(provider);
-                    double latitude = myLocation.getLatitude();
-                    double longitude = myLocation.getLongitude();
-                    LatLng latLng = new LatLng(latitude, longitude);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("").snippet(""));
                 }
 
 

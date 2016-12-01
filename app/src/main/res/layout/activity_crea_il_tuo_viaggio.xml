@@ -7,40 +7,39 @@
     android:id="@+id/drawer_layout"
     android:background="#FFFFFF"
     android:orientation="vertical">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:x="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_crea_il_tuo_viaggio"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ale.myapplicatio.CreaIlTuoViaggioActivity">
+    tools:context="com.example.ale.myapplicatio.CreaIlTuoViaggioActivity"
+    android:orientation="vertical">
 
 
     <requestFocus android:id="@+id/requestFocus" />
-
-
-    <Button
-        android:text="FATTO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonFatto"
-        android:layout_marginBottom="100dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_create_black_24dp"
         android:id="@+id/imageView5"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="17dp" />
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"/>
+    <TextView
+        android:text="@string/crea_il_tuo_viaggio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:id="@+id/testo"
+        android:textSize="36sp"
+        android:fontFamily="casual"
+        android:textStyle="normal|bold"
+        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
 
+        />
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -48,32 +47,31 @@
         android:ems="10"
         android:id="@+id/editTextNomeViaggio"
         android:textColor="#000000"
-        android:hint="        Nome del viaggio"
+        android:hint="@string/nome_del_viaggio"
         android:fontFamily="casual"
         android:textSize="25sp"
         android:textColorLink="@color/colorPrimaryDark"
-        android:layout_below="@+id/testo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+         />
 
     <Button
         android:id="@+id/button_partenza"
-        android:layout_width="100dp"
-        android:text="PARTENZA"
-        android:src="@drawable/badge_circle"
+        android:layout_width="196dp"
+        android:text="@string/partenza"
+        android:textSize="30sp"
+        android:background="@drawable/bottone_crea_viaggio"
         android:fontFamily="casual"
-        android:onClick="showDatePickerDialog (CreaIlTuoViaggioActivity)"
-        android:layout_below="@+id/editTextNomeViaggio"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="46dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
         android:textColor="#FFFFFF"
         android:textStyle="normal|bold"
-        android:backgroundTint="#E51B37"
-        android:layout_height="50dp" />
+        android:layout_height="60dp"
+        android:layout_marginBottom="30dp"/>
 
     <TextView
         android:id="@+id/partenza"
-        android:text="@string/init_text"
         android:layout_width="wrap_content"
         android:fontFamily="casual"
         android:textSize="20sp"
@@ -81,49 +79,49 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginTop="24dp"
-        android:layout_below="@+id/button_partenza"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
+        />
     <Button
         android:text="ARRIVO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="196dp"
+        android:layout_height="60dp"
         android:fontFamily="casual"
+        android:textSize="30sp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/bottone_crea_viaggio"
         android:id="@+id/button_arrivo"
-        android:layout_below="@+id/partenza"
-        android:layout_alignLeft="@+id/buttonFatto"
-        android:layout_alignStart="@+id/buttonFatto"
-        android:layout_marginTop="64dp"
-        android:src="@drawable/badge_circle"
-        android:textStyle="normal|bold" />
+        android:layout_gravity="center"
+        android:textStyle="normal|bold"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+       />
 
     <TextView
-        android:text="@string/init_text"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/arrivo"
         android:textSize="20sp"
         android:textColor="#000000"
         android:fontFamily="casual"
-        android:layout_below="@+id/button_arrivo"
-        android:layout_alignLeft="@+id/partenza"
-        android:layout_alignStart="@+id/partenza"
-        android:layout_marginTop="28dp" />
+        android:layout_marginTop="28dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
+        />
 
-    <TextView
-        android:text="Crea il tuo viaggio"
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:id="@+id/testo"
-        android:textSize="36sp"
-        android:fontFamily="casual"
-        android:textStyle="normal|bold"
-        android:layout_below="@+id/imageView5"
-        android:layout_centerHorizontal="true" />
+        app:srcCompat="@drawable/ic_done_black_24dp"
+        android:id="@+id/buttonFatto"
+        android:layout_gravity="center"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"/>
 
 
-</RelativeLayout>
+</LinearLayout>
 
     <ListView
         android:layout_height="match_parent"
