@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,7 +26,7 @@ import java.net.URL;
 
 public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> implements View.OnClickListener {
     private String[] scelte;
-    private ImageButton icon;
+    private ImageView icon;
     private RicercaActivityFragmentMenu fragmentMenu;
 
     public ItemAdapterVedereMangiareDormire(Context context, String[] scelte, RicercaActivityFragmentMenu fragment){
@@ -42,17 +42,17 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> imple
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_vedere_mangiare_dormire_item, parent, false);
         }
         // Lookup view for data population
-        TextView name = (TextView) convertView.findViewById(R.id.item_vedere_mangiare_dormire_text_view);
-        icon = (ImageButton) convertView.findViewById(R.id.item_vedere_mangiare_dormire_image_button);
+        TextView name = (TextView) convertView.findViewById(R.id.vedere_mangiare_dormire_text_view);
+        icon = (ImageView) convertView.findViewById(R.id.vedere_mangiare_dormire_image_view);
         // Populate the data into the template view using the data object
         name.setText(scelta);
-        name.setShadowLayer(20,10,10, android.R.color.black);
+       // name.setShadowLayer(20,10,10, android.R.color.black);
         if(scelta.equals("Cosa vedere?")){
-            icon.setImageResource(R.drawable.vedere1);
+            icon.setImageResource(R.drawable.ic_account_balance_black_24dp);
         }else if(scelta.equals("Dove mangiare?")){
-            icon.setImageResource(R.drawable.mangiare);
+            icon.setImageResource(R.drawable.ic_restaurant_black_24dp);
         }else if(scelta.equals("Dove dormire?")){
-            icon.setImageResource(R.drawable.dormire);
+            icon.setImageResource(R.drawable.ic_hotel_black_24dp);
         }
 
        icon.setOnClickListener(this);

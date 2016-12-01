@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="wrap_content"
         app:srcCompat="@android:drawable/bottom_bar"
-        android:id="@+id/lista_gestione_viaggio_item_icon"
+        android:id="@+id/vedere_mangiare_dormire_image_view"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:backgroundTint="@color/common_google_signin_btn_text_dark_default"
@@ -31,7 +31,7 @@
         android:textColor="#000000"
         android:focusable="false"
         android:layout_marginBottom="19dp"
-        android:layout_alignBottom="@+id/lista_gestione_viaggio_item_icon"
+        android:layout_alignBottom="@+id/vedere_mangiare_dormire_image_view"
         android:layout_centerHorizontal="true"
         android:fontFamily="casual" />
 
