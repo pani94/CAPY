@@ -42,6 +42,5 @@
     <string name="nome_del_viaggio">Nome del viaggio</string>
     <string name="textview">TextView</string>
     <string name="partenza">PARTENZA</string>
-    <string name="nome_del_viaggio">Nome del viaggio</string>
     <string name="crea_il_tuo_viaggio">Crea il tuo viaggio</string>
 </resources>
