@@ -13,7 +13,7 @@ package="com.example.ale.myapplicatio">
 <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 <uses-feature android:glEsVersion="0x00020000" android:required="true" />
 
-<application android:name=".PortraitOrientation" android:allowBackup="true" android:icon="@mipmap/ic_launcher"
+<application android:name=".PortraitOrientation" android:allowBackup="true" android:icon="@drawable/logo_app"
     android:label="Let's go!" android:supportsRtl="true" android:theme="@style/AppTheme">
     <!--   <meta-data android:name="com.google.android.geo.API_KEY" android:value="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM" /> -->
       <meta-data

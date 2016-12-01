@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -145,7 +146,12 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
     
 
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
-
+        ProgressDialog pd;
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            pd = ProgressDialog.show(getActivity(), "", "Caricamento in corso...", true, false);
+        }
 
 
 
@@ -167,7 +173,7 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
 
             if (bitmap != null) {
                 preferiti_foto.setImageBitmap(bitmap);
-
+                pd.dismiss();
 
             }
         }

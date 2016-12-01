@@ -181,10 +181,11 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
-
+        ProgressDialog pd;
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
+            pd = ProgressDialog.show(getActivity(), "", "Caricamento in corso...", true, false);
         }
 
         @Override
@@ -289,7 +290,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
             String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + item.getPhoto_reference() + "&sensor=false&key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
             new LoadImageTask().execute(photo_reference_url);
-            //pd.dismiss();
+            pd.dismiss();
         }
 
     }
