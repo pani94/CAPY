@@ -41,6 +41,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -450,7 +451,14 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                 if(attivitas.size() > 0){
                     for (int i = 0; i < attivitas.size();i++){
                         position = new LatLng(Double.parseDouble(attivitas.get(i).getLatitudine()), Double.parseDouble(attivitas.get(i).getLongitudine()));
-                        googleMap.addMarker(new MarkerOptions().position(position).title(attivitas.get(i).getNome()));
+                        MarkerOptions markerOptions = new MarkerOptions().position(position).title(attivitas.get(i).getNome());
+                        if (attivitas.get(i).getTipologia().equals("mangiare")){
+                            markerOptions = new MarkerOptions().position(position).title(attivitas.get(i).getNome()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                        }
+                        else if(attivitas.get(i).getTipologia().equals("dormire")){
+                            markerOptions = new MarkerOptions().position(position).title(attivitas.get(i).getNome()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                        }
+                        googleMap.addMarker(markerOptions);
                     }
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));

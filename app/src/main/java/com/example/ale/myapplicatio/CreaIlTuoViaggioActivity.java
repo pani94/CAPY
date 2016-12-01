@@ -228,7 +228,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                         if (part != null & arr != null) {
                             if (CheckDates(part, arr)) {
                                 DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
-                              //  MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
+                               MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
                                 long evento_id =0;
                                 if (modifica) {
                                     Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a,evento_id);
@@ -246,16 +246,16 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                 }
                                 salvaGiorni(part, arr, NViaggio);
 
-                                //if(prefs.getBoolean("preference_notification", true)){
+                                if(prefs.getBoolean("preference_notification", true)){
                                     //Log.e("messaggini", "preference notification true");
-                                   /* myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_week_before");
+                                    myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_week_before");
                                     myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_before");
-                                    myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_after");*/
+                                    myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_after");
                                     Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
                                     intent.putExtra("viaggio_creato", "viaggio creato");
                                     startActivity(intent);
                                     finish();
-                                //}
+                                }
 
                                 /*int i = p.indexOf("/");
                                 String giorno = p.substring(0, i);
