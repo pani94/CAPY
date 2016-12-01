@@ -247,6 +247,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                     Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
                                     intent.putExtra("viaggio_creato", "viaggio creato");
                                     startActivity(intent);
+                                    finish();
                                 //}
 
                                 /*int i = p.indexOf("/");

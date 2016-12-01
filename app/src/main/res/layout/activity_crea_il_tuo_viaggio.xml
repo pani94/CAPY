@@ -61,6 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PARTENZA"
+        android:src="@drawable/badge_circle"
         android:fontFamily="casual"
         android:onClick="showDatePickerDialog (CreaIlTuoViaggioActivity)"
         android:layout_below="@+id/editTextNomeViaggio"
@@ -91,6 +92,7 @@
         android:layout_alignLeft="@+id/buttonFatto"
         android:layout_alignStart="@+id/buttonFatto"
         android:layout_marginTop="64dp"
+        android:src="@drawable/badge_circle"
         android:textStyle="normal|bold" />
 
     <TextView
