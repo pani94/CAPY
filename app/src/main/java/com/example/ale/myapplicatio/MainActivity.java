@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         DataBase db = new DataBase(this);
         ButtonListener buttonListener = new ButtonListener();
         cityList = new ArrayList<>();
+
         bottone_crea_viaggio = (Button) findViewById(R.id.activity_main_button_crea_viaggio);
         cerca = (AutoCompleteTextView) findViewById(R.id.cerca);
         titolo = (TextView) findViewById(R.id.activity_main_titolo);
