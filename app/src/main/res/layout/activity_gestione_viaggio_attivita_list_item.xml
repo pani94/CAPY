@@ -36,12 +36,12 @@
 
                 <ImageView
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_wallpaper_black_18dp"
+                    app:srcCompat="@drawable/image_default"
                     android:id="@+id/gestione_viaggio_attivita_list_item_foto"
                     android:layout_height="500dp"
                     android:layout_alignParentLeft="false"
                     android:layout_alignParentStart="false"
-                    android:layout_width="1000dp" />
+                    android:layout_width="match_parent" />
 
                 <TextView
                     android:text="TextView"

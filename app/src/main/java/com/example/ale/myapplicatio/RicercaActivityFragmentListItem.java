@@ -1,6 +1,5 @@
 package com.example.ale.myapplicatio;
 
-import android.content.Context;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,10 +23,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -55,9 +52,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-
-import static android.R.drawable.btn_star_big_off;
-import static android.R.drawable.btn_star_big_on;
 
 public class RicercaActivityFragmentListItem extends Fragment implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,LocationListener {
 
@@ -163,9 +157,9 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         arrayListViaggi = database.getViaggi();
         giallo = database.getAttivitaPreferita(place_id);
         if (giallo == true){
-            preferiti_star.setImageResource(btn_star_big_on);
+            preferiti_star.setImageResource(R.drawable.yellow_star);
         }else{
-            preferiti_star.setImageResource(btn_star_big_off);
+            preferiti_star.setImageResource(R.drawable.grey_star);
         }
 
         preferiti_star.setOnClickListener(buttonListener);
@@ -392,7 +386,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Attività aggiunta ai preferiti",
                                 Toast.LENGTH_SHORT).show();
-                        preferiti_star.setImageResource(btn_star_big_on);
+                        preferiti_star.setImageResource(R.drawable.yellow_star);
                         giallo = true;
                     }else{
 
@@ -400,7 +394,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                         Toast.makeText(getActivity().getApplicationContext(),
                                 "Attività eliminata dai preferiti",
                                 Toast.LENGTH_SHORT).show();
-                        preferiti_star.setImageResource(btn_star_big_off);
+                        preferiti_star.setImageResource(R.drawable.grey_star);
                         giallo = false;
                     }
 

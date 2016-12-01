@@ -32,7 +32,7 @@
                 <ImageView
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
-                    app:srcCompat="@drawable/ic_wallpaper_black_18dp"
+                    app:srcCompat="@drawable/image_default"
                     android:id="@+id/RicercaActivityFragmentListItemImmagine"
                     android:layout_width="match_parent"
                     android:layout_height="600dp" />
@@ -154,7 +154,7 @@
                     />
 
                 <ImageButton
-                    android:layout_height="55dp"
+                    android:layout_height="80dp"
                     android:id="@+id/preferiti_star"
                     android:layout_width="55dp"
                     app:srcCompat="@drawable/grey_star"

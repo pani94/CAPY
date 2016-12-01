@@ -1,19 +1,24 @@
 package com.example.ale.myapplicatio;
 
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 
-public class RicercaActivityFragmentMenu extends Fragment  {
+public class RicercaActivityFragmentMenu extends Fragment implements AdapterView.OnItemClickListener {
 
     private String[] scelte;
     private ListView listaFragment;
@@ -47,6 +52,7 @@ public class RicercaActivityFragmentMenu extends Fragment  {
 
         scelta_menu = (TextView) view.findViewById(R.id.scelta_menu);
         listaFragment = (ListView) view.findViewById(R.id.listaFragment);
+        listaFragment.setOnItemClickListener(this);
         nomeCitta = (TextView) view.findViewById(R.id.fragment_ricerca_activity_menu_selectedCity);
         nomeCitta.setText(selectedCity);
 
@@ -58,7 +64,7 @@ public class RicercaActivityFragmentMenu extends Fragment  {
         return view;
     }
 
-    public void fragmentStart(int i) {
+    /*public void fragmentStart(int i) {
         RicercaActivityFragmentList newFragment = new RicercaActivityFragmentList();
         Bundle args = new Bundle();
         args.putString("selectedCity", selectedCity);
@@ -76,11 +82,44 @@ public class RicercaActivityFragmentMenu extends Fragment  {
         transaction.replace(R.id.fragment_container, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }
+    }*/
 
-    /*@Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.e("messaggini", "click");
+        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()){
+            RicercaActivityFragmentList newFragment = new RicercaActivityFragmentList();
+            Bundle args = new Bundle();
+            args.putString("selectedCity",selectedCity);
+            if(position == 0){
+                selectedItem = "vedere";
+            }else if(position == 1){
+                selectedItem = "mangiare";
+            }else if(position == 2){
+                selectedItem = "dormire";
+            }
+            args.putString("selectedItem",selectedItem);
+            newFragment.setArguments(args);
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }else{
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Attenzione")
+                    .setMessage("Non hai connessione.")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
+        }
+        /*Log.e("messaggini", "click");
         RicercaActivityFragmentList newFragment = new RicercaActivityFragmentList();
         Bundle args = new Bundle();
         args.putString("selectedCity",selectedCity);
@@ -100,8 +139,8 @@ public class RicercaActivityFragmentMenu extends Fragment  {
         transaction.addToBackStack(null);
 
 // Commit the transaction
-        transaction.commit();
-    }*/
+        transaction.commit();*/
+    }
 
 
 

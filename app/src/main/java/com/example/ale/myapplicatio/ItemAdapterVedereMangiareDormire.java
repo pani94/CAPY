@@ -1,19 +1,14 @@
 package com.example.ale.myapplicatio;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -24,9 +19,10 @@ import java.net.URL;
  * Created by Annalisa on 24/11/2016.
  */
 
-public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> implements View.OnClickListener {
+public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> {
     private String[] scelte;
     private ImageView icon;
+    private TextView name;
     private RicercaActivityFragmentMenu fragmentMenu;
 
     public ItemAdapterVedereMangiareDormire(Context context, String[] scelte, RicercaActivityFragmentMenu fragment){
@@ -41,12 +37,10 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> imple
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_vedere_mangiare_dormire_item, parent, false);
         }
-        // Lookup view for data population
-        TextView name = (TextView) convertView.findViewById(R.id.vedere_mangiare_dormire_text_view);
+        name = (TextView) convertView.findViewById(R.id.vedere_mangiare_dormire_text_view);
         icon = (ImageView) convertView.findViewById(R.id.vedere_mangiare_dormire_image_view);
-        // Populate the data into the template view using the data object
+        // Lookup view for data population
         name.setText(scelta);
-       // name.setShadowLayer(20,10,10, android.R.color.black);
         if(scelta.equals("Cosa vedere?")){
             icon.setImageResource(R.drawable.ic_account_balance_black_24dp);
         }else if(scelta.equals("Dove mangiare?")){
@@ -55,37 +49,11 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> imple
             icon.setImageResource(R.drawable.ic_hotel_black_24dp);
         }
 
-       icon.setOnClickListener(this);
+        //holder.setOnClickListener(convertView);
         new LoadImageTask();
 
         // Return the completed view to render on screen
         return convertView;
-    }
-
-    @Override
-    public void onClick(View v) {
-        ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()){
-            View parentRow = (View) v.getParent();
-            ListView listView = (ListView) parentRow.getParent();
-            int position = listView.getPositionForView(parentRow);
-            fragmentMenu.fragmentStart(position);
-        }else{
-            new AlertDialog.Builder(getContext())
-                    .setTitle("Attenzione")
-                    .setMessage("Non hai connessione.")
-                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-
-        }
-
     }
 
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -108,4 +76,30 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> imple
             }
         }
     }
+
+
+        /*public void setOnClickListener(View v) {
+            ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()){
+                View parentRow = (View) v.getParent();
+                ListView listView = (ListView) parentRow.getParent();
+                int position = listView.getPositionForView(parentRow);
+                fragmentMenu.fragmentStart(position);
+            }else{
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Attenzione")
+                        .setMessage("Non hai connessione.")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
+            }
+        }*/
+
 }
