@@ -29,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,14 +66,14 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
     private String daquando_aquando_get;
     private DataBase db ;
     private AutoCompleteTextView autoCompleteCerca;
-    private Button bottone_cerca;
+    private ImageButton bottone_cerca;
     private boolean check;
     private GetCity getCityRequest;
     ArrayList<String> cityList;
     private String[] scelte;
     private ListView listView;
     private DataBase database;
-    private MapView mMapView;
+    private CustomMapView mMapView;
     private GoogleMap googleMap;
     GoogleApiClient mGoogleApiClient;
 
@@ -110,11 +111,11 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
         nome_viaggio = (TextView) view.findViewById(R.id.gestione_viaggio_nome);
         daquando_aquando = (TextView) view.findViewById(R.id.gestione_viaggio_daquando_aquando);
         autoCompleteCerca = (AutoCompleteTextView) view.findViewById(R.id.gestione_viaggio_autocomplete);
-        bottone_cerca = (Button) view.findViewById(R.id.gestione_viaggio_bottone_cerca);
+        bottone_cerca = (ImageButton) view.findViewById(R.id.gestione_viaggio_bottone_cerca);
         listView = (ListView) view.findViewById(R.id.lista_gestione_viaggio);
         nome_viaggio.setText(nome_viaggio_get);
         daquando_aquando.setText(daquando_aquando_get);
-        mMapView = (MapView) view.findViewById(R.id.fragment_gestione_viaggio_mappa);
+        mMapView = (CustomMapView) view.findViewById(R.id.fragment_gestione_viaggio_mappa);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume(); // needed to get the map to display immediately
         try {
