@@ -10,6 +10,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -262,21 +264,26 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-
-            titolo.setText(item.getName());
-            telefono.setText(item.getPhone());
-            link.setText(item.getWebsite());
-            indirizzo.setText(item.getAddress());
-            if(item.getOpen_now().equalsIgnoreCase("true")){
-                orario.setText("APERTO ORA");
-                orario.setTextColor(Color.GREEN);
-            }else if(item.getOpen_now().equalsIgnoreCase("false")){
-                orario.setText("CHIUSO ORA");
-                orario.setTextColor(Color.RED);
-            }else{
-                orario.setText("");
+            ConnectivityManager cm = (ConnectivityManager)  getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            if (networkInfo != null &&
+                    networkInfo.isConnected()){
+                titolo.setText(item.getName());
+                telefono.setText(item.getPhone());
+                link.setText(item.getWebsite());
+                indirizzo.setText(item.getAddress());
+                if(item.getOpen_now().equalsIgnoreCase("true")){
+                    orario.setText("APERTO ORA");
+                    orario.setTextColor(Color.GREEN);
+                }else if(item.getOpen_now().equalsIgnoreCase("false")){
+                    orario.setText("CHIUSO ORA");
+                    orario.setTextColor(Color.RED);
+                }else{
+                    orario.setText("");
+                }
+                weekdayTextView.setText(item.getWeekday_text());
             }
-            weekdayTextView.setText(item.getWeekday_text());
+
             /*if(open_now.equalsIgnoreCase("true")){
                 orario.setText("APERTO ORA");
             }else if(open_now.equalsIgnoreCase("false")){
