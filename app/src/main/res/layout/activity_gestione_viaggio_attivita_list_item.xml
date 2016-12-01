@@ -36,7 +36,7 @@
 
                 <ImageView
                     android:scaleType="fitXY"
-                    app:srcCompat="@drawable/ic_wallpaper_black_18dp"
+                    app:srcCompat="@drawable/image_default"
                     android:id="@+id/gestione_viaggio_attivita_list_item_foto"
                     android:layout_height="500dp"
                     android:layout_alignParentLeft="false"

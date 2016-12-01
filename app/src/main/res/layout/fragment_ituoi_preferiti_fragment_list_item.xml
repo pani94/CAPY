@@ -29,7 +29,7 @@
                 <ImageView
                     android:scaleType="fitCenter"
                     android:adjustViewBounds="true"
-                    app:srcCompat="@drawable/ic_wallpaper_black_18dp"
+                    app:srcCompat="@drawable/image_default"
                     android:id="@+id/fragment_ituoi_preferiti_fragment_list_item_immagine"
                     android:layout_height="500dp"
                     android:layout_width="match_parent" />
