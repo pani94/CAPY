@@ -24,9 +24,10 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
             if(prefs.getBoolean("preference_notification", true)){
                 if(intent.getAction().equals("one_day_before")){
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                            .setSmallIcon(R.drawable.ic_business_center_white_24dp)
-                            .setContentTitle(intent.getStringExtra("nomeviaggio"))
-                            .setContentText("Sei pronto per la partenza?")
+                            .setSmallIcon(R.drawable.logo_app)
+                            .setContentTitle("Let's go")
+                            .setContentText(intent.getStringExtra("nomeviaggio"))
+                            .setSubText("Sei pronto per la partenza?")
                             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                             .setAutoCancel(true);
                     Intent intentToFire = new Intent(context, ProfiloViaggiActivity.class);
@@ -38,9 +39,10 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
                     NotificationManagerCompat.from(context).notify((int) System.currentTimeMillis(), builder.build());
                 }else if(intent.getAction().equals("one_week_before")){
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                            .setSmallIcon(R.drawable.ic_business_center_white_24dp)
-                            .setContentTitle(intent.getStringExtra("nomeviaggio"))
-                            .setContentText("Manca una sola settimana alla partenza, hai preparato tutto?")
+                            .setSmallIcon(R.drawable.logo_app)
+                            .setContentTitle("Let's go")
+                            .setContentText(intent.getStringExtra("nomeviaggio"))
+                            .setSubText("Manca una sola settimana alla partenza, hai preparato tutto?")
                             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                             .setAutoCancel(true);
                     Intent intentToFire = new Intent(context, ProfiloViaggiActivity.class);
@@ -52,9 +54,10 @@ public class ReminderBroadcastReceiver extends BroadcastReceiver {
                     NotificationManagerCompat.from(context).notify((int) System.currentTimeMillis(), builder.build());
                 }else if(intent.getAction().equals("one_day_after")){
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                            .setSmallIcon(R.drawable.ic_business_center_white_24dp)
-                            .setContentTitle(intent.getStringExtra("nomeviaggio"))
-                            .setContentText("Com'è andato il viaggio? Salva le foto che hai scattato nella galleria del tuo viaggio")
+                            .setSmallIcon(R.drawable.logo_app)
+                            .setContentTitle("Let's go")
+                            .setContentText(intent.getStringExtra("nomeviaggio"))
+                            .setSubText("Com'è andato il viaggio? Salva le foto che hai scattato nella galleria del tuo viaggio")
                             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                             .setAutoCancel(true);
                     Intent intentToFire = new Intent(context, GestioneViaggioGalleriaActivity.class);

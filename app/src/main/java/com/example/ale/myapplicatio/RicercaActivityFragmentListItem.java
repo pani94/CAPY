@@ -264,7 +264,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            ConnectivityManager cm = (ConnectivityManager)  getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager cm = (ConnectivityManager)  getContext().getSystemService(getContext().CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = cm.getActiveNetworkInfo();
             if (networkInfo != null &&
                     networkInfo.isConnected()){
