@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -457,6 +459,17 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                     }
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }else{
+                    LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                    Criteria criteria = new Criteria();
+                    String provider = locationManager.getBestProvider(criteria, true);
+                    Location myLocation = locationManager.getLastKnownLocation(provider);
+                    double latitude = myLocation.getLatitude();
+                    double longitude = myLocation.getLongitude();
+                    LatLng latLng = new LatLng(latitude, longitude);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("").snippet(""));
                 }
 
 

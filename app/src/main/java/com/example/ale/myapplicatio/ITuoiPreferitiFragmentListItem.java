@@ -40,10 +40,11 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
     private String preferiti_telefono_get;
     private String preferiti_indirizzo_get;
     private String preferiti_placeid_get;
+    private String preferiti_latitudine_get;
+    private String preferiti_longitudine_get;
     private ArrayList<Viaggio> arrayListViaggi;
     private String nomeViaggio;
     private long id;
-
     DataBase database;
     public ITuoiPreferitiFragmentListItem() {
         // Required empty public constructor
@@ -61,6 +62,9 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
             preferiti_telefono_get = getArguments().getString("preferiti_telefono");
             preferiti_indirizzo_get = getArguments().getString("preferiti_indirizzo");
             preferiti_placeid_get = getArguments().getString("preferiti_placeid");
+            preferiti_latitudine_get = getArguments().getString("preferiti_latitudine");
+            preferiti_longitudine_get = getArguments().getString("preferiti_longitudine");
+
         }
     }
 
@@ -100,7 +104,7 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
         @Override
         public void onClick(View v) {
             if(database.getViaggiBool()) {
-                Attivita attivita = new Attivita(preferiti_placeid_get, preferiti_titolo_get, preferiti_indirizzo_get, preferiti_orario_get, preferiti_telefono_get, preferiti_link_get, "true", preferiti_foto_get, "false","","");
+                Attivita attivita = new Attivita(preferiti_placeid_get, preferiti_titolo_get, preferiti_indirizzo_get, preferiti_orario_get, preferiti_telefono_get, preferiti_link_get, "true", preferiti_foto_get, "false",preferiti_latitudine_get,preferiti_longitudine_get);
                 database.insertAttivita(attivita);
                 String[] nomeViaggi = new String[arrayListViaggi.size()];
                 for (int k = 0; k < arrayListViaggi.size(); k++) {

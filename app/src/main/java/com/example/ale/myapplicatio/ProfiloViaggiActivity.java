@@ -151,7 +151,9 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        actionBarDrawerToggle.syncState();
+        if (actionBarDrawerToggle!= null){
+            actionBarDrawerToggle.syncState();
+        }
     }
 
     //create method replace fragment

@@ -305,7 +305,6 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                 case R.id.fragment_ricerca_activity_list_item_bottonepiu:
                     if(database.getViaggiBool()) {
                         Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false",latitudine,longitudine);
-                        Attivita attivita = new Attivita(place_id, name, formatted_address, weekday, international_phone_number, website, selectedItem, photo_reference, "false", latitudine,longitudine);
                         database.insertAttivita(attivita);
                         final String[] nomeViaggi = new String[arrayListViaggi.size()];
                         for (int k = 0; k < arrayListViaggi.size(); k++) {
