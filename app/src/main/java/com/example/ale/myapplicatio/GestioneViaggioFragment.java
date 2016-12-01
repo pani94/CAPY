@@ -218,17 +218,6 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                         getCityRequest.execute(s.toString());
                     }
                 }
-            }else{
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Attenzione")
-                        .setMessage("Non hai connessione.")
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
             }
         }
 
@@ -335,29 +324,44 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
 
         @Override
         public void onClick(View v) {
+            ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
             DataBase db = new DataBase(getActivity());
             String ricerca = autoCompleteCerca.getText().toString();
-            if(!ricerca.equals("")){
-                if(ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122 ){
-                    if(!autoCompleteCerca.getValidator().isValid(ricerca)){
-                        ricerca = autoCompleteCerca.getValidator().fixText(ricerca).toString();
-                        if(!ricerca.equals("")){
+            if (networkInfo != null && networkInfo.isConnected()) {
+                if (!ricerca.equals("")) {
+                    if (ricerca.charAt(0) >= 65 && ricerca.charAt(0) <= 90 || ricerca.charAt(0) >= 97 && ricerca.charAt(0) <= 122) {
+                        if (!autoCompleteCerca.getValidator().isValid(ricerca)) {
+                            ricerca = autoCompleteCerca.getValidator().fixText(ricerca).toString();
+                            if (!ricerca.equals("")) {
+                                Intent intent_cerca = new Intent(getActivity(), RicercaActivity.class);
+                                intent_cerca.putExtra("citta", ricerca);
+                                startActivity(intent_cerca);
+                            } else {
+                                Toast.makeText(getActivity(), "Inserisci una città valida", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
                             Intent intent_cerca = new Intent(getActivity(), RicercaActivity.class);
                             intent_cerca.putExtra("citta", ricerca);
                             startActivity(intent_cerca);
-                        }else {
-                            Toast.makeText(getActivity(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
                         }
-                    }else{
-                        Intent intent_cerca = new Intent(getActivity(), RicercaActivity.class);
-                        intent_cerca.putExtra("citta", ricerca);
-                        startActivity(intent_cerca);
+                    } else {
+                        Toast.makeText(getActivity(), "Inserisci una città valida", Toast.LENGTH_LONG).show();
                     }
-                }else{
-                    Toast.makeText(getActivity(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getActivity(), "Inserisci una città valida", Toast.LENGTH_LONG).show();
                 }
             }else{
-                Toast.makeText(getActivity(),"Inserisci una città valida",Toast.LENGTH_LONG).show();
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Attenzione")
+                        .setMessage("Non hai connessione.")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
 
         }
