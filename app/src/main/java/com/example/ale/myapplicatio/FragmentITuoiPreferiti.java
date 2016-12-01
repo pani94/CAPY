@@ -102,6 +102,8 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
         args.putString("preferiti_link", arrayList.get(position).getLink());
         args.putString("preferiti_telefono", arrayList.get(position).getTelefono());
         args.putString("preferiti_indirizzo", arrayList.get(position).getIndirizzo());
+        args.putString("preferiti_latitudine", arrayList.get(position).getLatitudine());
+        args.putString("preferiti_longitudine", arrayList.get(position).getLongitudine());
         newFragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
