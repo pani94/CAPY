@@ -1,17 +1,12 @@
 package com.example.ale.myapplicatio;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by Paola on 28/11/2016.
@@ -40,7 +35,7 @@ public class ItemAdapterGestioneViaggio extends ArrayAdapter<String> {
             db=new DataBase(getContext());
 
             if(scelta.equals("Attivita")){
-                icon.setImageResource(R.drawable.ic_account_balance_black_24dp);
+                icon.setImageResource(R.drawable.occhiali_da_sole);
             }else if(scelta.equals("Agenda")){
                 icon.setImageResource(R.drawable.ic_event_black_24dp);
             }else if(scelta.equals("Galleria")){
