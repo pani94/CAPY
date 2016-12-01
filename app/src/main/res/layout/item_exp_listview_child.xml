@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:background="#FFFFFF"
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="492dp"
+        android:layout_height="wrap_content"
         android:id="@+id/child_item"
         android:textSize="30dp"
         android:textColor="#000000"
-        android:fontFamily="casual 9"
-        />
+        android:fontFamily="casual"
+        android:text="ciao"
+        android:layout_marginTop="10dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_18dp"
+        android:id="@+id/imageView2"
+        android:layout_gravity="right"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>
