@@ -41,7 +41,7 @@
                     android:layout_height="500dp"
                     android:layout_alignParentLeft="false"
                     android:layout_alignParentStart="false"
-                    android:layout_width="1000dp" />
+                    android:layout_width="match_parent" />
 
                 <TextView
                     android:text="TextView"

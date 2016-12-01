@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
     private TextView preferiti_link;
     private TextView preferiti_telefono;
     private TextView preferiti_indirizzo;
-    private Button preferiti_bottoneaggiungi;
+    private ImageButton preferiti_bottoneaggiungi;
 
     private String preferiti_titolo_get;
     private String preferiti_orario_get;
@@ -80,7 +81,7 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
         preferiti_link= (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_link);
         preferiti_telefono = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_telefono);
         preferiti_indirizzo = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_indirizzo);
-        preferiti_bottoneaggiungi = (Button) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_bottoneaggiungi);
+        preferiti_bottoneaggiungi = (ImageButton) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_bottoneaggiungi);
         preferiti_titolo.setText(preferiti_titolo_get);
         preferiti_orario.setText(preferiti_orario_get);
         preferiti_link.setText(preferiti_link_get);
