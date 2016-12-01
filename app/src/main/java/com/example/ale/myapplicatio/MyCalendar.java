@@ -10,10 +10,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -46,8 +48,7 @@ public class MyCalendar {
                         CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
                         "my applicatio calendar");
                 values.put(
-                        CalendarContract.Calendars.CALENDAR_COLOR,
-                        0xffff0000);
+                        CalendarContract.Calendars.CALENDAR_COLOR, Color.parseColor("#E51B37"));
                 values.put(
                         CalendarContract.Calendars.CALENDAR_ACCESS_LEVEL,
                         CalendarContract.Calendars.CAL_ACCESS_OWNER);

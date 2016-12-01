@@ -229,7 +229,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                             if (CheckDates(part, arr)) {
                                 DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
                                MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
-                                long evento_id =0;
+                                long evento_id = myCalendar.addViaggioToCalendar(part,arr,NViaggio,CreaIlTuoViaggioActivity.this);
                                 if (modifica) {
                                     Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a,evento_id);
                                     long update = db.UpdateViaggio(viaggio);
