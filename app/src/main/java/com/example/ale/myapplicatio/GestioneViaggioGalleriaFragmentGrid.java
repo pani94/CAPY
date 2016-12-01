@@ -70,7 +70,10 @@ public class GestioneViaggioGalleriaFragmentGrid extends Fragment implements Ada
             gridView.setOnItemLongClickListener(this);
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                    Foto item = (Foto) parent.getItemAtPosition(position);
+                    Intent i = new Intent(getActivity(), FullScreenViewActivity.class);
+                    i.putExtra("position", position);
+                    i.putExtra("nome_viaggio",nome_viaggio);
+                    getActivity().startActivity(i);
 
 
                 }
