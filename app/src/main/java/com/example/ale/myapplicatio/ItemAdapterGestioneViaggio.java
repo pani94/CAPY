@@ -30,7 +30,7 @@ public class ItemAdapterGestioneViaggio extends ArrayAdapter<String> {
             view = LayoutInflater.from(getContext()).inflate(R.layout.lista_gestione_viaggio_item, parent, false);
         }
             TextView name = (TextView) view.findViewById(R.id.lista_gestione_viaggio_item_testo);
-            icon = (ImageView) view.findViewById(R.id.vedere_mangiare_dormire_image_view);
+            icon = (ImageView) view.findViewById(R.id.lista_gestione_viaggio_image_view);
             name.setText(scelta);
             db=new DataBase(getContext());
 
