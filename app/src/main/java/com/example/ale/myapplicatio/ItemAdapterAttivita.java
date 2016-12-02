@@ -35,11 +35,13 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
     String parte_giornata;
     String tipologia;
     String[] momento;
+    String provenienza;
 
-    public ItemAdapterAttivita(Context context, ArrayList<Attivita> Items,String nomeViaggio) {
+    public ItemAdapterAttivita(Context context, ArrayList<Attivita> Items,String nomeViaggio,String provenienza) {
         super(context, 0, Items);
         arrayList = Items;
         nome_viaggio = nomeViaggio;
+        this.provenienza = provenienza;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -83,7 +85,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.imageButton && !nome_viaggio.equals("")) {
+        if (v.getId() == R.id.imageButton && provenienza.equals("attivita")) {
             View parentRow = (View) v.getParent();
             ListView listView = (ListView) parentRow.getParent();
             final int position = listView.getPositionForView(parentRow);
@@ -180,7 +182,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
 
 
         }
-        else if (v.getId() == R.id.imageButton && nome_viaggio.equals("")){
+        else if (v.getId() == R.id.imageButton && provenienza.equals("preferiti")){
             final DataBase database = new DataBase(getContext());
              View parentRow = (View) v.getParent();
              ListView listView = (ListView) parentRow.getParent();

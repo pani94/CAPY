@@ -48,7 +48,7 @@ public class FragmentITuoiPreferiti extends Fragment implements AdapterView.OnIt
             listavuota.setText("");
         }
         itemListView = (ListView) view.findViewById(R.id.fragment_ituoi_preferiti_list);
-        final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), arrayList,"");
+        final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), arrayList,"","preferiti");
         adapter.notifyDataSetChanged();
         itemListView.setAdapter(adapter);
         itemListView.setOnItemClickListener(this);

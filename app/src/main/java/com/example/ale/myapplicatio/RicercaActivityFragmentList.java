@@ -41,7 +41,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     private String TAG = MainActivity.class.getSimpleName();
     private String selectedItem;
     private String next_page = "";
-    private int count = 0;
+    private int count;
     private GetPOI request;
     private Button altri;
 
@@ -64,7 +64,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        count = 0;
         if (getArguments() != null) {
             selectedCity = getArguments().getString("selectedCity");
             selectedItem = getArguments().getString("selectedItem");
@@ -342,7 +342,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
 
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            if(count > 1){
+            if(count > 2){
                 altri.setEnabled(false);
                 altri.setTextColor(Color.LTGRAY);
             }
