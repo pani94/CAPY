@@ -280,7 +280,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
 
             itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
-            final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas, NomeViaggio);
+            final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas, NomeViaggio,"attivita");
             adapter.notifyDataSetChanged();
             itemListView.setAdapter(adapter);
             itemListView.setOnItemClickListener(this);

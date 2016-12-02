@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -28,7 +29,6 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         listSliding = new ArrayList<>();
 
         //add item for sliding list
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_home_black_24dp, "Home"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_create_black_24dp, "Crea un nuovo viaggio"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "I miei viaggi"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_star_black_24dp, "I miei preferiti"));
@@ -280,20 +281,24 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
         switch (pos) {
             case 0:
+                Intent intent_home = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent_home);
+                break;
+            case 1:
                 Intent intent_creaViaggio = new Intent(MainActivity.this, CreaIlTuoViaggioActivity.class);
                 startActivity(intent_creaViaggio);
                 break;
-            case 1:
+            case 2:
                 Intent intent_viaggi = new Intent(MainActivity.this, ProfiloViaggiActivity.class);
                 intent_viaggi.putExtra("viaggio", "viaggio");
                 startActivity(intent_viaggi);
                 break;
-            case 2:
+            case 3:
                 Intent intent_preferiti = new Intent(MainActivity.this, ProfiloViaggiActivity.class);
                 intent_preferiti.putExtra("preferiti", "preferiti");
                 startActivity(intent_preferiti);
                 break;
-            case 3:
+            case 4:
                 Intent intent_impostazioni = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent_impostazioni);
                 /*final SwitchCompat sw = new SwitchCompat(MainActivity.this);
