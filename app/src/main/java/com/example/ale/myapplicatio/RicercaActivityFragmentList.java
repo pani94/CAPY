@@ -370,6 +370,8 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.fragment_container, newFragment);
+            transaction.hide(this);
+            transaction.show(newFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         }else{

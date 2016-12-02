@@ -71,11 +71,8 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
         //add item for sliding list
         listSliding.add(new ItemSlideMenu(R.drawable.ic_home_black_24dp, "Home"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_create_black_24dp, "Crea un nuovo viaggio"));
-        if(b){
-            listSliding.add(new ItemSlideMenu(R.drawable.ic_star_black_24dp, "I miei preferiti"));
-        }else{
-            listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "I miei viaggi"));
-        }
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "I miei viaggi"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_star_black_24dp, "I miei preferiti"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Impostazioni"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_info_black_24dp, "About"));
 
@@ -169,17 +166,16 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
                 startActivity(intent2);
                 break;
             case 2:
-                if(b){
-                    Intent intent_preferiti = new Intent(ProfiloViaggiActivity.this, ProfiloViaggiActivity.class);
-                    intent_preferiti.putExtra("preferiti", "preferiti");
-                    startActivity(intent_preferiti);
-                }else{
-                    Intent intent_viaggi = new Intent(ProfiloViaggiActivity.this, ProfiloViaggiActivity.class);
-                    intent_viaggi.putExtra("viaggio", "viaggio");
-                    startActivity(intent_viaggi);
-                }
+                Intent intent_viaggi = new Intent(ProfiloViaggiActivity.this, ProfiloViaggiActivity.class);
+                intent_viaggi.putExtra("viaggio", "viaggio");
+                startActivity(intent_viaggi);
                 break;
             case 3:
+                Intent intent_preferiti = new Intent(ProfiloViaggiActivity.this, ProfiloViaggiActivity.class);
+                intent_preferiti.putExtra("preferiti", "preferiti");
+                startActivity(intent_preferiti);
+                break;
+            case 4:
                 Intent intent_impostazioni = new Intent(ProfiloViaggiActivity.this, SettingsActivity.class);
                 startActivity(intent_impostazioni);
                 break;

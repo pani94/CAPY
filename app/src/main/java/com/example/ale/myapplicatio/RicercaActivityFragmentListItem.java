@@ -121,6 +121,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -173,7 +174,6 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
         return view;
     }
-
 
 
 

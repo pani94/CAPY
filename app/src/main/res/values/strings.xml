@@ -45,4 +45,5 @@
     <string name="crea_il_tuo_viaggio">Crea il tuo viaggio</string>
     <string name="let_s_go">Let\'s go!</string>
     <string name="hai_tot_attivit">Hai tot attività</string>
+    <string name="back">RicercaActivityFragmentList</string>
 </resources>
