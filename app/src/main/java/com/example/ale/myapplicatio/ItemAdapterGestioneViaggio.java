@@ -1,6 +1,7 @@
 package com.example.ale.myapplicatio;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,8 @@ public class ItemAdapterGestioneViaggio extends ArrayAdapter<String> {
             name.setText(scelta);
 
             if(scelta.equals("Attivita")){
-                icon.setImageResource(R.drawable.ic_work_black_24dp);
+                icon.setImageResource(R.drawable.occhialiiiiii);
+                icon.setBackgroundColor(Color.TRANSPARENT);
             }else if(scelta.equals("Agenda")){
                 icon.setImageResource(R.drawable.ic_event_black_24dp);
             }else if(scelta.equals("Galleria")){

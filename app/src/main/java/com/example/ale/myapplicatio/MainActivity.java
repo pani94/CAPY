@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView footer;
     private ImageButton bottone_cerca;
     private AutoCompleteTextView cerca;
-    private Button bottone_crea_viaggio;
     private String TAG = MainActivity.class.getSimpleName();
     ArrayList<String> cityList;
     private boolean apporto_modifiche = false;
@@ -83,13 +82,11 @@ public class MainActivity extends AppCompatActivity {
         ButtonListener buttonListener = new ButtonListener();
         cityList = new ArrayList<>();
 
-        bottone_crea_viaggio = (Button) findViewById(R.id.activity_main_button_crea_viaggio);
         cerca = (AutoCompleteTextView) findViewById(R.id.cerca);
         titolo = (TextView) findViewById(R.id.activity_main_titolo);
         footer = (TextView) findViewById(R.id.footer);
         cerca.addTextChangedListener(passwordWatcher);
         bottone_cerca = (ImageButton) findViewById(R.id.activity_main_cerca);
-        bottone_crea_viaggio.setOnClickListener(buttonListener);
         bottone_cerca.setOnClickListener(buttonListener);
 
         titolo.setShadowLayer(5, 0, 0, Color.WHITE);
@@ -535,10 +532,6 @@ public class MainActivity extends AppCompatActivity {
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
                     }
-                    break;
-                case R.id.activity_main_button_crea_viaggio:
-                    Intent intent = new Intent(MainActivity.this, CreaIlTuoViaggioActivity.class);
-                    startActivity(intent);
                     break;
             }
 

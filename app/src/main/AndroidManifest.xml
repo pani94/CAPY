@@ -24,7 +24,7 @@
     <application
         android:name=".PortraitOrientation"
         android:allowBackup="true"
-        android:icon="@drawable/logo_app"
+        android:icon="@drawable/logo_pani_piccolo"
         android:label="Let&apos;s go!"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -81,7 +81,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".GestioneViaggioAgendaActivity"
-            android:label="@string/title_activity_gestione_viaggio_agenda"
+            android:label="Gestisci il tuo viaggio"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".GestioneViaggioAttivitaListItemActivity" />
         <activity android:name=".GestioneViaggioGalleriaActivity" />
@@ -94,6 +94,7 @@
         </receiver>
 
         <activity android:name=".FullScreenViewActivity"></activity>
+
     </application>
 
 </manifest>
