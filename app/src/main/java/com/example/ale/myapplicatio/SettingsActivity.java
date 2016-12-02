@@ -47,6 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
         listSliding.add(new ItemSlideMenu(R.drawable.ic_create_black_24dp, "Crea un nuovo viaggio"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "I miei viaggi"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_star_black_24dp, "I miei preferiti"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Impostazioni"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_info_black_24dp, "About"));
 
         adapter = new SlidingMenuAdapter(this, listSliding);
@@ -127,6 +128,10 @@ public class SettingsActivity extends AppCompatActivity {
                 Intent intent_preferiti = new Intent(SettingsActivity.this, ProfiloViaggiActivity.class);
                 intent_preferiti.putExtra("preferiti", "preferiti");
                 startActivity(intent_preferiti);
+                break;
+            case 4:
+                Intent intent_impostazioni = new Intent(SettingsActivity.this, SettingsActivity.class);
+                startActivity(intent_impostazioni);
                 break;
             default:
                 break;

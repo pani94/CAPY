@@ -33,7 +33,8 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
     private ArrayList<ArrayList <AttivitaGiorno> >attivitaGiornos ;
     private TextView textView;
     private ImageButton bottone_aggiungi;
-    private ImageView freccia;
+    private TextView num_att;
+    private String stringa;
     public ExpandableListViewAttivitaGiornoAdapter(Context context,List<String> header_titles,ArrayList<ArrayList <AttivitaGiorno> > attivitaGiornos,int id_viaggio,String data){
         this.context = context;
         this.header_titles = header_titles;
@@ -87,12 +88,13 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
         }
         final DataBase db = new DataBase(context);
         textView = (TextView) convertView.findViewById(R.id.item_exp_listview_head);
+        num_att = (TextView) convertView.findViewById(R.id.item_exp_listview_num_att);
         bottone_aggiungi = (ImageButton) convertView.findViewById(R.id.item_exp_listview_bottone);
-        freccia =(ImageView) convertView.findViewById(R.id.item_exp_listview_frecciagiu);
         if(getChildrenCount(groupPosition)>0){
-            freccia.setVisibility(View.VISIBLE);
+            stringa = "Hai "+getChildrenCount(groupPosition)+ " attività";
+            num_att.setText(stringa);
         }else{
-            freccia.setVisibility(View.INVISIBLE);
+            num_att.setVisibility(View.INVISIBLE);
         }
 
         bottone_aggiungi.setOnClickListener(new View.OnClickListener() {
