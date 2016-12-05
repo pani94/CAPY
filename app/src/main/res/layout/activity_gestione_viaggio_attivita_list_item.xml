@@ -97,19 +97,41 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="20dp" />
 
-            <TextView
-                android:text="TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:linksClickable="true"
-                android:autoLink="web"
-                android:textSize="18sp"
-                android:id="@+id/gestione_viaggio_attivita_list_item_link"
-                android:textColorLink="?attr/actionModeSplitBackground"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp" />
+            <RelativeLayout
+                android:layout_width="561dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
 
 
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="1000dp"
+                    android:layout_height="wrap_content"
+                    android:linksClickable="true"
+                    android:autoLink="web"
+                    android:textSize="18sp"
+                    android:id="@+id/gestione_viaggio_attivita_list_item_link"
+                    android:textColorLink="?attr/actionModeSplitBackground"
+                    android:layout_marginLeft="129dp"
+                    android:layout_marginStart="129dp"
+                    android:layout_alignParentTop="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="#000000"
+                    android:text="@string/visita_il_sito"
+                    android:textSize="18sp"
+                    android:id="@+id/gestione_viaggio_attivita_list_item_visita"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+            </RelativeLayout>
 
 
             <ImageButton
@@ -118,7 +140,6 @@
                 app:srcCompat="@drawable/ic_add_circle_outline_black_24dp"
                 android:id="@+id/gestione_viaggio_attivita_list_item_button"
                 android:backgroundTint="@android:color/transparent"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:layout_weight="0.2"
                 android:layout_gravity="center" />
