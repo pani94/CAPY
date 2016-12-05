@@ -93,8 +93,6 @@ public class DataBase {
                     VIAGGIO_PARTENZA + " TEXT NOT NULL, " +
                     VIAGGIO_ARRIVO + " TEXT NOT NULL, " +
                      VIAGGIO_EVENTO_ID + " INTEGER );";
-    private static final String DROP_VIAGGIO_TABLE =
-            "DROP TABLE IF EXISTS " + VIAGGIO_TABLE;
 
     private static final String CREATE_ATTIVITA_TABLE =
             "CREATE TABLE " + ATTIVITA_TABLE + " (" +
@@ -109,8 +107,6 @@ public class DataBase {
                     ATTIVITA_PREFERITO + " TEXT NOT NULL," +
                     ATTIVITA_LATITUDINE + " TEXT ," +
                     ATTIVITA_LONGITUDINE + " TEXT );";
-    public static final String DROP_ATTIVITA_TABLE =
-            "DROP TABLE IF EXISTS " + ATTIVITA_TABLE;
 
     private static final String CREATE_GIORNO_TABLE =
             "CREATE TABLE " + GIORNO_TABLE + " (" +
@@ -125,32 +121,25 @@ public class DataBase {
                     ATTIVITAGIORNO_EVENTO_ID + " INTEGER, " +
                     "PRIMARY KEY (" + ATTIVITAGIORNO_PLACE_ID + "," + ATTIVITAGIORNO_DATA + "," + ATTIVITAGIORNO_ID_VIAGGIO +  "," + ATTIVITAGIORNO_QUANDO +  "," + ATTIVITAGIORNO_QUANDO+"))" +
                     ";";
-    public static final String DROP_ATTIVITAGIORNO_TABLE =
-            "DROP TABLE IF EXISTS " + ATTIVITAGIORNO_TABLE;
 
     private static final String CREATE_VIAGGIOATTIVITA_TABLE =
             "CREATE TABLE " + VIAGGIOATTIVITA_TABLE + " (" +
                     VIAGGIOATTIVITA_ID_VIAGGIO + " INTEGER, " +
                     VIAGGIOATTIVITA_PLACE_ID + " TEXT NOT NULL, " +
                     "PRIMARY KEY (" + VIAGGIOATTIVITA_PLACE_ID + "," + VIAGGIOATTIVITA_ID_VIAGGIO + "));";
-    public static final String DROP_VIAGGIOATTIVITA_TABLE =
-            "DROP TABLE IF EXISTS " + VIAGGIOATTIVITA_TABLE;
 
     private static final String CREATE_VIAGGIOGIORNO_TABLE =
             "CREATE TABLE " + VIAGGIOGIORNO_TABLE + " (" +
                     VIAGGIOGIORNO_ID_VIAGGIO + " INTEGER, " +
                     VIAGGIOGIORNO_DATA + " TEXT NOT NULL, " +
                     "PRIMARY KEY (" + VIAGGIOGIORNO_ID_VIAGGIO + "," + VIAGGIOGIORNO_DATA + "));";
-    public static final String DROP_VIAGGIOGIORNO_TABLE =
-            "DROP TABLE IF EXISTS " + VIAGGIOGIORNO_TABLE;
+
 
     private static final String CREATE_FOTO_TABLE =
             "CREATE TABLE " + FOTO_TABLE + " (" +
                     FOTO_ID_VIAGGIO + " INTEGER, " +
                     FOTO_PATH + " TEXT NOT NULL, " +
                     "PRIMARY KEY (" + FOTO_ID_VIAGGIO + "," + FOTO_PATH + "));";
-    public static final String DROP_FOTO_TABLE =
-            "DROP TABLE IF EXISTS " + FOTO_TABLE;
 
     private static class DBHelper extends SQLiteOpenHelper {
         private DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -194,17 +183,9 @@ public class DataBase {
             db.close();
     }
 
-    private void closeCursor(Cursor cursor) {
-        if (cursor != null) {
-            cursor.close();
-        }
-
-    }
 
     public long insertViaggio(Viaggio viaggio) {
-        // CHIEDERE SE è MEGLIO CREARE IL VIAGGIO OPPURE PASSARGLI DIRETTAMENTE I PARAMETRI
         ContentValues cv = new ContentValues();
-        //cv.put(VIAGGIO_ID, 0);
         cv.put(VIAGGIO_NOME, viaggio.getNome_viaggio());
         cv.put(VIAGGIO_ARRIVO, viaggio.getArrivo());
         cv.put(VIAGGIO_PARTENZA, viaggio.getPartenza());
@@ -237,7 +218,6 @@ public class DataBase {
         String where = VIAGGIO_NOME + " = ?" ;
         String [] whereargs = { nomeViaggio};
         this.openReadableDB();
-        //new String[] { VIAGGIO_ID , VIAGGIO_NOME , VIAGGIO_PARTENZA , VIAGGIO_ARRIVO}
         Cursor cursor = db.query(VIAGGIO_TABLE,null,where,whereargs,null,null,null);
         cursor.moveToFirst();
         int id_viaggio = cursor.getInt(VIAGGIO_ID_COL);
@@ -410,8 +390,6 @@ public class DataBase {
         Cursor cursor1 = null;
         ArrayList<Attivita> attivitas = new ArrayList<Attivita>();
         for(int i=0; i<viaggioAttivitas.size(); i++){
-
-            String[] whereArgs1;
             if(tipologia.equals("tutte")){
                 String where = ATTIVITA_PLACE_ID + " = ? "  ;
                 String[] whereArgs = { viaggioAttivitas.get(i).getPlace_id()};
@@ -430,14 +408,11 @@ public class DataBase {
 
             while (cursor1.moveToNext()) {
                 attivitas.add(getAttivitaFromCursor(cursor1));
-                // Log.e("attivita", attivitas.get(j).getNome());
-
             }
         }
 
         if (cursor1 != null)
             cursor1.close();
-        //this.closeDB();
 
         return attivitas;
     }
@@ -461,23 +436,18 @@ public class DataBase {
             }
             while (cursor1.moveToNext()) {
                 count++;
-                // Log.e("attivita", attivitas.get(j).getNome());
             }
         }
 
         if (cursor1 != null)
             cursor1.close();
         this.closeDB();
-
         return count;
     }
     public Attivita getAttivita(String place_id) {
         this.openReadableDB();
         Cursor cursor1 = null;
        Attivita attivita = null;
-
-
-
                 String where = ATTIVITA_PLACE_ID + " = ? "  ;
                 String[] whereArgs = { place_id};
                 cursor1 = db.query(ATTIVITA_TABLE, null,
@@ -527,10 +497,7 @@ public class DataBase {
         Cursor cursor = db.query(ATTIVITA_TABLE, null,
                 where, whereArgs,
                 null, null, null);
-
         cursor.moveToFirst();
-
-
         if (cursor != null && cursor.getCount() > 0){
             cursor.close();
             this.closeDB();
@@ -621,14 +588,6 @@ public class DataBase {
 
         return rowID;
     }
-    public int deleteGiorno(String data) {
-        String where = GIORNO_DATA + "= " + data;
-        this.openWriteableDB();
-        int rowCount = db.delete(GIORNO_TABLE, where, null);
-        this.closeDB();
-        return rowCount;
-    }
-
     public long insertViaggioGiorno(ViaggioGiorno viaggioGiorno) {
         ContentValues cv = new ContentValues();
         cv.put(VIAGGIOGIORNO_ID_VIAGGIO, viaggioGiorno.getId_viaggio());
@@ -636,17 +595,7 @@ public class DataBase {
         this.openWriteableDB();
         long rowID = db.insert(VIAGGIOGIORNO_TABLE, null, cv);
         this.closeDB();
-
         return rowID;
-    }
-    public int deleteViaggioGiorno(long id, String data) {
-        String where = VIAGGIOGIORNO_ID_VIAGGIO + "= ? AND " + VIAGGIOGIORNO_DATA + "= " + data ;
-        String[] whereArgs = { String.valueOf(id) };
-
-        this.openWriteableDB();
-        int rowCount = db.delete(VIAGGIOGIORNO_TABLE, where, whereArgs);
-        this.closeDB();
-        return rowCount;
     }
     public int deleteViaggioGiorni(long id) {
         String where = VIAGGIOGIORNO_ID_VIAGGIO + "= ?";
@@ -752,14 +701,12 @@ public class DataBase {
         }
         else
         {
-            Log.e("bool", "false");
             this.closeDB();
 
             return false;
         }
 
     }
-
     private static ViaggioAttivita getViaggioAttivitaFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
             return null;
@@ -816,8 +763,6 @@ public class DataBase {
         this.closeDB();
         return rowCount;
     }
-
-
     public ArrayList<AttivitaGiorno> getAttivitaGiorno(String data, int id, String quando) {
         String where = ATTIVITAGIORNO_DATA + " = ? " +  " AND " + ATTIVITAGIORNO_ID_VIAGGIO + " = ? " +  " AND " + ATTIVITAGIORNO_QUANDO + " =?";
         String[] whereArgs = { data,Integer.toString(id),quando };
@@ -831,9 +776,7 @@ public class DataBase {
         ArrayList<AttivitaGiorno> attivitaGiornos = new ArrayList<AttivitaGiorno>();
         int j = 0;
         while(cursor.moveToNext()){
-
             attivitaGiornos.add(getAttivitaGiornoFromCursor(cursor));
-            Log.e("attivitagiorno",attivitaGiornos.get(j).getData() + " " + attivitaGiornos.get(j).getPlace_id());
                     j++;
         }
 
@@ -843,7 +786,6 @@ public class DataBase {
 
         return attivitaGiornos;
     }
-
     private static AttivitaGiorno getAttivitaGiornoFromCursor(Cursor cursor) {
         if (cursor == null || cursor.getCount() == 0){
             return null;

@@ -133,8 +133,6 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
 
             //Display icon to open/close sliding list
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //set Title
-            //setTitle(listSliding.get(0).getTitle());
             //item selected
             listViewSliding.setItemChecked(0, true);
             //close menu
@@ -146,7 +144,6 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //set title
-                    //setTitle(listSliding.get(position).getTitle());
                     //item selected
                     listViewSliding.setItemChecked(position, true);
 
@@ -175,7 +172,6 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -185,19 +181,6 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
         if(actionBarDrawerToggle.onOptionsItemSelected(item)){
             return true;
         }
-        /*switch (item.getItemId()) {
-            case R.id.menu_profilo:
-                startActivity(new Intent(getApplicationContext(), ProfiloViaggiActivity.class));
-            case R.id.menu_settings:
-             //   startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
-                return true;
-            case R.id.menu_about:
-               // startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -208,7 +191,6 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
             actionBarDrawerToggle.syncState();
         }
     }
-
     //create method replace fragment
     private void replaceFragment(int pos) {
         Fragment fragment = null;
@@ -309,7 +291,6 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if(!parte_giornata.equals("")){
-                                    // CREARE L'EVENTO
                                     int evento_id =0;
                                     AttivitaGiorno attivitaGiorno = new AttivitaGiorno(placeid_get,data,id_viaggio,parte_giornata,evento_id);
                                     database.insertAttivitaGiorno(attivitaGiorno);
@@ -352,7 +333,6 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            //pd = ProgressDialog.show(GestioneViaggioAttivitaListItemActivity.this, "", "Caricamento in corso...", true, false);
         }
 
         @Override
@@ -370,10 +350,8 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-
             if (bitmap != null) {
                 attivita_listitem_foto.setImageBitmap(bitmap);
-                //pd.dismiss();
             }
         }
     }

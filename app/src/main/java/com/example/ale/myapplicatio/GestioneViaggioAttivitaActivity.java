@@ -32,7 +32,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private TextView attivita_nomeviaggio;
-
     //per SlideMenu
     private List<ItemSlideMenu> listSliding;
     private SlidingMenuAdapter adapter;
@@ -49,10 +48,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_attivita);
         setSupportActionBar(toolbar);
         NomeViaggio = getIntent().getStringExtra("attivita_nomeviaggio");
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container_attivita);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -79,8 +75,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
         //Display icon to open/close sliding list
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //set Title
-        //setTitle(listSliding.get(0).getTitle());
         //item selected
         listViewSliding.setItemChecked(0, true);
         //close menu
@@ -89,8 +83,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         listViewSliding.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //set title
-                //setTitle(listSliding.get(position).getTitle());
                 //item selected
                 listViewSliding.setItemChecked(position, true);
 
@@ -121,27 +113,15 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_gestione_viaggio_attivita, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you s
-        //int id = item.getItemId();
-
         if(actionBarDrawerToggle.onOptionsItemSelected(item)){
             return true;
         }
 
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
-            return true;
-        }
-    */
         return super.onOptionsItemSelected(item);
     }
 
@@ -219,7 +199,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 3;
         }
 
@@ -236,11 +215,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             }
             return null;
         }
-
-        /**
-         * Created by Paola on 18/11/2016.
-         */
-
     }
     public static class GestioneViaggioAttivitaTabTutte extends Fragment implements AdapterView.OnItemClickListener {
 
@@ -261,7 +235,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
 
         }
-
         public static GestioneViaggioAttivitaTabTutte newInstance(int sectionNumber) {
             GestioneViaggioAttivitaTabTutte fragment = new GestioneViaggioAttivitaTabTutte();
             Bundle args = new Bundle();
@@ -287,7 +260,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_gestione_viaggio_attivita, container, false);
-            attivitas = new ArrayList<Attivita>();
+            attivitas = new ArrayList<>();
             final DataBase db = new DataBase(getActivity());
             attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
 
@@ -332,17 +305,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
 
             return rootView;
         }
-        /*  public void onResume(){
-               super.onResume();
-               DataBase db = new DataBase(getActivity());
-              Log.e("aiuto", "onResume" + getArguments().getString("tabselected"));
-              attivitas = db.getAttivita(NomeViaggio, getArguments().getString("tabselected"));
-               //itemListView = (ListView) rootView.findViewById(R.id.fragment_gestione_viaggio_attivita_lista);
-               final ItemAdapterAttivita adapter = new ItemAdapterAttivita(getActivity(), attivitas);
-              adapter.notifyDataSetChanged();
-               itemListView.setAdapter(adapter);
-
-           }*/
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaListItemActivity.class);
@@ -357,22 +319,6 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
             intent.putExtra("tipologia", getArguments().getString("tabselected"));
             intent.putExtra("provenienza", "attivita");
             startActivity(intent);
-            /*GestioneViaggioAttivitaFragmentListItem newFragment = new GestioneViaggioAttivitaFragmentListItem();
-            Bundle args = new Bundle();
-            args.putString("placeid", attivitas.get(position).getPlace_id());
-            args.putString("titolo", attivitas.get(position).getNome());
-            args.putString("foto", attivitas.get(position).getFoto());
-            args.putString("orario", attivitas.get(position).getOrario());
-            args.putString("link", attivitas.get(position).getLink());
-            args.putString("telefono", attivitas.get(position).getTelefono());
-            args.putString("indirizzo", attivitas.get(position).getIndirizzo());
-            newFragment.setArguments(args);
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id., newFragment);
-            //transaction.replace(R.id., newFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();*/
         }
     }
 }

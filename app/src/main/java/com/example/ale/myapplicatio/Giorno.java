@@ -7,10 +7,6 @@ package com.example.ale.myapplicatio;
 public class Giorno {
 
     private String data;
-
-    public Giorno(){
-        data = "";
-    }
     public Giorno(String data){
         this.data = data;
     }

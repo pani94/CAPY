@@ -36,7 +36,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
     String tipologia;
     String[] momento;
     String provenienza;
-
+    ViewHolder holder;
     public ItemAdapterAttivita(Context context, ArrayList<Attivita> Items,String nomeViaggio,String provenienza) {
         super(context, 0, Items);
         arrayList = Items;
@@ -61,7 +61,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
         bottonepiu = (ImageButton) convertView.findViewById(R.id.imageButton);
         //ImageView icon = (ImageView) convertView.findViewById(R.id.fragment_gestione_viaggio_attivita_icon);
 
-        ViewHolder holder = (ViewHolder) convertView.getTag();
+        holder = (ViewHolder) convertView.getTag();
         String nome = item.getNome();
         String indirizzo = item.getIndirizzo();
         holder.name.setText(nome);
@@ -78,7 +78,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
         String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&maxheight=100&photoreference="+item.getFoto()+"&sensor=false&" + key;
         holder.icon.setTag(photo_reference_url);
         //if(photo_reference_url != holder.icon.getTag()){
-        new ImageDownloaderTask(holder.icon).execute(photo_reference_url);
+        new LoadImageTask().execute(photo_reference_url);
         //}
         return convertView;
     }
@@ -99,7 +99,6 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
             final String[] momento_mangiare = {"Pranzo", "Cena"};
             final String[] momento_vedere = {"Mattina", "Pomeriggio", "Sera"};
             final String[] momento_dormire = {"Dormire"};
-            //final String[] giornata = {"Mattina", "Pranzo", "Pomeriggio", "Cena", "Sera"};
             final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle("INSERISCI L'ATTIVITA' AD UN GIORNO");
             builder.setSingleChoiceItems(date, -1, new DialogInterface.OnClickListener() {
@@ -112,7 +111,6 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
             builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     if (!data.equals("")) {
-                        //Log.e("messaggini", tipologia);
                         if(tipologia.equals("vedere")){
                             momento = new String[momento_vedere.length];
                             for(int j=0; j<momento_vedere.length; j++){
@@ -235,17 +233,10 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
         }
     }
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
-
-
-
-
         @Override
         protected Bitmap doInBackground(String... args) {
-
             try {
-
                 return BitmapFactory.decodeStream((InputStream)new URL(args[0]).getContent());
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -256,7 +247,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
         protected void onPostExecute(Bitmap bitmap) {
 
             if (bitmap != null) {
-                icon.setImageBitmap(bitmap);
+                holder.icon.setImageBitmap(bitmap);
 
 
             }
