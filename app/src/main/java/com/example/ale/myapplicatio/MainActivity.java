@@ -42,8 +42,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-//import android.support.multidex.MultiDex;
-//import android.support.multidex.MultiDexApplication;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,11 +71,6 @@ public class MainActivity extends AppCompatActivity {
      */
     private GoogleApiClient client;
 
- /*   @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        MultiDex.install(this);
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

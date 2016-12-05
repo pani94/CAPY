@@ -2,6 +2,7 @@ package com.example.ale.myapplicatio;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -323,9 +324,11 @@ public class GestioneViaggioGalleriaActivity extends AppCompatActivity {
         return mypath.getAbsolutePath();
     }
     private class GetFoto extends AsyncTask<Bitmap, Void, Void> {
+        ProgressDialog pd;
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
+            pd = ProgressDialog.show(GestioneViaggioGalleriaActivity.this, "", "Caricamento in corso...", true, false);
         }
 
         @Override
@@ -342,6 +345,7 @@ public class GestioneViaggioGalleriaActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
+            pd.dismiss();
 
         }
     }
