@@ -188,8 +188,6 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.activity_main, fragment);
             transaction.commit();
-
-
         }
     }
 }

@@ -21,7 +21,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -35,6 +37,9 @@ public class GestioneViaggioGalleriaActivity extends AppCompatActivity {
     private String userChoosenTask;
     private DataBase db;
     private String nome_viaggio;
+    private ImageView icona;
+    private TextView galleria;
+
     //per SlideMenu
     private List<ItemSlideMenu> listSliding;
     private SlidingMenuAdapter adapter;
@@ -70,6 +75,8 @@ public class GestioneViaggioGalleriaActivity extends AppCompatActivity {
         //sliding menu
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        icona = (ImageView) findViewById(R.id.gestione_viaggio_galleria_icona);
+        galleria = (TextView) findViewById(R.id.gestione_viaggio_galleria_testo);
         // RelativeLayout mainContent = (RelativeLayout) findViewById(R.id.main_content);
         List<ItemSlideMenu> listSliding = new ArrayList<>();
 
