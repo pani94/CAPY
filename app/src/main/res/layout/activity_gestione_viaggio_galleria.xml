@@ -21,9 +21,12 @@
 
         <Button
             android:id="@+id/btnSelectPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Select Photo" />
+            android:layout_width="196dp"
+            android:layout_height="60dp"
+            android:text="@string/aggiungi_foto"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:background="@drawable/bottone_crea_viaggio"/>
 
     <FrameLayout
         android:id="@+id/fragmentGestioneViaggioGalleria"
