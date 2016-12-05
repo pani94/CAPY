@@ -212,7 +212,16 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                 intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);
                 startActivity(intent);
             }else{
-                Toast.makeText(getContext(),"Non hai ancora inserito attivita per questo viaggio",Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(getContext())
+                        .setTitle("ATTENZIONE")
+                        .setMessage("Non hai ancora inserito attività per questo viaggio.")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         }else if(scelte[position].equals("Agenda")){
             Intent intent = new Intent(getActivity(), GestioneViaggioAgendaActivity.class);
@@ -525,8 +534,16 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
 
                 } else {
 
-                    // Permission denied, Disable the functionality that depends on this permission.
-                    Toast.makeText(getContext(), "permission denied", Toast.LENGTH_LONG).show();
+                    new android.support.v7.app.AlertDialog.Builder(getContext())
+                            .setTitle("ATTENZIONE")
+                            .setMessage("Permesso negato.")
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();;
                 }
                 return;
             }

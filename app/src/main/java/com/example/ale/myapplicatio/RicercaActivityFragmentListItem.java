@@ -365,9 +365,16 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                         });
                         builder.show();
                     }else{
-                        Toast.makeText(getActivity().getApplicationContext(),
-                                "Non hai viaggi",
-                                Toast.LENGTH_SHORT).show();
+                        new android.support.v7.app.AlertDialog.Builder(getContext())
+                                .setTitle("ATTENZIONE")
+                                .setMessage("Per poter inserire un'attività devi creare prima un viaggio.")
+                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
                     }
                     break;
 
@@ -599,8 +606,16 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
                 } else {
 
-                    // Permission denied, Disable the functionality that depends on this permission.
-                    Toast.makeText(getContext(), "permission denied", Toast.LENGTH_LONG).show();
+                    new android.support.v7.app.AlertDialog.Builder(getContext())
+                            .setTitle("ATTENZIONE")
+                            .setMessage("Permesso negato.")
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
                 }
                 return;
             }

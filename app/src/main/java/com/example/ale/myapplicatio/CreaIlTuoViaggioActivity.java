@@ -266,11 +266,28 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                 }
 
                             } else {
-                                Toast.makeText(getApplicationContext(), "Date non valide", Toast.LENGTH_LONG).show();
+                                new AlertDialog.Builder(CreaIlTuoViaggioActivity.this)
+                                        .setTitle("ATTENZIONE")
+                                        .setMessage("Date non valide. La data di partenza deve precedere quella di arrivo.")                                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
                             }
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), "Inserisci i dati del viaggio", Toast.LENGTH_LONG).show();
+                        new AlertDialog.Builder(CreaIlTuoViaggioActivity.this)
+                                .setTitle("ATTENZIONE")
+                                .setMessage("Dati non validi. Inserire il nome del viaggio e le date di partenza e di arrivo.")
+                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
                     }
                     break;
 

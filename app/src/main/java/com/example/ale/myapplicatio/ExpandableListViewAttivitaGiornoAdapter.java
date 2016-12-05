@@ -141,8 +141,16 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
                     }
                 }
                 if(count == 0){
-                    Toast.makeText(context, "NON CI SONO ATTIVITA' COLLEGATO A QUESTO VIAGGIO",
-                            Toast.LENGTH_SHORT).show();
+                    new android.support.v7.app.AlertDialog.Builder(context)
+                            .setTitle("ATTENZIONE")
+                            .setMessage("Non ci sono attività collegate a questo viaggio.")
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
                 }else{
                     final ArrayList<Attivita> attivitasFinal =attivitas;
                     final AlertDialog.Builder builder = new AlertDialog.Builder(context);

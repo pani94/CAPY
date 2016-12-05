@@ -146,9 +146,16 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
                 });
                 builder.show();
             }else{
-                Toast.makeText(getActivity().getApplicationContext(),
-                        "Non hai viaggi",
-                        Toast.LENGTH_SHORT).show();
+                new android.support.v7.app.AlertDialog.Builder(getContext())
+                        .setTitle("ATTENZIONE")
+                        .setMessage("Per poter inserire un'attività devi creare prima un viaggio.")
+                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         }
     }
