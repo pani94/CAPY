@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -178,6 +180,18 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
             case 4:
                 Intent intent_impostazioni = new Intent(ProfiloViaggiActivity.this, SettingsActivity.class);
                 startActivity(intent_impostazioni);
+                break;
+            case 5: new AlertDialog.Builder(ProfiloViaggiActivity.this)
+                    .setTitle("Let's go")
+                    .setMessage("Questa applicazione è stata creata da: " +
+                            "Alessandro Barlocco, Annalisa Bovone, Paola Silvestre")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(R.drawable.logo_pani_piccolo)
+                    .show();
                 break;
             default:
                 break;

@@ -346,6 +346,18 @@ public class MainActivity extends AppCompatActivity {
 
                 myDialog.show();*/
                 break;
+            case 5: new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Let's go")
+                    .setMessage("Questa applicazione è stata creata da: " +
+                            "Alessandro Barlocco, Annalisa Bovone, Paola Silvestre")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(R.drawable.logo_pani_piccolo)
+                    .show();
+                break;
             default:
                 break;
         }

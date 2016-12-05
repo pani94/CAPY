@@ -236,6 +236,18 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
                 Intent intent_impostazioni = new Intent(GestioneViaggioAttivitaListItemActivity.this, SettingsActivity.class);
                 startActivity(intent_impostazioni);
                 break;
+            case 5: new AlertDialog.Builder(GestioneViaggioAttivitaListItemActivity.this)
+                    .setTitle("Let's go")
+                    .setMessage("Questa applicazione è stata creata da: " +
+                            "Alessandro Barlocco, Annalisa Bovone, Paola Silvestre")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(R.drawable.logo_pani_piccolo)
+                    .show();
+                break;
             default:
                 break;
         }

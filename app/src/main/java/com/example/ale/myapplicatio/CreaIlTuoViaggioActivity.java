@@ -1,6 +1,7 @@
 package com.example.ale.myapplicatio;
 
 //import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -89,6 +91,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
 
         //add item for sliding list
         listSliding.add(new ItemSlideMenu(R.drawable.ic_home_black_24dp, "Home"));
+        listSliding.add(new ItemSlideMenu(R.drawable.ic_create_black_24dp, "Crea un nuovo viaggio"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_business_center_black_24dp, "I miei viaggi"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_star_black_24dp, "I miei preferiti"));
         listSliding.add(new ItemSlideMenu(R.drawable.ic_settings_black_24dp, "Impostazioni"));
@@ -177,23 +180,39 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         Fragment fragment = null;
         switch (pos) {
             case 0:
-                Intent intent = new Intent(CreaIlTuoViaggioActivity.this, MainActivity.class);
-                startActivity(intent);
+                Intent intent_home = new Intent(CreaIlTuoViaggioActivity.this, MainActivity.class);
+                startActivity(intent_home);
                 break;
             case 1:
+                Intent intent_creaViaggio = new Intent(CreaIlTuoViaggioActivity.this, CreaIlTuoViaggioActivity.class);
+                startActivity(intent_creaViaggio);
+                break;
+            case 2:
                 Intent intent_viaggi = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
                 intent_viaggi.putExtra("viaggio", "viaggio");
                 startActivity(intent_viaggi);
                 break;
-            case 2:
+            case 3:
                 Intent intent_preferiti = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
                 intent_preferiti.putExtra("preferiti", "preferiti");
                 startActivity(intent_preferiti);
                 break;
-            case 3:
+            case 4:
                 Intent intent_impostazioni = new Intent(CreaIlTuoViaggioActivity.this, SettingsActivity.class);
                 startActivity(intent_impostazioni);
                 break;
+            case 5: new AlertDialog.Builder(CreaIlTuoViaggioActivity.this)
+                    .setTitle("Let's go")
+                    .setMessage("Questa applicazione è stata creata da: " +
+                            "Alessandro Barlocco, Annalisa Bovone, Paola Silvestre")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(R.drawable.logo_pani_piccolo)
+                    .show();
+            break;
             default:
                 break;
         }
