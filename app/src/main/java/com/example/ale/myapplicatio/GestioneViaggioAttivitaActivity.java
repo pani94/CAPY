@@ -222,7 +222,7 @@ public class GestioneViaggioAttivitaActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "DA VEDERE";
+                    return "COSA VEDERE";
                 case 1:
                     return "DOVE MANGIARE";
                 case 2:

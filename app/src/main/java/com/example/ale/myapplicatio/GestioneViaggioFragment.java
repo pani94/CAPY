@@ -28,7 +28,6 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -39,7 +38,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -119,7 +117,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
         bottone_cerca.setOnClickListener(buttonListener);
 
         scelte = new String[3];
-        scelte[0] = "Attivita";
+        scelte[0] = "Attività";
         scelte[1] = "Agenda";
         scelte[2] = "Galleria";
 
@@ -208,7 +206,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         db = new DataBase(getActivity());
-        if(scelte[position].equals("Attivita")){
+        if(scelte[position].equals("Attività")){
             if(db.getViaggiAttivitaBool(db.getIdViaggio(nome_viaggio_get))){
                 Intent intent = new Intent(getActivity(), GestioneViaggioAttivitaActivity.class);
                 intent.putExtra("attivita_nomeviaggio",nome_viaggio_get);

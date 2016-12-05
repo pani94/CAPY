@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -32,6 +31,10 @@ public class RicercaActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private RelativeLayout mainContent;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+
+    public void setActionBarTitle(String title){
+        getSupportActionBar().setTitle(title);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +111,16 @@ public class RicercaActivity extends AppCompatActivity {
         // getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
+    /*@Override
+    public void onResume() {
+        super.onResume();
+        // Set title
+        //AppCompatActivity activity = (AppCompatActivity) getActivity();
+        //ActionBar actionBar = this.getSupportActionBar();
+        //actionBar.setTitle("Let's go");
+        this.setActionBarTitle("Let's go!");
+    }*/
 
 
     @Override
@@ -186,7 +199,8 @@ public class RicercaActivity extends AppCompatActivity {
         if (fragment != null){
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.activity_main, fragment);
+            setActionBarTitle(getIntent().getStringExtra("citta"));
+            transaction.add(R.id.activity_main, fragment);
             transaction.commit();
         }
     }

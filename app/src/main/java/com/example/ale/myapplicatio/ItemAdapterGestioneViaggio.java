@@ -29,7 +29,8 @@ public class ItemAdapterGestioneViaggio extends ArrayAdapter<String> {
             TextView name = (TextView) view.findViewById(R.id.lista_gestione_viaggio_item_testo);
             icon = (ImageView) view.findViewById(R.id.lista_gestione_viaggio_image_view);
             name.setText(scelta);
-            if(scelta.equals("Attivita")){
+
+            if(scelta.equals("Attività")){
                 icon.setImageResource(R.drawable.occhialiiiiii);
                 icon.setBackgroundColor(Color.TRANSPARENT);
             }else if(scelta.equals("Agenda")){
