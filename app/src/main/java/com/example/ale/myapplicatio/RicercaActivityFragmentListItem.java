@@ -78,6 +78,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
     private String open_now = "";
     private String weekday = "";
     private String selectedItem;
+    private String selectedCity;
     private MapView mMapView;
     private GoogleMap googleMap;
     GoogleApiClient mGoogleApiClient;
@@ -117,6 +118,14 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
             latitudine = getArguments().getString("lat");
             longitudine = getArguments().getString("lng");
             selectedItem = getArguments().getString("selectedItem");
+            selectedCity = getArguments().getString("selectedCity");
+            /*if(selectedItem.equals("vedere")){
+                ((RicercaActivity) getActivity()).setActionBarTitle(selectedCity + " - Cosa vedere");
+            }else if(selectedItem.equals("mangiare")){
+                ((RicercaActivity) getActivity()).setActionBarTitle(selectedCity + " - Dove mangiare");
+            }else {
+                ((RicercaActivity) getActivity()).setActionBarTitle(selectedCity + " - Dove dormire");
+            }*/
         }
 
     }

@@ -3,7 +3,6 @@ package com.example.ale.myapplicatio;
 //import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.ParseException;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -286,6 +285,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         DialogFragment newFragment = new DatePickerFragment();
         Bundle arg = new Bundle();
         arg.putString("selezionato", selezione);
+        arg.putString("data", (String) partenza.getText());
         newFragment.setArguments(arg);
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }

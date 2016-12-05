@@ -36,10 +36,19 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             selectedCity = getArguments().getString("citta");
-
         }
 
     }
+
+    //@Override
+    //public void onResume() {
+      //  super.onResume();
+        // Set title
+        /*AppCompatActivity activity = (AppCompatActivity) getActivity();
+        ActionBar actionBar = activity.getSupportActionBar();
+        actionBar.setTitle("Let's go");*/
+        //((RicercaActivity) getActivity()).setActionBarTitle("Let's go!");
+    //}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -102,7 +111,9 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
             newFragment.setArguments(args);
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.hide(this);
+            transaction.add(R.id.fragment_container, newFragment);
+            transaction.show(newFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         }else{

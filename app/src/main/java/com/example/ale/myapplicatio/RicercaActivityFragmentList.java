@@ -68,10 +68,34 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         if (getArguments() != null) {
             selectedCity = getArguments().getString("selectedCity");
             selectedItem = getArguments().getString("selectedItem");
-
+            /*if(selectedItem.equals("vedere")){
+                ((RicercaActivity) getActivity()).setActionBarTitle(selectedCity + " - Cosa vedere");
+            }else if(selectedItem.equals("mangiare")){
+                ((RicercaActivity) getActivity()).setActionBarTitle(selectedCity + " - Dove mangiare");
+            }else {
+                ((RicercaActivity) getActivity()).setActionBarTitle(selectedCity + " - Dove dormire");
+            }*/
         }
        // Log.e(TAG, "SelectedItem =  " + selectedCity);
     }
+
+
+
+    //@Override
+    //public void onResume() {
+      //  super.onResume();
+        // Set title
+        /*AppCompatActivity activity = (AppCompatActivity) getActivity();
+        ActionBar actionBar = activity.getSupportActionBar();
+        actionBar.setTitle("Let's go");*/
+        /*if(selectedItem.equals("vedere")){
+            ((RicercaActivity) getActivity()).setActionBarTitle(selectedCity + " - Cosa vedere");
+        }else if(selectedItem.equals("mangiare")){
+            ((RicercaActivity) getActivity()).setActionBarTitle(selectedCity + " - Dove mangiare");
+        }else {
+            ((RicercaActivity) getActivity()).setActionBarTitle(selectedCity + " - Dove dormire");
+        }*/
+    //}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -366,10 +390,11 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             args.putString("lng", arrayList.get(position).getLongitudine());
             args.putString("orario",arrayList.get(position).getOrario());
             args.putString("selectedItem", selectedItem);
+            args.putString("selectedCity", selectedCity);
             newFragment.setArguments(args);
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.add(R.id.fragment_container, newFragment);
             transaction.hide(this);
             transaction.show(newFragment);
             transaction.addToBackStack(null);
@@ -388,6 +413,8 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         }
 
     }
+
+
 
 
 
