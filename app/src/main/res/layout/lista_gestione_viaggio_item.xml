@@ -25,7 +25,6 @@
         android:textSize="45sp"
         android:textColor="#000000"
         android:focusable="false"
-        android:fontFamily="casual"
         android:layout_weight="0.90"
 
         android:layout_marginTop="20dp" />

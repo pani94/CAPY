@@ -11,7 +11,6 @@
         android:id="@+id/GridLayoutItemViaggio"
         android:columnCount="1"
         android:rowCount="3"
-        android:fontFamily="casual"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -24,7 +23,6 @@
             android:layout_marginTop="5dp"
             android:id="@+id/item_i_tuoi_viaggi_nome"
             android:textStyle="bold"
-            android:fontFamily="casual"
             android:textColor="#000000"
             android:textSize="30sp" />
 
@@ -35,7 +33,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:textSize="18sp"
-            android:fontFamily="casual"
             android:layout_marginBottom="10dp" />
 
     </GridLayout>
