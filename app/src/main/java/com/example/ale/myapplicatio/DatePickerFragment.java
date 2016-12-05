@@ -30,18 +30,12 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         if(getArguments().getString("selezionato").equals("partenza")){
-            //int giornopartenza = view.getDayOfMonth();
-            //int mesepartenza = view.getMonth()+1;
-            //int annopartenza = view.getYear();
             TextView tv1= (TextView) getActivity().findViewById(R.id.partenza);
             tv1.setText(view.getDayOfMonth() + "/" + (view.getMonth()+1) + "/" + view.getYear());
             Button b = (Button) getActivity().findViewById(R.id.button_arrivo);
             b.setBackgroundResource(R.drawable.bottone_crea_viaggio);
             b.setEnabled(true);
         }else{
-            //int giornoarrivo = view.getDayOfMonth();
-            //int mesearrivo = view.getMonth()+1;
-            //int annoarrivo = view.getYear();
             TextView tv2 = (TextView) getActivity().findViewById(R.id.arrivo);
             tv2.setText(view.getDayOfMonth() + "/" + (view.getMonth()+1) + "/" + view.getYear());
         }

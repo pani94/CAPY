@@ -42,8 +42,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
+//import android.support.multidex.MultiDex;
+//import android.support.multidex.MultiDexApplication;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,31 +73,27 @@ public class MainActivity extends AppCompatActivity {
      */
     private GoogleApiClient client;
 
-    @Override
+ /*   @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getCityRequest = null;
-        DataBase db = new DataBase(this);
         ButtonListener buttonListener = new ButtonListener();
         cityList = new ArrayList<>();
-
         cerca = (AutoCompleteTextView) findViewById(R.id.cerca);
         titolo = (TextView) findViewById(R.id.activity_main_titolo);
         footer = (TextView) findViewById(R.id.footer);
         cerca.addTextChangedListener(passwordWatcher);
         bottone_cerca = (ImageButton) findViewById(R.id.activity_main_cerca);
         bottone_cerca.setOnClickListener(buttonListener);
-
         titolo.setShadowLayer(5, 0, 0, Color.WHITE);
         footer.setShadowLayer(1, 0, 0, Color.WHITE);
-
         cerca.setOnEditorActionListener(editTextListener);
         cerca.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -147,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         //sliding menu
         listViewSliding = (ListView) findViewById(R.id.lv_sliding_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //mainContent = (RelativeLayout) findViewById(R.id.main_content);
         listSliding = new ArrayList<>();
 
         //add item for sliding list
@@ -163,8 +158,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Display icon to open/close sliding list
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //set Title
-        //setTitle(listSliding.get(0).getTitle());
         //item selected
         listViewSliding.setItemChecked(0, true);
         //close menu
@@ -175,11 +168,8 @@ public class MainActivity extends AppCompatActivity {
         listViewSliding.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //set title
-                //setTitle(listSliding.get(position).getTitle());
                 //item selected
                 listViewSliding.setItemChecked(position, true);
-
                 replaceFragment(position);
                 //close menu
                 drawerLayout.closeDrawer(listViewSliding);
@@ -201,8 +191,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
@@ -226,18 +214,6 @@ public class MainActivity extends AppCompatActivity {
                         getCityRequest.execute(s.toString());
                     }
                 }
-            } else {
-                /*new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Attenzione")
-                        .setMessage("Non hai connessione.")
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();*/
-
             }
         }
 
@@ -248,29 +224,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        /*switch (item.getItemId()) {
-            case R.id.menu_profilo:
-                startActivity(new Intent(getApplicationContext(), ProfiloViaggiActivity.class));
-            case R.id.menu_settings:
-             //   startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
-                return true;
-            case R.id.menu_about:
-               // startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -281,7 +242,6 @@ public class MainActivity extends AppCompatActivity {
             actionBarDrawerToggle.syncState();
         }
     }
-
     //create method replace fragment
     private void replaceFragment(int pos) {
         Fragment fragment = null;
@@ -307,44 +267,6 @@ public class MainActivity extends AppCompatActivity {
             case 4:
                 Intent intent_impostazioni = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent_impostazioni);
-                /*final SwitchCompat sw = new SwitchCompat(MainActivity.this);
-                //sw.setTextOn("ON");
-                //sw.setTextOff("OFF");
-
-                LinearLayout linearLayout = new LinearLayout(MainActivity.this);
-                linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
-                linearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
-                linearLayout.addView(sw);
-
-                AlertDialog.Builder myDialog = new    AlertDialog.Builder(MainActivity.this);
-                myDialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if(sw.isChecked()){
-                            Log.e("messaggini", "confirm, true");
-                            SharedPreferences.Editor editor = getSharedPreferences("com.example.xyz", MODE_PRIVATE).edit();
-                            editor.putBoolean("NameOfThingToSave", true);
-                            editor.commit();
-                        }else{
-                            Log.e("messaggini", "confirm, false");
-                        }
-                    }
-                });
-                myDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if(sw.isChecked()){
-                            Log.e("messaggini", "cancel, true");
-                        }else{
-                            Log.e("messaggini", "cancel, false");
-                        }
-                    }
-                });
-                myDialog.setTitle("Impostazioni");
-                myDialog.setMessage("Notifiche:");
-                myDialog.setView(linearLayout);
-
-                myDialog.show();*/
                 break;
             default:
                 break;
@@ -360,45 +282,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Log.e("switch_compat", isChecked + "");
-    }
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Main Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
-    }
 
     private class GetCity extends AsyncTask<String, Void, Void> {
         //ProgressDialog pd;
@@ -427,36 +310,8 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray predictions = jsonObj.getJSONArray("predictions");
                     // looping through All Contacts
                     for (int i = 0; i < predictions.length(); i++) {
-                        if (isCancelled()) {
-
-                        }
                         JSONObject c = predictions.getJSONObject(i);
                         String description = c.getString("description");
-                        //String id = c.getString("id");
-                        /*JSONArray matched_substrings = c.getJSONArray("matched_substrings");
-                        for (int j = 0; j < matched_substrings.length(); j++) {
-                            JSONObject m = matched_substrings.getJSONObject(j);
-                            String length = m.getString("length");
-                            String offset = m.getString("offset");
-                        }*/
-                        //String placeid = c.getString("place_id");
-                        //String reference = c.getString("reference");
-                        //JSONObject structured_formatting = c.getJSONObject("structured_formatting");
-                        //String main_text = structured_formatting.getString("main_text");
-                        /*JSONArray main_text_matched_substrings = structured_formatting.getJSONArray("main_text_matched_substrings");
-                        for (int k = 0; k < main_text_matched_substrings.length(); k++) {
-                            JSONObject mt = main_text_matched_substrings.getJSONObject(k);
-                            String length1 = mt.getString("length");
-                            String offset1 = mt.getString("offset");
-                        }*/
-                        //String secondary_text = structured_formatting.getString("secondary_text");
-                        /*JSONArray terms = c.getJSONArray("terms");
-                        for (int p = 0; p < terms.length(); p++) {
-                            JSONObject t = terms.getJSONObject(p);
-                            String offset = t.getString("offset");
-                            String value = t.getString("value");
-                        }*/
-                        //String types = c.getString("types");
                         cityList.add(description);
                     }
                 } catch (final JSONException e) {
@@ -545,49 +400,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
             }
-
-            /*HttpHandler sh = new HttpHandler();
-            String url_part1 = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=";
-            String url_part2 = "&types=";
-            String vaffa1 = "(";
-            String vaffa2 = "cities";
-            String vaffa3 = ")";
-            String vaffa4 = "&language=it&key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
-                    //"key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
-            String ricercaurl = ricerca.replace(" ", "+").toString();
-            String url_finale = url_part1 + ricercaurl + url_part2 + vaffa1 + vaffa2 + vaffa3 + vaffa4;
-
-
-            Log.e("messaggini", url_finale);
-            String jsonStr = sh.makeServiceCall(url_finale);
-            //Log.e("messaggini", jsonStr);
-            if (jsonStr != null) {
-                Log.e("messaggini", "dentro l'if");
-                try {
-                    JSONObject jsonObj = new JSONObject(jsonStr);
-                    JSONArray predictions = jsonObj.getJSONArray("predictions");
-                    JSONArray status = jsonObj.getJSONArray("status");
-                    Log.e("messaggini", status.getString(0));
-                    JSONObject c = predictions.getJSONObject(0);
-                    String description = c.getString("description");
-                    Log.e("messaggini", description);
-
-                }catch (final JSONException e){
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-                Intent intent = new Intent(MainActivity.this, RicercaActivity.class);
-                intent.putExtra("citta", ricerca);
-                startActivity(intent);
-            }*/
-
         }
 
 

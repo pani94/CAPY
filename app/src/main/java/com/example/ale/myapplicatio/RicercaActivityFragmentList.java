@@ -52,14 +52,6 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
 
     }
 
-    /*public static RicercaActivityFragmentList newInstance(String param1, String param2) {
-        RicercaActivityFragmentList fragment = new RicercaActivityFragmentList();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +62,6 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             selectedItem = getArguments().getString("selectedItem");
 
         }
-        // Log.e(TAG, "SelectedItem =  " + selectedCity);
     }
 
     @Override
@@ -81,7 +72,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         if (networkInfo != null &&
                 networkInfo.isConnected()){
-            arrayList = new ArrayList<ItemRicercaActivity>();
+            arrayList = new ArrayList<>();
             itemsListView = (ListView) view.findViewById(R.id.lista);
             altri = (Button) view.findViewById(R.id.ricerca_activity_fragment_list_altri);
             Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
@@ -138,18 +129,12 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                     .show();
         }
 
-        /*SystemClock.sleep(500);
-        if(count > 1){
-            altro.setEnabled(false);
-
-        }*/
     }
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
         ProgressDialog pd;
         @Override
         protected void onPreExecute() {
-            // TODO Auto-generated method stub
             super.onPreExecute();
             pd= ProgressDialog.show(getContext(), "", "Caricamento in corso...", true, false);
         }
@@ -161,7 +146,6 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             String output = "/json";
             String type = "type=";
             String[] typesCoseDaVedere = {"amusement_park", "aquarium", "art_gallery", "casino", "church",  "museum", "stadium", "zoo"};
-            //String[] typesDoveMangiare = {"bar", "cafe", "restaurant"};
             String url = "";
             String parameters = "";
             String tipo_ricerca = "";
@@ -199,16 +183,6 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                 }
             }
             url = "https://maps.googleapis.com/maps/api/place/" + tipo_ricerca + output + "?" + parameters;
-
-            //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
-            // METTERE LA TIPOLOGIA
-
-
-            boolean bool ;
-            bool = false;
-            //do{
-
-
             if(count == 0){
                 url = "https://maps.googleapis.com/maps/api/place/" + tipo_ricerca + output + "?" + parameters;
             }
@@ -224,7 +198,6 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
-                    JSONArray html = jsonObj.getJSONArray("html_attributions");
                     if(jsonObj.has("next_page_token")){
                         next_page = jsonObj.getString("next_page_token");
                     }
@@ -248,26 +221,9 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                                 lng = location.getString("lng");
                             }
 
-                                /*if (geometry.has("viewport")) {
-                                    JSONObject viewport = geometry.getJSONObject("viewport");
-                                    JSONObject northeast = viewport.getJSONObject("northeast");
-                                    String lat2 = northeast.getString("lat");
-                                    String lng2 = northeast.getString("lng");
-                                    JSONObject southwest = viewport.getJSONObject("southwest");
-                                    String lat3 = southwest.getString("lat");
-                                    String lng3 = southwest.getString("lng");
-                                }*/
 
 
                         }
-                        String icon = "";
-                        if (p.has("icon")) {
-                            icon = p.getString("icon");
-                        }
-
-                            /*if (p.has("id")) {
-                              String id = p.getString("id");
-                            }*/
                         String name = null;
                         if (p.has("name")) {
                             name = p.getString("name");
@@ -276,51 +232,28 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                         if (p.has("opening_hours")) {
                             JSONObject opening_hours = p.getJSONObject("opening_hours");
                             open_now = opening_hours.getString("open_now");
-                            String weekday_text = opening_hours.getString("weekday_text");
                         }
                         String photo_reference="";
                         if (p.has("photos")) {
                             JSONArray photos = p.getJSONArray("photos");
                             for (int j = 0; j < photos.length(); j++) {
                                 JSONObject foto = photos.getJSONObject(j);
-                                //String height = foto.getString("height");
-                                    /*if (foto.has("html_attributes")) {
-                                        String html_attributes = foto.getString("html_attributes");
-                                    }*/
                                 photo_reference = foto.getString("photo_reference");
-                                   /* String photo_reference= "";
-                                    if(p.has("icon")){
-                                        photo_reference = foto.getString("icon");
-                                    }
-                                    */
-                                //photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photo_reference + "&sensor=false&" + key;
-                                //photo_reference_url = photo_reference;
-                                //String width = foto.getString("width");
                             }
                         }
                         String place_id = "";
                         if (p.has("place_id")) {
                             place_id = p.getString("place_id");
                         }
-
-                            /*if (p.has("rating")) {
-                                String rating = p.getString("rating");
-                            }*/
                         String reference="";
                         if (p.has("reference")) {
                             reference = p.getString("reference");
                         }
-                            /*if (p.has("scope")) {
-                                String scope = p.getString("scope");
-                            }
-                            if (p.has("types")) {
-                                String types1 = p.getString("types");
-                            }*/
+
                         if (p.has("vicinity")) {
                             vicinity = p.getString("vicinity");
                         }
                         ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference,open_now, photo_reference, lat, lng);
-                        // Log.e(TAG, "photo " + photo_reference_url);
                         arrayList.add(item);
                     }
                 } catch (final JSONException e) {
@@ -335,7 +268,6 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                     });
                 }
             }
-            // } while(bool==false && count<3);
 
             return null;
         }
@@ -389,45 +321,4 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
 
     }
 
-
-
-   /* // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     *
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-     */
 }

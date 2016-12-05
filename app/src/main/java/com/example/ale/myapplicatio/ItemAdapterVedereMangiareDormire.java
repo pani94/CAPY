@@ -48,8 +48,6 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> {
         }else if(scelta.equals("Dove dormire?")){
             icon.setImageResource(R.drawable.ic_hotel_black_24dp);
         }
-
-        //holder.setOnClickListener(convertView);
         new LoadImageTask();
 
         // Return the completed view to render on screen
@@ -76,30 +74,5 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> {
             }
         }
     }
-
-
-        /*public void setOnClickListener(View v) {
-            ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.isConnected()){
-                View parentRow = (View) v.getParent();
-                ListView listView = (ListView) parentRow.getParent();
-                int position = listView.getPositionForView(parentRow);
-                fragmentMenu.fragmentStart(position);
-            }else{
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Attenzione")
-                        .setMessage("Non hai connessione.")
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
-
-            }
-        }*/
 
 }

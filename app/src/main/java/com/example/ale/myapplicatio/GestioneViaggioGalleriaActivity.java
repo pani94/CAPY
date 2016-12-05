@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -104,12 +105,9 @@ public class GestioneViaggioGalleriaActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //set title
-                //setTitle(listSliding.get(position).getTitle());
                 //item selected
                 listViewSliding.setItemChecked(position, true);
-
                 replaceFragment(position);
-                //close menu
                 drawerLayout.closeDrawer(listViewSliding);
             }
         });
@@ -127,46 +125,42 @@ public class GestioneViaggioGalleriaActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
             }
         };
-
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        /*switch (item.getItemId()) {
-            case R.id.menu_profilo:
-                startActivity(new Intent(getApplicationContext(), ProfiloViaggiActivity.class));
-            case R.id.menu_settings:
-             //   startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
-                return true;
-            case R.id.menu_about:
-               // startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }*/
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         if (actionBarDrawerToggle!= null){
             actionBarDrawerToggle.syncState();
+        }else{
+            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_opened, R.string.drawer_closed) {
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    invalidateOptionsMenu();
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    super.onDrawerClosed(drawerView);
+                    invalidateOptionsMenu();
+                }
+            };
+            actionBarDrawerToggle.syncState();
         }
 
     }
-
     //create method replace fragment
     private void replaceFragment(int pos) {
         Fragment fragment = null;
@@ -221,27 +215,27 @@ public class GestioneViaggioGalleriaActivity extends AppCompatActivity {
     }
 
     private void selectImage() {
-        final CharSequence[] items = { "Take Photo", "Choose from Library",
-                "Cancel" };
+        final CharSequence[] items = { "Scatta una foto", "Scegli dalla libreria",
+                "Indietro" };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Aggiungi una foto");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 boolean result=Utility.checkPermission(getApplicationContext());
 
-                if (items[item].equals("Take Photo")) {
-                    userChoosenTask ="Take Photo";
+                if (items[item].equals("Scatta una foto")) {
+                    userChoosenTask ="Scatta una foto";
                     if(result)
                         cameraIntent();
 
-                } else if (items[item].equals("Choose from Library")) {
-                    userChoosenTask ="Choose from Library";
+                } else if (items[item].equals("Scegli dalla libreria")) {
+                    userChoosenTask ="Scegli dalla libreria";
                     if(result)
                        galleryIntent();
 
-                } else if (items[item].equals("Cancel")) {
+                } else if (items[item].equals("Indietro")) {
                     dialog.dismiss();
                 }
             }
@@ -276,13 +270,8 @@ public class GestioneViaggioGalleriaActivity extends AppCompatActivity {
     }
 
     private void onCaptureImageResult(Intent data) {
-        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-        String prova =saveToInternalStorage(thumbnail, nome_viaggio);
-        GestioneViaggioGalleriaFragmentGrid firstFragment = new GestioneViaggioGalleriaFragmentGrid();
-        Bundle bundle = new Bundle();
-        bundle.putString("nome_viaggio",nome_viaggio);
-        firstFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentGestioneViaggioGalleria, firstFragment).commit();
+        Bitmap bm= (Bitmap) data.getExtras().get("data");
+        new GetFoto().execute(bm);
     }
 
     @SuppressWarnings("deprecation")
@@ -295,13 +284,9 @@ public class GestioneViaggioGalleriaActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            new GetFoto().execute(bm);
         }
-        String prova =saveToInternalStorage(bm,nome_viaggio);
-        GestioneViaggioGalleriaFragmentGrid firstFragment = new GestioneViaggioGalleriaFragmentGrid();
-        Bundle bundle = new Bundle();
-        bundle.putString("nome_viaggio",nome_viaggio);
-        firstFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentGestioneViaggioGalleria, firstFragment).commit();
+
     }
     private String saveToInternalStorage(Bitmap bitmapImage,String nome_viaggio){
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
@@ -324,6 +309,29 @@ public class GestioneViaggioGalleriaActivity extends AppCompatActivity {
         Foto foto = new Foto(id_viaggio,mypath.getAbsolutePath());
         db.insertFoto(foto);
         return mypath.getAbsolutePath();
+    }
+    private class GetFoto extends AsyncTask<Bitmap, Void, Void> {
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Bitmap... bm) {
+            String prova =saveToInternalStorage(bm[0],nome_viaggio);
+            GestioneViaggioGalleriaFragmentGrid firstFragment = new GestioneViaggioGalleriaFragmentGrid();
+            Bundle bundle = new Bundle();
+            bundle.putString("nome_viaggio",nome_viaggio);
+            firstFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentGestioneViaggioGalleria, firstFragment).commit();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+
+        }
     }
 
 

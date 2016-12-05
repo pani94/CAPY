@@ -21,7 +21,6 @@ public class ItemAdapterGestioneViaggio extends ArrayAdapter<String> {
         super(context, 0, opzioni);
         this.opzioni= opzioni;
     }
-
     public View getView(final int position, View view, ViewGroup parent){
         final String scelta = opzioni[position];
         if(view == null){
@@ -30,7 +29,6 @@ public class ItemAdapterGestioneViaggio extends ArrayAdapter<String> {
             TextView name = (TextView) view.findViewById(R.id.lista_gestione_viaggio_item_testo);
             icon = (ImageView) view.findViewById(R.id.lista_gestione_viaggio_image_view);
             name.setText(scelta);
-
             if(scelta.equals("Attivita")){
                 icon.setImageResource(R.drawable.occhialiiiiii);
                 icon.setBackgroundColor(Color.TRANSPARENT);

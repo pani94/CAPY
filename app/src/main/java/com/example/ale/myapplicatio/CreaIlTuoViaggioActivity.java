@@ -56,7 +56,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         arrivo = (TextView) findViewById(R.id.arrivo);
         bottone_partenza = (Button) findViewById(R.id.button_partenza);
         bottone_arrivo = (Button) findViewById(R.id.button_arrivo);
-       bottone_fatto = (ImageButton) findViewById(R.id.buttonFatto);
+        bottone_fatto = (ImageButton) findViewById(R.id.buttonFatto);
         bottone_fatto.setOnClickListener(buttonListener);
         bottone_arrivo.setOnClickListener(buttonListener);
         bottone_partenza.setOnClickListener(buttonListener);
@@ -96,26 +96,14 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
 
         SlidingMenuAdapter adapter = new SlidingMenuAdapter(this, listSliding);
         listViewSliding.setAdapter(adapter);
-
-        //Display icon to open/close sliding list
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //set Title
-        //setTitle(listSliding.get(0).getTitle());
-        //item selected
         listViewSliding.setItemChecked(0, true);
-        //close menu
         drawerLayout.closeDrawer(listViewSliding);
-
         listViewSliding.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //set title
-                //setTitle(listSliding.get(position).getTitle());
-                //item selected
                 listViewSliding.setItemChecked(position, true);
-
-                replaceFragment(position);
-                //close menu
+                replaceFragment(position);//close menu
                 drawerLayout.closeDrawer(listViewSliding);
             }
         });
@@ -148,19 +136,6 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        /*switch (item.getItemId()) {
-            case R.id.menu_profilo:
-                startActivity(new Intent(getApplicationContext(), ProfiloViaggiActivity.class));
-            case R.id.menu_settings:
-             //   startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
-                return true;
-            case R.id.menu_about:
-               // startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -257,11 +232,6 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                                     finish();
                                 }
 
-                                /*int i = p.indexOf("/");
-                                String giorno = p.substring(0, i);
-                                int day = Integer.parseInt(giorno);
-                                String culo = String.valueOf(day);
-                                Log.e("giorno", culo);*/
                             } else {
                                 Toast.makeText(getApplicationContext(), "Date non valide", Toast.LENGTH_LONG).show();
                             }
@@ -291,7 +261,6 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
     }
 
     public static boolean CheckDates(Date partenza, Date arrivo) {
-        //Log.e("messaggini", "checkdates function");
         Calendar c_partenza = Calendar.getInstance();
         Calendar c_arrivo = Calendar.getInstance();
         c_partenza.setTime(partenza);
@@ -316,10 +285,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;
         long daysInMilli = hoursInMilli * 24;
-
         int elapsedDays = (int) (different / daysInMilli);
-        //elapsedDays = elapsedDays+1;
-        //Log.e("messaggini", String.valueOf(elapsedDays));
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(startDate);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -335,7 +301,6 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         }
         ViaggioGiorno va = new ViaggioGiorno(id_viaggio, p);
         db.insertViaggioGiorno(va);
-        //Log.e("messaggini", p);
         for (int k = 0; k < elapsedDays; k++) {
             if (month == 0 || month == 2 || month == 4 || month == 6 || month == 7 || month == 9) {
                 if (day == 31) {
@@ -380,7 +345,6 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
             db.insertGiorno(g);
             va = new ViaggioGiorno(id_viaggio, p_iesimo);
             db.insertViaggioGiorno(va);
-            //Log.e("messaggini", p_iesimo);
         }
     }
 

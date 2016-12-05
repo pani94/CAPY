@@ -50,7 +50,6 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
     @Override
     public int getChildrenCount(int groupPosition) {
         return attivitaGiornos.get(groupPosition).size();
-        //FARE SWITCH A SECONDA DEL GROUP POSITION
     }
 
     @Override
@@ -210,7 +209,6 @@ public class ExpandableListViewAttivitaGiornoAdapter extends BaseExpandableListA
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         DataBase dataBase = new DataBase(context);
-        //Log.e("GCV",getChild(groupPosition,childPosition).);
         String title =  dataBase.getAttivita(getChild(groupPosition,childPosition).getPlace_id()).getNome();
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
