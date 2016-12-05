@@ -35,6 +35,7 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
     private ImageView attivita_listitem_foto;
     private TextView attivita_listitem_orario;
     private TextView attivita_listitem_link;
+    private TextView visita;
     private TextView attivita_listitem_telefono;
     private TextView attivita_listitem_indirizzo;
     private ImageView attivita_listitem_button;
@@ -86,6 +87,7 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
             attivita_listitem_foto = (ImageView) findViewById(R.id.gestione_viaggio_attivita_list_item_foto);
             attivita_listitem_orario = (TextView) findViewById(R.id.gestione_viaggio_attivita_list_item_orario);
             attivita_listitem_link = (TextView) findViewById(R.id.gestione_viaggio_attivita_list_item_link);
+            visita =(TextView) findViewById(R.id.gestione_viaggio_attivita_list_item_visita);
             attivita_listitem_telefono = (TextView) findViewById(R.id.gestione_viaggio_attivita_list_item_telefono);
             attivita_listitem_indirizzo = (TextView) findViewById(R.id.gestione_viaggio_attivita_list_item_indirizzo);
             attivita_listitem_button = (ImageView) findViewById(R.id.gestione_viaggio_attivita_list_item_button);
@@ -100,6 +102,9 @@ public class GestioneViaggioAttivitaListItemActivity extends AppCompatActivity {
                 }
             }
 
+            if(link_get.equals("")){
+                visita.setVisibility(View.INVISIBLE);
+            }
             ButtonListener buttonListener = new ButtonListener();
             database = new DataBase(GestioneViaggioAttivitaListItemActivity.this);
             id_viaggio = database.getIdViaggio(nomeViaggio);

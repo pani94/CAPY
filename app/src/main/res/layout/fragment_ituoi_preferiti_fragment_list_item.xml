@@ -83,16 +83,37 @@
         android:id="@+id/fragment_ituoi_preferiti_list_item_orario"
         android:textColor="#000000" />
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:linksClickable="true"
-        android:autoLink="web"
-        android:textSize="18sp"
-        android:id="@+id/fragment_ituoi_preferiti_fragment_list_item_link"
-        android:layout_marginTop="17dp"
-        android:textColorLink="?attr/actionModeSplitBackground" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/visita_il_sito"
+                    android:id="@+id/fragment_ituoi_preferiti_fragment_list_item_visita"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:linksClickable="true"
+                    android:autoLink="web"
+                    android:textSize="18sp"
+                    android:id="@+id/fragment_ituoi_preferiti_fragment_list_item_link"
+                    android:textColorLink="?attr/actionModeSplitBackground"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/fragment_ituoi_preferiti_fragment_list_item_visita"
+                    android:layout_toEndOf="@+id/fragment_ituoi_preferiti_fragment_list_item_visita"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginStart="14dp" />
+
+            </RelativeLayout>
 
 
     <ImageButton

@@ -65,6 +65,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
     private TextView telefono;
     private TextView indirizzo;
     private TextView link;
+    private TextView visita;
     private ImageButton preferiti_star;
     private ImageButton bottone_piu;
     private ScrollView scrollView;
@@ -133,6 +134,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
         weekdayTextView = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemWeekDayText);
         telefono = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemTelefono);
         link = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemLink);
+        visita = (TextView) view.findViewById(R.id.ricerca_activity_fragment_list_visita);
         indirizzo = (TextView) view.findViewById(R.id.RicercaActivityFragmentListItemIndirizzo);
         preferiti_star = (ImageButton) view.findViewById(R.id.preferiti_star);
         bottone_piu = (ImageButton) view.findViewById(R.id.fragment_ricerca_activity_list_item_bottonepiu);
@@ -149,7 +151,6 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
             checkLocationPermission();
         }
         MapGetMapAsync(latitudine,longitudine);
-
 
         ButtonListener buttonListener = new ButtonListener();
         link.setOnClickListener(buttonListener);
@@ -271,6 +272,9 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                 titolo.setText(item.getName());
                 telefono.setText(item.getPhone());
                 link.setText(item.getWebsite());
+                if(link.getText().equals("")){
+                    visita.setVisibility(View.INVISIBLE);
+                }
                 indirizzo.setText(item.getAddress());
                 if(item.getOpen_now().equalsIgnoreCase("true")){
                     orario.setText("APERTO ORA");

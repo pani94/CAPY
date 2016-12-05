@@ -40,19 +40,18 @@
             android:id="@+id/btnSelectPhoto"
             android:layout_width="196dp"
             android:layout_height="60dp"
-            android:text="@string/aggiungi_foto"
+            android:text="Aggiungi foto"
             android:textColor="#FFFFFF"
+            android:layout_gravity="center"
             android:textSize="20sp"
             android:background="@drawable/bottone_crea_viaggio"/>
 
     <FrameLayout
         android:id="@+id/fragmentGestioneViaggioGalleria"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="52dp"
-        android:layout_below="@+id/btnSelectPhoto"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_height="match_parent"
+
+       />
 </LinearLayout>
     <ListView
         android:layout_height="match_parent"
