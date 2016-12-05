@@ -145,7 +145,22 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        if (actionBarDrawerToggle!= null){
+        if (actionBarDrawerToggle != null) {
+            actionBarDrawerToggle.syncState();
+        } else {
+            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_opened, R.string.drawer_closed) {
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    invalidateOptionsMenu();
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    super.onDrawerClosed(drawerView);
+                    invalidateOptionsMenu();
+                }
+            };
             actionBarDrawerToggle.syncState();
         }
     }
