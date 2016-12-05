@@ -29,6 +29,7 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
     private ImageView preferiti_foto;
     private TextView preferiti_orario;
     private TextView preferiti_link;
+    private TextView visita;
     private TextView preferiti_telefono;
     private TextView preferiti_indirizzo;
     private ImageButton preferiti_bottoneaggiungi;
@@ -77,6 +78,7 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
         preferiti_foto = (ImageView) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_immagine);
         preferiti_orario = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_list_item_orario);
         preferiti_link= (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_link);
+        visita = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_visita);
         preferiti_telefono = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_telefono);
         preferiti_indirizzo = (TextView) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_indirizzo);
         preferiti_bottoneaggiungi = (ImageButton) view.findViewById(R.id.fragment_ituoi_preferiti_fragment_list_item_bottoneaggiungi);
@@ -85,6 +87,10 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
         preferiti_link.setText(preferiti_link_get);
         preferiti_telefono.setText(preferiti_telefono_get);
         preferiti_indirizzo.setText(preferiti_indirizzo_get);
+
+       if(preferiti_link.getText().equals("")){
+            visita.setVisibility(View.INVISIBLE);
+        }
 
         ButtonListener buttonListener = new ButtonListener();
         database = new DataBase(getActivity());

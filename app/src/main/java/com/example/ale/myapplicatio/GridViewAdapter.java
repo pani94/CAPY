@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GridViewAdapter extends ArrayAdapter<Foto> {
-
     private Context context;
     private int layoutResourceId;
     private ArrayList<Foto> data = new ArrayList<>();
@@ -78,24 +77,4 @@ public class GridViewAdapter extends ArrayAdapter<Foto> {
         }
         return b;
     }
-    /*class OnImageClickListener implements View.OnClickListener {
-
-        int _postion;
-
-        // constructor
-        public OnImageClickListener(int position) {
-            this._postion = position;
-        }
-
-        @Override
-        public void onClick(View v) {
-            // on selecting grid view image
-            // launch full screen activity
-            Intent i = new Intent(context, FullScreenViewActivity.class);
-            i.putExtra("position", _postion);
-            context.startActivity(i);
-        }
-
-    }*/
-
 }

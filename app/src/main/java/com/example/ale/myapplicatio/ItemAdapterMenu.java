@@ -58,23 +58,6 @@ public class ItemAdapterMenu extends ArrayAdapter<ItemRicercaActivity>{
 
         //holder.icon.setImageResource(R.drawable.no);
         return convertView;
-
-
-        //TextView name = (TextView) convertView.findViewById(R.id.name);
-        //TextView vicinity = (TextView) convertView.findViewById(R.id.vicinity);
-        //icon = (ImageView) convertView.findViewById(R.id.icon);
-        //name.setText(item.getName());
-        //vicinity.setText(item.getVicinity());
-        //String key = "key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk";
-        //String key ="key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
-        //String key = "key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
-        //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
-        //String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference="+item.getPhoto_reference()+"&sensor=false&" + key;
-        //icon.setImageResource(R.drawable.ic_about);
-        //new ImageDownloaderTask(icon).execute(photo_reference_url);
-        //new LoadImageTask().execute(photo_reference_url);
-        // Return the completed view to render on screen
-        //return convertView;
     }
     public class LoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
@@ -99,8 +82,6 @@ public class ItemAdapterMenu extends ArrayAdapter<ItemRicercaActivity>{
 
             if (bitmap != null) {
                 icon.setImageBitmap(bitmap);
-
-
             }
         }
     }

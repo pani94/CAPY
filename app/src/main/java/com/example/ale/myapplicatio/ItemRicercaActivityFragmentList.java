@@ -13,15 +13,6 @@ public class ItemRicercaActivityFragmentList {
     private String open_now;
     private String weekday_text;
 
-    public ItemRicercaActivityFragmentList(){
-        this.name = null;
-        this.phone = null;
-        this.website = null;
-        this.photo_reference = null;
-        this.address = null;
-        this.open_now = null;
-        this.weekday_text = null;
-    }
 
     public ItemRicercaActivityFragmentList(String name, String phone, String website, String photo_reference,String address, String open_now, String weekday_text){
         this.name = name;
@@ -36,26 +27,6 @@ public class ItemRicercaActivityFragmentList {
     public void setName(String name){
         this.name = name;
     }
-
-    public void setPhone(String phone){
-        this.phone = phone;
-    }
-
-    public void setWebsite(String website){
-        this.website = website;
-    }
-
-    public void setPhoto_reference(String photo_reference){
-        this.photo_reference = photo_reference;
-    }
-
-    public void setAddress(String address){
-        this.address = address;
-    }
-
-    public void setOpen_now(String open_now) { this.open_now = open_now; }
-
-    public void setWeekday_text(String weekday_text) { this.weekday_text = weekday_text; }
 
     public String getName(){
         return this.name;

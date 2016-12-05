@@ -42,88 +42,41 @@ public class Attivita {
         this.longitudine = longitudine;
     }
 
-    public void setPlace_id(String place_id){
-        this.place_id = place_id;
-    }
 
-    public void setNome(String nome){
-        this.nome = nome;
-    }
-
-    public void setIndirizzo(String indirizzo){
-        this.indirizzo = indirizzo;
-    }
-
-    public void setOrario(String orario){
-        this.orario = orario;
-    }
-
-    public void setTelefono(String telefono){
-        this.telefono = telefono;
-    }
-
-    public void setLink(String link){
-        this.link = link;
-    }
-
-    public void setTipologia(String tipologia){
-        this.tipologia = tipologia;
-    }
 
     public void setFoto(String foto){
         this.foto = foto;
     }
-
-    public void setPreferito(String preferito){
-        this.preferito = preferito;
-    }
-    public void setLatitudine(String latitudine) {
-        this.latitudine = latitudine;
-    }
-
-    public void setLongitudine(String longitudine) {
-        this.longitudine = longitudine;
-    }
     public String getPlace_id(){
         return this.place_id;
     }
-
     public String getNome(){
         return this.nome;
     }
-
     public String getIndirizzo(){
         return this.indirizzo;
     }
-
     public String getOrario(){
         return this.orario;
     }
-
     public String getTelefono(){
         return this.telefono;
     }
-
     public String getLink(){
         return this.link;
     }
-
     public String getTipologia(){
         return this.tipologia;
     }
-
     public String getFoto(){
         return this.foto;
     }
-
     public String getPreferito(){
         return this.preferito;
     }
     public String getLongitudine() {
         return longitudine;
     }
-
-
     public String getLatitudine() {
         return latitudine;
     }

@@ -76,9 +76,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
         listViewSliding.setAdapter(adapter);
 
         //Display icon to open/close sliding list
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //set Title
-        //setTitle(listSliding.get(0).getTitle());
+
         //item selected
         listViewSliding.setItemChecked(0, true);
         //close menu
@@ -87,8 +85,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
         listViewSliding.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //set title
-                //setTitle(listSliding.get(position).getTitle());
+
                 //item selected
                 listViewSliding.setItemChecked(position, true);
 
@@ -120,38 +117,41 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_gestione_viaggio_agenda, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        //int id = item.getItemId();
-
         if(actionBarDrawerToggle.onOptionsItemSelected(item)){
             return true;
         }
 
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
-            return true;
-        }*/
-
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        if (actionBarDrawerToggle!= null){
+        if (actionBarDrawerToggle != null) {
+            actionBarDrawerToggle.syncState();
+        } else {
+            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_opened, R.string.drawer_closed) {
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    invalidateOptionsMenu();
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    super.onDrawerClosed(drawerView);
+                    invalidateOptionsMenu();
+                }
+            };
             actionBarDrawerToggle.syncState();
         }
     }
 
-    //create method replace fragment
     private void replaceFragment(int pos){
         Fragment fragment = null;
         switch (pos){
@@ -177,6 +177,18 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
                 Intent intent_impostazioni = new Intent(GestioneViaggioAgendaActivity.this, SettingsActivity.class);
                 startActivity(intent_impostazioni);
                 break;
+            case 5: new AlertDialog.Builder(GestioneViaggioAgendaActivity.this)
+                    .setTitle("Let's go")
+                    .setMessage("Questa applicazione è stata creata da: " +
+                            "Alessandro Barlocco, Annalisa Bovone, Paola Silvestre")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(R.drawable.logo_pani_piccolo)
+                    .show();
+                break;
             default:
                 break;
         }
@@ -190,11 +202,6 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
 
         }
     }
-
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class AgendaFragment extends Fragment implements ExpandableListView.OnChildClickListener,AdapterView.OnItemLongClickListener {
         private ExpandableListView expandableListView;
         ExpandableListViewAttivitaGiornoAdapter adapter=null;
@@ -221,7 +228,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
             String data = getArguments().getString("data");
             DataBase db = new DataBase(getContext());
             int id_viaggio = db.getIdViaggio(NomeViaggio);
-            List <String> headings = new ArrayList<String>();
+            List <String> headings = new ArrayList<>();
             ArrayList <AttivitaGiorno> arrayListChildMattina = db.getAttivitaGiorno(data,id_viaggio,"Mattina");
             ArrayList <AttivitaGiorno> arrayListChildPranzo = db.getAttivitaGiorno(data,id_viaggio,"Pranzo");;
             ArrayList <AttivitaGiorno> arrayListChildPomeriggio= db.getAttivitaGiorno(data,id_viaggio,"Pomeriggio");;
@@ -242,7 +249,6 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
             expandableListView.setAdapter(adapter);
             expandableListView.setOnChildClickListener(this);
             expandableListView.setOnItemLongClickListener(this);
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
 
@@ -315,10 +321,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
 
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
+
     public class SectionsPagerAdapter extends FragmentStatePagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -334,8 +337,7 @@ public class GestioneViaggioAgendaActivity extends AppCompatActivity{
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return getIntent().getIntExtra("numgiorni",1);
+                return getIntent().getIntExtra("numgiorni",1);
         }
 
         @Override

@@ -105,7 +105,7 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         if (networkInfo != null &&
                 networkInfo.isConnected()){
-            arrayList = new ArrayList<ItemRicercaActivity>();
+            arrayList = new ArrayList<>();
             itemsListView = (ListView) view.findViewById(R.id.lista);
             altri = (Button) view.findViewById(R.id.ricerca_activity_fragment_list_altri);
             Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
@@ -162,18 +162,12 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                     .show();
         }
 
-        /*SystemClock.sleep(500);
-        if(count > 1){
-            altro.setEnabled(false);
-
-        }*/
     }
 
     private class GetPOI extends AsyncTask<String, Void, Void> {
         ProgressDialog pd;
         @Override
         protected void onPreExecute() {
-            // TODO Auto-generated method stub
             super.onPreExecute();
             pd= ProgressDialog.show(getContext(), "", "Caricamento in corso...", true, false);
         }
@@ -181,18 +175,17 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
         @Override
         protected Void doInBackground(String... message) {
 
-                HttpHandler sh = new HttpHandler();
+            HttpHandler sh = new HttpHandler();
             String output = "/json";
             String type = "type=";
             String[] typesCoseDaVedere = {"amusement_park", "aquarium", "art_gallery", "casino", "church",  "museum", "stadium", "zoo"};
-            //String[] typesDoveMangiare = {"bar", "cafe", "restaurant"};
             String url = "";
             String parameters = "";
             String tipo_ricerca = "";
             //String key = "language=it&key=AIzaSyDg0CUi5HwJsPRxlrR_8VFBxng3eY2aMXk";
-           //String key = "language=it&key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
+            //String key = "language=it&key=AIzaSyBieTKI8Lmg7TuF2MgUUtK93bjpWylxLBM";
             //String key = "language=itkey=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
-           String key = "language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
+            String key = "language=it&key=AIzaSyAD1xAMtZ0YaMSii5iDkTJrFv0jz9cEz2U";
 
             if(selectedItem.equals("vedere")){
                 tipo_ricerca = "nearbysearch";
@@ -223,143 +216,91 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
                 }
             }
             url = "https://maps.googleapis.com/maps/api/place/" + tipo_ricerca + output + "?" + parameters;
+            if(count == 0){
+                url = "https://maps.googleapis.com/maps/api/place/" + tipo_ricerca + output + "?" + parameters;
+            }
+            else if( count > 0  && next_page != ""){
+                url = url + "&pagetoken=" + next_page;
+            }else{
+                //ount = 3;
+                url = "";
+            }
+            Log.e(TAG,"url " + url);
+            String jsonStr = sh.makeServiceCall(url);
 
-            //String key = "key=AIzaSyCG-pKhY5jLgcDTJZSaTUd3ufgvtcJ9NwQ";
-            // METTERE LA TIPOLOGIA
-
-
-            boolean bool ;
-            bool = false;
-            //do{
-
-
-                if(count == 0){
-                    url = "https://maps.googleapis.com/maps/api/place/" + tipo_ricerca + output + "?" + parameters;
-                }
-                else if( count > 0  && next_page != ""){
-                    url = url + "&pagetoken=" + next_page;
-                }else{
-                   //ount = 3;
-                    url = "";
-                }
-                Log.e(TAG,"url " + url);
-                String jsonStr = sh.makeServiceCall(url);
-
-                if (jsonStr != null) {
-                    try {
-                        JSONObject jsonObj = new JSONObject(jsonStr);
-                        JSONArray html = jsonObj.getJSONArray("html_attributions");
-                        if(jsonObj.has("next_page_token")){
-                            next_page = jsonObj.getString("next_page_token");
-                        }
-                        else{
-                            count = 3;
-                        }
-                        String lat = "";
-                        String lng = "";
-                        JSONArray places = jsonObj.getJSONArray("results");
-                        for (int i = 0; i < places.length(); i++) {
-                            JSONObject p = places.getJSONObject(i);
-                            String vicinity = "";
-                            if(p.has("formatted_address")){
-                                vicinity = p.getString("formatted_address");
-                            }
-                            if (p.has("geometry")) {
-                                JSONObject geometry = p.getJSONObject("geometry");
-                                if (geometry.has("location")) {
-                                    JSONObject location = geometry.getJSONObject("location");
-                                    lat = location.getString("lat");
-                                    lng = location.getString("lng");
-                                }
-
-                                /*if (geometry.has("viewport")) {
-                                    JSONObject viewport = geometry.getJSONObject("viewport");
-                                    JSONObject northeast = viewport.getJSONObject("northeast");
-                                    String lat2 = northeast.getString("lat");
-                                    String lng2 = northeast.getString("lng");
-                                    JSONObject southwest = viewport.getJSONObject("southwest");
-                                    String lat3 = southwest.getString("lat");
-                                    String lng3 = southwest.getString("lng");
-                                }*/
-
-
-                            }
-                            String icon = "";
-                            if (p.has("icon")) {
-                                icon = p.getString("icon");
-                            }
-
-                            /*if (p.has("id")) {
-                              String id = p.getString("id");
-                            }*/
-                            String name = null;
-                            if (p.has("name")) {
-                                name = p.getString("name");
-                            }
-                            String open_now = "";
-                            if (p.has("opening_hours")) {
-                                JSONObject opening_hours = p.getJSONObject("opening_hours");
-                                 open_now = opening_hours.getString("open_now");
-                                String weekday_text = opening_hours.getString("weekday_text");
-                            }
-                            String photo_reference="";
-                            if (p.has("photos")) {
-                                JSONArray photos = p.getJSONArray("photos");
-                                for (int j = 0; j < photos.length(); j++) {
-                                    JSONObject foto = photos.getJSONObject(j);
-                                    //String height = foto.getString("height");
-                                    /*if (foto.has("html_attributes")) {
-                                        String html_attributes = foto.getString("html_attributes");
-                                    }*/
-                                   photo_reference = foto.getString("photo_reference");
-                                   /* String photo_reference= "";
-                                    if(p.has("icon")){
-                                        photo_reference = foto.getString("icon");
-                                    }
-                                    */
-                                    //photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photo_reference + "&sensor=false&" + key;
-                                    //photo_reference_url = photo_reference;
-                                    //String width = foto.getString("width");
-                                }
-                            }
-                            String place_id = "";
-                            if (p.has("place_id")) {
-                                place_id = p.getString("place_id");
-                            }
-
-                            /*if (p.has("rating")) {
-                                String rating = p.getString("rating");
-                            }*/
-                            String reference="";
-                            if (p.has("reference")) {
-                                 reference = p.getString("reference");
-                            }
-                            /*if (p.has("scope")) {
-                                String scope = p.getString("scope");
-                            }
-                            if (p.has("types")) {
-                                String types1 = p.getString("types");
-                            }*/
-                            if (p.has("vicinity")) {
-                                vicinity = p.getString("vicinity");
-                            }
-                            ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference,open_now, photo_reference, lat, lng);
-                           // Log.e(TAG, "photo " + photo_reference_url);
-                            arrayList.add(item);
-                        }
-                    } catch (final JSONException e) {
-                        Log.e(TAG, "Json parsing error: " + e.getMessage());
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(getActivity().getApplicationContext(),
-                                        "Json parsing error: " + e.getMessage(),
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        });
+            if (jsonStr != null) {
+                try {
+                    JSONObject jsonObj = new JSONObject(jsonStr);
+                    if(jsonObj.has("next_page_token")){
+                        next_page = jsonObj.getString("next_page_token");
                     }
+                    else{
+                        count = 3;
+                    }
+                    String lat = "";
+                    String lng = "";
+                    JSONArray places = jsonObj.getJSONArray("results");
+                    for (int i = 0; i < places.length(); i++) {
+                        JSONObject p = places.getJSONObject(i);
+                        String vicinity = "";
+                        if(p.has("formatted_address")){
+                            vicinity = p.getString("formatted_address");
+                        }
+                        if (p.has("geometry")) {
+                            JSONObject geometry = p.getJSONObject("geometry");
+                            if (geometry.has("location")) {
+                                JSONObject location = geometry.getJSONObject("location");
+                                lat = location.getString("lat");
+                                lng = location.getString("lng");
+                            }
+
+
+
+                        }
+                        String name = null;
+                        if (p.has("name")) {
+                            name = p.getString("name");
+                        }
+                        String open_now = "";
+                        if (p.has("opening_hours")) {
+                            JSONObject opening_hours = p.getJSONObject("opening_hours");
+                            open_now = opening_hours.getString("open_now");
+                        }
+                        String photo_reference="";
+                        if (p.has("photos")) {
+                            JSONArray photos = p.getJSONArray("photos");
+                            for (int j = 0; j < photos.length(); j++) {
+                                JSONObject foto = photos.getJSONObject(j);
+                                photo_reference = foto.getString("photo_reference");
+                            }
+                        }
+                        String place_id = "";
+                        if (p.has("place_id")) {
+                            place_id = p.getString("place_id");
+                        }
+                        String reference="";
+                        if (p.has("reference")) {
+                            reference = p.getString("reference");
+                        }
+
+                        if (p.has("vicinity")) {
+                            vicinity = p.getString("vicinity");
+                        }
+                        ItemRicercaActivity item = new ItemRicercaActivity(name, place_id, vicinity, reference,open_now, photo_reference, lat, lng);
+                        arrayList.add(item);
+                    }
+                } catch (final JSONException e) {
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity().getApplicationContext(),
+                                    "Json parsing error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
-           // } while(bool==false && count<3);
+            }
 
             return null;
         }
@@ -414,47 +355,4 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
 
     }
 
-
-
-
-
-   /* // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     *
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-     */
 }

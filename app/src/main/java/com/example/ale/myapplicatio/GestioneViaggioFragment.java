@@ -76,18 +76,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
     GoogleApiClient mGoogleApiClient;
 
     public GestioneViaggioFragment() {
-        // Required empty public constructor
     }
-
-    /*public static GestioneViaggioFragment newInstance(String param1, String param2) {
-        GestioneViaggioFragment fragment = new GestioneViaggioFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,10 +124,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
        ItemAdapterGestioneViaggio adapter = new ItemAdapterGestioneViaggio(getActivity(), scelte);
         adapter.notifyDataSetChanged();
         listView.setAdapter(adapter);
-
         listView.setOnItemClickListener(this);
-
-
         autoCompleteCerca.addTextChangedListener(passwordWatcher);
         autoCompleteCerca.setOnEditorActionListener(editTextListener);
         autoCompleteCerca.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -177,8 +163,6 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                     if (!a.isEmpty()) {
                         return a.getItem(0).toString();
                     }else{
-                        //Log.e("messaggini", stringa);
-                        //return stringa;
                     }
                 } else {
                     if (check) {
@@ -243,11 +227,9 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
     }
 
     private class GetCity extends AsyncTask<String, Void, Void> {
-        //ProgressDialog pd;
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            //pd = ProgressDialog.show(getActivity(), "", "Caricamento in corso...", true, false);
         }
 
         @Override
@@ -260,41 +242,22 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
             String url1 = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=";
             String url2 ="&types=(cities)&language=it&" + chiave;
             String url= url1 + arg0[0] + url2 ;
-            Log.e("messaggini", url);
             String jsonStr = sh.makeServiceCall(url);
             if (jsonStr != null) {
                 try {
                     JSONObject jsonObj = new JSONObject(jsonStr);
                     JSONArray predictions = jsonObj.getJSONArray("predictions");
                     for (int i = 0; i < predictions.length(); i++) {
-                        if(isCancelled()){
-                            Log.e("messaggini", "cancellato");
-                        }
                         JSONObject c = predictions.getJSONObject(i);
                         String description = c.getString("description");
                         cityList.add(description);
                     }
                 } catch (final JSONException e) {
                     Log.e(TAG, "Json parsing error: " + e.getMessage());
-                    /*runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });*/
 
                 }
 
-            } else {
-                /*runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                    }
-                });*/
             }
-
             return null;
         }
 
@@ -308,7 +271,6 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                 autoCompleteCerca.showDropDown();
             }
             getCityRequest = null;
-            //pd.dismiss();
         }
     }
 

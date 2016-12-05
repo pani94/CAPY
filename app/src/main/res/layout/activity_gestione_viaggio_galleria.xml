@@ -6,34 +6,53 @@
     android:id="@+id/drawer_layout"
     android:orientation="vertical">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_gestione_viaggio_galleria"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.example.ale.myapplicatio.GestioneViaggioGalleriaActivity">
 
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_local_see_black_24dp"
+        android:layout_marginTop="12dp"
+        android:layout_gravity="center"
+        android:id="@+id/gestione_viaggio_galleria_icona"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="109dp"
+        android:text="Galleria"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:id="@+id/gestione_viaggio_galleria_testo"
+
+        />
         <Button
             android:id="@+id/btnSelectPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Select Photo" />
+            android:layout_width="196dp"
+            android:layout_height="60dp"
+            android:text="Aggiungi foto"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center"
+            android:textSize="20sp"
+            android:background="@drawable/bottone_crea_viaggio"/>
 
     <FrameLayout
         android:id="@+id/fragmentGestioneViaggioGalleria"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="52dp"
-        android:layout_below="@+id/btnSelectPhoto"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:layout_height="match_parent"
+
+       />
+</LinearLayout>
     <ListView
         android:layout_height="match_parent"
         android:id="@+id/lv_sliding_menu"

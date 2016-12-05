@@ -11,12 +11,6 @@ import java.util.Date;
 public class ViaggioGiorno implements Comparable <ViaggioGiorno> {
     public long id_viaggio;
     public String data;
-
-    public ViaggioGiorno(){
-        this.id_viaggio = 0;
-        this.data = null;
-    }
-
     public ViaggioGiorno(long id_viaggio, String data){
         this.id_viaggio = id_viaggio;
         this.data = data;

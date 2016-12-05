@@ -66,32 +66,11 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
         nomeCitta.setText(selectedCity);
 
         ItemAdapterVedereMangiareDormire adapter = new ItemAdapterVedereMangiareDormire(getActivity(), scelte,this);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(RicercaActivityFragmentMenu.this, R.layout.fragment_ricerca_activity_menu_item, scelte);
         adapter.notifyDataSetChanged();
         listaFragment.setAdapter(adapter);
         // Inflate the layout for this fragment
         return view;
     }
-
-    /*public void fragmentStart(int i) {
-        RicercaActivityFragmentList newFragment = new RicercaActivityFragmentList();
-        Bundle args = new Bundle();
-        args.putString("selectedCity", selectedCity);
-        if(scelte[i].equals("Cosa vedere?")){
-            selectedItem = "vedere";
-        }else if(scelte[i].equals("Dove mangiare?")){
-            selectedItem = "mangiare";
-        }else if(scelte[i].equals("Dove dormire?")){
-            selectedItem = "dormire";
-        }
-        args.putString("selectedItem", selectedItem);
-        newFragment.setArguments(args);
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }*/
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -130,68 +109,9 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
                     .show();
 
         }
-        /*Log.e("messaggini", "click");
-        RicercaActivityFragmentList newFragment = new RicercaActivityFragmentList();
-        Bundle args = new Bundle();
-        args.putString("selectedCity",selectedCity);
-        Log.e("messaggini", scelte[position]);
-        if(position == 0){
-            selectedItem = "vedere";
-        }else if(position == 1){
-            selectedItem = "mangiare";
-        }else if(position == 2){
-            selectedItem = "dormire";
-        }
-        args.putString("selectedItem",selectedItem);
-        newFragment.setArguments(args);
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, newFragment);
-        transaction.addToBackStack(null);
-
-// Commit the transaction
-        transaction.commit();*/
-    }
+            }
 
 
 
-   /* // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }*/
-
-   // @Override
-    /*public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-*/
-   /* @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-*/
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    /*public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }*/
 }
 

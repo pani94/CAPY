@@ -27,7 +27,6 @@
             android:textSize="50sp"
             android:textAlignment="center"
             android:textStyle="normal|bold"
-            android:fontFamily="casual"
             android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
             <TextView
@@ -39,7 +38,6 @@
                 tools:text="da quando a quando"
                 android:textAlignment="center"
                 android:textSize="30sp"
-                android:fontFamily="casual"
                 android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
             <LinearLayout
@@ -49,7 +47,6 @@
 
                 <AutoCompleteTextView
                     android:hint="@string/inserisci_una_citt_e_arricchisci_il_tuo_viaggio"
-                    android:fontFamily="casual"
                     android:layout_width="400dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/gestione_viaggio_autocomplete"

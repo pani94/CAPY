@@ -36,17 +36,6 @@ public class GestioneViaggioGalleriaFragmentGrid extends Fragment implements Ada
     public GestioneViaggioGalleriaFragmentGrid() {
         // Required empty public constructor
     }
-
-   /*
-    public static GestioneViaggioGalleriaFragmentGrid newInstance(String param1, String param2) {
-        GestioneViaggioGalleriaFragmentGrid fragment = new GestioneViaggioGalleriaFragmentGrid();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-    */
     @Override
     public void onCreate(Bundle savedInstanceState) {
 

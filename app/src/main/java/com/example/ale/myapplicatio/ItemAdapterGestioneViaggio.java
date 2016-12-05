@@ -21,7 +21,6 @@ public class ItemAdapterGestioneViaggio extends ArrayAdapter<String> {
         super(context, 0, opzioni);
         this.opzioni= opzioni;
     }
-
     public View getView(final int position, View view, ViewGroup parent){
         final String scelta = opzioni[position];
         if(view == null){

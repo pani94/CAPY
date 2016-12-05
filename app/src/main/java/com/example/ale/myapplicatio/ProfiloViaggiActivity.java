@@ -1,5 +1,6 @@
 package com.example.ale.myapplicatio;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -119,7 +121,6 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
     }
     public boolean onCreateOptionsMenu(Menu menu) {
-        // getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -129,29 +130,32 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
         if(actionBarDrawerToggle.onOptionsItemSelected(item)){
             return true;
         }
-        /*switch (item.getItemId()) {
-            case R.id.menu_profilo:
-                startActivity(new Intent(getApplicationContext(), ProfiloViaggiActivity.class));
-            case R.id.menu_settings:
-             //   startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
-                return true;
-            case R.id.menu_about:
-               // startActivity(new Intent(getApplicationContext(), RicercaActivity.class));
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }*/
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        if (actionBarDrawerToggle!= null){
+        if (actionBarDrawerToggle != null) {
+            actionBarDrawerToggle.syncState();
+        } else {
+            actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_opened, R.string.drawer_closed) {
+                @Override
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    invalidateOptionsMenu();
+                }
+
+                @Override
+                public void onDrawerClosed(View drawerView) {
+                    super.onDrawerClosed(drawerView);
+                    invalidateOptionsMenu();
+                }
+            };
             actionBarDrawerToggle.syncState();
         }
     }
+
 
     //create method replace fragment
     private void replaceFragment(int pos){
@@ -179,6 +183,18 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
                 Intent intent_impostazioni = new Intent(ProfiloViaggiActivity.this, SettingsActivity.class);
                 startActivity(intent_impostazioni);
                 break;
+            case 5: new AlertDialog.Builder(ProfiloViaggiActivity.this)
+                    .setTitle("Let's go")
+                    .setMessage("Questa applicazione è stata creata da: " +
+                            "Alessandro Barlocco, Annalisa Bovone, Paola Silvestre")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setIcon(R.drawable.logo_pani_piccolo)
+                    .show();
+                break;
             default:
                 break;
         }
@@ -188,8 +204,6 @@ public class ProfiloViaggiActivity extends AppCompatActivity {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.activity_main, fragment);
             transaction.commit();
-
-
         }
     }
 }

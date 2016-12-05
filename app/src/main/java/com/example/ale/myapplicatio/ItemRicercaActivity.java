@@ -32,19 +32,9 @@ public class ItemRicercaActivity {
     public void setName(String n){
         name=n;
     }
-    public void setPhoto_reference(String pr){photo_reference = pr;    }
-    public void setPlace_id(String p){
-        place_id = p;
-    }
-    public void setVicinity(String v){
-        vicinity = v;
-    }
     public void setIcon(String i){
         icon = i;
     }
-    public void setOrario(String o ){orario = o;}
-    public void setLatitudine(String lat) { latitudine = lat; }
-    public void setLongitudine(String lng) { longitudine = lng; }
     public String getName(){
         return name;
     }
@@ -60,5 +50,4 @@ public class ItemRicercaActivity {
     public String getOrario(){ return orario;}
     public String getLatitudine(){ return latitudine; }
     public String getLongitudine(){ return longitudine; }
-    public String getPhoto_reference(){ return photo_reference; }
 }
