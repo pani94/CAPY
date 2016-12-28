@@ -78,7 +78,8 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
         String photo_reference_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&maxheight=100&photoreference="+item.getFoto()+"&sensor=false&" + key;
         holder.icon.setTag(photo_reference_url);
         //if(photo_reference_url != holder.icon.getTag()){
-        new LoadImageTask().execute(photo_reference_url);
+        new ImageDownloaderTask(holder.icon).execute(photo_reference_url);
+        //new LoadImageTask().execute(photo_reference_url);
         //}
         return convertView;
     }

@@ -50,4 +50,5 @@ public class ItemRicercaActivity {
     public String getOrario(){ return orario;}
     public String getLatitudine(){ return latitudine; }
     public String getLongitudine(){ return longitudine; }
+    public String getPhoto_reference() { return photo_reference; }
 }
