@@ -202,13 +202,9 @@ public class RicercaActivityFragmentList extends Fragment implements AdapterView
             else {
                 tipo_ricerca = "textsearch";
                 int virgola = selectedCity.indexOf(",");
-                int spazio = selectedCity.indexOf(" ");
                 String citta = "";
-                if(spazio < virgola) {
-                    citta = selectedCity.substring(0, spazio) + "+" + selectedCity.substring(spazio + 1, virgola);
-                }else{
-                    citta = selectedCity.substring(0, virgola);
-                }
+                citta = selectedCity.substring(0, virgola);
+                citta = citta.replaceAll(" ", "+");
                 if (selectedItem.equals("mangiare")) {
                     parameters = "query=restaurant+in+" + citta + "&" + key;
                 } else if (selectedItem.equals("dormire")) {

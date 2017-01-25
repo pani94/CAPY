@@ -197,15 +197,17 @@ public class MainActivity extends AppCompatActivity {
             ConnectivityManager cm = (ConnectivityManager) MainActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = cm.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
-                if (s.length() > 0) {
-                    if (getCityRequest == null) {
-                        getCityRequest = new GetCity();
-                        getCityRequest.execute(s.toString());
-                    } else {
-                        getCityRequest.cancel(true);
-                        getCityRequest = new GetCity();
-                        getCityRequest.execute(s.toString());
-                    }
+                if (getCityRequest == null) {
+                    getCityRequest = new GetCity();
+                    String citta = s.toString();
+                    citta = citta.replaceAll(" ","");
+                    getCityRequest.execute(citta);
+                } else {
+                    getCityRequest.cancel(true);
+                    getCityRequest = new GetCity();
+                    String citta = s.toString();
+                    citta = citta.replaceAll(" ","");
+                    getCityRequest.execute(citta);
                 }
             }
         }

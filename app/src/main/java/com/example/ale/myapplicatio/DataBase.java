@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.IntegerRes;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -219,11 +220,19 @@ public class DataBase {
         String [] whereargs = { nomeViaggio};
         this.openReadableDB();
         Cursor cursor = db.query(VIAGGIO_TABLE,null,where,whereargs,null,null,null);
-        cursor.moveToFirst();
-        int id_viaggio = cursor.getInt(VIAGGIO_ID_COL);
-        cursor.close();
-        db.close();
-        return id_viaggio;
+        if(cursor != null && cursor.getCount()>0){
+            cursor.moveToFirst();
+            int id_viaggio = cursor.getInt(VIAGGIO_ID_COL);
+            cursor.close();
+            db.close();
+            return id_viaggio;
+        }
+        else{
+            db.close();
+            return -1;
+        }
+
+
 
 
     }
@@ -245,6 +254,41 @@ public class DataBase {
             catch(Exception e) {
                 return null;
             }
+        }
+    }
+
+    boolean getViaggio(String nomeViaggio, boolean modifica ,String vecchio){
+        String where = VIAGGIO_NOME + " = ?" ;
+        String [] whereargs = { nomeViaggio};
+        this.openReadableDB();
+        Cursor cursor = db.query(VIAGGIO_TABLE,null,where,whereargs,null,null,null);
+        if(cursor != null && cursor.getCount()>0){
+            if (modifica){
+                cursor.moveToFirst();
+                Viaggio viaggio = getViaggioFromCursor(cursor);
+
+               if(viaggio.getNome_viaggio().equals(vecchio)){
+                    cursor.close();
+                    this.closeDB();
+                    return false;
+                }
+                else{
+                    cursor.close();
+                    this.closeDB();
+                    return true;
+                }
+            }
+            else{
+                cursor.close();
+                this.closeDB();
+                return true;
+            }
+
+        }
+        else
+        {
+            this.closeDB();
+            return false;
         }
     }
     boolean getViaggiBool(){

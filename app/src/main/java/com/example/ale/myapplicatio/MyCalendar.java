@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.CalendarContract;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -150,20 +151,27 @@ public class MyCalendar {
 
         if(action.equals("one_day_before")){
             long timeMsOneDayBefore = partenza.getTime() - 86400000 + 43200000;
-            if (Build.VERSION.SDK_INT < 19) {
-                am.set(AlarmManager.RTC_WAKEUP, timeMsOneDayBefore, pendingIntent);
-            } else {
-                am.setExact(AlarmManager.RTC_WAKEUP, timeMsOneDayBefore, pendingIntent);
+            long invia = timeMsOneDayBefore - System.currentTimeMillis();
+            if(invia > 0){
+                if (Build.VERSION.SDK_INT < 19) {
+                    am.set(AlarmManager.RTC_WAKEUP, timeMsOneDayBefore, pendingIntent);
+                } else {
+                    am.setExact(AlarmManager.RTC_WAKEUP, timeMsOneDayBefore, pendingIntent);
+                }
             }
         }else if(action.equals("one_week_before")){
             long timeMsOneWeekBefore = partenza.getTime() - 604800000 + 43200000;
-            if (Build.VERSION.SDK_INT < 19) {
-                am.set(AlarmManager.RTC_WAKEUP, timeMsOneWeekBefore, pendingIntent);
-            } else {
-                am.setExact(AlarmManager.RTC_WAKEUP, timeMsOneWeekBefore, pendingIntent);
+            long invia = timeMsOneWeekBefore - System.currentTimeMillis();
+            if(invia > 0){
+                if (Build.VERSION.SDK_INT < 19) {
+                    am.set(AlarmManager.RTC_WAKEUP, timeMsOneWeekBefore, pendingIntent);
+                } else {
+                    am.setExact(AlarmManager.RTC_WAKEUP, timeMsOneWeekBefore, pendingIntent);
+                }
             }
+
         }else if(action.equals("one_day_after")){
-            long timeMsOneDayAfter = arrivo.getTime() + 43200000;
+            long timeMsOneDayAfter = arrivo.getTime() + (43200000*3);
             if (Build.VERSION.SDK_INT < 19) {
                 am.set(AlarmManager.RTC_WAKEUP, timeMsOneDayAfter, pendingIntent);
             } else {

@@ -16,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +48,7 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
     Button bottone_partenza;
     Button bottone_arrivo;
     ImageButton bottone_fatto;
+    String stringa_nomeViaggio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +64,10 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
         bottone_fatto.setOnClickListener(buttonListener);
         bottone_arrivo.setOnClickListener(buttonListener);
         bottone_partenza.setOnClickListener(buttonListener);
+        stringa_nomeViaggio = "";
         if (getIntent().getExtras() != null) {
             id_viaggio = getIntent().getIntExtra("id_viaggio", 10);
-            String stringa_nomeViaggio = getIntent().getStringExtra("nome_viaggio");
+            stringa_nomeViaggio = getIntent().getStringExtra("nome_viaggio");
             DataBase db = new DataBase(this);
             String data_partenza = db.getDataPartenza(id_viaggio);
             String data_arrivo = db.getDataArrivo(id_viaggio);
@@ -227,68 +230,87 @@ public class CreaIlTuoViaggioActivity extends AppCompatActivity {
                     DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Date part = null;
                     Date arr = null;
-                    if (!NViaggio.equals("") && !p.equals("gg/mm/aaaa") && !a.equals("gg/mm/aaaa")) {
-                        try {
-                            part = formatter.parse(p);
-                            arr = formatter.parse(a);
-                        } catch (java.text.ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (part != null & arr != null) {
-                            if (CheckDates(part, arr)) {
-                                DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
-                               MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
-                                long evento_id = myCalendar.addViaggioToCalendar(part,arr,NViaggio,CreaIlTuoViaggioActivity.this);
-                                if (modifica) {
-                                    Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a,evento_id);
-                                    long update = db.UpdateViaggio(viaggio);
-                                    if (update > 0) {
-                                        Toast.makeText(getApplicationContext(), "Viaggio modificato", Toast.LENGTH_SHORT).show();
-                                    }
+                    DataBase db = new DataBase(CreaIlTuoViaggioActivity.this);
+                    if (!NViaggio.equals("") && !p.equals("") && !a.equals("")) {
+                        Log.e("ciaao", NViaggio + Boolean.toString(modifica) + stringa_nomeViaggio);
+                        if(!db.getViaggio(NViaggio,modifica,stringa_nomeViaggio)){
+                            try {
+                                part = formatter.parse(p);
+                                arr = formatter.parse(a);
+                            } catch (java.text.ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if (part != null & arr != null) {
+                                if (CheckDates(part, arr)) {
+                                    //database
+                                    MyCalendar myCalendar = new MyCalendar(CreaIlTuoViaggioActivity.this);
+                                    long evento_id = myCalendar.addViaggioToCalendar(part,arr,NViaggio,CreaIlTuoViaggioActivity.this);
+                                    if (modifica) {
+                                        Viaggio viaggio = new Viaggio(id_viaggio, NViaggio, p, a,evento_id);
+                                        long update = db.UpdateViaggio(viaggio);
+                                        if (update > 0) {
+                                            Toast.makeText(getApplicationContext(), "Viaggio modificato", Toast.LENGTH_SHORT).show();
+                                        }
 
-                                } else {
-                                    Viaggio viaggio = new Viaggio(NViaggio, p, a,evento_id);
-                                    long update = db.insertViaggio(viaggio);
-                                    if (update > 0) {
-                                        Toast.makeText(getApplicationContext(), "Viaggio creato", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Viaggio viaggio = new Viaggio(NViaggio, p, a,evento_id);
+                                        long update = db.insertViaggio(viaggio);
+                                        if (update > 0) {
+                                            Toast.makeText(getApplicationContext(), "Viaggio creato", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                                salvaGiorni(part, arr, NViaggio);
+                                    salvaGiorni(part, arr, NViaggio);
 
-                                if(prefs.getBoolean("preference_notification", true)){
-                                    //Log.e("messaggini", "preference notification true");
+
+
                                     myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_week_before");
                                     myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_before");
                                     myCalendar.addNotify(CreaIlTuoViaggioActivity.this, part, arr, NViaggio, "one_day_after");
+
+
                                     Intent intent = new Intent(CreaIlTuoViaggioActivity.this, ProfiloViaggiActivity.class);
                                     intent.putExtra("viaggio_creato", "viaggio creato");
                                     startActivity(intent);
                                     finish();
+                                } else {
+                                    new AlertDialog.Builder(CreaIlTuoViaggioActivity.this)
+                                            .setTitle("ATTENZIONE")
+                                            .setMessage("Date non valide. La data di partenza deve precedere quella di arrivo.")                                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                            .setIcon(android.R.drawable.ic_dialog_alert)
+                                            .show();
                                 }
-
-                            } else {
-                                new AlertDialog.Builder(CreaIlTuoViaggioActivity.this)
-                                        .setTitle("ATTENZIONE")
-                                        .setMessage("Date non valide. La data di partenza deve precedere quella di arrivo.")                                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        })
-                                        .setIcon(android.R.drawable.ic_dialog_alert)
-                                        .show();
                             }
                         }
+                        else{
+                            new AlertDialog.Builder(CreaIlTuoViaggioActivity.this)
+                                    .setTitle("ATTENZIONE")
+                                    .setMessage("Dati non validi. Nome viaggio già in uso.")
+                                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
+                        }
+
                     } else {
-                        new AlertDialog.Builder(CreaIlTuoViaggioActivity.this)
-                                .setTitle("ATTENZIONE")
-                                .setMessage("Dati non validi. Inserire il nome del viaggio e le date di partenza e di arrivo.")
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .show();
+
+                            new AlertDialog.Builder(CreaIlTuoViaggioActivity.this)
+                                    .setTitle("ATTENZIONE")
+                                    .setMessage("Dati non validi. Inserire il nome del viaggio e le date di partenza e di arrivo.")
+                                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
+
                     }
                     break;
 

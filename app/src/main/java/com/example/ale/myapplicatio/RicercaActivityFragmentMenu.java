@@ -55,9 +55,9 @@ public class RicercaActivityFragmentMenu extends Fragment implements AdapterView
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ricerca_activity_fragment_menu, container, false);
         scelte = new String[3];
-        scelte[0] = "Cosa vedere?";
-        scelte[1] = "Dove mangiare?";
-        scelte[2] = "Dove dormire?";
+        scelte[0] = "Cosa vedere";
+        scelte[1] = "Dove mangiare";
+        scelte[2] = "Dove dormire";
 
         scelta_menu = (TextView) view.findViewById(R.id.scelta_menu);
         listaFragment = (ListView) view.findViewById(R.id.listaFragment);

@@ -126,7 +126,7 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
                     }
 
                 });
-                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, preferiti_placeid_get);
                         long insert =database.insertViaggioAttivita(viaggioattivita);
@@ -139,7 +139,7 @@ public class ITuoiPreferitiFragmentListItem extends Fragment {
 
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Cancella", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                     }

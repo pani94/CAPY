@@ -109,7 +109,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
                 }
 
             });
-            builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     if (!data.equals("")) {
                         if(tipologia.equals("vedere")){
@@ -136,7 +136,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
                                 parte_giornata = momento[k];
                             }
                         });
-                        builder1.setPositiveButton("Confirm", new DialogInterface.OnClickListener()  {
+                        builder1.setPositiveButton("Conferma", new DialogInterface.OnClickListener()  {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if(!parte_giornata.equals("")){
@@ -158,7 +158,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
                                 }
                             }
                         });
-                        builder1.setNegativeButton("Cancel", new DialogInterface.OnClickListener()  {
+                        builder1.setNegativeButton("Cancella", new DialogInterface.OnClickListener()  {
                             public void onClick(DialogInterface dialog, int which)  {
 
                             }
@@ -172,7 +172,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
 
                 }
             });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("Cancella", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
 
                 }
@@ -202,7 +202,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
                     }
 
                 });
-                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if(!nome_viaggio.equals("")){
                             ViaggioAttivita viaggioattivita = new ViaggioAttivita(database.getIdViaggio(nome_viaggio), arrayList.get(position).getPlace_id());
@@ -220,7 +220,7 @@ public class ItemAdapterAttivita extends ArrayAdapter<Attivita> implements View.
 
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Cancella", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                     }

@@ -340,7 +340,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
                             }
 
                         });
-                        builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 if(!nomeViaggio.equals("")){
                                     ViaggioAttivita viaggioattivita = new ViaggioAttivita(id, place_id);
@@ -358,7 +358,7 @@ public class RicercaActivityFragmentListItem extends Fragment implements GoogleA
 
                             }
                         });
-                        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        builder.setNegativeButton("Cancella", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
                             }

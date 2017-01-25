@@ -185,15 +185,17 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
             ConnectivityManager cm = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = cm.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
-                if (s.length() > 0) {
-                    if (getCityRequest == null) {
-                        getCityRequest = new GetCity();
-                        getCityRequest.execute(s.toString());
-                    } else {
-                        getCityRequest.cancel(true);
-                        getCityRequest = new GetCity();
-                        getCityRequest.execute(s.toString());
-                    }
+                if (getCityRequest == null) {
+                    getCityRequest = new GetCity();
+                    String citta = s.toString();
+                    citta = citta.replaceAll(" ","");
+                    getCityRequest.execute(citta);
+                } else {
+                    getCityRequest.cancel(true);
+                    getCityRequest = new GetCity();
+                    String citta = s.toString();
+                    citta = citta.replaceAll(" ","");
+                    getCityRequest.execute(citta);
                 }
             }
         }
@@ -423,7 +425,7 @@ public class GestioneViaggioFragment extends Fragment implements AdapterView.OnI
                         position = new LatLng(Double.parseDouble(attivitas.get(i).getLatitudine()), Double.parseDouble(attivitas.get(i).getLongitudine()));
                         MarkerOptions markerOptions = new MarkerOptions().position(position).title(attivitas.get(i).getNome());
                         if (attivitas.get(i).getTipologia().equals("mangiare")){
-                            markerOptions = new MarkerOptions().position(position).title(attivitas.get(i).getNome()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                            markerOptions = new MarkerOptions().position(position).title(attivitas.get(i).getNome()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                         }
                         else if(attivitas.get(i).getTipologia().equals("dormire")){
                             markerOptions = new MarkerOptions().position(position).title(attivitas.get(i).getNome()).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));

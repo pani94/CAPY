@@ -41,11 +41,11 @@ public class ItemAdapterVedereMangiareDormire extends ArrayAdapter<String> {
         icon = (ImageView) convertView.findViewById(R.id.vedere_mangiare_dormire_image_view);
         // Lookup view for data population
         name.setText(scelta);
-        if(scelta.equals("Cosa vedere?")){
+        if(scelta.equals("Cosa vedere")){
             icon.setImageResource(R.drawable.ic_account_balance_black_24dp);
-        }else if(scelta.equals("Dove mangiare?")){
+        }else if(scelta.equals("Dove mangiare")){
             icon.setImageResource(R.drawable.ic_restaurant_black_24dp);
-        }else if(scelta.equals("Dove dormire?")){
+        }else if(scelta.equals("Dove dormire")){
             icon.setImageResource(R.drawable.ic_hotel_black_24dp);
         }
         new LoadImageTask();
